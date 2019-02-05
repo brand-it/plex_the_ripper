@@ -1,0 +1,10 @@
+#!/usr/bin/env ruby
+
+require File.expand_path('../lib/ripper', __dir__).to_s
+
+OptParser.parse(ARGV)
+Logger.debug(Config.configuration.inspect)
+# Config.configuration.movies.update_movies
+# Logger.info "Local: #{Config.configuration.movies.local_movies}"
+# Logger.info "Server: #{Config.configuration.movies.server_movies}"
+Ripper.start

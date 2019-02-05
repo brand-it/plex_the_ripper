@@ -1,0 +1,16 @@
+#!/usr/bin/env ruby
+require 'pry'
+require File.expand_path('../lib/ripper', __dir__).to_s
+extend GemInstaller
+install 'pry'
+
+OptParser.parse(ARGV)
+movies = Movies.new
+movies.update_movies
+total_disks = movies.server_movies[:total_disks]
+Logger.info movies.server_movies.inspect
+Config.configuration.type = :tv
+movies.update_movies
+total_disks += movies.server_movies[:total_disks]
+
+Logger.info("There is a total of #{total_disks} disks on the server")
