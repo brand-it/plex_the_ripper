@@ -31,6 +31,7 @@ module TVShowsCleaner
     if episodes_list.size == Config.configuration.total_episodes
       return Logger.success('All right everything looks good')
     end
+
     if Config.configuration.total_episodes > episodes_list.size
       return Logger.warning(
         'Well this is bummer, it seams there are less episodes than what you where expected.'\
@@ -42,6 +43,7 @@ module TVShowsCleaner
       Logger.warning("Deleting #{episode} #{File.size(File.join([folder_path, episode]))}")
       FileUtils.rm_rf(File.join([folder_path, episode]))
       next unless File.exist?(File.join([folder_path, episode]))
+
       Notification.slack(
         "Issue Deleting File #{episode}",
         "Failed to delete #{File.join([folder_path, episode])} please destroy file by hand"
@@ -57,8 +59,8 @@ module TVShowsCleaner
   private
 
   def episodes(folder_path)
-    Dir.entries(folder_path).reject do |episode|
-      File.extname(episode) != '.mkv'
+    Dir.entries(folder_path).select do |episode|
+      File.extname(episode) == '.mkv'
     end
   end
 
@@ -92,6 +94,7 @@ module TVShowsCleaner
     if Config.configuration.total_episodes <= 1
       return find_largest_file_size(folder_path, episodes_list)
     end
+
     file_size_range(folder_path, episodes_list)
   end
 

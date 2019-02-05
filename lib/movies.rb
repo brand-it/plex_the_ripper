@@ -1,4 +1,3 @@
-
 class Movies
   include BashHelper
   attr_accessor :server_movies, :local_movies
@@ -28,8 +27,10 @@ class Movies
             end
     return movie if movie.nil? || season.nil?
     return movie.find { |m| m == disc } if movie.is_a?(Array)
+
     season = movie[season]
     return season if season.nil? || disc.nil?
+
     season[disc]
   end
 
@@ -79,6 +80,7 @@ class Movies
     elsif type == :movie
       movie_details = parse_movie_details(mkv_file_path)
       return if movie_details.size.zero?
+
       Logger.debug("adding movie #{movie_details[:title]}/#{movie_details[:mkv]}")
       if storage[movie_details[:title]].nil?
         storage[:total_disks] += 1
@@ -93,6 +95,7 @@ class Movies
   def find_file_type(mkv_file_path)
     return :tv if mkv_file_path.include?('TV Shows')
     return :movie if mkv_file_path.include?('Movies')
+
     :unknown
   end
 
@@ -100,6 +103,7 @@ class Movies
     index = mkv_file_path.split('/').find_index { |x| x == 'TV Shows' }
     details = mkv_file_path.split('/').reject.with_index { |_t, x| x <= index }
     return {} if details.size > 4
+
     {
       title: details[0].downcase,
       season: details[1],
@@ -112,6 +116,7 @@ class Movies
     index = mkv_file_path.split('/').find_index { |x| x == 'Movies' }
     details = mkv_file_path.split('/').reject.with_index { |_t, x| x <= index }
     return {} if details.size > 2
+
     {
       title: details[0].downcase,
       mkv: details[1]
@@ -128,6 +133,7 @@ class Movies
     response = capture3(command)
     Logger.debug(response.stdout_str)
     return [] unless response.status.success?
+
     results = response.stdout_str.split("\n").compact.uniq
     results.reject! do |result|
       result == '' || result.include?('Plex Versions') || result.include?('.@__thumb')

@@ -17,24 +17,25 @@ class MiniPortileCMake < MiniPortile
     return if configured?
 
     cache_file = File.join(tmp_path, 'configure.options_cache')
-    File.open(cache_file, "w") { |f| f.write computed_options.to_s }
+    File.open(cache_file, 'w') { |f| f.write computed_options.to_s }
 
-    execute('configure', %w(cmake) + computed_options + ["."])
+    execute('configure', %w[cmake] + computed_options + ['.'])
   end
 
   def configured?
     configure = File.join(work_path, 'configure')
     makefile  = File.join(work_path, 'CMakefile')
-    cache_file  = File.join(tmp_path, 'configure.options_cache')
+    cache_file = File.join(tmp_path, 'configure.options_cache')
 
-    stored_options  = File.exist?(cache_file) ? File.read(cache_file) : ""
+    stored_options  = File.exist?(cache_file) ? File.read(cache_file) : ''
     current_options = computed_options.to_s
 
     (current_options == stored_options) && newer?(makefile, configure)
   end
 
   def make_cmd
-    return "nmake" if MiniPortile.windows?
+    return 'nmake' if MiniPortile.windows?
+
     super
   end
 end

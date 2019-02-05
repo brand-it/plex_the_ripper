@@ -10,6 +10,7 @@ class Logger
   class << self
     def log_rip_time(seconds, movie_name, file_size)
       return unless can_log?
+
       File.open(Logger::RIP_PATH, 'a') do |file|
         file.write("#{seconds}, #{movie_name}, #{file_size}\n")
       end
@@ -17,6 +18,7 @@ class Logger
 
     def create_log_file
       return unless can_log?
+
       FileUtils.mkdir_p(Config.configuration.log_directory)
       FileUtils.touch(Logger::LOG_PATH)
       FileUtils.touch(Logger::RIP_PATH)
@@ -24,9 +26,11 @@ class Logger
 
     def log(message)
       return unless can_log?
+
       create_log_file
       text = message.to_s.gsub(/\033.*?m/, '').strip
       return if text == ''
+
       # File is created if does not exist
       File.open(Logger::LOG_PATH, 'a') do |file|
         file.write("#{text}\n")

@@ -59,4 +59,3 @@ binding.pry
 #   FileUtils.rm_rf(File.join(rip_path(safe: false), file))
 # end
 # rename_movies
-

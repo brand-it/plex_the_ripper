@@ -24,6 +24,7 @@ class Uploader
     return @upload_path if @upload_path.to_s != ''
     return File.join(%w[/share Multimedia Movies]) if type == :movie
     return File.join(['/share', 'Multimedia', 'TV Shows']) if type == :tv
+
     raise 'Well this is occward you some how manage to make the upload path nil'
   end
 
@@ -38,6 +39,7 @@ class Uploader
   def start_upload
     ripped_files = Dir[make_mkv.rip_path + '/*']
     return if ripped_files.empty?
+
     create_upload_path
     fork do
       retried_once = false
@@ -65,6 +67,7 @@ class Uploader
         move_file_into_done_path
       rescue Interrupt, BashError => exception
         raise exception if retried_once
+
         Logger.warning(
           "#{exception.message} for #{movie_name}. Executing Retry"
         )
@@ -87,6 +90,7 @@ class Uploader
 
   def delete_rip_path!
     return make_mkv.delete_rip_path! if success?
+
     Logger.warning(
       "Could not delete #{movie_name}, have not successfully uploaded files"
     )

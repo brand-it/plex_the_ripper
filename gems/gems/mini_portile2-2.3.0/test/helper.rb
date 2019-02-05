@@ -13,27 +13,23 @@ require 'mini_portile2'
 class TestCase < Minitest::Test
   include Minitest::Hooks
 
-  HTTP_PORT = 23523
+  HTTP_PORT = 23_523
 
   attr_accessor :webrick
 
   def start_webrick(path)
-    @webrick = WEBrick::HTTPServer.new(:Port => HTTP_PORT, :DocumentRoot => path).tap do |w|
+    @webrick = WEBrick::HTTPServer.new(Port: HTTP_PORT, DocumentRoot: path).tap do |w|
       Thread.new do
         w.start
       end
-      until w.status==:Running
-        sleep 0.1
-      end
+      sleep 0.1 until w.status == :Running
     end
   end
 
   def stop_webrick
-    if w=@webrick
+    if w = @webrick
       w.shutdown
-      until w.status==:Stop
-        sleep 0.1
-      end
+      sleep 0.1 until w.status == :Stop
     end
   end
 
@@ -46,7 +42,7 @@ class TestCase < Minitest::Test
     end
   end
 
-  def work_dir(r=recipe)
+  def work_dir(r = recipe)
     "tmp/#{r.host}/ports/#{r.name}/#{r.version}/#{r.name}-#{r.version}"
   end
 

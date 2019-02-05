@@ -1,17 +1,17 @@
-require File.expand_path('../helper', __FILE__)
+require File.expand_path('helper', __dir__)
 
 class TestDigest < TestCase
-  attr :assets_path, :tar_path, :recipe
+  attr_reader :assets_path, :tar_path, :recipe
 
   def before_all
     super
-    @assets_path = File.expand_path("../assets", __FILE__)
-    @tar_path = File.expand_path("../../tmp/test-digest-1.0.0.tar.gz", __FILE__)
+    @assets_path = File.expand_path('assets', __dir__)
+    @tar_path = File.expand_path('../tmp/test-digest-1.0.0.tar.gz', __dir__)
 
     # remove any previous test files
-    FileUtils.rm_rf("tmp")
+    FileUtils.rm_rf('tmp')
 
-    create_tar(@tar_path, @assets_path, "test mini portile-1.0.0")
+    create_tar(@tar_path, @assets_path, 'test mini portile-1.0.0')
     start_webrick(File.dirname(@tar_path))
   end
 
@@ -23,14 +23,14 @@ class TestDigest < TestCase
 
   def setup
     super
-    FileUtils.rm_rf("ports/archives")
-    @recipe = MiniPortile.new("test-digest", "1.0.0")
+    FileUtils.rm_rf('ports/archives')
+    @recipe = MiniPortile.new('test-digest', '1.0.0')
   end
 
   def download_with_digest(key, klass)
     @recipe.files << {
       :url => "http://localhost:#{webrick.config[:Port]}/#{ERB::Util.url_encode(File.basename(tar_path))}",
-      key => klass.file(tar_path).hexdigest,
+      key => klass.file(tar_path).hexdigest
     }
     @recipe.download
   end
@@ -38,9 +38,9 @@ class TestDigest < TestCase
   def download_with_wrong_digest(key)
     @recipe.files << {
       :url => "http://localhost:#{webrick.config[:Port]}/#{ERB::Util.url_encode(File.basename(tar_path))}",
-      key => "0011223344556677",
+      key => '0011223344556677'
     }
-    assert_raises(RuntimeError){ @recipe.download }
+    assert_raises(RuntimeError) { @recipe.download }
   end
 
   def test_sha256
@@ -89,17 +89,17 @@ e29SBje8DAAJn2l57s2OddXLPQ0DUwCcdNEaqgHwSk/Swxc7K+IpfvjLKHKUZZBP
 4Ko=
 =SVWi
 -----END PGP PUBLIC KEY BLOCK-----
-KEY
+    KEY
   end
 
   def test_with_valid_gpg_signature
     data_file = File.expand_path(File.join(File.dirname(__FILE__), 'assets', 'gpg-fixtures', 'data'))
 
     @recipe.files << {
-      :url => "file://#{data_file}",
-      :gpg => {
-        :key => public_key,
-        :signature_url => "file://#{data_file}.asc"
+      url: "file://#{data_file}",
+      gpg: {
+        key: public_key,
+        signature_url: "file://#{data_file}.asc"
       }
     }
     @recipe.download
@@ -109,9 +109,9 @@ KEY
     data_file = File.expand_path(File.join(File.dirname(__FILE__), 'assets', 'gpg-fixtures', 'data'))
 
     @recipe.files << {
-      :url => "file://#{data_file}",
-      :gpg => {
-        :key => public_key
+      url: "file://#{data_file}",
+      gpg: {
+        key: public_key
       }
     }
     @recipe.download
@@ -121,34 +121,34 @@ KEY
     data_file = File.expand_path(File.join(File.dirname(__FILE__), 'assets', 'gpg-fixtures', 'data'))
 
     @recipe.files << {
-      :url => "file://#{data_file}",
-      :gpg => {
-        :key => public_key,
-        :signature_url => "file://#{data_file}.invalid.asc"
+      url: "file://#{data_file}",
+      gpg: {
+        key: public_key,
+        signature_url: "file://#{data_file}.invalid.asc"
       }
     }
-    exception = assert_raises(RuntimeError){
+    exception = assert_raises(RuntimeError) do
       @recipe.download
-    }
-    assert_equal("signature mismatch", exception.message)
+    end
+    assert_equal('signature mismatch', exception.message)
   end
 
   def test_with_invalid_key
     data_file = File.expand_path(File.join(File.dirname(__FILE__), 'assets', 'gpg-fixtures', 'data'))
 
     @recipe.files << {
-      :url => "file://#{data_file}",
-      :gpg => {
-        :key => "thisisaninvalidkey",
-        :signature_url => "file://#{data_file}.asc"
+      url: "file://#{data_file}",
+      gpg: {
+        key: 'thisisaninvalidkey',
+        signature_url: "file://#{data_file}.asc"
       }
     }
-    exception = assert_raises(RuntimeError){ @recipe.download }
-    assert_equal("invalid gpg key provided", exception.message)
+    exception = assert_raises(RuntimeError) { @recipe.download }
+    assert_equal('invalid gpg key provided', exception.message)
   end
 
   def test_with_different_key_than_one_used_to_sign
-    puts "################"
+    puts '################'
 
     key = <<-KEY
 -----BEGIN PGP PUBLIC KEY BLOCK-----
@@ -197,19 +197,18 @@ TiqrWoCBXk2UyVsl03gJblSJAeJGYPPeo+Yj6m63OWe2+/S2VTgmbPS/RObn0Aeg
 3HREePb2aMJ/Ctw/76COwn0mtXeIXLCTvBmznXfaMKllsqbsy2nCJ2P2uJjOntw=
 =4JAR
 -----END PGP PUBLIC KEY BLOCK-----
-KEY
+    KEY
 
     data_file = File.expand_path(File.join(File.dirname(__FILE__), 'assets', 'gpg-fixtures', 'data'))
 
     @recipe.files << {
-      :url => "file://#{data_file}",
-      :gpg => {
-        :key => key,
-        :signature_url => "file://#{data_file}.asc"
+      url: "file://#{data_file}",
+      gpg: {
+        key: key,
+        signature_url: "file://#{data_file}.asc"
       }
     }
-    exception = assert_raises(RuntimeError){ @recipe.download }
-    assert_equal("signature mismatch", exception.message)
+    exception = assert_raises(RuntimeError) { @recipe.download }
+    assert_equal('signature mismatch', exception.message)
   end
 end
-

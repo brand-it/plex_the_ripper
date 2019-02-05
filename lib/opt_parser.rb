@@ -13,7 +13,7 @@ class OptParser
       opts.on(
         '-i', '--include-extras',
         'All other titles that are not the main movie will be added to the "Behind The Scenes" '\
-         "folder so plex can watch them. This will set the --min-length to zero unless --min-length option is used"
+         'folder so plex can watch them. This will set the --min-length to zero unless --min-length option is used'
       ) do
         Config.configuration.minlength
         Config.configuration.include_extras = true

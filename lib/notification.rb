@@ -1,4 +1,3 @@
-
 class Notification
   extend BashHelper
   extend GemInstaller

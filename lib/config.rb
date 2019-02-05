@@ -73,6 +73,7 @@ class Config
 
   def reset!
     return if type != :movie
+
     self.movie_name = nil
   end
 
@@ -94,11 +95,13 @@ class Config
     return @minlength if @minlength
     return 3600 if type == :movie
     return 780 if type == :tv
+
     3600
   end
 
   def ask_for_tv_season
     return if type != :tv
+
     self.tv_season = ask_value_required(
       "What season is this (#{tv_season}): ",
       type: Integer, default: tv_season
@@ -107,6 +110,7 @@ class Config
 
   def ask_for_tv_episode
     return if type != :tv
+
     self.episode = ask_value_required(
       "What is the start episode (#{episode}): ",
       type: Integer, default: episode
@@ -115,12 +119,12 @@ class Config
 
   def ask_for_disc_number
     return if type != :tv
+
     self.disc_number = ask_value_required(
       "What is the disc number for (#{disc_number}): ",
       type: Integer, default: disc_number
     )
   end
-
 
   def valid?
     error_messages.empty?
@@ -156,6 +160,4 @@ class Config
   end
 
   private
-
-
 end

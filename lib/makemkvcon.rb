@@ -6,7 +6,6 @@ class MakeMKVCon
 
   attr_reader :run_time, :title_numbers
 
-
   def initialize
     @rip_path = if Config.configuration.type == :tv
                   [
@@ -52,6 +51,7 @@ class MakeMKVCon
     started_at = Time.now
     title_numbers.each do |title_number|
       break unless success?
+
       execute(title_number)
     end
     copy_extras
@@ -61,9 +61,11 @@ class MakeMKVCon
 
   def copy_extras
     return if Config.configuration.include_extras == false
+
     all_titles = get_all_titles
     all_titles.each do |title_number|
       next if title_numbers.include?(title_number)
+
       execute(title_number, sub_directory: 'Behind The Scenes')
     end
   end
@@ -137,6 +139,7 @@ class MakeMKVCon
   def create_path(path)
     path = File.join(path)
     return if File.exist?(path)
+
     Logger.warning("Creating file path #{path}")
     FileUtils.mkdir_p(path)
   end
@@ -173,6 +176,7 @@ class MakeMKVCon
 
   def done
     return unless success?
+
     delete_extra_episodes(rip_path(safe: false))
     rename_seasons(rip_path(safe: false))
     rename_movies
@@ -271,7 +275,7 @@ class MakeMKVCon
     lines = disk_info_string.split("\n")
     groups = []
     lines.each do |line|
-      match = line.gsub('"', "").match(/(\A.*?):(.*)/)
+      match = line.delete('"').match(/(\A.*?):(.*)/)
       values = match[2].split(',')
       case match[1]
       when 'TINFO'
@@ -305,6 +309,7 @@ class MakeMKVCon
       end
     end
     raise 'No disk information found' if groups.size.zero?
+
     groups
   end
 
@@ -318,7 +323,7 @@ class MakeMKVCon
     end
   end
 
-  def execute_system!(command)
+  def execute_system!(_command)
     semaphore = Mutex.new
     progressbar = ProgressBar.create(format: '%e |%b>>%i| %p%% %t')
     current_progress = 0

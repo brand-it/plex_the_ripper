@@ -22,6 +22,7 @@ module BashHelper
   def system!(*cmd)
     response = capture3(*cmd)
     raise BashError, "#{cmd} - #{response.stderr_str}" unless response.status.success?
+
     response
   end
 
@@ -56,6 +57,7 @@ module BashHelper
     return answer.to_f if type == Float
     return answer =~ /\Ay/i || answer == '1' if type == TrueClass
     return answer =~ /\An/i || answer == '0' if type == FalseClass
+
     answer.to_s
   end
 

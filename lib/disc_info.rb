@@ -30,6 +30,7 @@ class DiscInfo
       values = disc.xpath('string|integer')
       keys.each_with_index do |key, index|
         next if values[index].nil?
+
         hash_map[key.inner_html] = values[index].inner_html
       end
       DiscInfo.new(hash_map)

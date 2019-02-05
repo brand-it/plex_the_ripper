@@ -1,9 +1,7 @@
 class MakeBackup
-  def initialize
-  end
+  def initialize; end
 
-  def perform
-  end
+  def perform; end
 
   private
 
@@ -15,5 +13,4 @@ class MakeBackup
       which_disc?
     end
   end
-
 end

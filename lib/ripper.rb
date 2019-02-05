@@ -49,7 +49,6 @@ class Ripper
     # else
     #   rip_disk
     # end
-
   rescue BashError => exception
     Logger.error(exception.message)
   rescue Interrupt
@@ -70,9 +69,11 @@ class Ripper
   end
 
   def self.process
-    show_wait_spinner('Waiting for disc to be inserted') do
-      !Config.configuration.selected_disc_info.disc_present?
-    end if Config.configuration.mkv_from_file.to_s == ''
+    if Config.configuration.mkv_from_file.to_s == ''
+      show_wait_spinner('Waiting for disc to be inserted') do
+        !Config.configuration.selected_disc_info.disc_present?
+      end
+    end
     make_mkv = create_mkv
     if make_mkv.success?
       Logger.info(
@@ -104,7 +105,7 @@ class Ripper
     make_mkv
   end
 
-  def self.upload(disc_info, make_mkv)
+  def self.upload(_disc_info, make_mkv)
     uploader = Uploader.new(make_mkv)
     uploader.start_upload
     uploader
