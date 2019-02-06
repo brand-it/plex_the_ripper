@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 require 'pry'
 require File.expand_path('../lib/ripper', __dir__).to_s
-extend GemInstaller
-install 'pry'
+GemInstaller.install 'pry'
 
 OptParser.parse(ARGV)
 movies = Movies.new

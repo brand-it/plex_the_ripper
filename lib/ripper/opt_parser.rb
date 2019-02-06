@@ -20,10 +20,11 @@ class OptParser
       end
 
       opts.on(
-        '-r', '--rip-folder [Folder]', String,
-        "Where would you like use to rip the files to. (#{Config.configuration.file_path.inspect})"
+        '-r', '--media-folder [Folder]', String,
+        'Where would you like use to rip the files to.'\
+        " (#{Config.configuration.media_directory_path.inspect})"
       ) do |value|
-        Config.configuration.file_path = value
+        Config.configuration.media_directory_path = value
       end
 
       opts.on(

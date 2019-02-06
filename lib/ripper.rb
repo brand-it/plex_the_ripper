@@ -1,71 +1,17 @@
-require File.expand_path('gem_installer', __dir__).to_s
-extend GemInstaller
-install 'pry'
-require 'pry'
-require File.expand_path('time_helper', __dir__).to_s
-require File.expand_path('bash_helper', __dir__).to_s
-require File.expand_path('humanizer_helper', __dir__).to_s
-require File.expand_path('tv_shows_cleaner', __dir__).to_s
-require File.expand_path('movies', __dir__).to_s
-require File.expand_path('config', __dir__).to_s
-require File.expand_path('disc_info', __dir__).to_s
-require File.expand_path('makemkvcon', __dir__).to_s
-require File.expand_path('opt_parser', __dir__).to_s
-require File.expand_path('uploader', __dir__).to_s
-require File.expand_path('logger', __dir__).to_s
-require File.expand_path('notification', __dir__).to_s
-
 class Ripper
-  extend GemInstaller
-
-  install 'nokogiri'
-  install 'net-scp'
-  install 'ruby-progressbar'
-
-  require 'nokogiri'
-  require 'set'
-  require 'fileutils'
-  require 'net/http'
-  require 'uri'
-  require 'net/scp'
-  require 'json'
-  require 'ruby-progressbar'
-
   extend BashHelper
   extend TimeHelper
   extend HumanizerHelper
 
-  def self.check_file_path
-    return if Config.configuration.file_path && File.exist?(Config.configuration.file_path)
-
-    Logger.error("File path #{Config.configuration.file_path.inspect} is not present on this computer please change --file-path")
-    abort
-  end
-
-  def self.start
+  def self.perform
+    FileChecker.perform
     DiscSelector.perform
-    # if Config.configuration.make_backup_path
-
-    # else
-    #   rip_disk
-    # end
-  rescue BashError => exception
-    Logger.error(exception.message)
-  rescue Interrupt
-    Logger.info("\nThanks for using us have a wonderful day")
+    AskForMovieDetails.perform
+    AskForTVDetails.perform
   end
 
   def self.rip_disk
-    check_file_path
-    while running
-      ask_questions
-      log_tv_info
-      if Config.configuration.selected_disc_info
-        Config.configuration.selected_disc_info.reload
-      end
-      which_disc?
-      process
-    end
+    process while running
   end
 
   def self.process
@@ -88,19 +34,19 @@ class Ripper
     Config.configuration.reset!
   end
 
-  def self.log_tv_info
-    return if Config.configuration.type != :tv
+  # def self.log_tv_info
+  # return if Config.configuration.type != :tv
 
-    details = [
-      Config.configuration.movie_name,
-      Config.configuration.tv_season_to_word,
-      Config.configuration.disc_number_to_word
-    ].reject { |x| x.to_s == '' }.join(' ')
-    Logger.info("Please insert #{details}")
-  end
+  # details = [
+  #   Config.configuration.movie_name,
+  #   Config.configuration.tv_season_to_word,
+  #   Config.configuration.disc_number_to_word
+  # ].reject { |x| x.to_s == '' }.join(' ')
+  # Logger.info("Please insert #{details}")
+  # end
 
   def self.create_mkv
-    make_mkv = MakeMKVCon.new
+    make_mkv = MakeMKV.new
     make_mkv.create_mkv
     make_mkv
   end
@@ -125,13 +71,5 @@ class Ripper
       tries += 1
     end
     Logger.success('Was able to eject disc')
-  end
-
-  def self.ask_questions
-    sleep 1
-    Config.configuration.ask_for_movie_name
-    Config.configuration.ask_for_tv_season
-    Config.configuration.ask_for_disc_number
-    Config.configuration.ask_for_tv_episode
   end
 end

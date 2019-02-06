@@ -1,7 +1,6 @@
 class Notification
   extend BashHelper
-  extend GemInstaller
-  install 'slack-notifier'
+  GemInstaller.install 'slack-notifier'
   require 'slack-notifier'
 
   def self.send_text(message)
