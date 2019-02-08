@@ -1,18 +1,126 @@
 class FileChecker
-  def self.perform
-    file_checker = FileChecker.new
-    return if file_checker.media_directory_path_exist?
+  Videos = Struct.new(:movies, :tv_shows)
+  TV_SHOW_PATTERN_ONE = /\A(?<name>.*)\s\-\ss(?<season>\d\d)e(?<episode>\d\d)/.freeze
+  TV_SHOW_PATTERN_TWO = /\A(?<name>.*)\ss(?<season>\d\d)e(?<episode>\d\d)/.freeze
+  TV_SHOW_PATTERN_THREE = /\A(?<name>.*)\-s(?<season>\d\d)e(?<episode>\d\d)/.freeze
 
-    Logger.error(
-      "File path #{Config.configuration.file_path.inspect}"\
-      ' does not exist. Use --media-folder [Folder] to change'
-    )
-    abort
+  class << self
+    def perform
+      file_checker = FileChecker.new
+      file_checker.ask_for_media_directory
+      file_checker.load_videos
+    end
+  end
+
+  def ask_for_media_directory
+    until media_directory_path_exist?
+      Config.configuration.media_directory_path = Shell.ask_value_required(
+        "Could not find #{Config.configuration.media_directory_path}"\
+        ' please use a different folder/directory: ', type: String
+      )
+    end
+  end
+
+  def media_directory_path_exist?
+    File.exist?(Config.configuration.media_directory_path)
+  end
+
+  def load_videos
+    videos = all_videos
+    videos.movies.each do |movie_path|
+      movie = parse_movie_mkv_path(movie_path)
+      begin
+        Config.configuration.videos.add_movie(movie)
+      rescue Model::Validation => exception
+        Logger.error("#{exception.message} #{movie_path} #{movie}")
+      end
+    end
+    videos.tv_shows.each do |tv_show_path|
+      tv_show = parse_tv_show_mkv_path(tv_show_path)
+      begin
+        Config.configuration.videos.add_tv_show(tv_show)
+      rescue Model::Validation => exception
+        Logger.error("#{exception.message} #{tv_show_path} #{tv_show}")
+      end
+    end
   end
 
   private
 
-  def media_directory_path_exist?
-    File.exist?(Config.configuration.media_directory_path)
+  def all_videos
+    threads = []
+    movies = []
+    tv_shows = []
+    threads << Thread.new do
+      tv_shows = Dir[
+        File.join(
+          Config.configuration.media_directory_path,
+          Config.configuration.tv_shows_directory_name,
+          '**', '*.mkv'
+        )
+      ]
+    end
+    threads << Thread.new do
+      movies = Dir[
+        File.join(
+          Config.configuration.media_directory_path,
+          Config.configuration.movies_directory_name,
+          '**', '*.mkv'
+        )
+      ]
+    end
+    threads.each(&:join)
+    Videos.new(movies, tv_shows)
+  end
+
+  def parse_tv_show_mkv_path(mkv_path)
+    name = get_name_from_path(mkv_path, Config.configuration.tv_shows_directory_name)
+    match = match_tv_show(mkv_path)
+    season = 0
+    episode = 0
+    if match
+      warn_about_naming_issues(mkv_path, name, match[:name])
+      season = match[:season].to_i
+      episode = match[:episode].to_i
+    end
+    {
+      title: name,
+      season: season,
+      episode: episode,
+    }
+  end
+
+  def parse_movie_mkv_path(mkv_path)
+    file_name = File.basename(mkv_path, '.mkv').strip
+    name = get_name_from_path(mkv_path, Config.configuration.movies_directory_name)
+    warn_about_naming_issues(mkv_path, name, file_name)
+    { name: name }
+  end
+
+  # This get the Name of the movie or folder that the movies are in.
+  # mkv_path should be the absolute path of where the mvk video is
+  # directory_name should be "TV Shows" or "Movies". But that can be custom
+  # depending on the user settings
+  def get_name_from_path(mkv_path, directory_name)
+    name_path = mkv_path.split(directory_name).last
+    name_path.split('/').reject { |x| x == '' }.first.strip
+  end
+
+  def warn_about_naming_issues(mkv_path, name_one, name_two)
+    return if name_one.strip == name_two.strip
+
+    Logger.warning(
+      "#{mkv_path} expected to match but does not Please fix "\
+      "#{name_one.inspect} != #{name_two.inspect}. Going to use #{name_one}",
+      delayed: true
+    )
+  end
+
+  def match_tv_show(mkv_path)
+    basename = File.basename(mkv_path, '.mkv')
+    [TV_SHOW_PATTERN_ONE, TV_SHOW_PATTERN_TWO, TV_SHOW_PATTERN_THREE].each do |pattern|
+      match = basename.match(pattern)
+      return match if match
+    end
   end
 end

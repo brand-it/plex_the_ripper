@@ -1,5 +1,4 @@
 module TVShowsCleaner
-  include BashHelper
   include HumanizerHelper
 
   def rename_seasons(folder_path)
@@ -9,19 +8,13 @@ module TVShowsCleaner
     episodes_list.each do |episode|
       season = format('%02d', Config.configuration.tv_season)
       episode_number = format('%02d', Config.configuration.episode)
-      episode_name = "#{Config.configuration.movie_name} "\
+      episode_name = "#{Config.configuration.video_name} "\
                      "- s#{season}e#{episode_number}.mkv"
       old_name = File.join([folder_path, episode])
       new_name = File.join([folder_path, episode_name])
       File.rename(old_name, new_name)
       Config.configuration.episode += 1
     end
-  end
-
-  def ask_if_total_number_of_episodes
-    return if Config.configuration.type != :tv
-
-    Config.configuration.total_episodes = ask_value_required('How many episodes are should there be? ', type: Integer)
   end
 
   def delete_extra_episodes(folder_path)
@@ -35,7 +28,8 @@ module TVShowsCleaner
     if Config.configuration.total_episodes > episodes_list.size
       return Logger.warning(
         'Well this is bummer, it seams there are less episodes than what you where expected.'\
-        " You expected there to be about (#{Config.configuration.total_episodes} > #{episodes_list.size}) more episode(s)."
+        ' You expected there to be about '\
+        "(#{Config.configuration.total_episodes} > #{episodes_list.size}) more episode(s)."
       )
     end
     sort_episodes_magically!(folder_path, episodes_list)
@@ -48,7 +42,7 @@ module TVShowsCleaner
         "Issue Deleting File #{episode}",
         "Failed to delete #{File.join([folder_path, episode])} please destroy file by hand"
       )
-      show_wait_spinner(
+      Shell.show_wait_spinner(
         "Failed to delete #{File.join([folder_path, episode])} please destroy file by hand"
       ) do
         File.exist?(File.join([folder_path, episode])) # if file exists keep waiting
@@ -81,7 +75,7 @@ module TVShowsCleaner
     end
   end
 
-  def file_size_range(folder_path, episodes_list) # rubocop:disable Metrics/AbcSize
+  def file_size_range(folder_path, episodes_list)
     details = files_details(folder_path, episodes_list)
     details[:file_sizes].sort! do |a, b|
       (a - details[:mean]).abs <=> (b - details[:mean]).abs

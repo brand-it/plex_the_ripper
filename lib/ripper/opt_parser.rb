@@ -4,8 +4,8 @@ require 'ostruct'
 require 'pp'
 
 class OptParser
-  def self.parse(args)
-    opt_parser = OptionParser.new do |opts|
+  def self.parse(args) # rubocop:disable AbcSize, MethodLength, CyclomaticComplexity
+    opt_parser = OptionParser.new do |opts| # rubocop:disable Metrics/BlockLength
       opts.banner = 'Usage: rip [options]'
 
       opts.separator ''
@@ -13,7 +13,8 @@ class OptParser
       opts.on(
         '-i', '--include-extras',
         'All other titles that are not the main movie will be added to the "Behind The Scenes" '\
-         'folder so plex can watch them. This will set the --min-length to zero unless --min-length option is used'
+         'folder so plex can watch them. This will set the --min-length "\
+         "to zero unless --min-length option is used'
       ) do
         Config.configuration.minlength
         Config.configuration.include_extras = true
@@ -40,23 +41,29 @@ class OptParser
 
       opts.on(
         '-l', '--min-length [SECONDS]', Integer,
-        "The minimum amount of time that a video length should be. Exlude anything less than (#{Config.configuration.minlength.inspect}) seconds"
+        'The minimum amount of time that a video length should be. Exlude '\
+        "anything less than (#{Config.configuration.minlength.inspect}) seconds"
       ) do |value|
         Config.configuration.minlength = value
       end
 
       opts.on(
         '-x', '--max-length [SECONDS]', Integer,
-        "The max amount of time that a video length should be. Anything less than will not be copied (#{Config.configuration.maxlength.inspect})"
+        'The max amount of time that a video length should be. Anything less '\
+        "than will not be copied (#{Config.configuration.maxlength.inspect})"
       ) do |value|
         Config.configuration.maxlength = value
       end
 
-      opts.on('-s', '--tv-season [NUMBER]', Integer, 'Provide the season number if TV show') do |value|
+      opts.on(
+        '-s', '--tv-season [NUMBER]', Integer, 'Provide the season number if TV show'
+      ) do |value|
         Config.configuration.tv_season = value
       end
 
-      opts.on('-t', '--type [TYPE]', %i[tv movie], 'Set the type disc type (tv, movie)') do |type|
+      opts.on(
+        '-t', '--type [TYPE]', %i[tv movie], 'Set the type disc type (tv, movie)'
+      ) do |type|
         Logger.warning('Could not resolve your type default is :movie') if type.nil?
         Config.configuration.type = type || :movie
       end
@@ -74,7 +81,7 @@ class OptParser
         '-m', '--movie-name [NAME]',
         'Name of the movie or TV show'
       ) do |value|
-        Config.configuration.movie_name = value
+        Config.configuration.video_name = value
       end
 
       opts.on(

@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require File.expand_path('../lib/base', __dir__).to_s
+require File.expand_path('../lib/ripper', __dir__).to_s
 
 begin
   OptParser.parse(ARGV)
@@ -7,7 +7,7 @@ begin
   # Config.configuration.movies.update_movies
   # Logger.info "Local: #{Config.configuration.movies.local_movies}"
   # Logger.info "Server: #{Config.configuration.movies.server_movies}"
-  Ripper.start
+  Ripper.perform
 rescue Interrupt
   Logger.info("\nThanks for using us have a wonderful day")
 end

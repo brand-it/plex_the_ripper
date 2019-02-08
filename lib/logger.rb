@@ -37,30 +37,34 @@ class Logger
       end
     end
 
-    def info(message, rewrite: false)
+    def info(message, rewrite: false, delayed: false)
       log(message)
-      if rewrite && !Config.configuration.verbose
-        print "#{message}\r"
+      if delayed
+        Shell.store_info(message)
+      elsif rewrite && !Config.configuration.verbose
+        Shell.print "#{message}\r"
         $stdout.flush
       else
-        puts message
+        Shell.puts message
       end
     end
 
-    def debug(message)
-      info "\033[0;36m#{message}\033[0m" if Config.configuration.verbose
+    def debug(message, delayed: false)
+      return unless Config.configuration.verbose
+
+      info "\033[0;36m#{message}\033[0m", delayed: delayed
     end
 
-    def success(message)
-      info "\033[1;32m#{message}\033[0m"
+    def success(message, delayed: false)
+      info "\033[1;32m#{message}\033[0m", delayed: delayed
     end
 
-    def error(message)
-      info "\033[0;31m#{message}\033[0m"
+    def error(message, delayed: false)
+      info "\033[0;31m#{message}\033[0m", delayed: delayed
     end
 
-    def warning(message, rewrite: false)
-      info "\033[0;33m#{message}\033[0m", rewrite: rewrite
+    def warning(message, rewrite: false, delayed: false)
+      info "\033[0;33m#{message}\033[0m", rewrite: rewrite, delayed: delayed
     end
 
     private

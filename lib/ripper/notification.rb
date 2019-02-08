@@ -1,8 +1,4 @@
 class Notification
-  extend BashHelper
-  GemInstaller.install 'slack-notifier'
-  require 'slack-notifier'
-
   def self.send_text(message)
     auth_token = '5e695829e7cfcd79d45c3b437354c463'
     user_id = 'AC9af401e21f31056f078a1dbc59b59852'
@@ -13,7 +9,7 @@ class Notification
       "--data-urlencode 'Body=#{message}'",
       "-u #{user_id}:#{auth_token}"
     ]
-    system!(
+    Shell.system!(
       "curl 'https://api.twilio.com/2010-04-01/"\
       "Accounts/#{user_id}/Messages.json'"\
       " #{params.join(' ')}"

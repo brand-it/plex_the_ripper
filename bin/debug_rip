@@ -6,56 +6,8 @@ begin
 rescue LoadError => exception
   Logger.error exception.message
 end
-include TimeHelper
-include TVShowsCleaner
+
 OptParser.parse(ARGV)
 Logger.debug(Config.configuration.inspect)
 
-# movies = Movies.new
-# movies.update_movies
-# movies.find_movie(name: 'Stargate SG-1', season: 'season_2')
-# Ripper.ask_questions
-# Ripper.log_tv_info
-# Ripper.which_disc?
-# make_mkv = MakeMKVCon.new
-# Ripper.upload(Config.configuration.selected_disc_info, make_mkv)
-# binding.pry
-# username, host = Config.configuration.scp_info.split('@')
-# ask_if_total_number_of_episodes('/Volumes/Multimedia/TV Shows/Game of Thrones/season_1/disc_1')
-# Net::SCP.upload!(host, username, a, b, ssh: { password: 'X8B,}Bghz9C}byu73' },recursive: true) do |_ch, _name, sent, total|
-#   Logger.log "#{movie_name}: #{sent}/#{total}"
-# end
-# Config.configuration.selected_disc_info.dev = '/dev/disk4'
-make = MakeMKVCon.new
-
-# command = [
-#   Config.configuration.makemkvcon_path,
-#   'info',
-#   "dev:#{Config.configuration.selected_disc_info.dev}",
-#   '--noscan',
-#   "--minlength=#{Config.configuration.minlength}"
-# ].join(' ')
-# Logger.info(system!(command).stdout_str)
-# Logger.warning('There was more then one movie found. Please Select one of the title above')
-upload_path = Config.configuration.upload_path
-rip_path = '/Users/newdark/Movies/tmp_movies/Van\ Helsing'
-username, host = Config.configuration.scp_info.split('@')
-# Net::SCP.start(host, username, password: Config.configuration.ssh_password) do |scp|
-#   ripped_files = Dir[rip_path + '/*']
-#   ripped_files.each do |ripped_file|
-#     Logger.info "Uploading #{ripped_file} to #{Config.configuration.scp_info}"
-#     scp.upload!(ripped_file, ripped_file.gsub(rip_path, upload_path))
-#   end
-# end
-
 binding.pry
-# title_number = ask_value_required(
-#   'Which one do you want to keep?(Title Number) ',
-#   type: Integer
-# )
-# mkv_files.each_with_index do |file, index|
-#   next if index == title_number
-#   Logger.warning("Deleteing #{file}")
-#   FileUtils.rm_rf(File.join(rip_path(safe: false), file))
-# end
-# rename_movies

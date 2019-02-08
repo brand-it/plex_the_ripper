@@ -7,9 +7,7 @@ class MakeBackup
 
   def backup_disk
     while running
-      if Config.configuration.selected_disc_info
-        Config.configuration.selected_disc_info.reload
-      end
+      Config.configuration.selected_disc_info.reload if Config.configuration.selected_disc_info
       which_disc?
     end
   end
