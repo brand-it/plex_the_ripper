@@ -15,12 +15,8 @@ class DiscSelector
   end
 
   def wait_for_discs_to_be_present
-    while DiscInfo.list_discs.empty?
-      Logger.warning(
-        'Could not find any disc currently inserted. Please insert a disc.',
-        rewrite: true
-      )
-      sleep(1)
+    Shell.show_wait_spinner('Could not find any disc currently inserted. Please insert a disc.') do
+      DiscInfo.list_discs.empty?
     end
   end
 

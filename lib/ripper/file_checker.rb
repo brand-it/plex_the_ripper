@@ -6,6 +6,8 @@ class FileChecker
 
   class << self
     def perform
+      return if Config.configuration.videos.any?
+
       file_checker = FileChecker.new
       file_checker.ask_for_media_directory
       file_checker.load_videos

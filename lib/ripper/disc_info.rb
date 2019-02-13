@@ -1,4 +1,15 @@
 class DiscInfo
+  include ArrayHelper
+  Detail = Struct.new(:name, :integer_one, :integer_two, :titles) do
+    include ArrayHelper
+
+    def titles_as_ranges
+      return @titles_as_ranges if @titles_as_ranges
+
+      @titles_as_ranges = ranges_from_integers(titles.to_a)
+    end
+  end
+
   attr_accessor(
     :content, :device_identifier, :mount_point,
     :size, :volume_name, :ejected
@@ -43,6 +54,17 @@ class DiscInfo
     "/dev/#{device_identifier}"
   end
 
+  def consolidated_details
+    return @consolidated_details if @consolidated_details
+
+    @consolidated_details = {}
+    details.each do |detail|
+      @consolidated_details[detail.titles_as_ranges.first] ||= []
+      @consolidated_details[detail.titles_as_ranges.first].push(detail)
+    end
+    @consolidated_details
+  end
+
   def details
     return @details if @details
 
@@ -68,7 +90,7 @@ class DiscInfo
 
     @titles = Set.new
     details.each do |detail|
-      @titles.merge(detail[:titles])
+      @titles.merge(detail.titles)
     end
     @titles
   end
@@ -108,45 +130,45 @@ class DiscInfo
 
   def parse_disk_info_string(disk_info_string)
     lines = disk_info_string.split("\n")
-    groups = []
+    details = []
     lines.each do |line|
       match = line.delete('"').match(/(\A.*?):(.*)/)
       values = match[2].split(',')
       case match[1]
       when 'TINFO'
-        dup_group = groups.find do |group|
-          group[:string] == values[3] && group[:integer_one] == values[1].to_i
+        dup_detail = details.find do |detail|
+          detail.name == values[3] && detail.integer_one == values[1].to_i
         end
-        if dup_group
-          dup_group[:titles].add(values[0].to_i)
+        if dup_detail
+          dup_detail.titles.add(values[0].to_i)
         else
-          groups << {
-            integer_one: values[1].to_i,
-            integer_two: values[2].to_i,
-            string: values[3].to_s,
-            titles: Set[values[0].to_i]
-          }
+          details << Detail.new(
+            values[3].to_s,
+            values[1].to_i,
+            values[2].to_i,
+            Set[values[0].to_i],
+          )
         end
       when 'SINFO'
-        dup_group = groups.find do |group|
-          group[:string] == values[4].to_s
+        dup_detail = details.find do |detail|
+          detail.name == values[4].to_s
         end
-        if dup_group
-          dup_group[:titles].add(values[0].to_i)
+        if dup_detail
+          dup_detail.titles.add(values[0].to_i)
         else
-          groups << {
-            integer_one: values[2].to_i,
-            integer_two: values[3].to_i,
-            string: values[4].to_s,
-            titles: Set[values[0].to_i]
-          }
+          details << Detail.new(
+            values[4].to_s,
+            values[2].to_i,
+            values[3].to_i,
+            Set[values[0].to_i]
+          )
         end
       end
     end
-    if groups.size.zero?
+    if details.size.zero?
       Logger.error('No disk information found', delayed: true)
       Logger.error(disk_info_string, delayed: true)
     end
-    groups
+    details
   end
 end

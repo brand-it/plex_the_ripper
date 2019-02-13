@@ -3,6 +3,8 @@ require File.expand_path('base', __dir__).to_s
 class Ripper
   extend TimeHelper
   extend HumanizerHelper
+  class Abort < Interrupt; end
+
   class << self
     def perform
       threads = []
@@ -10,12 +12,19 @@ class Ripper
       threads << Thread.new { FileChecker.perform }
       threads << Thread.new { LoadDiscDetails.perform }
       threads << Thread.new do
-        AskForMovieDetails.perform
+        AskForMovieDetails.perform(threads[1])
         AskForTVDetails.perform(threads[1])
       end
       threads.each(&:join)
-      
       Shell.puts_buffer
+      DuplicateChecker.perform
+      CreateMKV::Movie.perform
+      Config.configuration.reset!
+      Ripper.perform
+    rescue Ripper::Abort => exception
+      Logger.warning(exception.message)
+      Config.configuration.reset!
+      Ripper.perform
     end
 
     def rip_disk
@@ -23,11 +32,6 @@ class Ripper
     end
 
     def process
-      if Config.configuration.mkv_from_file.to_s == ''
-        Shell.show_wait_spinner('Waiting for disc to be inserted') do
-          !Config.configuration.selected_disc_info.disc_present?
-        end
-      end
       make_mkv = create_mkv
       if make_mkv.success?
         Logger.info(

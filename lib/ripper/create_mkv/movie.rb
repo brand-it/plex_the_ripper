@@ -1,260 +1,72 @@
 class CreateMKV
   class Movie < Base
-    include TimeHelper
-    include TVShowsCleaner
-    include HumanizerHelper
-    attr_reader :run_time, :title_numbers
-
-    def perform; end
-  end
-
-  def create_mkv
-    check_for_multiple_movies
-    resolve_tv_data
-    started_at = Time.now
-    title_numbers.each do |title_number|
-      break unless success?
-
-      execute(title_number)
-    end
-    copy_extras
-    @run_time = Time.now - started_at
-    done
-  end
-
-  def copy_extras
-    return if Config.configuration.include_extras == false
-
-    all_titles = get_all_titles
-    all_titles.each do |title_number|
-      next if title_numbers.include?(title_number)
-
-      execute(title_number, sub_directory: 'Behind The Scenes')
-    end
-  end
-
-  def execute(title_number, sub_directory: nil)
-    command = command(title_number: title_number, sub_directory: sub_directory)
-    Logger.debug(command)
-    status = execute_system!(command)
-    if status.success? && Dir[rip_path + '/*'].any?
-      @success = true
-    else
-      failed(title_number)
-    end
-  end
-
-  def success?
-    @success != false
-  end
-
-  def delete_rip_path!
-    Logger.debug("delete_rip_path! #{rip_path(safe: false)}")
-    FileUtils.rm_rf(rip_path(safe: false))
-  end
-
-  def rip_path(safe: true, create_directory: false, sub_directory: nil)
-    path = sub_directory ? @rip_path + [sub_directory] : @rip_path
-    Logger.debug(path)
-    create_path(path) if create_directory
-    if safe
-      Shellwords.escape(File.join(path))
-    else
-      File.join(path)
-    end
-  end
-
-  def size
-    size = 0
-    mkv_files.each do |file|
-      path = File.join([rip_path(safe: false), file])
-      size += File.size(path)
-    end
-    size
-  end
-
-  private
-
-  def mkv_files
-    Dir.entries(rip_path(safe: false)).reject do |movie|
-      movie == '..' || movie == '.'
-    end
-  end
-
-  def rename_movies
-    return unless Config.configuration.type == :movie
-
-    movies = mkv_files
-    movies.sort!
-    movies.each_with_index do |movie, index|
-      number = format('%02d', index)
-      movie_name = if movies.size > 1
-                     "#{Config.configuration.video_name} - #{number}.mkv"
-                   else
-                     "#{Config.configuration.video_name}.mkv"
-                   end
-      old_name = File.join([rip_path(safe: false), movie])
-      new_name = File.join([rip_path(safe: false), movie_name])
-      File.rename(old_name, new_name)
-    end
-  end
-
-  def create_path(path)
-    path = File.join(path)
-    return if File.exist?(path)
-
-    Logger.warning("Creating file path #{path}")
-    FileUtils.mkdir_p(path)
-  end
-
-  def already_ripped?
-    Config.configuration.movies.movie_present?(
-      name: Config.configuration.video_name
+    DIRECTORY = File.join(
+      Config.configuration.media_directory_path,
+      Config.configuration.movies_directory_name
     )
-  end
 
-  def command(title_number: nil, sub_directory: nil)
-    [
-      Config.configuration.makemkvcon_path,
-      'mkv',
-      disk_source,
-      (title_number || 'all'),
-      rip_path(create_directory: true, sub_directory: sub_directory),
-      "--minlength=#{Config.configuration.minlength}",
-      '--progress=-same',
-      '--noscan',
-      '--robot',
-      '--profile="FLAC"'
-    ].join(' ')
-  end
+    class << self
+      def perform
+        return if Config.configuration.type != :movie
 
-  def backup_command
-    [
-      Config.configuration.makemkvcon_path,
-      'backup',
-      disk_source,
-      Config.configuration.make_backup_path
-    ].join(' ')
-  end
-
-  def done
-    return unless success?
-
-    delete_extra_episodes(rip_path(safe: false))
-    rename_seasons(rip_path(safe: false))
-    rename_movies
-    Notification.slack(
-      "Finished ripping #{humanize_disk_info}",
-      "It took a total of #{human_seconds(run_time)} to rip #{Config.configuration.video_name}",
-      message_color: 'green'
-    )
-  end
-
-  def failed(title_number)
-    Logger.error(
-      "Could not rip file #{Config.configuration.video_name} #{command(title_number: title_number)}"
-    )
-    Notification.slack(
-      "Failed ripping #{humanize_disk_info}",
-      "There was a issue making a copy of #{Config.configuration.video_name}",
-      message_color: 'red'
-    )
-    @success = false
-  end
-
-  def resolve_tv_data
-    return if Config.configuration.type != :tv
-
-    disk_info = get_disk_info
-    track_times = parse_title_times(disk_info)
-    if Config.configuration.maxlength
-      track_times.reject! { |disk| disk[:seconds] > Config.configuration.maxlength }
-    end
-    @title_numbers = track_times.collect { |x| x[:titles].to_a }.flatten.uniq
-  end
-
-  def check_for_multiple_movies
-    return if Config.configuration.type == :tv
-
-    Config.configuration.movies.update_movies
-    all_titles = get_all_titles
-    if all_titles.size == 1
-      @title_numbers = [all_titles.first]
-    elsif all_titles.size > 1
-      Logger.warning('There was more then one movie found. Please Select one of the title above')
-      @title_numbers = [Shell.ask_value_required(
-        'Which one do you want to keep?(Title Number) ',
-        type: Integer
-      )]
-    else
-      Logger.warning 'Well this sucks I got zero titles for this disk'
-      Logger.warning all_titles.inspect
-      Logger.warning get_disk_info.inspect
-    end
-  end
-
-  def get_all_titles
-    disk_info = get_disk_info
-    all_titles = Set[]
-    groups = disk_info.group_by { |x| x[:titles].to_a }
-    groups.each do |group, hash_details|
-      all_titles.merge!(group)
-      Logger.info "Title: #{group}"
-      hash_details.each do |hash|
-        Logger.info "  #{hash[:string]}"
+        movie = CreateMKV::Movie.new
+        movie.start!
+        movie.create_mkv
+        movie.rename_movies
+        movie.finished!
+        movie.notify_slack_success
       end
     end
-    all_titles
-  end
 
-  def parse_title_times(disk_info)
-    track_times = disk_info.select do |disk|
-      disk[:integer_two] == 0 && disk[:string].match(/[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}/)
+    def create_mkv
+      status = mkv_system!(title: Config.configuration.movie_title)
+      process_status!(status)
     end
-    track_times.each do |disk|
-      hours, minutes, seconds = disk[:string].split(':').map(&:to_i)
-      minutes += (hours * 60)
-      seconds += (minutes * 60)
-      disk[:seconds] = seconds
+
+    def rename_movies
+      mkv_files.sort.each_with_index do |movie, index|
+        number = format('%02d', index)
+        movie_name = if movies.size > 1
+                      "#{Config.configuration.video_name} - #{number}.mkv"
+                    else
+                      "#{Config.configuration.video_name}.mkv"
+                    end
+        old_name = File.join([rip_path(safe: false), movie])
+        new_name = File.join([rip_path(safe: false), movie_name])
+        File.rename(old_name, new_name)
+      end
     end
-    track_times
-  end
 
-  def execute_system!(_command)
-    semaphore = Mutex.new
-    progressbar = ProgressBar.create(format: '%e |%b>>%i| %p%% %t')
-    current_progress = 0
-    current_title = nil
-    max = 0
-    type = ''
-    values = ''
+    def check_for_multiple_movies
+      return if Config.configuration.type == :tv
 
-    Open3.popen2e(
-      {}, command(title_number: title_number, sub_directory: sub_directory)
-    ) do |stdin, std_out_err, wait_thr|
-      stdin.close
-      Thread.new do
-        while raw_line = std_out_err.gets # rubocop:disable Lint/AssignmentInCondition
-          Logger.debug(raw_line.strip)
-          semaphore.synchronize do
-            type, values = raw_line.strip.split(':')
-            if type == 'PRGV'
-              _current, progress, max = values.split(',').map(&:to_i)
-              progressbar.total = max if max != progressbar.total
-              progressbar.progress += (progress - current_progress)
-              current_progress = progress
-            elsif type == 'PRGC' && current_title != values.split(',').last.strip
-              current_title = values.split(',').last.strip
-              progressbar.finish
-              progressbar.reset
-              progressbar.title = current_title
-              progressbar.start
-            end
-          end
+      if all_titles.size == 1
+        @titles = [all_titles.first]
+      elsif all_titles.size > 1
+        Logger.warning('There was more then one movie found. Please Select one of the title above')
+        @title_numbers = [Shell.ask_value_required(
+          'Which one do you want to keep?(Title Number) ',
+          type: Integer
+        )]
+      else
+        Logger.warning 'Well this sucks I got zero titles for this disk'
+        Logger.warning all_titles.inspect
+        Logger.warning get_disk_info.inspect
+      end
+    end
+
+    def get_all_titles
+      disk_info = get_disk_info
+      all_titles = Set[]
+      groups = disk_info.group_by { |x| x[:titles].to_a }
+      groups.each do |group, hash_details|
+        all_titles.merge!(group)
+        Logger.info "Title: #{group}"
+        hash_details.each do |hash|
+          Logger.info "  #{hash[:string]}"
         end
-        progressbar.finish
-      end.join
-      wait_thr.value
+      end
+      all_titles
     end
   end
 end

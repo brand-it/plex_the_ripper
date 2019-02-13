@@ -18,15 +18,19 @@ Dir[
 end
 Dir[
   File.expand_path('ripper/', __dir__) + '/*.rb'
-].each do |helpers|
-  require helpers
+].each do |lib|
+  require lib
 end
 require File.expand_path('ripper/model/model', __dir__)
 Dir[
   File.expand_path('ripper/model/', __dir__) + '/*.rb'
-].each do |helpers|
-  require helpers
+].each do |model|
+  require model
 end
+
+require File.expand_path('ripper/create_mkv/base', __dir__)
+require File.expand_path('ripper/create_mkv/movie', __dir__)
+require File.expand_path('ripper/create_mkv/tv', __dir__)
 
 require 'nokogiri'
 require 'set'

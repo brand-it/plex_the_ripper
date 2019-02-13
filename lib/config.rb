@@ -1,11 +1,12 @@
 # Configuration Information for the ripper application
 class Config
   attr_accessor(
-    :verbose, :type, :upload_path, :tv_season,
+    :verbose, :type, :tv_season,
     :video_name, :disc_number, :episode, :selected_disc_info,
     :total_episodes, :maxlength, :include_extras,
     :mkv_from_file, :make_backup_path, :makemkvcon_path,
-    :tv_shows_directory_name, :movies_directory_name, :parent_process_pid
+    :tv_shows_directory_name, :movies_directory_name,
+    :movie_title
   )
   attr_writer(:minlength)
   attr_reader(:media_directory_path)
@@ -23,7 +24,6 @@ class Config
     )
     self.mkv_from_file = nil
     self.make_backup_path = nil
-    self.upload_path = '/share/CE_CACHEDEV1_DATA/Multimedia'
     self.media_directory_path = File.join(%w[/ Volumes Multimedia])
     self.verbose = false
     self.tv_season = 1
@@ -38,7 +38,7 @@ class Config
     self.include_extras = false
     self.tv_shows_directory_name = 'TV Shows'
     self.movies_directory_name = 'Movies'
-    self.parent_process_pid = Process.pid
+    self.movie_title = nil
   end
 
   def videos
@@ -78,5 +78,11 @@ class Config
   def media_directory_path=(value)
     @log_directory = nil
     @media_directory_path = File.join(File.expand_path(value))
+  end
+
+  def reset!
+    self.video_name = nil
+    self.total_episodes = 0
+    self.selected_disc_info = nil
   end
 end

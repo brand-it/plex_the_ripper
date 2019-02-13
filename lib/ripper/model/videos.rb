@@ -35,4 +35,8 @@ class Videos < Model
     season.add_episode(episode)
     tv_show
   end
+
+  def any?
+    movies.any? || tv_shows.any?
+  end
 end
