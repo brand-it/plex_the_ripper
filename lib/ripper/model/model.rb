@@ -22,6 +22,7 @@ module ModelMixin
           if column_presence_required?(name) && (value.nil? || value == '')
             raise(Model::Validation, "#{name} can't be blank for #{self.class.name}.")
           end
+
           instance_variable_set("@#{name}", value)
         end
       end
@@ -33,7 +34,7 @@ module ModelMixin
       value
     end
 
-    def cast_type(type, value)
+    def cast_type(type, value) # rubocop:disable CyclomaticComplexity
       case type.to_s
       when 'Integer'
         value.to_i if value

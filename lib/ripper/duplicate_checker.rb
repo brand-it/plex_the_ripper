@@ -20,6 +20,7 @@ class DuplicateChecker
 
   def ask_if_you_want_to_overwrite_tv_show
     return if Config.configuration.type != :tv
+
     name = [
       Config.configuration.tv_shows_directory_name,
       Config.configuration.video_name,

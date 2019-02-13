@@ -1,6 +1,5 @@
 class CreateMKV
   class TV < Base
-
     class << self
       def perform
         raise "define peform on #{self.class.name}"
@@ -68,11 +67,13 @@ class CreateMKV
       end
     end
 
-    def file_size_range
+    def file_size_range # rubocop:disable AbcSize
       files_details[:file_sizes].sort! do |a, b|
         (a - files_details[:mean]).abs <=> (b - files_details[:mean]).abs
       end
-      files_details[:file_sizes] = files_details[:file_sizes][0..(Config.configuration.total_episodes - 1)]
+      files_details[:file_sizes] = files_details[:file_sizes][
+        0..(Config.configuration.total_episodes - 1)
+      ]
       Range.new(files_details[:file_sizes].min, files_details[:file_sizes].max)
     end
 
@@ -108,7 +109,6 @@ class CreateMKV
     end
 
     def tv_titles
-
       disk_info = get_disk_info
       track_times = parse_title_times(disk_info)
       if Config.configuration.maxlength
@@ -117,14 +117,11 @@ class CreateMKV
       @title_numbers = track_times.collect { |x| x[:titles].to_a }.flatten.uniq
     end
 
-
     def parse_title_times(disk_info)
-
       Config.configuration.selected_disc_info.details do |detail|
-        
       end
       track_times = disk_info.select do |disk|
-        disk[:integer_two] == 0 && disk[:string].match(/[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}/)
+        disk[:integer_two].zero? && disk[:string].match(/[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}/)
       end
       track_times.each do |disk|
         hours, minutes, seconds = disk[:string].split(':').map(&:to_i)

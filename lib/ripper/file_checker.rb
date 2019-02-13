@@ -9,22 +9,8 @@ class FileChecker
       return if Config.configuration.videos.any?
 
       file_checker = FileChecker.new
-      file_checker.ask_for_media_directory
       file_checker.load_videos
     end
-  end
-
-  def ask_for_media_directory
-    until media_directory_path_exist?
-      Config.configuration.media_directory_path = Shell.ask_value_required(
-        "Could not find #{Config.configuration.media_directory_path}"\
-        ' please use a different folder/directory: ', type: String
-      )
-    end
-  end
-
-  def media_directory_path_exist?
-    File.exist?(Config.configuration.media_directory_path)
   end
 
   def load_videos
@@ -88,7 +74,7 @@ class FileChecker
     {
       title: name,
       season: season,
-      episode: episode,
+      episode: episode
     }
   end
 

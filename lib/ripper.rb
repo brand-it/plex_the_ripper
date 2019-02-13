@@ -3,12 +3,13 @@ require File.expand_path('base', __dir__).to_s
 class Ripper
   extend TimeHelper
   extend HumanizerHelper
-  class Abort < Interrupt; end
+  class Abort < RuntimeError; end
 
   class << self
     def perform
       threads = []
       DiscSelector.perform
+      FilePathBuilder.perform
       threads << Thread.new { FileChecker.perform }
       threads << Thread.new { LoadDiscDetails.perform }
       threads << Thread.new do

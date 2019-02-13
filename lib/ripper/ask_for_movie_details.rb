@@ -29,10 +29,9 @@ class AskForMovieDetails
       Logger.info "  #{details.map(&:name).join(', ')}"
     end
     config.movie_title = Shell.ask_value_required(
-      "Many Titles where found please type in a number: ", type: Integer
+      'Many Titles where found please type in a number: ', type: Integer
     )
   end
-
 
   def puts_movie_name
     Logger.info(
@@ -50,9 +49,7 @@ class AskForMovieDetails
     config.video_name = Shell.ask_value_required(
       "What is the Name of this #{config.type}: ", type: String
     ) do
-      if config.selected_disc_info
-        Logger.info(config.selected_disc_info.reload.describe)
-      end
+      Logger.info(config.selected_disc_info.reload.describe) if config.selected_disc_info
     end
   end
 end

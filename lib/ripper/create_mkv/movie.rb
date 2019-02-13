@@ -27,10 +27,10 @@ class CreateMKV
       mkv_files.sort.each_with_index do |movie, index|
         number = format('%02d', index)
         movie_name = if movies.size > 1
-                      "#{Config.configuration.video_name} - #{number}.mkv"
-                    else
-                      "#{Config.configuration.video_name}.mkv"
-                    end
+                       "#{Config.configuration.video_name} - #{number}.mkv"
+                     else
+                       "#{Config.configuration.video_name}.mkv"
+                     end
         old_name = File.join([rip_path(safe: false), movie])
         new_name = File.join([rip_path(safe: false), movie_name])
         File.rename(old_name, new_name)
@@ -53,20 +53,6 @@ class CreateMKV
         Logger.warning all_titles.inspect
         Logger.warning get_disk_info.inspect
       end
-    end
-
-    def get_all_titles
-      disk_info = get_disk_info
-      all_titles = Set[]
-      groups = disk_info.group_by { |x| x[:titles].to_a }
-      groups.each do |group, hash_details|
-        all_titles.merge!(group)
-        Logger.info "Title: #{group}"
-        hash_details.each do |hash|
-          Logger.info "  #{hash[:string]}"
-        end
-      end
-      all_titles
     end
   end
 end

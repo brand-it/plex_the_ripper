@@ -40,7 +40,7 @@ class Logger
     def info(message, rewrite: false, delayed: false)
       log(message)
       if delayed
-        Shell.store_info(message)
+        Shell.store_info(message + "\n")
       elsif rewrite && !Config.configuration.verbose
         Shell.print "#{message}\r"
         $stdout.flush

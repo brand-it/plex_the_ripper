@@ -8,7 +8,7 @@ class CreateMKV
       self.started_at = nil
       self.completed_at = nil
       self.status = 'ready'
-      self.directory = FilePathBuilder.path.to_s
+      self.directory = FilePathBuilder.path
       create_directory_path
     end
 
@@ -76,16 +76,17 @@ class CreateMKV
 
     def run_time
       return 0 if started_at.nil? || completed_at.nil?
+
       started_at - completed_at
     end
 
     def mkv(title: 'all')
       [
-        Config.configuration.makemkvcon_path,
+        Shellwords.escape(Config.configuration.makemkvcon_path),
         'mkv',
         Config.configuration.disk_source,
         title,
-        directory,
+        Shellwords.escape(directory),
         "--minlength=#{Config.configuration.minlength}",
         '--progress=-same',
         '--noscan',
@@ -114,7 +115,9 @@ class CreateMKV
               type, values = raw_line.strip.split(':')
               if type == 'PRGV'
                 _current, progress, max_progress = values.split(',').map(&:to_i)
-                increment_progress(max_progress, progress, progressbar, current_progress)
+                current_progress = increment_progress(
+                  max_progress, progress, progressbar, current_progress
+                )
               elsif type == 'PRGC' && current_title != values.split(',').last.strip
                 current_title = values.split(',').last.strip
                 reset_progress(progressbar, current_title)
@@ -130,7 +133,7 @@ class CreateMKV
     def increment_progress(max_progress, progress, progressbar, current_progress)
       progressbar.total = max_progress if max_progress != progressbar.total
       progressbar.progress += (progress - current_progress)
-      current_progress = progress
+      progress
     end
 
     def reset_progress(progressbar, current_title)

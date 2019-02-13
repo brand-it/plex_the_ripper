@@ -8,8 +8,10 @@ class Videos < Model
   def tv_show_present?(title:)
     tv_show = find_tv_show(title)
     return false if tv_show.nil?
+
     season = tv_show.find_season(Config.configuration.tv_season)
     return false if season.nil?
+
     episode = season.find_episode(Config.configuration.episode)
     episode != nil
   end

@@ -128,6 +128,7 @@ class DiscInfo
 
   private
 
+  # rubocop:disable AbcSize, CyclomaticComplexity, MethodLength
   def parse_disk_info_string(disk_info_string)
     lines = disk_info_string.split("\n")
     details = []
@@ -146,7 +147,7 @@ class DiscInfo
             values[3].to_s,
             values[1].to_i,
             values[2].to_i,
-            Set[values[0].to_i],
+            Set[values[0].to_i]
           )
         end
       when 'SINFO'
@@ -171,4 +172,5 @@ class DiscInfo
     end
     details
   end
+  # rubocop:enable AbcSize, CyclomaticComplexity, MethodLength
 end

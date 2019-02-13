@@ -2,9 +2,9 @@
 class Shell
   Response = Struct.new(:stdout_str, :stderr_str, :status, :cmd)
   class Error < StandardError; end
-  @@buffer = ''
 
   class << self
+    @buffer = ''
     def puts(string)
       Kernel.puts(string)
     end
@@ -14,13 +14,14 @@ class Shell
     end
 
     def store_info(string)
-      @@buffer += string
+      @buffer += string
     end
 
     def puts_buffer
-      return if @@buffer == ''
-      print @@buffer
-      @@buffer = ''
+      return if @buffer == ''
+
+      puts @@buffer
+      @buffer = ''
     end
 
     def capture3(*cmd)
@@ -59,7 +60,7 @@ class Shell
       end
     end
 
-    def ask(question, type: String)
+    def ask(question, type: String) # rubocop:disable CyclomaticComplexity
       Kernel.print(question)
       answer = STDIN.gets # if you don't use STDIN it will pull from ARGS depending on the situation
       answer = answer.strip
