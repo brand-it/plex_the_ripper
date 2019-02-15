@@ -2,9 +2,11 @@
 require File.expand_path('gem_installer', __dir__).to_s
 require File.expand_path('config', __dir__).to_s
 require File.expand_path('logger', __dir__).to_s
+require File.expand_path('shell', __dir__).to_s
 
 GemInstaller.bundle_install
 
+require 'pry' # debugging tool
 require 'fileutils'
 require 'pathname'
 require 'optparse'

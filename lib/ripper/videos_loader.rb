@@ -1,4 +1,4 @@
-class FileChecker
+class VideosLoader
   Videos = Struct.new(:movies, :tv_shows)
   TV_SHOW_PATTERN_ONE = /\A(?<name>.*)\s\-\ss(?<season>\d\d)e(?<episode>\d\d)/.freeze
   TV_SHOW_PATTERN_TWO = /\A(?<name>.*)\ss(?<season>\d\d)e(?<episode>\d\d)/.freeze
@@ -8,7 +8,10 @@ class FileChecker
     def perform
       return if Config.configuration.videos.any?
 
-      file_checker = FileChecker.new
+      sleep 1 until File.exist?(Config.configuration.media_directory_path)
+      Logger.info('Started Loading Videos')
+
+      file_checker = VideosLoader.new
       file_checker.load_videos
     end
   end
@@ -36,28 +39,20 @@ class FileChecker
   private
 
   def all_videos
-    threads = []
-    movies = []
-    tv_shows = []
-    threads << Thread.new do
-      tv_shows = Dir[
-        File.join(
-          Config.configuration.media_directory_path,
-          Config.configuration.tv_shows_directory_name,
-          '**', '*.mkv'
-        )
-      ]
-    end
-    threads << Thread.new do
-      movies = Dir[
-        File.join(
-          Config.configuration.media_directory_path,
-          Config.configuration.movies_directory_name,
-          '**', '*.mkv'
-        )
-      ]
-    end
-    threads.each(&:join)
+    tv_shows = Dir.glob(
+      File.join(
+        Config.configuration.media_directory_path,
+        Config.configuration.tv_shows_directory_name,
+        '**', '*.mkv'
+      )
+    )
+    movies = Dir[
+      File.join(
+        Config.configuration.media_directory_path,
+        Config.configuration.movies_directory_name,
+        '**', '*.mkv'
+      )
+    ]
     Videos.new(movies, tv_shows)
   end
 
@@ -66,7 +61,7 @@ class FileChecker
     match = match_tv_show(mkv_path)
     season = 0
     episode = 0
-    if match
+    if match.is_a?(Hash)
       warn_about_naming_issues(mkv_path, name, match[:name])
       season = match[:season].to_i
       episode = match[:episode].to_i
@@ -74,7 +69,8 @@ class FileChecker
     {
       title: name,
       season: season,
-      episode: episode
+      episode: episode,
+      file_path: mkv_path
     }
   end
 

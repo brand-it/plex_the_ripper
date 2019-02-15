@@ -2,12 +2,31 @@ class CreateMKV
   class TV < Base
     class << self
       def perform
-        raise "define peform on #{self.class.name}"
+        tv = CreateMKV::TV.new
+        tv.start!
+        tv.create_mkv
+        tv.delete_extra_episodes
+        tv.rename_seasons
+        tv.update_config
+        tv.finished!
+        tv.notify_slack_success
+      end
+    end
+
+    def update_config
+      Config.configuration.episode = mkv_files(reload: true).size + 1
+      Config.configuration.disc_number += 1
+    end
+
+    def create_mkv
+      tv_titles.each do |title|
+        status = mkv_system!(title: title)
+        process_status!(status)
       end
     end
 
     def delete_extra_episodes
-      if episodes.size == Config.configuration.total_episodes
+      if mkv_files.size == Config.configuration.total_episodes
         return Logger.success('All right everything looks good')
       end
 
@@ -26,26 +45,25 @@ class CreateMKV
 
         Notification.slack(
           "Issue Deleting File #{episode}",
-          "Failed to delete #{File.join([folder_path, episode])} please destroy file by hand"
+          "Failed to delete #{File.join([directory, episode])} please destroy file by hand"
         )
         Shell.show_wait_spinner(
-          "Failed to delete #{File.join([folder_path, episode])} please destroy file by hand"
+          "Failed to delete #{File.join([directory, episode])} please destroy file by hand"
         ) do
-          File.exist?(File.join([folder_path, episode])) # if file exists keep waiting
+          File.exist?(File.join([directory, episode])) # if file exists keep waiting
         end
       end
     end
 
     def rename_seasons
-      mkv_files.each do |episode|
+      mkv_files(reload: true).each do |episode|
         season_number = format('%02d', Config.configuration.tv_season)
         episode_number = format('%02d', Config.configuration.episode)
         episode_name = "#{Config.configuration.video_name} "\
                       "- s#{season_number}e#{episode_number}.mkv"
-        old_name = File.join([folder_path, episode])
-        new_name = File.join([folder_path, episode_name])
+        old_name = File.join([directory, episode])
+        new_name = File.join([directory, episode_name])
         File.rename(old_name, new_name)
-        Config.configuration.episode += 1
       end
     end
 
@@ -109,27 +127,12 @@ class CreateMKV
     end
 
     def tv_titles
-      disk_info = get_disk_info
-      track_times = parse_title_times(disk_info)
-      if Config.configuration.maxlength
-        track_times.reject! { |disk| disk[:seconds] > Config.configuration.maxlength }
-      end
-      @title_numbers = track_times.collect { |x| x[:titles].to_a }.flatten.uniq
-    end
+      disc_info = Config.configuration.selected_disc_info
+      return disc_info.titles if Config.configuration.maxlength.nil?
 
-    def parse_title_times(disk_info)
-      Config.configuration.selected_disc_info.details do |detail|
+      disc_info.titles.select.with_index do |_title, index|
+        disc_info.title_seconds[index] <= Config.configuration.maxlength
       end
-      track_times = disk_info.select do |disk|
-        disk[:integer_two].zero? && disk[:string].match(/[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}/)
-      end
-      track_times.each do |disk|
-        hours, minutes, seconds = disk[:string].split(':').map(&:to_i)
-        minutes += (hours * 60)
-        seconds += (minutes * 60)
-        disk[:seconds] = seconds
-      end
-      track_times
     end
   end
 end

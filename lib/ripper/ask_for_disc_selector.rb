@@ -1,9 +1,9 @@
-class DiscSelector
+class AskForDiscSelector
   attr_accessor :selected_disc
 
   class << self
     def perform
-      disc_selector = DiscSelector.new
+      disc_selector = AskForDiscSelector.new
       disc_selector.wait_for_discs_to_be_present
       while Config.configuration.selected_disc_info.nil?
         discs = DiscInfo.list_discs

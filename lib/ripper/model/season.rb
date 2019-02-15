@@ -3,10 +3,10 @@ class Season < Model
   validate_presence :number
   validate_presence :tv_show
 
-  def add_episode(episode_number)
+  def add_episode(episode_number, file_path)
     episode = find_episode(episode_number)
     episode || episodes.push(
-      Episode.new(number: episode_number, season: self)
+      Episode.new(number: episode_number, season: self, file_path: file_path)
     ).last
   end
 

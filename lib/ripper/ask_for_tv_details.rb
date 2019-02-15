@@ -6,15 +6,15 @@ class AskForTVDetails
   end
 
   class << self
-    def perform(loading_details_thread)
+    def perform
       return if Config.configuration.type != :tv
 
       ask_for_tv_details = AskForTVDetails.new
       ask_for_tv_details.ask_for_tv_season
-      ask_for_tv_details.ask_for_tv_episode
       ask_for_tv_details.ask_for_disc_number
-      Shell.show_wait_spinner('waiting to for disc details') do
-        loading_details_thread.alive?
+      ask_for_tv_details.ask_for_tv_episode
+      Shell.show_wait_spinner('Loading Disc') do
+        !Config.configuration.selected_disc_info.details_loaded?
       end
       ask_for_tv_details.ask_for_total_number_of_episodes
     end

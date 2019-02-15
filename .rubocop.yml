@@ -21,3 +21,8 @@ Metrics/MethodLength:
 
 Metrics/PerceivedComplexity:
   Max: 10
+
+AllCops:
+  Exclude:
+    - 'gems/**/*'
+    - '.bundle/**/*'

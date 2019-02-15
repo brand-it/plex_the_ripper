@@ -1,7 +1,7 @@
-class FilePathBuilder
+class AskForFilePathBuilder
   class << self
     def perform
-      file_path_builder = FilePathBuilder.new
+      file_path_builder = AskForFilePathBuilder.new
       file_path_builder.ask_for_media_directory
       Logger.info("Using #{Config.configuration.media_directory_path} to store videos")
     end

@@ -30,11 +30,11 @@ class Videos < Model
     movie
   end
 
-  def add_tv_show(title:, season:, episode:)
+  def add_tv_show(title:, season:, episode:, file_path:)
     tv_show = find_tv_show(title)
     tv_show ||= tv_shows.push(TVShow.new(title: title, video: self)).last
     season = tv_show.add_season(season)
-    season.add_episode(episode)
+    season.add_episode(episode, file_path)
     tv_show
   end
 

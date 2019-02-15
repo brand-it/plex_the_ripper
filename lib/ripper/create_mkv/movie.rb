@@ -24,15 +24,16 @@ class CreateMKV
     end
 
     def rename_movies
-      mkv_files.sort.each_with_index do |movie, index|
+      movies = mkv_files.sort
+      movies.each_with_index do |movie, index|
         number = format('%02d', index)
         movie_name = if movies.size > 1
                        "#{Config.configuration.video_name} - #{number}.mkv"
                      else
                        "#{Config.configuration.video_name}.mkv"
                      end
-        old_name = File.join([rip_path(safe: false), movie])
-        new_name = File.join([rip_path(safe: false), movie_name])
+        old_name = File.join([directory, movie])
+        new_name = File.join([directory, movie_name])
         File.rename(old_name, new_name)
       end
     end

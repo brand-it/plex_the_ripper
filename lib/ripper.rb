@@ -8,22 +8,26 @@ class Ripper
   class << self
     def perform
       threads = []
-      DiscSelector.perform
-      FilePathBuilder.perform
-      threads << Thread.new { FileChecker.perform }
-      threads << Thread.new { LoadDiscDetails.perform }
       threads << Thread.new do
-        AskForMovieDetails.perform(threads[1])
-        AskForTVDetails.perform(threads[1])
+        AskForDiscSelector.perform
+        AskForFilePathBuilder.perform
+        AskForVideoDetails.perform
+        AskForMovieDetails.perform
+        AskForTVDetails.perform
       end
+      threads << Thread.new { VideosLoader.perform }
+      threads << Thread.new { LoadDiscDetails.perform }
       threads.each(&:join)
       Shell.puts_buffer
       DuplicateChecker.perform
       CreateMKV::Movie.perform
+      CreateMKV::TV.perform
+      Config.configuration.selected_disc_info.eject
       Config.configuration.reset!
       Ripper.perform
     rescue Ripper::Abort => exception
       Logger.warning(exception.message)
+      Config.configuration.selected_disc_info.eject
       Config.configuration.reset!
       Ripper.perform
     end

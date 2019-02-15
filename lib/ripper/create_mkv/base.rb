@@ -8,11 +8,12 @@ class CreateMKV
       self.started_at = nil
       self.completed_at = nil
       self.status = 'ready'
-      self.directory = FilePathBuilder.path
+      self.directory = AskForFilePathBuilder.path
       create_directory_path
     end
 
-    def mkv_files
+    def mkv_files(reload: false)
+      @mkv_files = nil if reload
       @mkv_files ||= Dir.entries(directory).select do |episode|
         File.extname(episode) == '.mkv'
       end
@@ -77,7 +78,7 @@ class CreateMKV
     def run_time
       return 0 if started_at.nil? || completed_at.nil?
 
-      started_at - completed_at
+      completed_at - started_at
     end
 
     def mkv(title: 'all')

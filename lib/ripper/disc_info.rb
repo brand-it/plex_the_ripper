@@ -1,6 +1,6 @@
 class DiscInfo
   include ArrayHelper
-  Detail = Struct.new(:name, :integer_one, :integer_two, :titles) do
+  Detail = Struct.new(:string, :integer_one, :integer_two, :titles) do
     include ArrayHelper
 
     def titles_as_ranges
@@ -126,7 +126,34 @@ class DiscInfo
     size > 0
   end
 
+  # the Title Seconds are in the same order as the titles.
+  # This means if you are looking for a titles seconds just use this code below
+  # - examples -
+  #    title_seconds[titles.find_index(12)]
+  def title_seconds
+    return @title_seconds if @title_seconds
+
+    titles.map do |title|
+      detail = details.find do |a_detail|
+        detail.titles.include?(title) && detail.integer_two.zero? &&
+          detail.string.match(/[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}/)
+      end
+      convert_formatted_time_to_seconds(detail.string)
+    end
+  end
+
+  def details_loaded?
+    @details != nil
+  end
+
   private
+
+  def convert_formatted_time_to_seconds(formatted_time)
+    hours, minutes, seconds = formatted_time.split(':').map(&:to_i)
+    minutes += (hours * 60)
+    seconds += (minutes * 60)
+    seconds
+  end
 
   # rubocop:disable AbcSize, CyclomaticComplexity, MethodLength
   def parse_disk_info_string(disk_info_string)
@@ -138,7 +165,7 @@ class DiscInfo
       case match[1]
       when 'TINFO'
         dup_detail = details.find do |detail|
-          detail.name == values[3] && detail.integer_one == values[1].to_i
+          detail.string == values[3] && detail.integer_one == values[1].to_i
         end
         if dup_detail
           dup_detail.titles.add(values[0].to_i)
@@ -152,7 +179,7 @@ class DiscInfo
         end
       when 'SINFO'
         dup_detail = details.find do |detail|
-          detail.name == values[4].to_s
+          detail.string == values[4].to_s
         end
         if dup_detail
           dup_detail.titles.add(values[0].to_i)

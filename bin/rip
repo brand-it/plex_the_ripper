@@ -1,6 +1,11 @@
 #!/usr/bin/env ruby
 require File.expand_path('../lib/ripper', __dir__).to_s
 
+Signal.trap('INT') do
+  Logger.info("\nGood Bye")
+  exit 1
+end
+
 begin
   OptParser.parse(ARGV)
   Logger.debug(Config.configuration.inspect)
@@ -9,5 +14,6 @@ begin
   # Logger.info "Server: #{Config.configuration.movies.server_movies}"
   Ripper.perform
 rescue Interrupt
-  Logger.info("\nThanks for using us have a wonderful day")
+  Logger.info("\nGood Bye")
+  exit 1
 end

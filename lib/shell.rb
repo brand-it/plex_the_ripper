@@ -2,9 +2,9 @@
 class Shell
   Response = Struct.new(:stdout_str, :stderr_str, :status, :cmd)
   class Error < StandardError; end
+  @buffer = ''
 
   class << self
-    @buffer = ''
     def puts(string)
       Kernel.puts(string)
     end
@@ -20,7 +20,7 @@ class Shell
     def puts_buffer
       return if @buffer == ''
 
-      puts @@buffer
+      puts @buffer
       @buffer = ''
     end
 
@@ -55,7 +55,7 @@ class Shell
             Logger.info "#{message} ... #{chars[(index += 1) % chars.length]}", rewrite: true
           end
         rescue Timeout::Error => exception
-          Logger.error "Timeout happened #{exception.message}"
+          raise Ripper::Abort, "Timeout #{exception.message}"
         end
       end
     end
