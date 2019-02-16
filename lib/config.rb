@@ -58,11 +58,11 @@ class Config
   end
 
   def tv_season_to_word
-    "season_#{tv_season}"
+    "Season #{format('%02d', tv_season)}"
   end
 
   def disc_number_to_word
-    "disc_#{disc_number}"
+    "Disc #{format('%02d', disc_number)}"
   end
 
   def disk_source
