@@ -19,7 +19,7 @@ class CreateMKV
     end
 
     def create_mkv
-      tv_titles.each do |title|
+      Config.configuration.selected_titles.each do |title|
         status = mkv_system!(title: title)
         process_status!(status)
       end
@@ -124,15 +124,6 @@ class CreateMKV
       end
       @file_details[:mean] = @file_details[:file_size_total] / @file_details[:file_sizes].length
       @file_details
-    end
-
-    def tv_titles
-      disc_info = Config.configuration.selected_disc_info
-      return disc_info.titles if Config.configuration.maxlength.nil?
-
-      disc_info.titles.select.with_index do |_title, index|
-        disc_info.title_seconds[index] <= Config.configuration.maxlength
-      end
     end
   end
 end

@@ -16,8 +16,11 @@ class OptParser
          'folder so plex can watch them. This will set the --min-length "\
          "to zero unless --min-length option is used'
       ) do
-        Config.configuration.minlength
         Config.configuration.include_extras = true
+      end
+
+      opts.on('-a', '--api-key [Key]', String, 'API key provide by themoviedb.org') do |value|
+        Config.configuration.the_movie_db_config.api_key = value
       end
 
       opts.on(

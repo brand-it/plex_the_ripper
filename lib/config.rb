@@ -6,10 +6,10 @@ class Config
     :total_episodes, :maxlength, :include_extras,
     :mkv_from_file, :make_backup_path, :makemkvcon_path,
     :tv_shows_directory_name, :movies_directory_name,
-    :movie_title
+    :the_movie_db_config, :selected_titles
   )
   attr_writer(:minlength)
-  attr_reader(:media_directory_path)
+  attr_reader(:media_directory_path, :the_movie_db_api_key)
 
   class << self
     def configuration(reload: false)
@@ -38,7 +38,8 @@ class Config
     self.include_extras = false
     self.tv_shows_directory_name = 'TV Shows'
     self.movies_directory_name = 'Movies'
-    self.movie_title = nil
+    self.the_movie_db_config = TheMovieDBConfig.new
+    self.selected_titles = []
   end
 
   def videos

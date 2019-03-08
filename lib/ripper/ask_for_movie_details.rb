@@ -19,15 +19,17 @@ class AskForMovieDetails
 
   def ask_for_which_title_if_multiple
     if config.selected_disc_info.titles.size == 1
-      return config.movie_title = config.selected_disc_info.titles
+      return config.selected_titles = config.selected_disc_info.titles
     end
 
     config.selected_disc_info.consolidated_details.each do |titles, details|
       Logger.info "Titles: #{titles}"
       Logger.info "  #{details.map(&:name).join(', ')}"
     end
-    config.movie_title = Shell.ask_value_required(
-      'Many Titles where found please type in a number: ', type: Integer
-    )
+    config.selected_titles = [
+      Shell.ask_value_required(
+        'Many Titles where found please type in a number:', type: Integer
+      )
+    ]
   end
 end

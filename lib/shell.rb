@@ -61,13 +61,12 @@ class Shell
     end
 
     def ask(question, type: String) # rubocop:disable CyclomaticComplexity
-      Kernel.print(question)
-      answer = STDIN.gets # if you don't use STDIN it will pull from ARGS depending on the situation
-      answer = answer.strip
+      answer = TTY::Prompt.new.ask(question.strip)
       Logger.debug("answer: #{answer}")
       return if answer == '' || answer.nil?
       return answer.to_i if type == Integer
       return answer.to_f if type == Float
+      return [answer] if type == Array
       return answer =~ /\Ay/i || answer == '1' if type == TrueClass
       return answer =~ /\An/i || answer == '0' if type == FalseClass
 

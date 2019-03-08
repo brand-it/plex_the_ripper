@@ -13,7 +13,7 @@ begin
   # Logger.info "Local: #{Config.configuration.movies.local_movies}"
   # Logger.info "Server: #{Config.configuration.movies.server_movies}"
   Ripper.perform
-rescue Interrupt
+rescue Interrupt, TTY::Reader::InputInterrupt
   Logger.info("\nGood Bye")
   exit 1
 end

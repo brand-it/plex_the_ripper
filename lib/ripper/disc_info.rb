@@ -135,10 +135,19 @@ class DiscInfo
 
     titles.map do |title|
       detail = details.find do |a_detail|
-        detail.titles.include?(title) && detail.integer_two.zero? &&
-          detail.string.match(/[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}/)
+        a_detail.titles.include?(title) && a_detail.integer_two.zero? &&
+          a_detail.string.match(/[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}/)
       end
       convert_formatted_time_to_seconds(detail.string)
+    end
+  end
+
+  def tiles_with_length
+    return disc_info.titles if Config.configuration.maxlength.nil?
+
+    titles.select.with_index do |_title, index|
+      title_seconds[index] <= Config.configuration.maxlength &&
+        title_seconds[index] >= Config.configuration.minlength
     end
   end
 

@@ -19,8 +19,10 @@ class CreateMKV
     end
 
     def create_mkv
-      status = mkv_system!(title: Config.configuration.movie_title)
-      process_status!(status)
+      Config.configuration.selected_titles.each do |title|
+        status = mkv_system!(title: title)
+        process_status!(status)
+      end
     end
 
     def rename_movies
