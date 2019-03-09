@@ -20,6 +20,8 @@ class TheMovieDB
 
   def search(page: 1, query:, type:)
     results = request("search/#{type}", params: { query: query, page: page })
+    return {} if results.nil?
+
     if results['total_pages'] != page
       results['results'] += search(page: page + 1, query: query, type: type)['results']
     end

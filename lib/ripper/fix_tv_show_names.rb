@@ -15,33 +15,30 @@ class FixTVShowNames
       end
     end
 
-
     def rename_directory(tv_show)
       old_directory = tv_show.directory
       new_directory = tv_show.directory.gsub(tv_show.title, Config.configuration.video_name)
       return if old_directory == new_directory
 
       Logger.info("Renaming Directory #{old_directory} #{new_directory}")
-      # File.rename(old_directory, new_directory)
+      File.rename(old_directory, new_directory)
     end
 
     def rename(tv_show, season, episode)
       match = VideosLoader.new.send(:match_tv_show, episode.file_path)
-      return if match.nil?
-
-      return if tv_show.title == match[:name]
+      return if match.nil? || tv_show.title == match[:name]
 
       name = request_episode_name(season_number: season.number, episode_number: episode.number)
       season_number = format('%02d', season.number)
       episode_number = format('%02d', episode.number)
       episode_name = if name
-                        "#{tv_show.title} - s#{season_number}e#{episode_number} - #{name}.mkv"
-                      else
-                        "#{tv_show.title} - s#{season_number}e#{episode_number}.mkv"
+                       "#{tv_show.title} - s#{season_number}e#{episode_number} - #{name}.mkv"
+                     else
+                       "#{tv_show.title} - s#{season_number}e#{episode_number}.mkv"
                       end
       new_name = File.join([File.dirname(episode.file_path), episode_name])
       Logger.info("Renaming #{episode.file_path} => #{new_name}")
-      # File.rename(episode.file_path, new_name)
+      File.rename(episode.file_path, new_name)
     end
 
     def request_episode_name(season_number:, episode_number:)
@@ -58,7 +55,7 @@ class FixTVShowNames
 
     def ask_for_tv_details(tv_show)
       search = TheMovieDB.new.search(type: 'tv', query: tv_show.title)
-      if search.nil? || search['total_results'].zero?
+      if search['total_results'].to_i.zero?
         Config.configuration.the_movie_db_config.selected_video = nil
         Config.configuration.video_name = tv_show.title
         return
@@ -81,7 +78,7 @@ class FixTVShowNames
 
       Config.configuration.the_movie_db_config.selected_video = search['results'][answer]
       Config.configuration.video_name = names[answer]
-    rescue => exception
+    rescue StandardError => exception
       binding.pry
     end
   end

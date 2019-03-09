@@ -2,9 +2,9 @@
 
 class VideosLoader
   Videos = Struct.new(:movies, :tv_shows)
-  TV_SHOW_PATTERN_ONE = /\A(?<name>.*)\s\-\ss(?<season>\d\d)e(?<episode>\d\d)/
-  TV_SHOW_PATTERN_TWO = /\A(?<name>.*)\ss(?<season>\d\d)e(?<episode>\d\d)/
-  TV_SHOW_PATTERN_THREE = /\A(?<name>.*)\-s(?<season>\d\d)e(?<episode>\d\d)/
+  TV_SHOW_PATTERN_ONE = /\A(?<name>.*)\s\-\ss(?<season>\d\d)e(?<episode>\d\d)/.freeze
+  TV_SHOW_PATTERN_TWO = /\A(?<name>.*)\ss(?<season>\d\d)e(?<episode>\d\d)/.freeze
+  TV_SHOW_PATTERN_THREE = /\A(?<name>.*)\-s(?<season>\d\d)e(?<episode>\d\d)/.freeze
 
   class << self
     def perform
