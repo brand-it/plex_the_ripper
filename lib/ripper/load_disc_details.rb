@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class LoadDiscDetails
   class << self
     def perform

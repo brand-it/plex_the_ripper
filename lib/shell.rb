@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # This is some top level systems for creating bash scripts in ruby
 class Shell
   Response = Struct.new(:stdout_str, :stderr_str, :status, :cmd)
@@ -71,6 +73,8 @@ class Shell
       return answer =~ /\An/i || answer == '0' if type == FalseClass
 
       answer.to_s
+    rescue TTY::Reader::InputInterrupt
+      raise Ripper::Terminate, 'Good bye'
     end
 
     def ask_value_required(question = nil, type: String, default: nil)

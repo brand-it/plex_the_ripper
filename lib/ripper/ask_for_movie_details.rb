@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AskForMovieDetails
   include ArrayHelper
   attr_accessor :config
@@ -9,6 +11,7 @@ class AskForMovieDetails
   class << self
     def perform
       return if Config.configuration.type != :movie # these apply for TV as well
+
       Shell.show_wait_spinner('Loading Disc') do
         !Config.configuration.selected_disc_info.details_loaded?
       end

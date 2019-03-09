@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 class TVShow < Model
-  columns(title: String, seasons: Array, video: Videos)
+  columns(title: String, seasons: Array, video: Videos, directory: String)
   validate_presence(:title)
   validate_presence(:video)
+  validate_presence(:directory)
 
   def add_season(season_number)
     season = find_season(season_number)

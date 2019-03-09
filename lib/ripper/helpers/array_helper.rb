@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ArrayHelper
   def ranges_from_integers(integers) # rubocop:disable CyclomaticComplexity
     ranges = []

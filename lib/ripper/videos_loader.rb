@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class VideosLoader
   Videos = Struct.new(:movies, :tv_shows)
-  TV_SHOW_PATTERN_ONE = /\A(?<name>.*)\s\-\ss(?<season>\d\d)e(?<episode>\d\d)/.freeze
-  TV_SHOW_PATTERN_TWO = /\A(?<name>.*)\ss(?<season>\d\d)e(?<episode>\d\d)/.freeze
-  TV_SHOW_PATTERN_THREE = /\A(?<name>.*)\-s(?<season>\d\d)e(?<episode>\d\d)/.freeze
+  TV_SHOW_PATTERN_ONE = /\A(?<name>.*)\s\-\ss(?<season>\d\d)e(?<episode>\d\d)/
+  TV_SHOW_PATTERN_TWO = /\A(?<name>.*)\ss(?<season>\d\d)e(?<episode>\d\d)/
+  TV_SHOW_PATTERN_THREE = /\A(?<name>.*)\-s(?<season>\d\d)e(?<episode>\d\d)/
 
   class << self
     def perform
@@ -61,7 +63,7 @@ class VideosLoader
     match = match_tv_show(mkv_path)
     season = 0
     episode = 0
-    if match.is_a?(Hash)
+    if match.is_a?(MatchData)
       warn_about_naming_issues(mkv_path, name, match[:name])
       season = match[:season].to_i
       episode = match[:episode].to_i
@@ -70,7 +72,12 @@ class VideosLoader
       title: name,
       season: season,
       episode: episode,
-      file_path: mkv_path
+      file_path: mkv_path,
+      directory: [
+        Config.configuration.media_directory_path,
+        Config.configuration.tv_shows_directory_name,
+        name
+      ].join('/')
     }
   end
 
@@ -106,5 +113,6 @@ class VideosLoader
       match = basename.match(pattern)
       return match if match
     end
+    nil
   end
 end

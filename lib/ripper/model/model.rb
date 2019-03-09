@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module ModelMixin
   class << self
     def included(base)
@@ -34,12 +36,12 @@ module ModelMixin
       value
     end
 
-    def cast_type(type, value) # rubocop:disable CyclomaticComplexity
+    def cast_type(type, value)
       case type.to_s
       when 'Integer'
-        value.to_i if value
+        value&.to_i
       when 'String'
-        value.to_s if value
+        value&.to_s
       when 'Array'
         type.try_convert(value) || type.new
       else

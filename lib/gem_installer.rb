@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rubygems'
 require 'rubygems/gem_runner'
 require 'rubygems/exceptions'

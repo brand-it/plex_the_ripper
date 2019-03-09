@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AskForTVDetails
   attr_accessor :config
 
@@ -26,11 +28,12 @@ class AskForTVDetails
     return if request_tv_show_names.nil?
 
     if request_tv_show_names['total_results'] == 1
-      return config.video_id = request_tv_show_names['results'].first['id']
+      config.the_movie_db_config.selected_video = search['results'].first
+      config.video_name = search['results'].first['name']
     end
 
     if request_tv_show_names['results'].any?
-      select_tv_show_from_results
+      select_tv_show_from_results(request_tv_show_names)
     else
       ask_for_a_different_name
       check_tv_name
@@ -46,16 +49,17 @@ class AskForTVDetails
     @tv_shows = nil
   end
 
-  def select_tv_show_from_results
+  def select_tv_show_from_results(search)
+    names = TheMovieDB.new.uniq_names(search['results'])
     answer = TTY::Prompt.new.select(
       'Found multiple titles that matched. Pick one from below'
     ) do |menu|
-      request_tv_show_names['results'].each_with_index do |result, index|
-        menu.choice result['name'], index
+      names.each_with_index do |name, index|
+        menu.choice name, index
       end
     end
-    config.the_movie_db_config.selected_video = request_tv_show_names['results'][answer]
-    config.video_name = config.the_movie_db_config.selected_video['name']
+    config.the_movie_db_config.selected_video = search['results'][answer]
+    config.video_name = names[answer]
   end
 
   def ask_for_tv_season
@@ -81,19 +85,19 @@ class AskForTVDetails
 
   def ask_user_to_select_titles
     titles = config.selected_disc_info.tiles_with_length
-    selections = titles.each_with_object(Hash.new('')) {|i, h| h[i] = ''}
+    selections = titles.each_with_object(Hash.new('')) { |i, h| h[i] = '' }
     config.selected_disc_info.details.each do |details|
       next if details.integer_one != 27
       next unless selections.include?[titles.first]
+
       selections[details.string] = details.titles.first
     end
     config.selected_titles = prompt.multi_select('Select Titles', selections)
   end
 
   def request_tv_show_names
-    @request_tv_show_names ||= config.the_movie_db_config.request(
-      'search/tv',
-      params: { query: config.video_name }
+    @request_tv_show_names ||= config.the_movie_db_config.search(
+      type: 'tv', query: config.video_name
     )
   end
 

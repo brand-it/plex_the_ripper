@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMKV
   class Movie < Base
     DIRECTORY = File.join(

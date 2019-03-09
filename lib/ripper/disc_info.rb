@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class DiscInfo
   include ArrayHelper
   Detail = Struct.new(:string, :integer_one, :integer_two, :titles) do
@@ -68,21 +70,7 @@ class DiscInfo
   def details
     return @details if @details
 
-    get_disk_info_command = [
-      Config.configuration.makemkvcon_path,
-      'info',
-      Config.configuration.disk_source,
-      "--minlength=#{Config.configuration.minlength}",
-      '-r'
-    ].join(' ')
-    Logger.info(
-      "Inspecting #{Config.configuration.disk_source} with min length "\
-      "#{Config.configuration.minlength} seconds", delayed: true
-    )
-    @details = parse_disk_info_string(
-      Shell.system!(get_disk_info_command).stdout_str
-    )
-    @details
+    @details = parse_disk_info_string(CreateMKV.disc_info)
   end
 
   def titles

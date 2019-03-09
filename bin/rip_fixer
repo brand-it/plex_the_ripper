@@ -11,10 +11,7 @@ end
 begin
   OptParser.parse(ARGV)
   Logger.debug(Config.configuration.inspect)
-  # Config.configuration.movies.update_movies
-  # Logger.info "Local: #{Config.configuration.movies.local_movies}"
-  # Logger.info "Server: #{Config.configuration.movies.server_movies}"
-  Ripper.perform
+  Ripper.fixer
 rescue Interrupt, TTY::Reader::InputInterrupt
   Logger.info("\nGood Bye")
   exit 1

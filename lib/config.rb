@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Configuration Information for the ripper application
 class Config
   attr_accessor(

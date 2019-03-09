@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Notification
   def self.send_text(message)
     auth_token = '5e695829e7cfcd79d45c3b437354c463'

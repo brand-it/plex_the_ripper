@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module TimeHelper
   def human_seconds(total_seconds)
     hours = (total_seconds / 3600).floor

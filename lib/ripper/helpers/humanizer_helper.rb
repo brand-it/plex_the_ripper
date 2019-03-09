@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module HumanizerHelper
   NUMBER_TO_WORD = {
     1 => 'one',

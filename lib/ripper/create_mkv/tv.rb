@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateMKV
   class TV < Base
     class << self

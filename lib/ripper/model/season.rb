@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Season < Model
   columns(number: Integer, episodes: Array, tv_show: TVShow)
   validate_presence :number

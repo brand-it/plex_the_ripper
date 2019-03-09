@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class MakeBackup
   def initialize; end
 
@@ -7,7 +9,7 @@ class MakeBackup
 
   def backup_disk
     while running
-      Config.configuration.selected_disc_info.reload if Config.configuration.selected_disc_info
+      Config.configuration.selected_disc_info&.reload
       which_disc?
     end
   end
