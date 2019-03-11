@@ -22,8 +22,9 @@ class CreateMKV
 
     def create_mkv
       Config.configuration.selected_titles.each do |title|
+        Logger.info("Ripping Title #{title}")
         status = mkv_system!(title: title)
-        process_status!(status)
+        process_status!(status, title)
       end
     end
 

@@ -4,6 +4,8 @@ class CreateMKV
   class TV < Base
     class << self
       def perform
+        return if Config.configuration.type != :tv
+
         tv = CreateMKV::TV.new
         tv.start!
         tv.create_mkv
@@ -23,7 +25,7 @@ class CreateMKV
     def create_mkv
       Config.configuration.selected_titles.each do |title|
         status = mkv_system!(title: title)
-        process_status!(status)
+        process_status!(status, title)
       end
     end
 

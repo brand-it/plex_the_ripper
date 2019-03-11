@@ -12,7 +12,6 @@ class AskForTVDetails
       return if Config.configuration.type != :tv
 
       ask_for_tv_details = AskForTVDetails.new
-      ask_for_tv_details.check_tv_name
       ask_for_tv_details.update_runtime
       ask_for_tv_details.ask_for_tv_season
       ask_for_tv_details.ask_for_disc_number
@@ -22,44 +21,6 @@ class AskForTVDetails
       end
       ask_for_tv_details.ask_user_to_select_titles
     end
-  end
-
-  def check_tv_name
-    return if request_tv_show_names.nil?
-
-    if request_tv_show_names['total_results'] == 1
-      config.the_movie_db_config.selected_video = search['results'].first
-      config.video_name = search['results'].first['name']
-    end
-
-    if request_tv_show_names['results'].any?
-      select_tv_show_from_results(request_tv_show_names)
-    else
-      ask_for_a_different_name
-      check_tv_name
-    end
-  end
-
-  def ask_for_a_different_name
-    Logger.warning(
-      'When looking up the title in themoviedb.org we could not find TV title'
-    )
-    config.video_name = nil
-    AskForVideoDetails.perform
-    @tv_shows = nil
-  end
-
-  def select_tv_show_from_results(search)
-    names = TheMovieDB.new.uniq_names(search['results'])
-    answer = TTY::Prompt.new.select(
-      'Found multiple titles that matched. Pick one from below'
-    ) do |menu|
-      names.each_with_index do |name, index|
-        menu.choice name, index
-      end
-    end
-    config.the_movie_db_config.selected_video = search['results'][answer]
-    config.video_name = names[answer]
   end
 
   def ask_for_tv_season
@@ -96,17 +57,8 @@ class AskForTVDetails
   end
 
   def request_tv_show_names
-    @request_tv_show_names ||= config.the_movie_db_config.search(
+    @request_tv_show_names ||= TheMovieDB.new.search(
       type: 'tv', query: config.video_name
     )
-  end
-
-  def update_runtime
-    return if config.the_movie_db_config.selected_video.nil?
-
-    selected_video = config.the_movie_db_config.selected_video
-    response = config.the_movie_db_config.request("tv/#{selected_video['id']}")
-    config.minlength = (response['episode_run_time'].min - 1) * 60
-    config.maxlength = (response['episode_run_time'].max + 1) * 60
   end
 end

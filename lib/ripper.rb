@@ -11,9 +11,9 @@ class Ripper
   class << self
     def perform
       Thread.report_on_exception = Config.configuration.verbose
+      Thread.abort_on_exception = true
       threads = []
       threads << Thread.new do
-        AskForDiscSelector.perform
         AskForDiscSelector.perform
         AskForFilePathBuilder.perform
         AskForVideoDetails.perform

@@ -20,19 +20,43 @@ class AskForMovieDetails
     end
   end
 
-  def ask_for_which_title_if_multiple
-    if config.selected_disc_info.titles.size == 1
-      return config.selected_titles = config.selected_disc_info.titles
+  def check_movie_name
+    return if request_movie_names.nil?
+
+    if request_movie_names['total_results'] == 1
+      config.the_movie_db_config.selected_video = search['results'].first
+      config.video_name = search['results'].first['name']
     end
 
-    config.selected_disc_info.consolidated_details.each do |titles, details|
-      Logger.info "Titles: #{titles}"
-      Logger.info "  #{details.map(&:name).join(', ')}"
+    if request_movie_names['results'].any?
+      select_movie_from_results(request_movie_names)
+    else
+      ask_for_a_different_name
+      check_tv_name
     end
-    config.selected_titles = [
-      Shell.ask_value_required(
-        'Many Titles where found please type in a number:', type: Integer
+  end
+
+  def ask_for_which_title_if_multiple
+    titles = config.selected_disc_info.tiles_with_length
+    return config.selected_titles = titles.keys if titles.size == 1
+
+    if titles.empty?
+      raise(
+        Ripper::Abort,
+        'Looks like no titles could be found using this disc.'\
+        ' This is beacuse we could not find titles that where in the expected length of this movie.'
       )
-    ]
+    end
+    answer = TTY::Prompt.new.select(
+      'Found multiple titles that matched. Pick one from below'
+    ) do |menu|
+      config.selected_disc_info.friendly_details.each do |detail|
+        next unless titles.keys.include?(detail[:title])
+
+        menu.choice detail[:name], detail[:title]
+      end
+    end
+
+    config.selected_titles = [answer]
   end
 end

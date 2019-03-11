@@ -8,7 +8,7 @@ class Config
     :total_episodes, :maxlength, :include_extras,
     :mkv_from_file, :make_backup_path, :makemkvcon_path,
     :tv_shows_directory_name, :movies_directory_name,
-    :the_movie_db_config, :selected_titles
+    :the_movie_db_config, :selected_titles, :slack_url
   )
   attr_writer(:minlength)
   attr_reader(:media_directory_path, :the_movie_db_api_key)
@@ -42,6 +42,7 @@ class Config
     self.movies_directory_name = 'Movies'
     self.the_movie_db_config = TheMovieDBConfig.new
     self.selected_titles = []
+    self.slack_url = nil
   end
 
   def videos
@@ -58,6 +59,12 @@ class Config
     return 780 if type == :tv
 
     3600
+  end
+
+  def minlength=(value)
+    return @minlength = value if value && value.positive?
+
+    @minlength = 1
   end
 
   def tv_season_to_word

@@ -78,8 +78,6 @@ class FixTVShowNames
 
       Config.configuration.the_movie_db_config.selected_video = search['results'][answer]
       Config.configuration.video_name = names[answer]
-    rescue StandardError => exception
-      binding.pry
     end
   end
 end

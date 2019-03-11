@@ -26,6 +26,16 @@ class OptParser
       end
 
       opts.on(
+        '-u',
+        '--slack-url [URL]',
+        String,
+        'Slack Web Hook. Can be handy if you want to notify a '\
+        'channel of the progress or details of how the rip is going'
+      ) do |value|
+        Config.configuration.slack_url = value
+      end
+
+      opts.on(
         '-r', '--media-folder [Folder]', String,
         'Where would you like use to rip the files to.'\
         " (#{Config.configuration.media_directory_path.inspect})"
@@ -90,7 +100,7 @@ class OptParser
       end
 
       opts.on(
-        '-s', '--file-source [FolderName]', String,
+        '-f', '--file-source [FolderName]', String,
         'If you want open files in folder <FolderName>'
       ) do |value|
         Config.configuration.mkv_from_file = value

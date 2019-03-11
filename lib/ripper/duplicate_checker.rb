@@ -13,10 +13,7 @@ class DuplicateChecker
     return if Config.configuration.type != :movie
     return if Config.configuration.videos.find_movie(Config.configuration.video_name).nil?
 
-    yes = Shell.ask_value_required(
-      "Is #{Config.configuration.video_name} of better quality? (Yes|No) ",
-      type: TrueClass
-    )
+    yes = TTY::Prompt.new.yes?("Is #{Config.configuration.video_name} of better quality?")
     yes ? delete_movie_files : abort
   end
 

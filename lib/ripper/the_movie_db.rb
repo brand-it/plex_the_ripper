@@ -41,17 +41,35 @@ class TheMovieDB
   def uniq_names(search_results)
     names_hash = Hash.new(0)
     search_results.map do |result|
-      names_hash[result['name']] += 1
-      if names_hash[result['name']] > 1
+      names_hash[parse_name(result)] += 1
+      if names_hash[parse_name(result)] > 1
         extra_info = if result['first_air_date'].to_s != ''
                        Time.parse(result['first_air_date'].to_s).year
                      else
                        result['id']
-        end
-        "#{result['name']} (#{extra_info})"
+                     end
+        "#{parse_name(result)} (#{extra_info})"
       else
-        result['name']
+        parse_name(result)
       end
+    end
+  end
+
+  # Movies name the titles and tv shows name the names
+  # This is just so I can standardize the lookup
+  def parse_name(result)
+    result['title'] || result['name']
+  end
+
+  def runtime(type:, id:)
+    response = request("#{type}/#{id}")
+
+    if type == :tv
+      episode_run_time = response['episode_run_time'] || [0]
+      { min: episode_run_time.min, max: episode_run_time.max }
+    else
+      runtime = response['runtime'].to_i
+      { min: runtime, max: runtime }
     end
   end
 end

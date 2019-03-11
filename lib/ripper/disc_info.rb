@@ -2,15 +2,7 @@
 
 class DiscInfo
   include ArrayHelper
-  Detail = Struct.new(:string, :integer_one, :integer_two, :titles) do
-    include ArrayHelper
-
-    def titles_as_ranges
-      return @titles_as_ranges if @titles_as_ranges
-
-      @titles_as_ranges = ranges_from_integers(titles.to_a)
-    end
-  end
+  Detail = Struct.new(:id, :code_one, :code_two, :value)
 
   attr_accessor(
     :content, :device_identifier, :mount_point,
@@ -56,17 +48,6 @@ class DiscInfo
     "/dev/#{device_identifier}"
   end
 
-  def consolidated_details
-    return @consolidated_details if @consolidated_details
-
-    @consolidated_details = {}
-    details.each do |detail|
-      @consolidated_details[detail.titles_as_ranges.first] ||= []
-      @consolidated_details[detail.titles_as_ranges.first].push(detail)
-    end
-    @consolidated_details
-  end
-
   def details
     return @details if @details
 
@@ -74,13 +55,7 @@ class DiscInfo
   end
 
   def titles
-    return @titles if @titles
-
-    @titles = Set.new
-    details.each do |detail|
-      @titles.merge(detail.titles)
-    end
-    @titles
+    details.keys
   end
 
   def reload
@@ -90,7 +65,6 @@ class DiscInfo
     self.size = disc_info.size
     self.volume_name = disc_info.volume_name
     @details = nil
-    @titles = nil
     self
   end
 
@@ -111,7 +85,7 @@ class DiscInfo
 
   def disc_present?
     reload
-    size > 0
+    size.positive?
   end
 
   # the Title Seconds are in the same order as the titles.
@@ -121,21 +95,44 @@ class DiscInfo
   def title_seconds
     return @title_seconds if @title_seconds
 
-    titles.map do |title|
-      detail = details.find do |a_detail|
-        a_detail.titles.include?(title) && a_detail.integer_two.zero? &&
-          a_detail.string.match(/[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}/)
-      end
-      convert_formatted_time_to_seconds(detail.string)
+    @title_seconds = {}
+
+    details.each do |title, information|
+      detail = information.find { |info| info.code_one == 9 }
+      if detail.nil?
+        raise(
+          Ripper::Terminate,
+          "failed to resolve title the run time for #{title}. "\
+          'This might be because of a bad disc or more then likey a bug in this code'
+        )
+        end
+      title_seconds[title] = convert_formatted_time_to_seconds(detail.value)
     end
+    @title_seconds
+  end
+
+  # build a sort of user reable string of details and information
+  def friendly_details
+    return @friendly_titles if @friendly_titles
+
+    @friendly_titles = []
+    details.each do |title, detail|
+      length = detail.find { |d| d.code_one == 9 }.value
+      name = detail.find { |d| d.code_one == 2 }.value
+      file_size = detail.find { |d| d.code_one == 10 }.value
+      file_name = detail.find { |d| d.code_one == 27 }.value
+      @friendly_titles.push(
+        title: title,
+        name: "#{name} Runtime (#{length}) Size (#{file_size}) File Name #{file_name.inspect}"
+      )
+    end
+    @friendly_titles
   end
 
   def tiles_with_length
-    return disc_info.titles if Config.configuration.maxlength.nil?
-
-    titles.select.with_index do |_title, index|
-      title_seconds[index] <= Config.configuration.maxlength &&
-        title_seconds[index] >= Config.configuration.minlength
+    details.select do |title|
+      title_seconds[title] <= (Config.configuration.maxlength || title_seconds[title]) &&
+        title_seconds[title] >= (Config.configuration.minlength || title_seconds[title])
     end
   end
 
@@ -147,6 +144,8 @@ class DiscInfo
 
   def convert_formatted_time_to_seconds(formatted_time)
     hours, minutes, seconds = formatted_time.split(':').map(&:to_i)
+    return 0 if hours.nil? && minutes.nil? && seconds.nil?
+
     minutes += (hours * 60)
     seconds += (minutes * 60)
     seconds
@@ -155,46 +154,28 @@ class DiscInfo
   # rubocop:disable AbcSize, CyclomaticComplexity, MethodLength
   def parse_disk_info_string(disk_info_string)
     lines = disk_info_string.split("\n")
-    details = []
+    titles = {}
     lines.each do |line|
       match = line.delete('"').match(/(\A.*?):(.*)/)
       values = match[2].split(',')
       case match[1]
-      when 'TINFO'
-        dup_detail = details.find do |detail|
-          detail.string == values[3] && detail.integer_one == values[1].to_i
-        end
-        if dup_detail
-          dup_detail.titles.add(values[0].to_i)
-        else
-          details << Detail.new(
-            values[3].to_s,
+      when 'SINFO', 'TINFO'
+        titles[values[0].to_i] ||= []
+        titles[values[0].to_i].push(
+          Detail.new(
+            values[0].to_i,
             values[1].to_i,
             values[2].to_i,
-            Set[values[0].to_i]
+            values[3].to_s.delete('"').delete('\\')
           )
-        end
-      when 'SINFO'
-        dup_detail = details.find do |detail|
-          detail.string == values[4].to_s
-        end
-        if dup_detail
-          dup_detail.titles.add(values[0].to_i)
-        else
-          details << Detail.new(
-            values[4].to_s,
-            values[2].to_i,
-            values[3].to_i,
-            Set[values[0].to_i]
-          )
-        end
+        )
       end
     end
-    if details.size.zero?
-      Logger.error('No disk information found', delayed: true)
-      Logger.error(disk_info_string, delayed: true)
+    if titles.size.zero?
+      Logger.error(disk_info_string)
+      raise Ripper::Abort, 'No disk information found'
     end
-    details
+    titles
   end
   # rubocop:enable AbcSize, CyclomaticComplexity, MethodLength
 end

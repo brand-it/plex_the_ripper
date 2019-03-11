@@ -5,10 +5,9 @@ class CreateMKV
     def disc_info
       check_if_mkv_exists
       response = Shell.capture3(disk_info_command)
-
       return response.stdout_str if response.status.success?
 
-      raise_message_error(response.stdout_str)
+      raise_message_error(response)
     end
 
     def check_if_mkv_exists
@@ -25,18 +24,20 @@ class CreateMKV
         Config.configuration.makemkvcon_path,
         'info',
         Config.configuration.disk_source,
-        "--minlength=#{Config.configuration.minlength}",
         '-r'
       ].join(' ')
     end
 
-    def raise_message_error(stdout_str)
-      messages = stdout_str.split("\n").select { |m| m =~ /^MSG/ }
+    def raise_message_error(response)
+      messages = response.stdout_str.split("\n").select { |m| m =~ /^MSG/ }
 
       messages = messages.map do |message|
         message_array = message.split(',')
         message_array[message_array.length - 3].delete('"').delete('\\')
       end
+      messages.push(response.status.to_s)
+      messages.push(response.stderr_str)
+
       raise Ripper::Terminate, messages.join("\n")
     end
   end
