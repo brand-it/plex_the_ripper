@@ -22,6 +22,8 @@ class OptParser
       end
 
       opts.on('-a', '--api-key [Key]', String, 'API key provide by themoviedb.org') do |value|
+        Logger.info('API provided for themovidedb and will try to use the data to help rip movie')
+
         Config.configuration.the_movie_db_config.api_key = value
       end
 
@@ -32,6 +34,7 @@ class OptParser
         'Slack Web Hook. Can be handy if you want to notify a '\
         'channel of the progress or details of how the rip is going'
       ) do |value|
+        Logger.info("Slack URL provided and all notifications will be sent to the #{value}")
         Config.configuration.slack_url = value
       end
 

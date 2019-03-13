@@ -32,6 +32,10 @@ class TheMovieDB
     request("tv/#{tv_id}/season/#{season_number}/episode/#{episode_number}")
   end
 
+  def season(tv_id:, season_number:)
+    request("tv/#{tv_id}/season/#{season_number}")
+  end
+
   # This build a bunch of uniq names that can be used to build the names of the files.
   # These uniq names work best as they play nice with the Plex data and plus then you can
   # tell if you have which movie is from 1999 and 2032.
@@ -61,8 +65,12 @@ class TheMovieDB
     result['title'] || result['name']
   end
 
+  def video(type:, id:)
+    request("#{type}/#{id}")
+  end
+
   def runtime(type:, id:)
-    response = request("#{type}/#{id}")
+    response = video(type: type, id: id)
 
     if type == :tv
       episode_run_time = response['episode_run_time'] || [0]

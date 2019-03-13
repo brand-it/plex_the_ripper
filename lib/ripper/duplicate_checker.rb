@@ -24,10 +24,9 @@ class DuplicateChecker
     episode = find_tv_episodes.first
     episodes = find_tv_episodes.map(&:number)
 
-    yes = Shell.ask_value_required(
+    yes = TTY::Prompt.new.yes?(
       "Duplicates found do you want to replace #{episode.season.tv_show.title}"\
-      " Season #{episode.season.number} Episodes #{episodes.min} to #{episodes.max}? (Yes|No) ",
-      type: TrueClass
+      " Season #{episode.season.number} Episodes #{episodes.min} to #{episodes.max}?"
     )
     yes ? delete_tv_files : abort
   end
@@ -42,7 +41,7 @@ class DuplicateChecker
 
     season.episodes.select do |episode|
       min = Config.configuration.episode
-      max = min + Config.configuration.total_episodes
+      max = min + Config.configuration.selected_titles.size
       episode.number >= min && episode.number <= max
     end
   end

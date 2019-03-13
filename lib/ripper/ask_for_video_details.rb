@@ -10,6 +10,7 @@ class AskForVideoDetails
   class << self
     def perform
       ask_for_video_details = AskForVideoDetails.new
+      ask_for_video_details.update_type
       ask_for_video_details.ask_for_video_name
       ask_for_video_details.check_against_movie_database
       ask_for_video_details.update_runtime
@@ -23,6 +24,15 @@ class AskForVideoDetails
     config.video_name.to_s != ''
   end
 
+  def update_type
+    options = if config.type == :tv
+                %i[tv movie]
+              else
+                %i[movie tv]
+              end
+    config.type = TTY::Prompt.new.select('Please select a video type', options)
+  end
+
   def ask_for_video_name
     until video_name_present?
       config.video_name = Shell.ask_value_required(
@@ -34,7 +44,7 @@ class AskForVideoDetails
   end
 
   def check_against_movie_database
-    return if request_video_names.nil?
+    return if request_video_names.empty?
 
     if request_video_names['total_results'] == 1
       config.the_movie_db_config.selected_video = request_video_names['results'].first
@@ -104,5 +114,4 @@ class AskForVideoDetails
     ask_for_video_name
     @request_video_names = nil # clear the local cache because of video_name changing
   end
-
 end

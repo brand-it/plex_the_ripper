@@ -9,20 +9,28 @@ class Ripper
   class Terminate < RuntimeError; end
 
   class << self
+
+    def terminate
+      return unless @threads
+
+      @threads.each { |t| Thread.kill t }
+      @threads = []
+    end
+
     def perform
       Thread.report_on_exception = Config.configuration.verbose
       Thread.abort_on_exception = true
-      threads = []
-      threads << Thread.new do
+      @threads = []
+      @threads << Thread.new do
         AskForDiscSelector.perform
         AskForFilePathBuilder.perform
         AskForVideoDetails.perform
         AskForMovieDetails.perform
         AskForTVDetails.perform
       end
-      threads << Thread.new { VideosLoader.perform }
-      threads << Thread.new { LoadDiscDetails.perform }
-      threads.each(&:join)
+      @threads << Thread.new { VideosLoader.perform }
+      @threads << Thread.new { LoadDiscDetails.perform }
+      @threads.each(&:join)
       Shell.puts_buffer
       DuplicateChecker.perform
       CreateMKV::Movie.perform
@@ -31,14 +39,14 @@ class Ripper
       Config.configuration.reset!
       Ripper.perform
     rescue Ripper::Abort => exception
-      threads.each { |t| Thread.kill t }
+      terminate
       Logger.warning(exception.message)
       Config.configuration.selected_disc_info.eject
       Config.configuration.reset!
       Ripper.perform
     rescue Ripper::Terminate => exception
       Logger.error(exception.message)
-      threads.each { |t| Thread.kill t }
+      terminate
     end
 
     def fixer
@@ -52,7 +60,7 @@ class Ripper
       Ripper.perform
     rescue Ripper::Terminate => exception
       Logger.error(exception.message)
-      threads.each { |t| Thread.kill t }
+      terminate
     end
   end
 end

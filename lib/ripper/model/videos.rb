@@ -2,6 +2,34 @@
 
 class Videos < Model
   columns(movies: Array, tv_shows: Array)
+  class << self
+    def load
+      tv_shows = Dir.glob(
+        File.join(
+          Config.configuration.media_directory_path,
+          Config.configuration.tv_shows_directory_name,
+          '**', '*.mkv'
+        )
+      )
+      movies = Dir[
+        File.join(
+          Config.configuration.media_directory_path,
+          Config.configuration.movies_directory_name,
+          '**', '*.mkv'
+        )
+      ]
+      { movies: movies, tv_shows: tv_shows }
+    end
+
+    # This get the Name of the movie or folder that the movies are in.
+    # mkv_path should be the absolute path of where the mvk video is
+    # directory_name should be "TV Shows" or "Movies". But that can be custom
+    # depending on the user settings
+    def get_name_from_path(mkv_path, directory_name)
+      name_path = mkv_path.split(directory_name).last
+      name_path.split('/').reject { |x| x == '' }.first.strip
+    end
+  end
 
   def movie_present?(name:)
     find_movie(name) != nil

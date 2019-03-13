@@ -29,14 +29,13 @@ class AskForDiscSelector
   end
 
   def ask_user_which_disk(discs)
-    discs.each { |d| Logger.info(d.describe) }
     while selected_disc.nil?
-      device_identifier = Shell.ask_value_required(
-        'There where multiple discs found which one do you want to use'\
-        " (#{discs.first.device_identifier})? "
-      )
-      self.selected_disc = discs.find do |d|
-        d.device_identifier == device_identifier
+      self.selected_disc = TTY::Prompt.new.select(
+        'There where multiple discs found which one do you want to use'
+      ) do |menu|
+        discs.each do |disc|
+          menu.choice disc.describe, disc
+        end
       end
     end
   end

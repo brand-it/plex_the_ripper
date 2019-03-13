@@ -151,7 +151,7 @@ class DiscInfo
     seconds
   end
 
-  # rubocop:disable AbcSize, CyclomaticComplexity, MethodLength
+  # rubocop:disable AbcSize
   def parse_disk_info_string(disk_info_string)
     lines = disk_info_string.split("\n")
     titles = {}
@@ -177,5 +177,5 @@ class DiscInfo
     end
     titles
   end
-  # rubocop:enable AbcSize, CyclomaticComplexity, MethodLength
+  # rubocop:enable AbcSize
 end

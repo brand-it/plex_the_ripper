@@ -62,7 +62,7 @@ class Config
   end
 
   def minlength=(value)
-    return @minlength = value if value && value.positive?
+    return @minlength = value if value&.positive?
 
     @minlength = 1
   end
@@ -87,7 +87,11 @@ class Config
 
   def media_directory_path=(value)
     @log_directory = nil
-    @media_directory_path = File.join(File.expand_path(value))
+    if value
+      @media_directory_path = File.join(File.expand_path(value))
+    else
+      @media_directory_path = nil
+    end
   end
 
   def reset!

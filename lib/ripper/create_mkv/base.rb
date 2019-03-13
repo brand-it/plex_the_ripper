@@ -15,11 +15,20 @@ class CreateMKV
       create_directory_path
     end
 
+
+    def create_mkv
+      Config.configuration.selected_titles.each do |title|
+        Logger.info("Ripping Title #{title}")
+        status = mkv_system!(title: title)
+        process_status!(status, title)
+      end
+    end
+
     def mkv_files(reload: false)
       @mkv_files = nil if reload
       @mkv_files ||= Dir.entries(directory).select do |episode|
         File.extname(episode) == '.mkv'
-      end
+      end.sort
     end
 
     def notify_slack_success

@@ -20,12 +20,9 @@ class CreateMKV
       end
     end
 
-    def create_mkv
-      Config.configuration.selected_titles.each do |title|
-        Logger.info("Ripping Title #{title}")
-        status = mkv_system!(title: title)
-        process_status!(status, title)
-      end
+    def add_to_movies
+      videos = Config.configuration.videos
+      videos.add_movie(name: Config.configuration.video_name)
     end
 
     def rename_movies

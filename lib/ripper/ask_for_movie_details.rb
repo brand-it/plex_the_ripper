@@ -41,17 +41,13 @@ class AskForMovieDetails
     return config.selected_titles = titles.keys if titles.size == 1
 
     if titles.empty?
-      raise(
-        Ripper::Abort,
-        'Looks like no titles could be found using this disc.'\
-        ' This is beacuse we could not find titles that where in the expected length of this movie.'
-      )
+      Logger.warning('Could not find a title using min and max. Falling back to using all titles')
+      titles = config.selected_disc_info.titles
     end
-    answer = TTY::Prompt.new.select(
-      'Found multiple titles that matched. Pick one from below'
-    ) do |menu|
+
+    answer = TTY::Prompt.new.select('Found multiple titles that matched. Pick one from below') do |menu|
       config.selected_disc_info.friendly_details.each do |detail|
-        next unless titles.keys.include?(detail[:title])
+        next unless titles.key?(detail[:title])
 
         menu.choice detail[:name], detail[:title]
       end

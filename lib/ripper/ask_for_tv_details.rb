@@ -1,10 +1,12 @@
 # frozen_string_literal: true
 
 class AskForTVDetails
-  attr_accessor :config
+  attr_accessor :config, :tv_show, :season, :episode
 
   def initialize
     self.config = Config.configuration
+    selected_video = config.the_movie_db_config.selected_video
+    self.tv_show = TheMovieDB.new.video(id: selected_video['id'], type: config.type) if selected_video
   end
 
   class << self
@@ -12,7 +14,6 @@ class AskForTVDetails
       return if Config.configuration.type != :tv
 
       ask_for_tv_details = AskForTVDetails.new
-      ask_for_tv_details.update_runtime
       ask_for_tv_details.ask_for_tv_season
       ask_for_tv_details.ask_for_disc_number
       ask_for_tv_details.ask_for_tv_episode
@@ -24,17 +25,41 @@ class AskForTVDetails
   end
 
   def ask_for_tv_season
-    config.tv_season = Shell.ask_value_required(
-      "What season is this (#{config.tv_season}): ",
-      type: Integer, default: config.tv_season
-    )
+    config.tv_season = if tv_show
+      answer = TTY::Prompt.new.select('Select a season') do |menu|
+        default = tv_show['seasons'].index { |e| e['season_number'] == config.tv_season }
+        menu.default default + 1 if default
+
+        tv_show['seasons'].each do |season|
+          menu.choice season['name'], season['season_number']
+        end
+      end
+      self.season = TheMovieDB.new.season(tv_id: tv_show['id'], season_number: config.tv_season)
+      answer
+    else
+      Shell.ask_value_required(
+        "What season is this (#{config.tv_season}):",
+        type: Integer, default: config.tv_season
+      )
+    end
   end
 
   def ask_for_tv_episode
-    config.episode = Shell.ask_value_required(
-      "What is the start episode (#{config.episode}): ",
-      type: Integer, default: config.episode
-    )
+    config.episode = if season
+      TTY::Prompt.new.select('Select a Episode') do |menu|
+        default = season['episodes'].index { |e| e['episode_number'] == config.episode }
+        menu.default default + 1 if default
+
+        season['episodes'].each do |episode|
+          menu.choice episode['name'], episode['episode_number']
+        end
+      end
+    else
+      Shell.ask_value_required(
+        "What is the episode number (#{config.episode}): ",
+        type: Integer, default: config.episode
+      )
+    end
   end
 
   def ask_for_disc_number
@@ -46,19 +71,19 @@ class AskForTVDetails
 
   def ask_user_to_select_titles
     titles = config.selected_disc_info.tiles_with_length
-    selections = titles.each_with_object(Hash.new('')) { |i, h| h[i] = '' }
-    config.selected_disc_info.details.each do |details|
-      next if details.integer_one != 27
-      next unless selections.include?[titles.first]
 
-      selections[details.string] = details.titles.first
+    if titles.empty?
+      Logger.warning('Could not find a title using min and max. Falling back to using all titles')
+      titles = config.selected_disc_info.titles
     end
-    config.selected_titles = prompt.multi_select('Select Titles', selections)
-  end
+    config.selected_titles = TTY::Prompt.new.multi_select(
+      'Found a few options. Select the episodes on this disc'
+    ) do |menu|
+      config.selected_disc_info.friendly_details.each do |detail|
+        next unless titles.key?(detail[:title])
 
-  def request_tv_show_names
-    @request_tv_show_names ||= TheMovieDB.new.search(
-      type: 'tv', query: config.video_name
-    )
+        menu.choice detail[:name], detail[:title]
+      end
+    end
   end
 end

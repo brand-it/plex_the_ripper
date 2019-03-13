@@ -9,7 +9,7 @@ class CreateMKV
         tv = CreateMKV::TV.new
         tv.start!
         tv.create_mkv
-        tv.delete_extra_episodes
+        # tv.delete_extra_episodes no longer doing this..... we ask the user to select the titles
         tv.rename_seasons
         tv.update_config
         tv.finished!
@@ -22,13 +22,7 @@ class CreateMKV
       Config.configuration.disc_number += 1
     end
 
-    def create_mkv
-      Config.configuration.selected_titles.each do |title|
-        status = mkv_system!(title: title)
-        process_status!(status, title)
-      end
-    end
-
+    # Don't use this was nice but it was not ideal...
     def delete_extra_episodes
       if mkv_files.size == Config.configuration.total_episodes
         return Logger.success('All right everything looks good')

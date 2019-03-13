@@ -29,12 +29,14 @@ class AskForFilePathBuilder
   end
 
   def ask_for_media_directory
+    current_path = Config.configuration.media_directory_path
     until media_directory_path_exist?
+      Config.configuration.media_directory_path = nil
       Config.configuration.media_directory_path = Shell.ask_value_required(
-        "Could not find #{Config.configuration.media_directory_path}"\
-        ' please use a different folder/directory: ',
-        type: String, default: Config.configuration.media_directory_path
+        "Could not find #{current_path} please use a different folder/directory: ",
+        type: String, default: current_path
       )
+      current_path = Config.configuration.media_directory_path
     end
   end
 
