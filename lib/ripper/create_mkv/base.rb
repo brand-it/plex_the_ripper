@@ -15,7 +15,6 @@ class CreateMKV
       create_directory_path
     end
 
-
     def create_mkv
       Config.configuration.selected_titles.each do |title|
         Logger.info("Ripping Title #{title}")

@@ -26,39 +26,39 @@ class AskForTVDetails
 
   def ask_for_tv_season
     config.tv_season = if tv_show
-      answer = TTY::Prompt.new.select('Select a season') do |menu|
-        default = tv_show['seasons'].index { |e| e['season_number'] == config.tv_season }
-        menu.default default + 1 if default
+                         answer = TTY::Prompt.new.select('Select a season') do |menu|
+                           default = tv_show['seasons'].index { |e| e['season_number'] == config.tv_season }
+                           menu.default default + 1 if default
 
-        tv_show['seasons'].each do |season|
-          menu.choice season['name'], season['season_number']
-        end
-      end
-      self.season = TheMovieDB.new.season(tv_id: tv_show['id'], season_number: config.tv_season)
-      answer
-    else
-      Shell.ask_value_required(
-        "What season is this (#{config.tv_season}):",
-        type: Integer, default: config.tv_season
-      )
+                           tv_show['seasons'].each do |season|
+                             menu.choice season['name'], season['season_number']
+                           end
+                         end
+                         self.season = TheMovieDB.new.season(tv_id: tv_show['id'], season_number: config.tv_season)
+                         answer
+                       else
+                         Shell.ask_value_required(
+                           "What season is this (#{config.tv_season}):",
+                           type: Integer, default: config.tv_season
+                         )
     end
   end
 
   def ask_for_tv_episode
     config.episode = if season
-      TTY::Prompt.new.select('Select a Episode') do |menu|
-        default = season['episodes'].index { |e| e['episode_number'] == config.episode }
-        menu.default default + 1 if default
+                       TTY::Prompt.new.select('Select a Episode') do |menu|
+                         default = season['episodes'].index { |e| e['episode_number'] == config.episode }
+                         menu.default default + 1 if default
 
-        season['episodes'].each do |episode|
-          menu.choice episode['name'], episode['episode_number']
-        end
-      end
-    else
-      Shell.ask_value_required(
-        "What is the episode number (#{config.episode}): ",
-        type: Integer, default: config.episode
-      )
+                         season['episodes'].each do |episode|
+                           menu.choice episode['name'], episode['episode_number']
+                         end
+                       end
+                     else
+                       Shell.ask_value_required(
+                         "What is the episode number (#{config.episode}): ",
+                         type: Integer, default: config.episode
+                       )
     end
   end
 

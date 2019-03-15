@@ -9,7 +9,6 @@ class Ripper
   class Terminate < RuntimeError; end
 
   class << self
-
     def terminate
       return unless @threads
 

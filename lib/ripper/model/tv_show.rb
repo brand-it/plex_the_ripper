@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 class TVShow < Model
-  PATTERN_ONE = /\A(?<name>.*)\s\-\ss(?<season>\d\d)e(?<episode>\d\d)/
-  PATTERN_TWO = /\A(?<name>.*)\ss(?<season>\d\d)e(?<episode>\d\d)/
-  PATTERN_THREE = /\A(?<name>.*)\-s(?<season>\d\d)e(?<episode>\d\d)/
+  PATTERN_ONE = /\A(?<name>.*)\s\-\ss(?<season>\d\d)e(?<episode>\d\d)/.freeze
+  PATTERN_TWO = /\A(?<name>.*)\ss(?<season>\d\d)e(?<episode>\d\d)/.freeze
+  PATTERN_THREE = /\A(?<name>.*)\-s(?<season>\d\d)e(?<episode>\d\d)/.freeze
 
   columns(title: String, seasons: Array, video: Videos, directory: String)
   validate_presence(:title)
@@ -56,4 +56,5 @@ class TVShow < Model
   end
 
   private
+
 end
