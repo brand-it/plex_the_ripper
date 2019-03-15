@@ -6,7 +6,9 @@ class AskForTVDetails
   def initialize
     self.config = Config.configuration
     selected_video = config.the_movie_db_config.selected_video
-    self.tv_show = TheMovieDB.new.video(id: selected_video['id'], type: config.type) if selected_video
+    if selected_video['id']
+      self.tv_show = TheMovieDB.new.video(id: selected_video['id'], type: config.type)
+    end
   end
 
   class << self

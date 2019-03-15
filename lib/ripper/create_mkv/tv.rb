@@ -9,16 +9,15 @@ class CreateMKV
         tv = CreateMKV::TV.new
         tv.start!
         tv.create_mkv
-        # tv.delete_extra_episodes no longer doing this..... we ask the user to select the titles
         tv.rename_seasons
         tv.update_config
         tv.finished!
         tv.notify_slack_success
+        tv
       end
     end
 
     def update_config
-      Config.configuration.episode = mkv_files(reload: true).size + 1
       Config.configuration.disc_number += 1
     end
 
@@ -54,18 +53,34 @@ class CreateMKV
     end
 
     def rename_seasons
-      mkv_files(reload: true).each do |episode|
+      mkv_files(reload: true).each_with_index do |episode, index|
         season_number = format('%02d', Config.configuration.tv_season)
-        episode_number = format('%02d', Config.configuration.episode)
-        episode_name = "#{Config.configuration.video_name} "\
-                      "- s#{season_number}e#{episode_number}.mkv"
+        episode_number = format('%02d', Config.configuration.episode + index)
+        episode_name = [
+          Config.configuration.video_name,
+          "s#{season_number}e#{episode_number}",
+          episode_name
+        ].compact.join(' - ')
+        Config.configuration.episode += 1
         old_name = File.join([directory, episode])
-        new_name = File.join([directory, episode_name])
+        new_name = File.join([directory, "#{episode_name}.mkv"])
         File.rename(old_name, new_name)
       end
     end
 
     private
+
+    def episode_name
+      tv_show_id = Config.configuration.the_movie_db_config.selected_video['id']
+      return if tv_show_id.nil?
+
+      season = heMovieDB.new.season(
+        tv_id: tv_show_id, season_number: Config.configuration.tv_season
+      )
+      return if season.nil?
+
+      season['episodes'].find { |e| e['episode_number'].to_i == Config.configuration.episode }['name']
+    end
 
     def sort_episodes_magically!
       # round to a Gigabyte and sort based off that info. This will also remove the

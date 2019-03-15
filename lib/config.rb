@@ -91,8 +91,8 @@ class Config
   end
 
   def reset!
-    self.video_name = nil
-    self.total_episodes = 0
+    self.video_name = nil if Config.configuration.type == :movie
+    self.selected_titles = nil
     self.selected_disc_info = nil
   end
 end

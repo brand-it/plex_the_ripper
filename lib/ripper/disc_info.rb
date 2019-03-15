@@ -101,7 +101,7 @@ class DiscInfo
       detail = information.find { |info| info.code_one == 9 }
       if detail.nil?
         raise(
-          Ripper::Terminate,
+          Plex::Ripper::Terminate,
           "failed to resolve title the run time for #{title}. "\
           'This might be because of a bad disc or more then likey a bug in this code'
         )
@@ -173,7 +173,7 @@ class DiscInfo
     end
     if titles.size.zero?
       Logger.error(disk_info_string)
-      raise Ripper::Abort, 'No disk information found'
+      raise Plex::Ripper::Abort, 'No disk information found'
     end
     titles
   end

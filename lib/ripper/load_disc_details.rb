@@ -8,7 +8,7 @@ class LoadDiscDetails
 
       return if details || details.any?
 
-      raise Ripper::Terminate, 'Failed to load disc something really bad happened'
+      raise Plex::Ripper::Terminate, 'Failed to load disc something really bad happened'
     end
   end
 end

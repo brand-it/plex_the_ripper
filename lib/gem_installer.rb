@@ -15,7 +15,7 @@ class GemInstaller
     def install(lib)
       return false if gem_present?(lib)
 
-      Logger.info("running 'install #{lib}'")
+      Logger.info("running `gem install #{lib}`")
       Gem::GemRunner.new.run(['install', lib])
       Logger.info("failed to 'install #{lib}")
       abort
@@ -24,27 +24,40 @@ class GemInstaller
         Logger.info("Successfully Installed #{lib}")
         true
       else
-        Logger.info("failed to 'install #{lib}")
+        Logger.info("failed to `gem install #{lib}` #{exception.message} #{exception.inspect}")
         abort
       end
+    rescue Gem::InstallError => exception
+      Logger.error("failed to `gem install #{lib}` #{exception.message} #{exception.inspect}")
+      Logger.info("GEM_HOME: #{ENV['GEM_HOME']}")
     end
 
     def bundle_install
-      install('bundle')
+      install('bundler')
       require 'bundler/friendly_errors'
       Bundler.with_friendly_errors do
         require 'bundler/cli'
-        Bundler::CLI.start(["--path=#{ENV['GEM_HOME']}"])
+        Bundler::CLI.start(["--path=#{ENV['GEM_HOME']}", '--without=test'])
       end
     end
 
+    def reset!
+      FileUtils.remove_dir(ENV['GEM_HOME'])
+      uninstall('bundler')
+    end
+
     def reinstall(lib)
-      return install(lib) unless `gem list #{lib}`.include?(lib)
+      uninstall(lib)
+      install(lib)
+    end
+
+
+    def uninstall(lib)
+      return unless gem_present?(lib)
 
       Logger.info("Uninstalling #{lib}")
       Gem::GemRunner.new.run(['uninstall', lib, '-a'])
       Logger.info("Failed to uninstall #{lib}")
-      install(lib)
     rescue StandardError => exception
       Logger.error("Failure #{exception.message}")
     end
@@ -60,11 +73,34 @@ class GemInstaller
       $stderr.reopen original_stderr
     end
 
+    def require_gems
+      begin
+        require 'bundler'
+      rescue LoadError
+        reset!
+        bundle_install
+      end
+      retried = false
+      begin
+        Bundler.require
+      rescue LoadError, Bundler::GemNotFound
+        reset!
+        bundle_install
+        unless retried
+          retried = true
+          retry
+        end
+      end
+    end
+
     private
 
     def gem_present?(lib)
-      !Gem::Specification.find_by_name(lib).nil?
-    rescue Gem::MissingSpecError
+      gem_details = Gem::Specification.find_by_name(lib)
+      return false if gem_details.nil?
+
+      gem_details.gem_dir && File.exist?(gem_details.gem_dir)
+    rescue Gem::MissingSpecError, NoMethodError
       false
     end
   end

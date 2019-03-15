@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require File.expand_path('../lib/ripper', __dir__).to_s
+require File.expand_path('../lib/plex_ripper', __dir__).to_s
 
 Signal.trap('INT') do
   Logger.info("\nGood Bye")
-  Ripper.terminate
+  Plex::Ripper.terminate
   exit 1
 end
 
@@ -15,9 +15,9 @@ begin
   # Config.configuration.movies.update_movies
   # Logger.info "Local: #{Config.configuration.movies.local_movies}"
   # Logger.info "Server: #{Config.configuration.movies.server_movies}"
-  Ripper.perform
+  Plex::Ripper.perform
 rescue Interrupt, TTY::Reader::InputInterrupt
   Logger.info("\nGood Bye")
-  Ripper.terminate
+  Plex::Ripper.terminate
   exit 1
 end

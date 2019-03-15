@@ -57,7 +57,7 @@ class Shell
             Logger.info "#{message} ... #{chars[(index += 1) % chars.length]}", rewrite: true
           end
         rescue Timeout::Error => exception
-          raise Ripper::Abort, "Timeout #{exception.message}"
+          raise Plex::Ripper::Abort, "Timeout #{exception.message}"
         end
       end
     end
@@ -74,7 +74,7 @@ class Shell
 
       answer.to_s
     rescue TTY::Reader::InputInterrupt
-      raise Ripper::Terminate, 'Good bye'
+      raise Plex::Ripper::Terminate, 'Good bye'
     end
 
     def ask_value_required(question = nil, type: String, default: nil)

@@ -14,7 +14,7 @@ class CreateMKV
       return if File.executable?(Config.configuration.makemkvcon_path)
 
       raise(
-        Ripper::Terminate,
+        Plex::Ripper::Terminate,
         'Please download the latest version of Make MKV at http://www.makemkv.com/download/'
       )
     end
@@ -38,7 +38,7 @@ class CreateMKV
       messages.push(response.status.to_s)
       messages.push(response.stderr_str)
 
-      raise Ripper::Terminate, messages.join("\n")
+      raise Plex::Ripper::Terminate, messages.join("\n")
     end
   end
 end

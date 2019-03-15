@@ -2,7 +2,7 @@
 
 # Configuration Information for the ripper application
 class TheMovieDBConfig
-  attr_accessor :selected_video
+  attr_writer :selected_video
   attr_reader :api_key
 
   def invalid_api_key?
@@ -24,5 +24,11 @@ class TheMovieDBConfig
     @api_key = value
 
     @api_key = nil if invalid_api_key?
+  end
+
+  def selected_video
+    return {} if @selected_video.nil?
+
+    @selected_video
   end
 end

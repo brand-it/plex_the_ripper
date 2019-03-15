@@ -1,11 +1,11 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require File.expand_path('../lib/ripper', __dir__).to_s
+require File.expand_path('../lib/plex_ripper', __dir__).to_s
 
 OptParser.parse(ARGV)
-Ripper.ask_questions
-Ripper.log_tv_info
-# Ripper.which_disc?
+Plex::Ripper.ask_questions
+Plex::Ripper.log_tv_info
+# Plex::Ripper.which_disc?
 make_mkv = MakeMKVCon.new
-Ripper.upload(Config.configuration.selected_disc_info, make_mkv)
+Plex::Ripper.upload(Config.configuration.selected_disc_info, make_mkv)

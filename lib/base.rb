@@ -7,7 +7,7 @@ require File.expand_path('config', __dir__).to_s
 require File.expand_path('logger', __dir__).to_s
 require File.expand_path('shell', __dir__).to_s
 
-GemInstaller.bundle_install
+GemInstaller.require_gems
 
 require 'fileutils'
 require 'pathname'
@@ -15,7 +15,7 @@ require 'optparse'
 require 'open3'
 require 'timeout'
 require 'shellwords'
-Bundler.require
+
 Dir[
   File.expand_path('ripper/helpers/', __dir__) + '/*.rb'
 ].each do |helpers|

@@ -48,7 +48,7 @@ class DuplicateChecker
 
   def abort
     raise(
-      Ripper::Abort,
+      Plex::Ripper::Abort,
       "Can't Rip #{Config.configuration.video_name} all ready has been ripped"
     )
   end
