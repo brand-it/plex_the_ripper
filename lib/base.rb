@@ -1,5 +1,8 @@
 # frozen_string_literal: true
-
+puts(
+  "WARNING: #{RUBY_VERSION} is not tested. "\
+  'There might be issues with it using version older then 2.3'
+) if RUBY_VERSION.to_f < 2.3
 # This load order is important, Remeber changing the order could effect the code
 require File.expand_path('gem_installer', __dir__).to_s
 require File.expand_path('the_movie_db_config', __dir__).to_s
