@@ -7,7 +7,9 @@ describe CreateMKV::TV do
     Config.configuration.video_name = name
     Config.configuration.episode = 1
     Config.configuration.disc_number = 1
+    Config.configuration.selected_titles = [1, 2]
     FileUtils.mkdir_p(AskForFilePathBuilder.path)
+    allow_any_instance_of(CreateMKV::TV).to receive(:mkv_system!).and_return(double(success?: true))
   end
 
   let(:name) { Faker::FunnyName.name }
@@ -33,20 +35,17 @@ describe CreateMKV::TV do
   end
 
   describe '.perform' do
+    before { create_mkv_files }
     subject(:perform) { CreateMKV::TV.perform }
     it { expect { perform }.to_not raise_exception }
     context 'make mkv creates 2 files' do
-      before do
-        allow_any_instance_of(CreateMKV::TV).to receive(:create_mkv).and_return(create_mkv_files)
-        perform
-      end
+      before { perform }
       it { expect(perform.mkv_files(reload: true).size).to eq mkv_titles.size }
       it { expect(perform.mkv_files(reload: true).first).to eq "#{name} - s01e01.mkv" }
     end
 
     context 'when a the movie db api key is present' do
       before do
-        allow_any_instance_of(CreateMKV::TV).to receive(:create_mkv).and_return(create_mkv_files)
         stub_valid_api_key
         Config.configuration.the_movie_db_config.selected_video = the_movie_db_tv
         allow(TheMovieDB::Season).to receive(:find).and_return(the_movie_db_season)

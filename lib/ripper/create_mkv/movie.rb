@@ -14,7 +14,6 @@ class CreateMKV
         movie = CreateMKV::Movie.new
         movie.start!
         movie.create_mkv
-        movie.rename_movies
         movie.finished!
         movie.notify_slack_success
       end
@@ -25,19 +24,17 @@ class CreateMKV
       videos.add_movie(name: Config.configuration.video_name)
     end
 
-    def rename_movies
-      movies = mkv_files.sort
-      movies.each_with_index do |movie, index|
-        number = format('%02d', index)
-        movie_name = if movies.size > 1
-                       "#{Config.configuration.video_name} - #{number}.mkv"
-                     else
-                       "#{Config.configuration.video_name}.mkv"
-                     end
-        old_name = File.join([directory, movie])
-        new_name = File.join([directory, movie_name])
-        File.rename(old_name, new_name)
-      end
+    # The index is the number or title in the list. This helps if
+    def rename_mkv(mkv_file_name:, index:)
+      number = format('%02d', index)
+      movie_name = if index != 1
+                     "#{Config.configuration.video_name} - #{number}.mkv"
+                   else
+                     "#{Config.configuration.video_name}.mkv"
+                   end
+      old_name = File.join([directory, mkv_file_name])
+      new_name = File.join([directory, movie_name])
+      File.rename(old_name, new_name)
     end
 
     def check_for_multiple_movies
