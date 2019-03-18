@@ -15,7 +15,8 @@ class AskForVideoDetails
       ask_for_video_details.check_against_movie_database
       ask_for_video_details.update_runtime
       Logger.info(
-        "Name of #{Config.configuration.type} is going to be #{Config.configuration.video_name.inspect}"
+        "Name of #{Config.configuration.type} is going to"\
+        " be #{Config.configuration.video_name.inspect}"
       )
     end
   end
@@ -30,32 +31,29 @@ class AskForVideoDetails
               else
                 %i[movie tv]
               end
-    config.type = TTY::Prompt.new.select('Please select a video type', options)
+    config.type = Shell.prompt.select('Please select a video type', options)
   end
 
   def ask_for_video_name
     until video_name_present?
-      config.video_name = Shell.ask_value_required(
-        "What is the Name of this #{config.type}: ", type: String
-      ) do
-        Logger.info(config.selected_disc_info.reload.describe) if config.selected_disc_info
-      end
+      config.video_name = Shell.ask("What is the Name of this #{config.type}:", type: String)
     end
   end
 
   def check_against_movie_database
-    return if request_video_names.empty?
-
-    if request_video_names['total_results'] == 1
-      config.the_movie_db_config.selected_video = request_video_names['results'].first
-      config.video_name = request_video_names['results'].first['name']
-    end
-
-    if request_video_names['results'].any?
-      select_video_from_results(request_video_names)
-    else
-      ask_for_a_different_name
+    if Config.configuration.the_movie_db_config.invalid_api_key?
+      config.the_movie_db_config.selected_video = nil
+    elsif request_videos.size.zero?
+      config.the_movie_db_config.selected_video = nil
+      config.video_name = nil
+      @request_videos = nil
+      ask_for_video_name
       check_against_movie_database
+    elsif request_videos.size == 1
+      config.the_movie_db_config.selected_video = request_videos.first
+      config.video_name = request_videos.first.name
+    else
+      select_video_from_results(request_videos)
     end
   end
 
@@ -63,7 +61,7 @@ class AskForVideoDetails
     selected_video = config.the_movie_db_config.selected_video
     return if selected_video.nil?
 
-    runtime = TheMovieDB.new.runtime(type: config.type, id: selected_video['id'])
+    runtime = selected_video.runtime
     # margin = config.type == :movie ? 30 : 5
     margin = 2 # how much of wiggle room we want to give the movie times
 
@@ -75,28 +73,18 @@ class AskForVideoDetails
     )
   end
 
-  def request_video_names
-    @request_video_names ||= TheMovieDB.new.search(
-      type: config.type, query: config.video_name
-    )
+  def request_videos
+    @request_videos ||= if config.type == :tv
+                          TheMovieDB::TV.search(config.video_name)
+                        else
+                          TheMovieDB::Movie.search(config.video_name)
+                        end
   end
 
-  def select_video_from_results(search)
-    if search['total_results'].to_i.zero?
-      config.the_movie_db_config.selected_video = nil
-      config.video_name = nil
-      return
-    end
+  def select_video_from_results(request_videos)
+    names = TheMovieDB::Movie.uniq_names(request_videos)
 
-    if search['total_results'].to_i == 1
-      config.the_movie_db_config.selected_video = search['results'].first
-      config.video_name = TheMovieDB.new.uniq_names(search['results']).first
-      return
-    end
-
-    names = TheMovieDB.new.uniq_names(search['results'])
-
-    answer = TTY::Prompt.new.select(
+    answer = Shell.prompt.select(
       "Found multiple titles that matched (#{config.video_name}). Pick one from below"
     ) do |menu|
       names.each_with_index do |name, index|
@@ -104,14 +92,7 @@ class AskForVideoDetails
       end
     end
 
-    config.the_movie_db_config.selected_video = search['results'][answer]
+    config.the_movie_db_config.selected_video = request_videos[answer]
     config.video_name = names[answer]
-  end
-
-  def ask_for_a_different_name
-    Logger.warning('When looking up the title in themoviedb.org we could not find TV title')
-    config.video_name = nil
-    ask_for_video_name
-    @request_video_names = nil # clear the local cache because of video_name changing
   end
 end

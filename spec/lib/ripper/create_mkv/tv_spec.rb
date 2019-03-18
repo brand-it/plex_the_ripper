@@ -1,5 +1,6 @@
-describe CreateMKV::TV do
+# frozen_string_literal: true
 
+describe CreateMKV::TV do
   before do
     Config.configuration.type = :tv
     Config.configuration.video_name = name
@@ -10,7 +11,7 @@ describe CreateMKV::TV do
   let(:name) { Faker::FunnyName.name }
 
   let(:mkv_titles) do
-    ["Star Trek Season 1- Disc 7_t00.mkv", "Star Trek Season 1- Disc 7_t02.mkv"]
+    ['Star Trek Season 1- Disc 7_t00.mkv', 'Star Trek Season 1- Disc 7_t02.mkv']
   end
 
   let(:create_mkv_files) do

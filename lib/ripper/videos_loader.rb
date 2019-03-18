@@ -16,14 +16,18 @@ class VideosLoader
   def load_videos
     videos = Videos.load
     videos[:movies].each do |movie_path|
-      Config.configuration.videos.add_movie(Movie.mkv_path_to_hash(movie_path))
-    rescue Model::Validation => exception
-      Logger.error("#{exception.message} #{movie_path} #{movie}")
+      begin
+        Config.configuration.videos.add_movie(Movie.mkv_path_to_hash(movie_path))
+      rescue Model::Validation => exception
+        Logger.error("#{exception.message} #{movie_path} #{movie}")
+      end
     end
     videos[:tv_shows].each do |tv_show_path|
-      Config.configuration.videos.add_tv_show(TVShow.mkv_path_to_hash(tv_show_path))
-    rescue Model::Validation => exception
-      Logger.error("#{exception.message} #{tv_show_path} #{tv_show}")
+      begin
+        Config.configuration.videos.add_tv_show(TVShow.mkv_path_to_hash(tv_show_path))
+      rescue Model::Validation => exception
+        Logger.error("#{exception.message} #{tv_show_path} #{tv_show}")
+      end
     end
   end
 

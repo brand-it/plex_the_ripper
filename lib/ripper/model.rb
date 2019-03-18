@@ -22,7 +22,7 @@ module ModelMixin
         define_method "#{name}=" do |value|
           value = self.class.cast_type(type, value)
           if column_presence_required?(name) && (value.nil? || value == '')
-            raise(Model::Validation, "#{name} can't be blank for #{self.class.name}.")
+            raise(Model::Validation, "#{name} can't be blank for #{self.class.name}")
           end
 
           instance_variable_set("@#{name}", value)
@@ -61,7 +61,7 @@ class Model
 
   def initialize(values = {})
     self.class.instance_variable_get('@columns').to_a.each do |key, _type|
-      send("#{key}=", values[key])
+      send("#{key}=", values[key] || values[key.to_s])
     end
   end
 

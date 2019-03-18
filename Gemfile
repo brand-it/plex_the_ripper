@@ -10,8 +10,9 @@ gem 'slack-notifier'
 gem 'tty-prompt'
 
 group :test do
-  gem 'rspec'
   gem 'faker'
+  gem 'rspec'
   gem 'rubocop'
+  gem 'vcr'
+  gem 'webmock'
 end
-

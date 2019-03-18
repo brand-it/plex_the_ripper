@@ -10,7 +10,7 @@ class Config
     :tv_shows_directory_name, :movies_directory_name,
     :the_movie_db_config, :selected_titles, :slack_url
   )
-  attr_writer(:minlength)
+  # attr_writer(:minlength)
   attr_reader(:media_directory_path, :the_movie_db_api_key)
 
   class << self

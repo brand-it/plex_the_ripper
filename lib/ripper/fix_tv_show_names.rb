@@ -35,7 +35,7 @@ class FixTVShowNames
                        "#{tv_show.title} - s#{season_number}e#{episode_number} - #{name}.mkv"
                      else
                        "#{tv_show.title} - s#{season_number}e#{episode_number}.mkv"
-                      end
+                     end
       new_name = File.join([File.dirname(episode.file_path), episode_name])
       Logger.info("Renaming #{episode.file_path} => #{new_name}")
       File.rename(episode.file_path, new_name)

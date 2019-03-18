@@ -1,0 +1,73 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/299534?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - api.themoviedb.org
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After
+      Cache-Control:
+      - public, max-age=28800
+      Content-Type:
+      - application/json;charset=utf-8
+      Date:
+      - Mon, 18 Mar 2019 04:23:33 GMT
+      Etag:
+      - W/"2e1939d443b80dd9a62cc97fe956c371"
+      Server:
+      - openresty
+      Vary:
+      - Accept-Encoding
+      X-Memc:
+      - HIT
+      X-Memc-Age:
+      - '8966'
+      X-Memc-Expires:
+      - '19834'
+      X-Memc-Key:
+      - 29a9d8eec46350f5c41a706e418c8c8b
+      X-Ratelimit-Limit:
+      - '40'
+      X-Ratelimit-Remaining:
+      - '39'
+      X-Ratelimit-Reset:
+      - '1552883023'
+      Content-Length:
+      - '800'
+      Connection:
+      - keep-alive
+    body:
+      encoding: ASCII-8BIT
+      string: '{"adult":false,"backdrop_path":"/9e7OOTa0iIzNZdelleZxdR2HmNd.jpg","belongs_to_collection":{"id":86311,"name":"The
+        Avengers Collection","poster_path":"/qJawKUQcIBha507UahUlX0keOT7.jpg","backdrop_path":"/zuW6fOiusv4X9nnW3paHGfXcSll.jpg"},"budget":500000000,"genres":[{"id":12,"name":"Adventure"},{"id":878,"name":"Science
+        Fiction"},{"id":28,"name":"Action"}],"homepage":"https://www.marvel.com/movies/avengers-endgame","id":299534,"imdb_id":"tt4154796","original_language":"en","original_title":"Avengers:
+        Endgame","overview":"After the devastating events of Avengers: Infinity War,
+        the universe is in ruins due to the efforts of the Mad Titan, Thanos. With
+        the help of remaining allies, the Avengers must assemble once more in order
+        to undo Thanos'' actions and restore order to the universe once and for all,
+        no matter what consequences may be in store.","popularity":93.818,"poster_path":"/bJLYrLIHT1r7cikhWGbpZkxlUpA.jpg","production_companies":[{"id":420,"logo_path":"/hUzeosd33nzE5MCNsZxCGEKTXaQ.png","name":"Marvel
+        Studios","origin_country":"US"}],"production_countries":[{"iso_3166_1":"US","name":"United
+        States of America"}],"release_date":"2019-04-24","revenue":0,"runtime":180,"spoken_languages":[{"iso_639_1":"en","name":"English"}],"status":"Post
+        Production","tagline":"Part of the journey is the end.","title":"Avengers:
+        Endgame","video":false,"vote_average":0.0,"vote_count":0}'
+    http_version: 
+  recorded_at: Mon, 18 Mar 2019 04:23:33 GMT
+recorded_with: VCR 4.0.0

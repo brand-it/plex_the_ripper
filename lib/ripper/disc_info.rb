@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:disable Metrics/ClassLength
+# TODO: This file is a bit long. Make it smaller by splitting up it methods into more classes
 class DiscInfo
   include ArrayHelper
   Detail = Struct.new(:id, :code_one, :code_two, :value)
@@ -105,7 +107,7 @@ class DiscInfo
           "failed to resolve title the run time for #{title}. "\
           'This might be because of a bad disc or more then likey a bug in this code'
         )
-        end
+      end
       title_seconds[title] = convert_formatted_time_to_seconds(detail.value)
     end
     @title_seconds
@@ -151,8 +153,7 @@ class DiscInfo
     seconds
   end
 
-  # rubocop:disable AbcSize
-  def parse_disk_info_string(disk_info_string)
+  def parse_disk_info_string(disk_info_string) # rubocop:disable AbcSize
     lines = disk_info_string.split("\n")
     titles = {}
     lines.each do |line|
@@ -177,5 +178,5 @@ class DiscInfo
     end
     titles
   end
-  # rubocop:enable AbcSize
 end
+# rubocop:enable Metrics/ClassLength

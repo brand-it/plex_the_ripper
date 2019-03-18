@@ -54,7 +54,4 @@ class TVShow < Model
   def find_season(season_number)
     seasons.find { |s| s.number == season_number }
   end
-
-  private
-
 end

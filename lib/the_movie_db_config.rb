@@ -2,7 +2,7 @@
 
 # Configuration Information for the ripper application
 class TheMovieDBConfig
-  attr_writer :selected_video
+  attr_accessor :selected_video
   attr_reader :api_key
 
   def invalid_api_key?
@@ -12,7 +12,7 @@ class TheMovieDBConfig
   def valid_api_key?
     return @valid_api_key if @valid_api_key
 
-    @valid = TheMovieDB.new.request('movie/550') do |response|
+    @valid_api_key = TheMovieDB::Movie.request('authentication/session/new') do |response|
       response.is_a?(Net::HTTPSuccess)
     end
   end
@@ -24,11 +24,5 @@ class TheMovieDBConfig
     @api_key = value
 
     @api_key = nil if invalid_api_key?
-  end
-
-  def selected_video
-    return {} if @selected_video.nil?
-
-    @selected_video
   end
 end

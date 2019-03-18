@@ -23,6 +23,7 @@ Metrics/PerceivedComplexity:
   Max: 10
 
 AllCops:
+  TargetRubyVersion: 2.3
   Exclude:
     - 'gems/**/*'
     - '.bundle/**/*'

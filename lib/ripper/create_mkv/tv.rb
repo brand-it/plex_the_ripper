@@ -74,12 +74,12 @@ class CreateMKV
       tv_show_id = Config.configuration.the_movie_db_config.selected_video['id']
       return if tv_show_id.nil?
 
-      season = heMovieDB.new.season(
+      season = TheMovieDB.new.season(
         tv_id: tv_show_id, season_number: Config.configuration.tv_season
       )
       return if season.nil?
 
-      season['episodes'].find { |e| e['episode_number'].to_i == Config.configuration.episode }['name']
+      episode = season['episodes'].find { |e| e['episode_number'].to_i == Config.configuration.episode }
     end
 
     def sort_episodes_magically!

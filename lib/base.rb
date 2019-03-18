@@ -26,9 +26,13 @@ Dir[
 ].each do |lib|
   require lib
 end
-require File.expand_path('ripper/model/model', __dir__)
 Dir[
   File.expand_path('ripper/model/', __dir__) + '/*.rb'
+].each do |model|
+  require model
+end
+Dir[
+  File.expand_path('ripper/the_movie_db/', __dir__) + '/*.rb'
 ].each do |model|
   require model
 end

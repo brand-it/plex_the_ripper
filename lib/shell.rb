@@ -7,6 +7,11 @@ class Shell
   @buffer = ''
 
   class << self
+
+    def prompt
+      @prompt ||= TTY::Prompt.new
+    end
+
     def puts(string)
       Kernel.puts(string)
     end

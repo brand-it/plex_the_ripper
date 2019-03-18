@@ -51,7 +51,6 @@ class GemInstaller
       install(lib)
     end
 
-
     def uninstall(lib)
       return unless gem_present?(lib)
 
