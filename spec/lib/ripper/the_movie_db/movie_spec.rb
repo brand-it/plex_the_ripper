@@ -23,5 +23,4 @@ describe TheMovieDB::Movie do
     end
     it { expect(search.first).to be_a(TheMovieDB::Movie) }
   end
-
 end

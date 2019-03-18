@@ -31,5 +31,4 @@ RSpec.shared_context 'the_movie_db' do
       TheMovieDB::Movie.find(movie_id)
     end
   end
-
 end

@@ -38,7 +38,6 @@ Dir[File.expand_path('../spec/support', __dir__) + '/**/*.rb'].each do |f|
 end
 
 RSpec.configure do |config|
-
   config.before :each do
     Config.configuration(reload: true)
     Config.configuration.media_directory_path = File.expand_path('../test_files', __dir__)
