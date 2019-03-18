@@ -12,7 +12,7 @@ class Season < Model
     ).last
   end
 
-  def find_episode_by_number(episode_number)
+  def find_episode(episode_number)
     episodes.find { |s| s.number == episode_number }
   end
 end

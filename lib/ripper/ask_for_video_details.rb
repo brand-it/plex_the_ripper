@@ -92,7 +92,7 @@ class AskForVideoDetails
       end
     end
 
-    config.the_movie_db_config.selected_video = request_videos[answer]
+    config.the_movie_db_config.selected_video = TheMovieDB::TV.find(request_videos[answer].id)
     config.video_name = names[answer]
   end
 end

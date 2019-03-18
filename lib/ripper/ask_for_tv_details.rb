@@ -5,10 +5,7 @@ class AskForTVDetails
 
   def initialize
     self.config = Config.configuration
-    selected_video = config.the_movie_db_config.selected_video
-    return if selected_video['id'].nil?
-
-    self.tv_show = TheMovieDB::TV.find(selected_video['id'])
+    self.tv_show = config.the_movie_db_config.selected_video
   end
 
   class << self
@@ -28,18 +25,8 @@ class AskForTVDetails
 
   def ask_for_tv_season
     config.tv_season = if tv_show
-                         answer = TTY::Prompt.new.select('Select a season') do |menu|
-                           default = tv_show.seasons.index do |season|
-                             season.season_number == config.tv_season
-                           end
-                           menu.default default + 1 if default
-
-                           tv_show.seasons.each do |season|
-                             menu.choice season.name, season.season_number
-                           end
-                         end
-                         self.season = tv_show.find_season_by_number(config.tv_season)
-                         answer
+                         self.season = select_season_from_the_movie_db
+                         season.season_number
                        else
                          Shell.ask_value_required(
                            "What season is this (#{config.tv_season}):",
@@ -48,18 +35,10 @@ class AskForTVDetails
                        end
   end
 
+
   def ask_for_tv_episode
     config.episode = if season
-                       TTY::Prompt.new.select('Select a Episode') do |menu|
-                         default = season.episodes.index do |e|
-                           e.episode_number == config.episode
-                         end
-                         menu.default default + 1 if default
-
-                         season.episodes.each do |episode|
-                           menu.choice episode.name, episode.episode_number
-                         end
-                       end
+                       select_episode_from_the_movie_db.episode_number
                      else
                        Shell.ask_value_required(
                          "What is the episode number (#{config.episode}): ",
@@ -68,10 +47,38 @@ class AskForTVDetails
                      end
   end
 
+  def select_season_from_the_movie_db
+    Shell.prompt.select('Select a Season') do |menu|
+      default = tv_show.seasons.index do |season|
+        season['season_number'] == config.tv_season
+      end
+      menu.default default + 1 if default
+
+      tv_show.seasons.each do |season|
+        menu.choice season['name'], TheMovieDB::Season.new(season.merge(tv: tv_show))
+      end
+    end
+  end
+
+  def select_episode_from_the_movie_db
+    Shell.prompt.select('Select a Episode') do |menu|
+      default = season.episodes.index do |e|
+        e['episode_number'] == config.episode
+      end
+      menu.default default + 1 if default
+
+      season.episodes.each do |episode|
+        episode = TheMovieDB::Episode.new(episode)
+        menu.choice episode.name, episode
+      end
+    end
+  end
+
   def ask_for_disc_number
     config.disc_number = Shell.ask_value_required(
       "What is the disc number for (#{config.disc_number}): ",
       type: Integer, default: config.disc_number
+
     )
   end
 
