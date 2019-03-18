@@ -2,6 +2,7 @@
 
 describe TheMovieDB::Movie do
   include_context 'the_movie_db'
+  before { stub_valid_api_key }
   describe '.find' do
     # kinda of confusing but the find is a shared vcr, we are going to test it here however
     subject(:find) { the_movie_db_movie }

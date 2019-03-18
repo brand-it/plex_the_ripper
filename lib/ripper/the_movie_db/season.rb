@@ -14,19 +14,23 @@ module TheMovieDB
     class << self
       include TheMovieDBAPI
 
-      def find(tv_id:, season_number:)
-        request("tv/#{tv_id}/season/#{season_number}")
+      def find(tv:, season_number:) # rubocop:disable UncommunicativeMethodParamName
+        response = request("tv/#{tv.id}/season/#{season_number}")
+        return if response.nil?
+
+        response[:tv] = tv
+        Season.new(response)
       end
     end
 
     def season
-      @season ||= Season.find(tv_id: tv.id, season_number: season_number)
+      @season ||= Season.find(tv: tv, season_number: season_number)
     end
 
     def episodes
       return @episodes if @episodes.any?
 
-      self.episodes = season['episodes']
+      self.episodes = season.episodes
     end
 
     def find_episode_by_number(number)
