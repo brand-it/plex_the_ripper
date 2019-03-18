@@ -18,7 +18,7 @@ module Plex
       end
 
       def perform
-        Thread.report_on_exception = Config.configuration.verbose
+        Thread.report_on_exception = Config.configuration.verbose if Thread.respond_to?(:report_on_exception)
         Thread.abort_on_exception = true
         @threads = []
         @threads << Thread.new do
