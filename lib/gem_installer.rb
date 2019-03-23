@@ -55,8 +55,16 @@ class GemInstaller
       return unless gem_present?(lib)
 
       Logger.info("Uninstalling #{lib}")
-      Gem::GemRunner.new.run(['uninstall', lib, '-a'])
+      Gem::GemRunner.new.run(['uninstall', lib, '-a', '--force', '-x'])
       Logger.info("Failed to uninstall #{lib}")
+    rescue Gem::SystemExitException => exception
+      if exception.exit_code.zero?
+        Logger.info("Successfully Uninstalling #{lib}")
+        true
+      else
+        Logger.info("failed to `gem uninstall #{lib}` #{exception.message} #{exception.inspect}")
+        abort
+      end
     rescue StandardError => exception
       Logger.error("Failure #{exception.message}")
     end
