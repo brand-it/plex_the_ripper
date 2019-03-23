@@ -69,3 +69,15 @@ All the other options in the help that I have not given examples for are optiona
 All options are prompted so you should not have to provde extra flags unless you fell it really is needed.
 
 Something else to note. There is a movie duplicate checker in the tool. I added this beause I found if you ripping a large volumne of movies some times you might be creating the same one twice. This also might mean you have a better quality movie. If it prompts you about a duplicate I would be careful. It will delete the original before it start to copy the new file. I have to improve on that so it is a bit safer about how it does this.
+
+
+### Fixer
+
+```shell
+bin/rip_fixer --api-key a15f04ccfb72f83614f8ad670asdf7574
+```
+
+What this script does is it cleans up TV show information. `"#{tv_show.title} - s#{season_number}e#{episode_number} - #{name}.mkv"`
+The format of the TV shows should look something like this. The spacing and the name of the show should be present. However most of the time I found I did not add the name of the show. So I built a script to help cleanup the TV show information. What it does is it goes into https://www.themoviedb.org/ and tries to get the episode information. However if you don't provide one it will fall back to not applying the names to the files.
+
+It tries to stay conservitive about what it changes. It will not touch MKV files if the folder name matches the name/title on the MKV file. This (`#{tv_show.title}`) has to match the name of the folder/directory. If it does not it will try and correct any spelling errors or mistakes it thinks it found.

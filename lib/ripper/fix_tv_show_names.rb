@@ -25,8 +25,7 @@ class FixTVShowNames
     end
 
     def rename(tv_show, season, episode)
-      match = VideosLoader.new.send(:match_tv_show, episode.file_path)
-      return if match.nil? || tv_show.title == match[:name]
+      return if episode.name == tv_show.title
 
       name = request_episode_name(season_number: season.number, episode_number: episode.number)
       season_number = format('%02d', season.number)
