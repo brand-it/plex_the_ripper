@@ -16,9 +16,12 @@ module ModelMixin
     def columns(columns)
       @columns = columns
       columns.each do |name, type|
-        define_method name do
+        define_method name do |arg = nil|
+          return arg.send(name) if arg # this is so it will work with Symbol Procs
+
           instance_variable_get("@#{name}")
         end
+
         define_method "#{name}=" do |value|
           value = self.class.cast_type(type, value)
           if column_presence_required?(name) && (value.nil? || value == '')

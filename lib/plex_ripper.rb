@@ -49,15 +49,26 @@ module Plex
         terminate
       end
 
+      def swapper
+        AskForFilePathBuilder.perform
+        VideosLoader.perform
+        Swap.perform
+        Ripper.swapper
+      rescue Ripper::Abort => exception
+        terminate
+        Logger.warning(exception.message)
+        Ripper.swapper
+      rescue Ripper::Terminate => exception
+        Logger.error(exception.message)
+        terminate
+      end
+
       def fixer
         VideosLoader.perform
         FixTVShowNames.perform
       rescue Ripper::Abort => exception
-        threads.each { |t| Thread.kill t }
+        terminate
         Logger.warning(exception.message)
-        Config.configuration.selected_disc_info.eject
-        Config.configuration.reset!
-        Ripper.perform
       rescue Ripper::Terminate => exception
         Logger.error(exception.message)
         terminate

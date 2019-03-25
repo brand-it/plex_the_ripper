@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
 class TVShow < Model
-  PATTERN_ONE = /\A(?<name>.*)\s\-\ss(?<season>\d\d)e(?<episode>\d\d)/.freeze
-  PATTERN_TWO = /\A(?<name>.*)\ss(?<season>\d\d)e(?<episode>\d\d)/.freeze
-  PATTERN_THREE = /\A(?<name>.*)\-s(?<season>\d\d)e(?<episode>\d\d)/.freeze
+  PATTERN_ONE = /\A(?<name>.*)(\s|)\-(\s|)s(?<season>\d\d)e(?<episode>\d\d)(\s|)\-(\s|)(?<episode_name>.*)/.freeze
+  PATTERN_TWO = /\A(?<name>.*)\ss(?<season>\d\d)e(?<episode>\d\d)(\s|)\-(\s|)(?<episode_name>.*)/.freeze
 
   columns(title: String, seasons: Array, video: Videos, directory: String)
   validate_presence(:title)
@@ -16,15 +15,18 @@ class TVShow < Model
       match = mkv_path_to_match(mkv_path)
       season = 0
       episode = 0
+      episode_name = nil
       if match.is_a?(MatchData)
         season = match[:season].to_i
         episode = match[:episode].to_i
+        episode_name = match[:episode_name]
       end
       {
         title: name,
         season: season,
         episode: episode,
         file_path: mkv_path,
+        episode_name: episode_name,
         directory: [
           Config.configuration.media_directory_path,
           Config.configuration.tv_shows_directory_name,
@@ -37,7 +39,7 @@ class TVShow < Model
 
     def mkv_path_to_match(mkv_path)
       basename = File.basename(mkv_path, '.mkv')
-      [PATTERN_ONE, PATTERN_TWO, PATTERN_THREE].each do |pattern|
+      [PATTERN_ONE, PATTERN_TWO].each do |pattern|
         match = basename.match(pattern)
         return match if match
       end
