@@ -5,13 +5,13 @@ class Config
   attr_accessor(
     :verbose, :type, :tv_season,
     :video_name, :disc_number, :episode, :selected_disc_info,
-    :total_episodes, :maxlength, :include_extras,
+    :total_episodes, :include_extras, :maxlength,
     :mkv_from_file, :make_backup_path, :makemkvcon_path,
     :tv_shows_directory_name, :movies_directory_name,
     :the_movie_db_config, :selected_titles, :slack_url
   )
-  # attr_writer(:minlength)
   attr_reader(:media_directory_path, :the_movie_db_api_key)
+  attr_writer(:minlength)
 
   class << self
     def configuration(reload: false)
@@ -50,21 +50,15 @@ class Config
   end
 
   def log_directory
-    @log_directory ||= File.join([media_directory_path, 'logs'])
+    @log_directory = File.join([media_directory_path, 'logs'])
   end
 
+  # minlength in seconds
   def minlength
     return @minlength if @minlength
-    return 3600 if type == :movie
     return 780 if type == :tv
 
     3600
-  end
-
-  def minlength=(value)
-    return @minlength = value if value&.positive?
-
-    @minlength = 1
   end
 
   def tv_season_to_word

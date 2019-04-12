@@ -19,7 +19,7 @@ class Logger
     end
 
     def create_log_file
-      return unless can_log?
+      return if can_log?
 
       FileUtils.mkdir_p(Config.configuration.log_directory)
       FileUtils.touch(Logger::LOG_PATH)
@@ -27,9 +27,10 @@ class Logger
     end
 
     def log(message)
+      create_log_file
       return unless can_log?
 
-      create_log_file
+
       text = message.to_s.gsub(/\033.*?m/, '').strip
       return if text == ''
 

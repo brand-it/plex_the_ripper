@@ -42,7 +42,7 @@ class AskForMovieDetails
 
     if titles.empty?
       Logger.warning('Could not find a title using min and max. Falling back to using all titles')
-      titles = config.selected_disc_info.titles
+      titles = config.selected_disc_info.details
     end
 
     answer = TTY::Prompt.new.select(

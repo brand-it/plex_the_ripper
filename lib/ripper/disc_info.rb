@@ -173,8 +173,8 @@ class DiscInfo
       end
     end
     if titles.size.zero?
-      Logger.error(disk_info_string)
-      raise Plex::Ripper::Abort, 'No disk information found'
+      Logger.error(disk_info_string.gsub!('  ', ''))
+      Logger.warning('No disk information found')
     end
     titles
   end

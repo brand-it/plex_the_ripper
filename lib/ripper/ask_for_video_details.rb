@@ -44,6 +44,7 @@ class AskForVideoDetails
     if Config.configuration.the_movie_db_config.invalid_api_key?
       config.the_movie_db_config.selected_video = nil
     elsif request_videos.size.zero?
+      Logger.info("Tried Looking up #{config.video_name} but did not find any")
       config.the_movie_db_config.selected_video = nil
       config.video_name = nil
       @request_videos = nil
@@ -59,18 +60,31 @@ class AskForVideoDetails
 
   def update_runtime
     selected_video = config.the_movie_db_config.selected_video
-    return if selected_video.nil?
+    runtime = selected_video.runtime if selected_video
+    runtime = {}
 
-    runtime = selected_video.runtime
     # margin = config.type == :movie ? 30 : 5
     margin = 2 # how much of wiggle room we want to give the movie times
+    update_minlength(runtime[:min], margin)
+    update_maxlength(runtime[:max], margin)
 
-    config.minlength = (runtime[:min] - margin) * 60 if runtime[:min].positive?
-    config.maxlength = (runtime[:max] + margin) * 60 if runtime[:max] > (config.minlength / 60)
     Logger.info(
       "Updated the min runtime to #{config.minlength.inspect} seconds "\
       "and the max runtime to #{config.maxlength || '∞'} seconds"
     )
+  end
+
+  def update_minlength(min, margin)
+    return config.minlength = (min - margin) * 60 if min&.positive?
+
+    # We need to change what ever this value was back to nil if it was not nil already
+    config.minlength = nil # this will make it use config defaults
+  end
+
+  def update_maxlength(max, margin)
+    return config.maxlength = (max + margin) * 60 if max.to_i > (config.minlength / 60)
+
+    config.maxlength = nil
   end
 
   def request_videos

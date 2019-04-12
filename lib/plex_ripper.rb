@@ -17,7 +17,7 @@ module Plex
         @threads = []
       end
 
-      def perform
+      def rip_video
         Thread.report_on_exception = Config.configuration.verbose if Thread.respond_to?(:report_on_exception)
         Thread.abort_on_exception = true
         @threads = []
@@ -37,16 +37,26 @@ module Plex
         CreateMKV::TV.perform
         Config.configuration.selected_disc_info.eject
         Config.configuration.reset!
-        Ripper.perform
+        Ripper.rip_video
       rescue Ripper::Abort => exception
         terminate
         Logger.warning(exception.message)
         Config.configuration.selected_disc_info.eject
         Config.configuration.reset!
-        Ripper.perform
+        Ripper.rip_video
       rescue Ripper::Terminate => exception
         Logger.error(exception.message)
         terminate
+      end
+
+      def perform
+        Notification.slack(
+          'Slack Hooks Ready',
+          'Cool slack is setup and ready to go. '\
+          'It will send you notifications on updates in the ripping process to this channel'
+        ) # there is a check in this tool it will not work if the webhook is not setup correctly
+        Logger.info("Logs are stored here: #{Config.configuration.log_directory}")
+        rip_video
       end
 
       def swapper

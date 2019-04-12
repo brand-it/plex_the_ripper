@@ -135,14 +135,15 @@ class CreateMKV
             Logger.debug(raw_line.strip)
             semaphore.synchronize do
               type, values = raw_line.strip.split(':')
-              notify_slack_of_progress(progressbar) if current_title == 'Saving to MKV file'
+
               if type == 'PRGV'
+                notify_slack_of_progress(progressbar) if current_title == 'Saving to MKV file'
                 _current, progress, max_progress = values.split(',').map(&:to_i)
                 current_progress = increment_progress(
                   max_progress, progress, progressbar, current_progress
                 )
               elsif type == 'PRGC' && current_title != values.split(',').last.strip
-                current_title = values.split(',').last.strip
+                current_title = values.split(',').last.strip.delete('"')
                 reset_progress(progressbar, current_title)
               end
             end
@@ -154,7 +155,6 @@ class CreateMKV
     end
 
     def notify_slack_of_progress(progressbar)
-      return if progressbar.nil?
       return if notification_percentages.first > progressbar.to_h['percentage']
 
       notification_percentages.shift
