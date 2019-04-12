@@ -7,15 +7,15 @@ if RUBY_VERSION.to_f < 2.3
   )
 end
 # This load order is important, Remeber changing the order could effect the code
+require 'fileutils' # required for GemInstaller
 require File.expand_path('gem_installer', __dir__).to_s
 require File.expand_path('the_movie_db_config', __dir__).to_s
 require File.expand_path('config', __dir__).to_s
 require File.expand_path('logger', __dir__).to_s
 require File.expand_path('shell', __dir__).to_s
 
-GemInstaller.require_gems
+GemInstaller.require_gems # load gem for gem file and installs them if needed
 
-require 'fileutils'
 require 'pathname'
 require 'optparse'
 require 'open3'
