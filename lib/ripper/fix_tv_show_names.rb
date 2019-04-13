@@ -68,7 +68,7 @@ class FixTVShowNames
       names = TheMovieDB.new.uniq_names(search['results'])
 
       answer = TTY::Prompt.new.select(
-        "Found multiple titles that matched (#{tv_show.title}). Pick one from below"
+        "Found multiple matched for (#{tv_show.title}). Pick one from below", per_page: 50
       ) do |menu|
         names.each_with_index do |name, index|
           menu.choice name, index

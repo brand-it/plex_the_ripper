@@ -71,4 +71,12 @@ class Model
   def column_presence_required?(name)
     self.class.instance_variable_get('@validate_presence').to_a.include?(name)
   end
+
+  def update(attributes = {})
+    return unless attributes.is_a?(Hash)
+
+    attributes.each do |key, value|
+      send("#{key}=", value) if respond_to?("#{key}=")
+    end
+  end
 end

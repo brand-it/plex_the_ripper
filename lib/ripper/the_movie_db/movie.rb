@@ -2,6 +2,7 @@
 
 module TheMovieDB
   class Movie < Model
+    attr_accessor(:loaded)
     columns(
       title: String,
       id: Integer,
@@ -32,7 +33,17 @@ module TheMovieDB
     end
 
     def runtime
+      load_more
       { min: @runtime, max: @runtime }
+    end
+
+    # load more of the data if more is needed. This is useful for in the
+    # case of runtime not being present
+    def load_more
+      return if loaded
+
+      update(Movie.video(type: :movie, id: id))
+      self.loaded = true
     end
   end
 end

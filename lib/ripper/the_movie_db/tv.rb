@@ -2,6 +2,7 @@
 
 module TheMovieDB
   class TV < Model
+    attr_accessor(:loaded)
     columns(seasons: Array, id: Integer, episode_run_time: Array, name: String, first_air_date: String)
     validate_presence(:id)
 
@@ -23,6 +24,7 @@ module TheMovieDB
     end
 
     def runtime
+      load_more
       { min: episode_run_time.min, max: episode_run_time.max }
     end
 
@@ -35,5 +37,15 @@ module TheMovieDB
       season[:tv] = self
       Season.new(season)
     end
+
+    # load more of the data if more is needed. This is useful for in the
+    # case of runtime not being present
+    def load_more
+      return if loaded
+
+      update(TV.video(type: :tv, id: id))
+      self.loaded = true
+    end
+
   end
 end

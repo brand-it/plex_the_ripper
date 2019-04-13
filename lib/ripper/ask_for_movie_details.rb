@@ -45,8 +45,8 @@ class AskForMovieDetails
       titles = config.selected_disc_info.details
     end
 
-    answer = TTY::Prompt.new.select(
-      'Found multiple titles that matched. Pick one from below'
+    answer = Shell.prompt.select(
+      'Found multiple titles that matched. Pick one from below', per_page: 50, filter: true
     ) do |menu|
       config.selected_disc_info.friendly_details.each do |detail|
         next unless titles.key?(detail[:title])

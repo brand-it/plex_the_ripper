@@ -17,12 +17,17 @@ module TheMovieDBAPI
     return if config.api_key.nil?
 
     uri = URI("https://api.themoviedb.org/3/#{path}")
-    uri.query = URI.encode_www_form(params.merge(api_key: config.api_key))
-    response = Net::HTTP.get_response(uri)
+    uri.query = URI.encode_www_form(params.merge(api_key: config.api_key, langauge: 'en-US'))
+    response = get(uri)
     if block_given?
       yield(response)
     elsif response.is_a?(Net::HTTPSuccess)
       JSON.parse(response.body)
+    elsif response.is_a?(Net::HTTPInternalServerError)
+      Logger.error("URI: #{uri}")
+      Logger.error(response.body)
+    else
+      Logger.debug(response.body)
     end
   end
 
@@ -43,6 +48,17 @@ module TheMovieDBAPI
 
     end
     results
+  end
+
+  def get(uri)
+    request = Net::HTTP::Get.new(uri)
+    # don't know why but they want data in the body but it creates problem if you don't have it
+    # really I not total sure it is needed however better safe then sorry.
+    request.body = '{}'
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
+    http.request(request)
   end
 
   # This build a bunch of uniq names that can be used to build the names of the files.

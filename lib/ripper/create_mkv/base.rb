@@ -4,6 +4,8 @@ class CreateMKV
   class Base
     include TimeHelper
     include HumanizerHelper
+    # PROGRESS_BAR_FORMAT = '%e |%b>>%i| %p%% %t'
+    PROGRESS_BAR_FORMAT = '%t %p% %E | Time Elapsed %a'.freeze
 
     attr_accessor :run_time, :directory, :started_at, :completed_at, :status, :notification_percentages
     def initialize
@@ -119,7 +121,7 @@ class CreateMKV
 
     def mkv_system!(title:)
       semaphore = Mutex.new
-      progressbar = ProgressBar.create(format: '%e |%b>>%i| %p%% %t')
+      progressbar = ProgressBar.create(format: PROGRESS_BAR_FORMAT)
       current_progress = 0
       current_title = nil
       type = ''
@@ -155,13 +157,14 @@ class CreateMKV
     end
 
     def notify_slack_of_progress(progressbar)
+      return if notification_percentages.empty?
       return if notification_percentages.first > progressbar.to_h['percentage']
 
       notification_percentages.shift
 
       Notification.slack(
         "Progress Update #{Config.configuration.video_name}",
-        progressbar.to_s('%t %p% %E | Time Elapsed %a'),
+        progressbar.to_s,
         message_color: 'green'
       )
     end

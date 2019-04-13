@@ -99,7 +99,8 @@ class AskForVideoDetails
     names = TheMovieDB::Movie.uniq_names(request_videos)
 
     answer = Shell.prompt.select(
-      "Found multiple titles that matched (#{config.video_name}). Pick one from below"
+      "Found multiple movies that matched #{config.video_name.inspect}. Pick one from below",
+      per_page: 50, filter: true
     ) do |menu|
       names.each_with_index do |name, index|
         menu.choice name, index
