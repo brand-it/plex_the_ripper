@@ -61,7 +61,7 @@ class AskForVideoDetails
   def update_runtime
     selected_video = config.the_movie_db_config.selected_video
     runtime = selected_video.runtime if selected_video
-    runtime = {}
+    runtime ||= {}
 
     # margin = config.type == :movie ? 30 : 5
     margin = 2 # how much of wiggle room we want to give the movie times
@@ -107,7 +107,7 @@ class AskForVideoDetails
       end
     end
 
-    config.the_movie_db_config.selected_video = TheMovieDB::TV.find(request_videos[answer].id)
+    config.the_movie_db_config.selected_video = request_videos[answer]
     config.video_name = names[answer]
   end
 end
