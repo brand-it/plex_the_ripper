@@ -18,6 +18,7 @@ module Plex
       end
 
       def rip_video
+        Downloadtools::MKVmaker.download
         Thread.report_on_exception = Config.configuration.verbose if Thread.respond_to?(:report_on_exception)
         Thread.abort_on_exception = true
         @threads = []

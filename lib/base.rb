@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+APP_ROOT = File.expand_path('../', __dir__)
 
 if RUBY_VERSION.to_f < 2.3
   puts(
@@ -43,6 +44,7 @@ Dir[
   require model
 end
 
+
 require File.expand_path('ripper/create_mkv/base', __dir__)
 require File.expand_path('ripper/create_mkv/movie', __dir__)
 require File.expand_path('ripper/create_mkv/tv', __dir__)
@@ -52,3 +54,9 @@ require 'net/http'
 require 'uri'
 require 'net/scp'
 require 'json'
+
+Dir[
+  File.expand_path('ripper/download_tools/', __dir__) + '/*.rb'
+].each do |model|
+  require model
+end
