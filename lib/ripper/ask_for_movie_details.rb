@@ -46,7 +46,7 @@ class AskForMovieDetails
     end
 
     answer = Shell.prompt.select(
-      'Found multiple titles that matched. Pick one from below', per_page: 50, filter: true
+      'Found multiple titles that matched. Pick one from below', per_page: 25, filter: true
     ) do |menu|
       config.selected_disc_info.friendly_details.each do |detail|
         next unless titles.key?(detail[:title])
