@@ -82,13 +82,24 @@ class AskForTVDetails
     )
   end
 
+  def try_to_get_titles_using_closest_time
+    times = config.selected_disc_info.title_seconds.values.sort
+    Config.configuration.maxlength = times.group_by { |x| x <=> Config.configuration.maxlength }[-1].last
+    minlength = times.group_by { |x| x <=> Config.configuration.minlength }[-1].reject { |x| x == Config.configuration.maxlength }
+    Config.configuration.minlength = minlength.last
+    Logger.warning("Failed to find titles changing the min to #{Config.configuration.minlength} and max to #{Config.configuration.maxlength}")
+    config.selected_disc_info.tiles_with_length
+  end
+
   def ask_user_to_select_titles
     titles = config.selected_disc_info.tiles_with_length
-
-    if titles.empty?
-      Logger.warning('Could not find a title using min and max. Falling back to using all titles')
-      titles = config.selected_disc_info.titles
+    if config.selected_disc_info.details.empty?
+      raies Plex::Ripper::Abort, 'This disc has no titles that is strange... I have to give up'
     end
+
+    titles = try_to_get_titles_using_closest_time if titles.size <= 1
+    titles = config.selected_disc_info.details if titles.size <= 1
+
     config.selected_titles = TTY::Prompt.new.multi_select(
       'Found a few options. Select the episodes on this disc'
     ) do |menu|

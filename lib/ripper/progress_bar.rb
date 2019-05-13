@@ -6,7 +6,7 @@ module Ripper
     }.freeze
 
     class << self
-      def create(args)
+      def create(args = {})
         args[:format] ||= PROGRESS_BAR_FORMATS[:default]
         super(args)
       end

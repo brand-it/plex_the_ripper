@@ -120,13 +120,15 @@ class DiscInfo
     @friendly_titles = []
     details.each do |title, detail|
       length = detail.find { |d| d.code_one == 9 }.value
-      name = detail.find { |d| d.code_one == 2 }.value
+      name = detail.find { |d| d.code_one == 2 }&.value
       file_size = detail.find { |d| d.code_one == 10 }.value
       file_name = detail.find { |d| d.code_one == 27 }.value
       @friendly_titles.push(
         title: title,
-        name: "#{name} Runtime (#{length}) Size (#{file_size}) File Name #{file_name.inspect}"
+        name: "#{name || '?unknown name?'} Runtime (#{length}) Size (#{file_size}) File Name #{file_name.inspect}"
       )
+      rescue => exception
+        binding.pry
     end
     @friendly_titles
   end

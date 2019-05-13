@@ -24,6 +24,8 @@ class Logger
       FileUtils.mkdir_p(Config.configuration.log_directory)
       FileUtils.touch(Logger::LOG_PATH)
       FileUtils.touch(Logger::RIP_PATH)
+    rescue Errno::EACCES => exception
+
     end
 
     def log(message)
