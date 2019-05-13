@@ -43,7 +43,7 @@ class Logger
     end
 
     def info(message, rewrite: false, delayed: false)
-      log(message)
+      log("Info: #{message}")
       if delayed
         Shell.store_info(message + "\n")
       elsif rewrite && !Config.configuration.verbose
@@ -55,20 +55,24 @@ class Logger
     end
 
     def debug(message, delayed: false)
+      log("Debug: #{message}")
       return unless Config.configuration.verbose
 
       info "\033[0;36m#{message}\033[0m", delayed: delayed
     end
 
     def success(message, delayed: false)
+      log("Success: #{message}")
       info "\033[1;32m#{message}\033[0m", delayed: delayed
     end
 
     def error(message, delayed: false)
+      log("Error: #{message}")
       info "\033[0;31m#{message}\033[0m", delayed: delayed
     end
 
     def warning(message, rewrite: false, delayed: false)
+      log("Warning: #{message}")
       info "\033[0;33m#{message}\033[0m", rewrite: rewrite, delayed: delayed
     end
 
