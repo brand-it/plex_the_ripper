@@ -45,9 +45,13 @@ Dir[
 end
 
 
+require File.expand_path('ripper/create_mkv/progressable', __dir__)
+require File.expand_path('ripper/create_mkv/make_backup', __dir__)
 require File.expand_path('ripper/create_mkv/base', __dir__)
 require File.expand_path('ripper/create_mkv/movie', __dir__)
 require File.expand_path('ripper/create_mkv/tv', __dir__)
+
+
 
 require 'set'
 require 'net/http'

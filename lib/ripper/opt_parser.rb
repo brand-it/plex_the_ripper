@@ -114,10 +114,15 @@ class OptParser
         Config.configuration.verbose = v
       end
 
+      opts.on('--log-level [LogLevel]', String, 'Provde ERROR or DEBUG') do |v|
+        Config.configuration.log_level = v if v == 'DEBUG'
+      end
+
       opts.on_tail('-h', '--help', 'Prints this help') do
         puts opts
         exit
       end
+
     end
     opt_parser.parse!(args)
   end

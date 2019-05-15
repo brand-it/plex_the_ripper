@@ -1,7 +1,7 @@
 module Ripper
   class ProgressBar < ProgressBar
     PROGRESS_BAR_FORMATS = {
-      default: '%t %p% %E | Time Elapsed %a',
+      default: '%t %p% %E | Elapsed %a',
       with_bar: '%e |%b>>%i| %p%% %t'
     }.freeze
 

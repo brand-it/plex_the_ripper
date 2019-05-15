@@ -4,15 +4,28 @@ class CreateMKV
   class Base
     include TimeHelper
     include HumanizerHelper
+    include Progressable
 
-    attr_accessor :run_time, :directory, :started_at, :completed_at, :status, :notification_percentages
+    attr_accessor(
+      :run_time, :directory, :started_at, :completed_at, :status, :notification_percentages,
+      :backup, :progressbar
+    )
     def initialize
       self.started_at = nil
       self.completed_at = nil
       self.status = 'ready'
       self.directory = AskForFilePathBuilder.path
       self.notification_percentages = [5.0, 25.0, 50.0, 75.0, 90.0, 95.0, 99.0]
+      self.progressbar = Ripper::ProgressBar.create
+      self.backup = CreateMKV::MakeBackup.new
       create_directory_path
+    end
+
+    def create_backup!
+      return if Config.configuration.mkv_from_file.to_s != '' || Config.configuration.skip_backup
+
+
+      backup.start!
     end
 
     def create_mkv
@@ -42,8 +55,6 @@ class CreateMKV
     end
 
     def notify_slack_success
-      return unless success?
-
       Notification.slack(
         "Finished ripping #{humanize_disk_info}",
         "It took a total of #{human_seconds(run_time)} to rip #{Config.configuration.video_name}",
@@ -52,8 +63,6 @@ class CreateMKV
     end
 
     def notify_slack_failure
-      return unless failed?
-
       Notification.slack(
         "Failed ripping #{humanize_disk_info}",
         "There was a issue making a copy of #{Config.configuration.video_name}",
@@ -78,23 +87,21 @@ class CreateMKV
     end
 
     def success!
+      backup.destroy!
+      notify_slack_success
       self.status = 'success'
     end
 
     def failure!
+      backup.destroy! unless backup.success
       self.completed_at = Time.now
       self.status = 'failed'
+      notify_slack_failure
     end
 
     def start!
       self.started_at = Time.now
       self.status = 'started'
-    end
-
-    def finished!
-      return unless success?
-
-      self.completed_at = Time.now
     end
 
     def run_time
@@ -104,10 +111,11 @@ class CreateMKV
     end
 
     def mkv(title: 'all')
+      source = backup.exists? ? backup.source : Config.configuration.disk_source
       [
         Shellwords.escape(Config.configuration.makemkvcon_path),
         'mkv',
-        Config.configuration.disk_source,
+        source,
         title,
         Shellwords.escape(directory),
         '--progress=-same',
@@ -119,65 +127,17 @@ class CreateMKV
 
     def mkv_system!(title:)
       semaphore = Mutex.new
-      progressbar = Ripper::ProgressBar.create
-      current_progress = 0
-      current_title = nil
-      type = ''
-      values = ''
-
       Logger.debug(mkv(title: title))
-      Open3.popen2e(
-        {}, mkv(title: title)
-      ) do |stdin, std_out_err, wait_thr|
+      Thread.report_on_exception = true
+      Open3.popen2e({}, mkv(title: title)) do |stdin, std_out_err, wait_thr|
         stdin.close
         Thread.new do
-          while raw_line = std_out_err.gets # rubocop:disable Lint/AssignmentInCondition
-            Logger.debug(raw_line.strip)
-            semaphore.synchronize do
-              type, values = raw_line.strip.split(':')
-
-              if type == 'PRGV'
-                notify_slack_of_progress(progressbar) if current_title == 'Saving to MKV file'
-                _current, progress, max_progress = values.split(',').map(&:to_i)
-                current_progress = increment_progress(
-                  max_progress, progress, progressbar, current_progress
-                )
-              elsif type == 'PRGC' && current_title != values.split(',').last.strip
-                current_title = values.split(',').last.strip.delete('"')
-                reset_progress(progressbar, current_title)
-              end
-            end
+          while raw_line = std_out_err.gets
+            semaphore.synchronize { process_progress_from(raw_line) }
           end
-          progressbar.finish
         end.join
         wait_thr.value
       end
-    end
-
-    def notify_slack_of_progress(progressbar)
-      return if notification_percentages.empty?
-      return if notification_percentages.first > progressbar.to_h['percentage']
-
-      notification_percentages.shift
-
-      Notification.slack(
-        "Progress Update #{Config.configuration.video_name}",
-        progressbar.to_s,
-        message_color: 'green'
-      )
-    end
-
-    def increment_progress(max_progress, progress, progressbar, current_progress)
-      progressbar.total = max_progress if max_progress != progressbar.total
-      progressbar.progress += (progress - current_progress)
-      progress
-    end
-
-    def reset_progress(progressbar, current_title)
-      progressbar.finish
-      progressbar.reset
-      progressbar.title = current_title
-      progressbar.start
     end
 
     def create_directory_path
@@ -192,10 +152,7 @@ class CreateMKV
       if response.success? && Dir[directory + '/*'].any?
         success!
       else
-        Logger.error(
-          "Could not rip file #{Config.configuration.video_name}, #{mkv(title: title)}"
-        )
-        notify_slack_failure
+        Logger.error("Could not rip file #{Config.configuration.video_name}, #{mkv(title: title)}")
         failure!
       end
     end

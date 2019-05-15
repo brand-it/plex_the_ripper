@@ -8,7 +8,8 @@ class Config
     :total_episodes, :include_extras, :maxlength,
     :mkv_from_file, :make_backup_path, :makemkvcon_path,
     :tv_shows_directory_name, :movies_directory_name,
-    :the_movie_db_config, :selected_titles, :slack_url
+    :the_movie_db_config, :selected_titles, :slack_url,
+    :log_level
   )
   attr_reader(:media_directory_path, :the_movie_db_api_key)
   attr_writer(:minlength)
@@ -43,6 +44,7 @@ class Config
     self.the_movie_db_config = TheMovieDBConfig.new
     self.selected_titles = []
     self.slack_url = nil
+    self.log_level = 'ERROR'
   end
 
   def videos
@@ -71,9 +73,9 @@ class Config
 
   def disk_source
     if mkv_from_file.to_s != ''
-      "file:#{Config.configuration.mkv_from_file}"
+      "file:#{mkv_from_file}"
     elsif selected_disc_info.dev.to_s != ''
-      "dev:#{Config.configuration.selected_disc_info.dev}"
+      "dev:#{selected_disc_info.dev}"
     else
       raise 'Failed to resolve the disk source there is a bug in the code'
     end

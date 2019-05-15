@@ -8,10 +8,9 @@ class CreateMKV
 
         tv = CreateMKV::TV.new
         tv.start!
+        tv.create_backup!
         tv.create_mkv
         tv.update_config
-        tv.finished!
-        tv.notify_slack_success
         tv
       end
     end

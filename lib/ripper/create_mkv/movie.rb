@@ -13,9 +13,8 @@ class CreateMKV
 
         movie = CreateMKV::Movie.new
         movie.start!
+        movie.create_backup!
         movie.create_mkv
-        movie.finished!
-        movie.notify_slack_success
       end
     end
 
@@ -27,7 +26,7 @@ class CreateMKV
     # The index is the number or title in the list. This helps if
     def rename_mkv(mkv_file_name:, index:)
       number = format('%02d', index)
-      movie_name = if index != 1
+      movie_name = if index > 0
                      "#{Config.configuration.video_name} - #{number}.mkv"
                    else
                      "#{Config.configuration.video_name}.mkv"

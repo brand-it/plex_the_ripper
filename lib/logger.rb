@@ -55,7 +55,7 @@ class Logger
     end
 
     def debug(message, delayed: false)
-      log("Debug: #{message}")
+      log("Debug: #{message}") if Config.configuration.log_level == 'DEBUG'
       return unless Config.configuration.verbose
 
       info "\033[0;36m#{message}\033[0m", delayed: delayed
