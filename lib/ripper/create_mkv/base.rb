@@ -22,8 +22,8 @@ class CreateMKV
     end
 
     def create_backup!
-      return if Config.configuration.mkv_from_file.to_s != '' || Config.configuration.skip_backup
-
+      return if Config.configuration.mkv_from_file.to_s != ''
+      return
 
       backup.start!
     end
@@ -41,7 +41,7 @@ class CreateMKV
       end
     end
 
-    # Define this method on each child class. If not defined that is ok. We will just assume you wanted
+    # Define this method on each child class. If not defined that is ok.   We will just assume you wanted
     # that and just display a warning to the user.
     def rename_mkv(mkv_file_name:, index:)
       Logger.warning("rename_mkv is not defined for #{self.class.name}")

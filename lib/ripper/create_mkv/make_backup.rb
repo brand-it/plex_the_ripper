@@ -22,7 +22,7 @@ class CreateMKV
     end
 
     def destroy!
-      Logger.warning("Destroying backup because it not verified #{directory}")
+      Logger.warning("Destroying backup #{directory}")
       FileUtils.rm_rf(directory)
     end
 
@@ -31,7 +31,7 @@ class CreateMKV
     end
 
     def source
-      "file:#{Shellwords.escape(directory)}"
+      "file:#{Shellwords.escape(directory)}/BDMV"
     end
 
     private
