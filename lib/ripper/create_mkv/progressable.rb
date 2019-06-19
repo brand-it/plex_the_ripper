@@ -20,7 +20,7 @@ class CreateMKV
       progressbar.reset
       progressbar.title = current_title.strip
       progressbar.start
-      self.notification_percentages = NOTIFICATION_PERCENTAGES
+      self.notification_percentages = NOTIFICATION_PERCENTAGES.dup
       progressbar
     end
 

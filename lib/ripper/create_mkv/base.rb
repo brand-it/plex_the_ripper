@@ -15,7 +15,7 @@ class CreateMKV
       self.completed_at = nil
       self.status = 'ready'
       self.directory = AskForFilePathBuilder.path
-      self.notification_percentages = NOTIFICATION_PERCENTAGES
+      self.notification_percentages = NOTIFICATION_PERCENTAGES.dup
       self.progressbar = Ripper::ProgressBar.create
       self.backup = CreateMKV::MakeBackup.new
       create_directory_path
