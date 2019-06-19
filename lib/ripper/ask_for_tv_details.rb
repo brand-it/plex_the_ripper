@@ -94,7 +94,7 @@ class AskForTVDetails
   def ask_user_to_select_titles(show_all: false)
     titles = config.selected_disc_info.tiles_with_length
     if config.selected_disc_info.details.empty?
-      raies Plex::Ripper::Abort, 'This disc has no titles that is strange... I have to give up'
+      raise Plex::Ripper::Abort, 'This disc has no titles that is strange... I have to give up'
     end
 
     titles = try_to_get_titles_using_closest_time if titles.size <= 1
@@ -111,7 +111,7 @@ class AskForTVDetails
 
       menu.choice('Show All Titles', true) unless show_all
     end
-    
+
     if titles.empty?
       ask_user_to_select_titles
     elsif titles.include?(true)
