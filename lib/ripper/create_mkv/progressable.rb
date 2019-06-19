@@ -1,5 +1,7 @@
 class CreateMKV
   module Progressable
+    NOTIFICATION_PERCENTAGES = [5.0, 25.0, 50.0, 75.0, 90.0, 95.0, 99.0].freeze
+
     def set_progress_total(total)
       return if total == progressbar.total
       Logger.debug("Updating total to #{total} from #{progressbar.total}")
@@ -16,13 +18,14 @@ class CreateMKV
 
       progressbar.finish
       progressbar.reset
-      progressbar.title = current_title
+      progressbar.title = current_title.strip
       progressbar.start
+      self.notification_percentages = NOTIFICATION_PERCENTAGES
       progressbar
     end
 
-    def notify_slack_of_progress
-      return if notification_percentages.empty?
+    def notify_slack_of_mkv_progress
+      return if notification_percentages.empty? || progressbar&.title != 'Saving to MKV file'
       return if notification_percentages.first > progressbar.to_h['percentage']
 
       notification_percentages.shift
@@ -47,6 +50,7 @@ class CreateMKV
       when 'PRGV'
         set_progress_total(parsed[:progress][:max])
         increment_progress(parsed[:progress][:total])
+        notify_slack_of_mkv_progress
       when 'PRGC'
         reset_progress(parsed[:progress_title][:name])
       end
