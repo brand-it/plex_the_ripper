@@ -30,7 +30,7 @@ class CreateMKV
 
       notification_percentages.shift
 
-      Notification.slack(
+      Notification.send(
         "Progress Update #{Config.configuration.video_name}",
         progressbar.to_s,
         message_color: 'green'

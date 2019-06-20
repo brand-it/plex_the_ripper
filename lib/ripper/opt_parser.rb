@@ -118,6 +118,14 @@ class OptParser
         Config.configuration.log_level = v if v == 'DEBUG'
       end
 
+      opts.on('-y' '--ifttt-webhook-key [KEY]', String, 'Send notification to IFTTT please provide a key from https://ifttt.com/services/maker_webhooks/settings') do |v|
+        Logger.info("IFTTT URL provided and all notifications will be sent to the #{v}")
+        Logger.info('"Event Name" is "plex_the_ripper"')
+        Logger.info('"{{value1}}" is the title')
+        Logger.info('"{{value2}}" is the message')
+        Config.configuration.ifttt_webhook_key = v
+      end
+
       opts.on_tail('-h', '--help', 'Prints this help') do
         puts opts
         exit

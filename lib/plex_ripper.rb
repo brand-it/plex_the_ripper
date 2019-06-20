@@ -51,10 +51,10 @@ module Plex
       end
 
       def perform
-        Notification.slack(
-          'Slack Hooks Ready',
-          'Cool slack is setup and ready to go. '\
-          'It will send you notifications on updates in the ripping process to this channel'
+        Notification.send(
+          'Hooks Ready',
+          'Notification Hook ready to go.'\
+          'It will send you notifications on updates in the ripping process.'
         ) # there is a check in this tool it will not work if the webhook is not setup correctly
         Logger.info("Logs are stored here: #{Config.configuration.log_directory}")
         rip_video

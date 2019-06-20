@@ -54,8 +54,8 @@ class CreateMKV
       end.sort
     end
 
-    def notify_slack_success
-      Notification.slack(
+    def notify_success
+      Notification.send(
         "Finished ripping #{humanize_disk_info}",
         "It took a total of #{human_seconds(run_time)} to rip #{Config.configuration.video_name}",
         message_color: 'green'
@@ -63,7 +63,7 @@ class CreateMKV
     end
 
     def notify_slack_failure
-      Notification.slack(
+      Notification.send(
         "Failed ripping #{humanize_disk_info}",
         "There was a issue making a copy of #{Config.configuration.video_name}",
         message_color: 'red'

@@ -4,8 +4,6 @@ require 'rubygems'
 require 'rubygems/gem_runner'
 require 'rubygems/exceptions'
 
-ENV['GEM_HOME'] = File.expand_path('../gems', __dir__).to_s
-ENV['BUNDLE_GEMFILE'] = File.expand_path('../Gemfile', __dir__).to_s
 FileUtils.mkdir_p(ENV['GEM_HOME'])
 Gem.clear_paths
 
@@ -82,7 +80,7 @@ class GemInstaller
 
     def require_gems
       begin
-        require 'bundler'
+        
       rescue LoadError
         reset!
         bundle_install

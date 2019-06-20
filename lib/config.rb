@@ -9,7 +9,7 @@ class Config
     :mkv_from_file, :make_backup_path, :makemkvcon_path,
     :tv_shows_directory_name, :movies_directory_name,
     :the_movie_db_config, :selected_titles, :slack_url,
-    :log_level
+    :log_level, :ifttt_webhook_key
   )
   attr_reader(:media_directory_path, :the_movie_db_api_key)
   attr_writer(:minlength)
@@ -45,6 +45,7 @@ class Config
     self.selected_titles = []
     self.slack_url = nil
     self.log_level = 'ERROR'
+    self.ifttt_webhook_key = nil
   end
 
   def videos

@@ -15,7 +15,17 @@ require File.expand_path('config', __dir__).to_s
 require File.expand_path('logger', __dir__).to_s
 require File.expand_path('shell', __dir__).to_s
 
-GemInstaller.require_gems # load gem for gem file and installs them if needed
+begin
+  require 'bundler'
+  Bundler.require
+rescue StandardError => exception
+  Logger.error('Issue loading gems using bundler')
+  Logger.error("Solutions: ")
+  Logger.error("  run `gem update --system`")
+  Logger.error("  run `gem install bundle:2.0.1`")
+  Logger.error("  run `bundle install`")
+  raise exception
+end
 
 require 'pathname'
 require 'optparse'

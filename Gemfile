@@ -8,6 +8,7 @@ gem 'pry'
 gem 'ruby-progressbar'
 gem 'slack-notifier'
 gem 'tty-prompt'
+gem 'httparty'
 
 group :test do
   gem 'faker'
