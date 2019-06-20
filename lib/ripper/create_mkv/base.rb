@@ -89,6 +89,7 @@ class CreateMKV
 
     def success!
       backup.destroy!
+      self.completed_at = Time.now
       self.status = 'success'
     end
 

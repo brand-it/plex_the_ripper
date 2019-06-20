@@ -1,6 +1,6 @@
 class CreateMKV
   module Progressable
-    NOTIFICATION_PERCENTAGES = [5.0, 25.0, 50.0, 75.0, 90.0, 95.0, 99.0].freeze
+    NOTIFICATION_PERCENTAGES = [25.0, 50.0, 75.0, 99.0].freeze
 
     def set_progress_total(total)
       return if total == progressbar.total
