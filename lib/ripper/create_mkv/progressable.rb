@@ -31,11 +31,21 @@ class CreateMKV
       notification_percentages.shift
 
       Notification.send(
-        "Progress Update #{Config.configuration.video_name}",
-        progressbar.to_s,
+        progress_title, progressbar.to_s,
         message_color: 'green'
       )
     end
+
+    def progress_title
+      if Config.configuration.type == :tv
+        season_number = format('%02d', Config.configuration.tv_season)
+        episode_number = format('%02d', Config.configuration.episode)
+        "TV Show Progress #{Config.configuration.video_name} s#{season_number}e#{season_number}"
+      else
+        "Movie Progress #{Config.configuration.video_name}"
+      end
+    end
+
 
     def progress_done
       progressbar.finish

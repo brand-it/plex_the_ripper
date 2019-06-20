@@ -39,6 +39,7 @@ class CreateMKV
           rename_mkv(mkv_file_name: File.basename(mkv_files(reload: true).last), index: index)
         end
       end
+      send_success_notification if success?
     end
 
     # Define this method on each child class. If not defined that is ok.   We will just assume you wanted
@@ -54,7 +55,7 @@ class CreateMKV
       end.sort
     end
 
-    def notify_success
+    def send_success_notification
       Notification.send(
         "Finished ripping #{humanize_disk_info}",
         "It took a total of #{human_seconds(run_time)} to rip #{Config.configuration.video_name}",
@@ -62,7 +63,7 @@ class CreateMKV
       )
     end
 
-    def notify_slack_failure
+    def send_failure_notification
       Notification.send(
         "Failed ripping #{humanize_disk_info}",
         "There was a issue making a copy of #{Config.configuration.video_name}",
@@ -88,7 +89,6 @@ class CreateMKV
 
     def success!
       backup.destroy!
-      notify_slack_success
       self.status = 'success'
     end
 
@@ -96,7 +96,7 @@ class CreateMKV
       backup.destroy! unless backup.success
       self.completed_at = Time.now
       self.status = 'failed'
-      notify_slack_failure
+      send_failure_notification
     end
 
     def start!
