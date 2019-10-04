@@ -30,6 +30,7 @@ class CreateMKV
       Config.configuration.episode += 1
       old_name = File.join([directory, mkv_file_name])
       new_name = File.join([directory, "#{episode_name}.mkv"])
+      Logger.info("Renaming file: '#{old_name}' => '#{new_name}'")
       File.rename(old_name, new_name)
     end
 

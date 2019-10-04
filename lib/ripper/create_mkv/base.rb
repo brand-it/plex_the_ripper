@@ -8,7 +8,7 @@ class CreateMKV
 
     attr_accessor(
       :run_time, :directory, :started_at, :completed_at, :status, :notification_percentages,
-      :backup, :progressbar
+      :backup, :progressbar, :newest_mkv_file_path
     )
     def initialize
       self.started_at = nil
@@ -36,16 +36,14 @@ class CreateMKV
         # We want to rename the mkv file for each success. That was if there is a failure of
         # one of them it will still get he correct name for the rest of them.
         if success?
-          rename_mkv(mkv_file_name: File.basename(mkv_files(reload: true).last), index: index)
+          rename_mkv(mkv_file_name: File.basename(newest_mkv_file_path), index: index)
         end
       end
       send_success_notification if success?
     end
 
-    # Define this method on each child class. If not defined that is ok.   We will just assume you wanted
-    # that and just display a warning to the user.
     def rename_mkv(mkv_file_name:, index:)
-      Logger.warning("rename_mkv is not defined for #{self.class.name}")
+      raise Plex::Ripper::Abort, "rename_mkv is not defined for #{self.class.name}"
     end
 
     def mkv_files(reload: false)
@@ -97,12 +95,14 @@ class CreateMKV
       backup.destroy! unless backup.success
       self.completed_at = Time.now
       self.status = 'failed'
+      self.newest_mkv_file_path = nil
       send_failure_notification
     end
 
     def start!
       self.started_at = Time.now
       self.status = 'started'
+      self.newest_mkv_file_path = nil
     end
 
     def run_time
@@ -130,7 +130,8 @@ class CreateMKV
       semaphore = Mutex.new
       Logger.debug(mkv(title: title))
       Thread.report_on_exception = true
-      Open3.popen2e({}, mkv(title: title)) do |stdin, std_out_err, wait_thr|
+      current_mkv_files = mkv_files(reload: true)
+      response = Open3.popen2e({}, mkv(title: title)) do |stdin, std_out_err, wait_thr|
         stdin.close
         Thread.new do
           while raw_line = std_out_err.gets
@@ -139,6 +140,8 @@ class CreateMKV
         end.join
         wait_thr.value
       end
+      self.newest_mkv_file_path = (mkv_files(reload: true) - current_mkv_files).first
+      response
     end
 
     def create_directory_path
