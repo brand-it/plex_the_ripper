@@ -101,7 +101,7 @@ class AskForTVDetails
     titles = config.selected_disc_info.details if titles.size <= 1
 
     titles = TTY::Prompt.new.multi_select(
-      'Found a few options. Select the episodes on this disc'
+      'Found a few options. Select the episodes on this disc', echo: false
     ) do |menu|
       config.selected_disc_info.friendly_details.each do |detail|
         if show_all || titles.key?(detail[:title])

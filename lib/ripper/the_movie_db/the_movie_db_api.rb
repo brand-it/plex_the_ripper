@@ -19,6 +19,9 @@ module TheMovieDBAPI
     uri = URI("https://api.themoviedb.org/3/#{path}")
     uri.query = URI.encode_www_form(params.merge(api_key: config.api_key, langauge: 'en-US'))
     response = get(uri)
+    Logger.debug(uri)
+    Logger.debug(response)
+    Logger.debug(response.body)
     if block_given?
       yield(response)
     elsif response.is_a?(Net::HTTPSuccess)

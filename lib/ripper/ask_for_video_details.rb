@@ -27,11 +27,15 @@ class AskForVideoDetails
 
   def update_type
     options = if config.type == :tv
-                %i[tv movie]
+                [:tv, :movie, 'eject disc']
               else
-                %i[movie tv]
+                [:movie, :tv, 'eject disc']
               end
     config.type = Shell.prompt.select('Please select a video type', options)
+    if config.type == 'eject disc'
+      config.selected_disc_info.eject if config.selected_disc_info
+      update_type
+    end
   end
 
   def ask_for_video_name
