@@ -8,7 +8,7 @@ class CreateMKV
 
     attr_accessor(
       :run_time, :directory, :started_at, :completed_at, :status, :notification_percentages,
-      :backup, :progressbar, :newest_mkv_file_path
+      :progressbar, :newest_mkv_file_path
     )
     def initialize
       self.started_at = nil
@@ -17,15 +17,7 @@ class CreateMKV
       self.directory = AskForFilePathBuilder.path
       self.notification_percentages = NOTIFICATION_PERCENTAGES.dup
       self.progressbar = Ripper::ProgressBar.create
-      self.backup = CreateMKV::MakeBackup.new
       create_directory_path
-    end
-
-    def create_backup!
-      return if Config.configuration.mkv_from_file.to_s != ''
-      return
-
-      backup.start!
     end
 
     def create_mkv
@@ -46,9 +38,8 @@ class CreateMKV
       raise Plex::Ripper::Abort, "rename_mkv is not defined for #{self.class.name}"
     end
 
-    def mkv_files(reload: false)
-      @mkv_files = nil if reload
-      @mkv_files ||= Dir.entries(directory).select do |video|
+    def mkv_files
+      Dir.entries(directory).select do |video|
         File.extname(video) == '.mkv'
       end.sort
     end
@@ -86,13 +77,11 @@ class CreateMKV
     end
 
     def success!
-      backup.destroy!
       self.completed_at = Time.now
       self.status = 'success'
     end
 
     def failure!
-      backup.destroy! unless backup.success
       self.completed_at = Time.now
       self.status = 'failed'
       self.newest_mkv_file_path = nil
@@ -112,7 +101,7 @@ class CreateMKV
     end
 
     def mkv(title: 'all')
-      source = backup.exists? ? backup.source : Config.configuration.disk_source
+      source = Config.configuration.disk_source
       [
         Shellwords.escape(Config.configuration.makemkvcon_path),
         'mkv',
@@ -130,7 +119,8 @@ class CreateMKV
       semaphore = Mutex.new
       Logger.debug(mkv(title: title))
       Thread.report_on_exception = true
-      current_mkv_files = mkv_files(reload: true)
+      current_mkv_files = mkv_files
+      Logger.debug(current_mkv_files.join("\n"))
       response = Open3.popen2e({}, mkv(title: title)) do |stdin, std_out_err, wait_thr|
         stdin.close
         Thread.new do
@@ -140,7 +130,8 @@ class CreateMKV
         end.join
         wait_thr.value
       end
-      self.newest_mkv_file_path = (mkv_files(reload: true) - current_mkv_files).first
+      self.newest_mkv_file_path = (mkv_files - current_mkv_files).first
+      Logger.debug(newest_mkv_file_path)
       response
     end
 

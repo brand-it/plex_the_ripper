@@ -40,8 +40,8 @@ describe CreateMKV::TV do
     it { expect { perform }.to_not raise_exception }
     context 'make mkv creates 2 files' do
       before { perform }
-      it { expect(perform.mkv_files(reload: true).size).to eq mkv_titles.size }
-      it { expect(perform.mkv_files(reload: true).first).to eq "#{name} - s01e01.mkv" }
+      it { expect(perform.mkv_files.size).to eq mkv_titles.size }
+      it { expect(perform.mkv_files.first).to eq "#{name} - s01e01.mkv" }
     end
 
     context 'when a the movie db api key is present' do
@@ -52,7 +52,7 @@ describe CreateMKV::TV do
         perform
       end
       it do
-        expect(perform.mkv_files(reload: true).first).to eq(
+        expect(perform.mkv_files.first).to eq(
           "#{name} - s01e01 - Superman on Earth.mkv"
         )
       end

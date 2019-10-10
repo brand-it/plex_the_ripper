@@ -13,7 +13,6 @@ class CreateMKV
 
         movie = CreateMKV::Movie.new
         movie.start!
-        movie.create_backup!
         movie.create_mkv
       end
     end
