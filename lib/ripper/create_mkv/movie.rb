@@ -29,7 +29,7 @@ class CreateMKV
                      "#{Config.configuration.video_name} - #{number}.mkv"
                    else
                      "#{Config.configuration.video_name}.mkv"
-                   end
+                   end.delete('/:\\')
       old_name = File.join([directory, mkv_file_name])
       new_name = File.join([directory, movie_name])
       File.rename(old_name, new_name)
