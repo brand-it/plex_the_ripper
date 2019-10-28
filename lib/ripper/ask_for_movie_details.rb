@@ -20,22 +20,6 @@ class AskForMovieDetails
     end
   end
 
-  def check_movie_name
-    return if request_movie_names.nil?
-
-    if request_movie_names['total_results'] == 1
-      config.the_movie_db_config.selected_video = search['results'].first
-      config.video_name = search['results'].first['name']
-    end
-
-    if request_movie_names['results'].any?
-      select_movie_from_results(request_movie_names)
-    else
-      ask_for_a_different_name
-      check_tv_name
-    end
-  end
-
   def ask_for_which_title_if_multiple
     titles = config.selected_disc_info.tiles_with_length
     return config.selected_titles = titles.keys if titles.size == 1

@@ -127,8 +127,6 @@ class DiscInfo
         title: title,
         name: "#{name || '?unknown name?'} Runtime (#{length}) Size (#{file_size}) File Name #{file_name.inspect}"
       )
-      rescue => exception
-        binding.pry
     end
     @friendly_titles
   end

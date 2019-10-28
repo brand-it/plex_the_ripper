@@ -7,7 +7,7 @@ module TheMovieDB
       title: String,
       id: Integer,
       runtime: Integer,
-      first_air_date: String
+      release_date: String
     )
     validate_presence(:id)
 
@@ -21,10 +21,18 @@ module TheMovieDB
       end
 
       def search(query, page: 1)
-        super(page: page, query: query, type: :movie).map do |tv_show|
-          Movie.new(tv_show)
+        super(page: page, query: query, type: :movie).map do |movie|
+          Movie.new(movie)
         end
       end
+    end
+
+    def release_date_to_time
+      @release_date_to_time ||= Time.parse(release_date)
+    end
+
+    def release_date_present?
+      release_date.to_s != ''
     end
 
     # TV show use name this helps normalize the data

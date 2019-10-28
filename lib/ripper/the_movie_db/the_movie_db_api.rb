@@ -75,11 +75,7 @@ module TheMovieDBAPI
     search_results.map do |result|
       names_hash[result.name] += 1
       if names_hash[result.name] > 1
-        extra_info = if result.first_air_date.to_s != ''
-                       Time.parse(result.first_air_date).year
-                     else
-                       result.id
-                     end
+        extra_info = result.release_date_present? ? result.release_date_to_time.year : result.id
         "#{result.name} (#{extra_info})"
       else
         result.name

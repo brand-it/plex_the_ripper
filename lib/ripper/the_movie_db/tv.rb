@@ -3,7 +3,13 @@
 module TheMovieDB
   class TV < Model
     attr_accessor(:loaded)
-    columns(seasons: Array, id: Integer, episode_run_time: Array, name: String, first_air_date: String)
+    columns(
+      seasons: Array,
+      id: Integer,
+      episode_run_time: Array,
+      name: String,
+      first_air_date: String
+    )
     validate_presence(:id)
 
     class << self
@@ -21,6 +27,15 @@ module TheMovieDB
 
         TV.new(tv_show)
       end
+    end
+
+
+    def release_date_to_time
+      @release_date_to_time ||= Time.parse(first_air_date)
+    end
+
+    def release_date_present?
+      first_air_date.to_s != ''
     end
 
     def runtime
