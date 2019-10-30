@@ -61,6 +61,7 @@ class AskForTVDetails
   end
 
   def select_episode_from_the_movie_db
+
     Shell.prompt.select('Select a Episode') do |menu|
       default = season.episodes.index do |e|
         e['episode_number'] == config.episode
@@ -69,7 +70,8 @@ class AskForTVDetails
 
       season.episodes.each do |episode|
         episode = TheMovieDB::Episode.new(episode)
-        menu.choice episode.name, episode
+        ripped = ripped_episodes.any? { |e| e.name == episode.name }
+        menu.choice "#{episode.name} #{'(ripped)' if ripped}", episode
       end
     end
   end
@@ -89,6 +91,18 @@ class AskForTVDetails
     Config.configuration.minlength = minlength.last
     Logger.warning("Failed to find titles changing the min to #{Config.configuration.minlength} and max to #{Config.configuration.maxlength}")
     config.selected_disc_info.tiles_with_length
+  end
+
+  def ripped_episodes
+    return @ripped_episodes if @ripped_episodes.to_a.any?
+
+    videos = Config.configuration.videos
+    tv_show = videos.find_tv_show(Config.configuration.video_name)
+    return [] if tv_show.nil?
+
+    season = tv_show.find_season(Config.configuration.tv_season)
+    return [] if season.nil?
+    @ripped_episodes ||= season.episodes
   end
 
   def ask_user_to_select_titles(show_all: false)
