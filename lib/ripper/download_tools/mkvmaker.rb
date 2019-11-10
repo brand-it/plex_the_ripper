@@ -1,6 +1,6 @@
 module Downloadtools
   class MKVmaker
-    VERSION = '1.14.3'.freeze
+    VERSION = '1.14.5'.freeze
     URI = URI("https://www.makemkv.com/download/makemkv_v#{VERSION}_osx.dmg")
     DMG_PATH = "#{APP_ROOT}/apps/makemkv_v#{VERSION}.dmg"
 
@@ -11,7 +11,6 @@ module Downloadtools
     end
 
     def start
-
       Net::HTTP.start(URI.host, URI.port, use_ssl: (URI.scheme == 'https')) do |http|
         request = Net::HTTP::Get.new URI
         http.request request do |response|
@@ -31,7 +30,7 @@ module Downloadtools
       Logger.info('Mounting the DMG file on your mac')
       output = `hdiutil attach #{DMG_PATH}`
 
-      @disk_location = output.scan(/^.*\/Volumes\/makemkv_v1.14.3/).first.split("\t").first
+      @disk_location = output.scan(/^.*\/Volumes\/makemkv_v#{VERSION}/).first.split("\t").first
     end
 
     def move_mounted_file

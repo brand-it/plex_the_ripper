@@ -118,7 +118,7 @@ class CreateMKV
     def mkv_system!(title:)
       semaphore = Mutex.new
       Logger.debug(mkv(title: title))
-      Thread.report_on_exception = true
+      Thread.report_on_exception = true if Thread.respond_to?(:report_on_exception)
       current_mkv_files = mkv_files
       Logger.debug(current_mkv_files.join("\n"))
       response = Open3.popen2e({}, mkv(title: title)) do |stdin, std_out_err, wait_thr|

@@ -1,3 +1,4 @@
 gems
 .DS_Store
 cache
+apps/*.dmg
