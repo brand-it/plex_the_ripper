@@ -14,17 +14,21 @@ module TheMovieDBAPI
   end
 
   def request(path, params: {})
-    return if config.api_key.nil?
+    if config.api_key.nil?
+      Logger.debug('api.themoviedb.org api key is nil')
+      return
+    end
 
     uri = URI("https://api.themoviedb.org/3/#{path}")
     uri.query = URI.encode_www_form(params.merge(api_key: config.api_key, langauge: 'en-US'))
-    response = get(uri)
+    response = Net::HTTP.get_response(uri)
+
     Logger.debug(uri)
     Logger.debug(response)
     Logger.debug(response.body)
     if block_given?
       yield(response)
-    elsif response.is_a?(Net::HTTPSuccess)
+    elsif response.is_a?(Net::HTTPOK)
       JSON.parse(response.body)
     elsif response.is_a?(Net::HTTPInternalServerError)
       Logger.error("URI: #{uri}")

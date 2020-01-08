@@ -1,6 +1,6 @@
 module Downloadtools
   class MKVmaker
-    VERSION = '1.14.5'.freeze
+    VERSION = '1.14.7'.freeze
     URI = URI("https://www.makemkv.com/download/makemkv_v#{VERSION}_osx.dmg")
     DMG_PATH = "#{APP_ROOT}/apps/makemkv_v#{VERSION}.dmg"
 

@@ -12,6 +12,12 @@ class OptParser
 
       opts.separator ''
       opts.separator 'Specific options:'
+
+      opts.on('--log-level [LogLevel]', String, 'Provde ERROR or DEBUG') do |v|
+        puts "setting log level to #{v}"
+        Config.configuration.log_level = v
+      end
+
       opts.on(
         '-i', '--include-extras',
         'All other titles that are not the main movie will be added to the "Behind The Scenes" '\
@@ -114,9 +120,6 @@ class OptParser
         Config.configuration.verbose = v
       end
 
-      opts.on('--log-level [LogLevel]', String, 'Provde ERROR or DEBUG') do |v|
-        Config.configuration.log_level = v if v == 'DEBUG'
-      end
 
       opts.on('-y' '--ifttt-webhook-key [KEY]', String, 'Send notification to IFTTT please provide a key from https://ifttt.com/services/maker_webhooks/settings') do |v|
         Logger.info("IFTTT URL provided and all notifications will be sent to the #{v}")
