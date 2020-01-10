@@ -65,7 +65,7 @@ class FixTVShowNames
         Config.configuration.video_name = search['results'].first['name']
       end
 
-      names = TheMovieDB.new.uniq_names(search['results'])
+      names = TheMovieDB.new.uniq_titles(search['results'])
 
       answer = TTY::Prompt.new.select(
         "Found multiple matched for (#{tv_show.title}). Pick one from below", per_page: 50

@@ -8,7 +8,8 @@ module TheMovieDB
       id: Integer,
       episode_run_time: Array,
       name: String,
-      first_air_date: String
+      first_air_date: String,
+      url: String
     )
     validate_presence(:id)
 

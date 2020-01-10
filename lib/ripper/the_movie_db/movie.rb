@@ -7,7 +7,8 @@ module TheMovieDB
       title: String,
       id: Integer,
       runtime: Integer,
-      release_date: String
+      release_date: String,
+      url: String
     )
     validate_presence(:id)
 

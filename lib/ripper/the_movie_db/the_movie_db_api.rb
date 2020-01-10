@@ -47,7 +47,7 @@ module TheMovieDBAPI
       )
       if response
         more_pages = page < response['total_pages']
-        results += response['results']
+        results += response['results'].each { |r| r['url'] = "https://www.themoviedb.org/#{type}/#{r['id']}" }
       else
         more_pages = false
       end
@@ -72,19 +72,14 @@ module TheMovieDBAPI
   # These uniq names work best as they play nice with the Plex data and plus then you can
   # tell if you have which movie is from 1999 and 2032.
   # Example:
-  #   uniq_names(search('dark'))
+  #   uniq_titles(search('dark'))
   #
-  def uniq_names(search_results)
-    names_hash = Hash.new(0)
-    search_results.map do |result|
-      names_hash[result.name] += 1
-      if names_hash[result.name] > 1
-        extra_info = result.release_date_present? ? result.release_date_to_time.year : result.id
-        "#{result.name} (#{extra_info})"
-      else
-        result.name
-      end
+  def uniq_titles(search_results)
+    search_results.each do |result|
+      next unless result.release_date_present?
+      result.title = "#{result.name} (#{result.release_date_to_time.year})"
     end
+    search_results
   end
 
   def video(type:, id:)

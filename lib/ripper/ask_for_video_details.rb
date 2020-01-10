@@ -100,18 +100,18 @@ class AskForVideoDetails
   end
 
   def select_video_from_results(request_videos)
-    names = TheMovieDB::Movie.uniq_names(request_videos)
+    request_videos = TheMovieDB::Movie.uniq_titles(request_videos)
 
     answer = Shell.prompt.select(
       "Found multiple movies that matched #{config.video_name.inspect}. Pick one from below",
       per_page: 50, filter: true
     ) do |menu|
-      names.each_with_index do |name, index|
-        menu.choice name, index
+      request_videos.each_with_index do |video, index|
+        menu.choice "#{video.title} (#{video.url})", index
       end
     end
 
     config.the_movie_db_config.selected_video = request_videos[answer]
-    config.video_name = names[answer]
+    config.video_name = config.the_movie_db_config.selected_video.title
   end
 end
