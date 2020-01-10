@@ -38,7 +38,8 @@ module TheMovieDB
 
     # TV show use name this helps normalize the data
     def name
-      title
+      return title unless release_date_present?
+      "#{title} (#{release_date_to_time.year})"
     end
 
     def runtime

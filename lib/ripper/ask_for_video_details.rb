@@ -100,8 +100,6 @@ class AskForVideoDetails
   end
 
   def select_video_from_results(request_videos)
-    request_videos = TheMovieDB::Movie.uniq_titles(request_videos)
-
     answer = Shell.prompt.select(
       "Found multiple movies that matched #{config.video_name.inspect}. Pick one from below",
       per_page: 50, filter: true
