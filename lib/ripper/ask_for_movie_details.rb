@@ -28,7 +28,9 @@ class AskForMovieDetails
       Logger.warning('Could not find a title using min and max. Falling back to using all titles')
       titles = config.selected_disc_info.details
     end
-
+    if titles.nil? || titles.empty?
+      raise Plex::Ripper::Abort, 'Could not load titles from Disc the disc might be damaged or the CD drive is having issues'
+    end
     answer = Shell.prompt.select(
       'Found multiple titles that matched. Pick one from below', per_page: 25, filter: true
     ) do |menu|

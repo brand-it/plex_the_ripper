@@ -105,11 +105,11 @@ class AskForVideoDetails
       per_page: 50, filter: true
     ) do |menu|
       request_videos.each_with_index do |video, index|
-        menu.choice "#{video.title} (#{video.url})", index
+        menu.choice "#{video.name} (#{video.url})", index
       end
     end
 
     config.the_movie_db_config.selected_video = request_videos[answer]
-    config.video_name = config.the_movie_db_config.selected_video.title
+    config.video_name = config.the_movie_db_config.selected_video.name
   end
 end
