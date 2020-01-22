@@ -17,7 +17,7 @@ class VideosLoader
     videos = Videos.load
     videos[:movies].each do |movie_path|
       begin
-        Config.configuration.videos.add_movie(Movie.mkv_path_to_hash(movie_path))
+        Config.configuration.videos.add_movie(**Movie.mkv_path_to_hash(movie_path))
       rescue Model::Validation => exception
         Logger.error("#{exception.message} #{movie_path} #{movie}")
       end
