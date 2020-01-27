@@ -68,7 +68,7 @@ class AskForVideoDetails
     runtime ||= {}
 
     # margin = config.type == :movie ? 30 : 5
-    margin = 2 # how much of wiggle room we want to give the movie times
+    margin = 10 # min how much of wiggle room we want to give the movie times
     update_minlength(runtime[:min], margin)
     update_maxlength(runtime[:max], margin)
 
