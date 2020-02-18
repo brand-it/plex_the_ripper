@@ -30,15 +30,16 @@ module TheMovieDB
     def episodes
       return @episodes if @episodes.any?
 
-      self.episodes = season.episodes
+      self.episodes = season.episodes.map do |episode|
+        episode[:season] = self
+        Episode.new(episode)
+      end
     end
 
     def find_episode_by_number(number)
       return if number.nil?
 
-      episode = episodes.find { |e| e['episode_number'].to_i == number }
-      episode['season'] = self
-      Episode.new(episode)
+      episodes.find { |e| e.episode_number == number }
     end
   end
 end

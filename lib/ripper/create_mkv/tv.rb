@@ -29,24 +29,26 @@ class CreateMKV
     private
 
     def new_name
+      detailed_episode = detailed_episode(Config.configuration.episode)
       season_number = format('%02d', Config.configuration.tv_season)
-      episode_number = format('%02d', Config.configuration.episode)
+      episode_number = format('%02d', detailed_episode.episode_number)
       episode_name = [
         Config.configuration.video_name,
-        "s#{season_number}e#{episode_number}",
-        episode_name(Config.configuration.episode)
+        "S#{season_number}E#{episode_number}",
+        detailed_episode.air_date.strftime('%Y-%m-%d'),
+        detailed_episode.name
       ].compact.join(' - ')
       File.join([directory, "#{episode_name}.mkv"])
     end
 
-    def episode_name(episode_number)
+    def season
       tv_show = Config.configuration.the_movie_db_config.selected_video
       return if tv_show.nil?
+      tv_show.find_season_by_number(Config.configuration.tv_season)
+    end
 
-      season = tv_show.find_season_by_number(Config.configuration.tv_season)
-      return if season.nil?
-
-      season.find_episode_by_number(episode_number)&.name
+    def detailed_episode(episode_number)
+      season&.find_episode_by_number(episode_number)
     end
   end
 end

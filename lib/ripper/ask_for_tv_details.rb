@@ -14,7 +14,7 @@ class AskForTVDetails
 
       ask_for_tv_details = AskForTVDetails.new
       ask_for_tv_details.ask_for_tv_season
-      ask_for_tv_details.ask_for_disc_number
+      # ask_for_tv_details.ask_for_disc_number
       ask_for_tv_details.ask_for_tv_episode
       Shell.show_wait_spinner('Loading Disc') do
         !Config.configuration.selected_disc_info.details_loaded?
@@ -50,12 +50,12 @@ class AskForTVDetails
   def select_season_from_the_movie_db
     Shell.prompt.select('Select a Season') do |menu|
       default = tv_show.seasons.index do |season|
-        season['season_number'] == config.tv_season
+        season.season_number == config.tv_season
       end
       menu.default default + 1 if default
 
       tv_show.seasons.each do |season|
-        menu.choice season['name'], TheMovieDB::Season.new(season.merge(tv: tv_show))
+        menu.choice season.name, season
       end
     end
   end
@@ -64,14 +64,13 @@ class AskForTVDetails
 
     Shell.prompt.select('Select a Episode') do |menu|
       default = season.episodes.index do |e|
-        e['episode_number'] == config.episode
+        e.episode_number == config.episode
       end
       menu.default default + 1 if default
 
       season.episodes.each do |episode|
-        episode = TheMovieDB::Episode.new(episode)
         ripped = ripped_episodes.any? { |e| e.name == episode.name }
-        menu.choice "#{episode.name} #{'(ripped)' if ripped}", episode
+        menu.choice "#{episode.name} ##{episode.episode_number} #{'(ripped)' if ripped}", episode
       end
     end
   end

@@ -30,6 +30,12 @@ module TheMovieDB
       end
     end
 
+    # TV show use name this helps normalize the data
+    def name
+      return @name unless release_date_present?
+      "#{@name} (#{release_date_to_time.year})"
+    end
+
 
     def release_date_to_time
       @release_date_to_time ||= Time.parse(first_air_date)
@@ -46,12 +52,15 @@ module TheMovieDB
 
     def find_season_by_number(number)
       return if number.nil?
+      load_more
+      seasons.find { |s| s.season_number == number }
+    end
 
-      season = seasons.find { |s| s['season_number'].to_i == number }
-      return if season.nil?
-
-      season[:tv] = self
-      Season.new(season)
+    def seasons=(values)
+      @seasons = values.to_a.map do |value|
+        value[:tv] = self
+        Season.new(value)
+      end
     end
 
     # load more of the data if more is needed. This is useful for in the

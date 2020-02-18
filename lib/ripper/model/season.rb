@@ -11,7 +11,10 @@ class Season < Model
 
     episode = episodes.push(
       Episode.new(
-        number: episode_number, season: self, file_path: file_path, name: episode_name
+        number: episode_number,
+        season: self,
+        file_path: file_path,
+        name: episode_name
       )
     ).last
     episodes.sort_by!(&:number) # slow but who care... just not worth it to fix
