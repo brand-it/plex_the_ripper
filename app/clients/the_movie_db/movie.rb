@@ -3,14 +3,10 @@
 module TheMovieDB
   class Movie < Model
     attr_accessor(:loaded)
-    columns(
-      title: String,
-      id: Integer,
-      runtime: Integer,
-      release_date: String,
-      url: String
-    )
-    validate_presence(:id)
+    option :title, type: Types::String
+    option :id, type: Types::Integer
+    option :runtime, type: Types::Integer.optional
+    option :release_date, type: Types::String.optional
 
     class << self
       include TheMovieDBAPI
@@ -38,8 +34,7 @@ module TheMovieDB
 
     # TV show use name this helps normalize the data
     def name
-      return title unless release_date_present?
-      "#{title} (#{release_date_to_time.year})"
+      title
     end
 
     def runtime

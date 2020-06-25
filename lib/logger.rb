@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class Logger
+module Ripper
   if Config.configuration.log_directory
     LOG_PATH = File.join([Config.configuration.log_directory, 'movies.log'])
     RIP_PATH = File.join([Config.configuration.log_directory, 'rip_info.log'])
