@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module ArrayHelper
-  def ranges_from_integers(integers) # rubocop:disable CyclomaticComplexity
+  def ranges_from_integers(integers) # rubocop:disable Metrics/CyclomaticComplexity
     ranges = []
     max = nil
     min = nil

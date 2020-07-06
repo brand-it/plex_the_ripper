@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 # # frozen_string_literal: true
 # ugh this is going to suck to test... it is designed to loop forever.... FOREVER
 # how do you test a loop that never ends. It like a boat ride that never ends...

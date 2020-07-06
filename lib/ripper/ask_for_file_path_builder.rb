@@ -24,8 +24,8 @@ class AskForFilePathBuilder
                ]
              end
       File.join(path)
-    rescue StandardError => exception
-      raise Plex::Ripper::Abort, "#{path} could not be created. #{exception.message}"
+    rescue StandardError => e
+      raise Plex::Ripper::Abort, "#{path} could not be created. #{e.message}"
     end
   end
 

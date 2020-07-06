@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
 class Notification
-
   def self.send(title, message, message_color: 'blue', event_name: nil)
     ifttt(value1: title, value2: message, event_name: event_name)
     slack(title, message, message_color: message_color)
-  rescue StandardError => exception
-    Logger.warning(exception.message)
+  rescue StandardError => e
+    Logger.warning(e.message)
     Logger.debug(title)
     Logger.debug(message)
-    Logger.debug(exception.backtrace.join("\n"))
+    Logger.debug(e.backtrace.join("\n"))
   end
 
   def self.slack(title, message, message_color: 'blue')
@@ -23,7 +22,6 @@ class Notification
       }]
     )
   end
-
 
   def self.ifttt(values = {})
     return if Config.configuration.ifttt_webhook_key.nil?

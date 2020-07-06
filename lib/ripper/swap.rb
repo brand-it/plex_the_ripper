@@ -35,9 +35,7 @@ class Swap
   end
 
   def find_tv_show
-    if config.videos.tv_shows.empty?
-      raise(Plex::Ripper::Abort, 'Could not find any TV shows to swap')
-    end
+    raise(Plex::Ripper::Abort, 'Could not find any TV shows to swap') if config.videos.tv_shows.empty?
 
     Shell.prompt.select('Choose a tv show?', tv_shows_for_select, filter: true)
   end

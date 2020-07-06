@@ -153,7 +153,7 @@ class DiscInfo
     seconds
   end
 
-  def parse_disk_info_string(disk_info_string) # rubocop:disable AbcSize
+  def parse_disk_info_string(disk_info_string) # rubocop:disable Metrics/AbcSize
     lines = disk_info_string.split("\n")
     titles = {}
     lines.each do |line|

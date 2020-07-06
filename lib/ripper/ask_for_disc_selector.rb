@@ -31,8 +31,6 @@ class AskForDiscSelector
   end
 
   def ask_user_which_disk(discs)
-
-
     while selected_disc.nil?
       self.selected_disc = TTY::Prompt.new.select(
         'There where multiple discs found which one do you want to use'

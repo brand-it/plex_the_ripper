@@ -1,29 +1,18 @@
-inherit_from: .rubocop_todo.yml
 
-# Offense count: 25
 Style/Documentation:
   Enabled: false
 
-# Offense count: 45
-# Configuration parameters: AllowHeredoc, AllowURI, URISchemes, IgnoreCopDirectives, IgnoredPatterns.
-# URISchemes: http, https
-Metrics/LineLength:
-  Max: 100
-
-Metrics/AbcSize:
-  Max: 21
-
-Metrics/BlockLength:
-  Max: 32
-
-Metrics/MethodLength:
-  Max: 38
-
-Metrics/PerceivedComplexity:
-  Max: 10
+Style/MixinUsage:
+  Exclude:
+    - 'Rakefile'
 
 AllCops:
-  TargetRubyVersion: 2.3
+  TargetRubyVersion: 2.7.0
   Exclude:
-    - 'gems/**/*'
-    - '.bundle/**/*'
+    - bin/*
+    - config/application.rb
+    - config/unicorn.rb
+    - Dangerfile
+    - db/**/*
+    - node_modules/**/*
+    - vendor/**/*

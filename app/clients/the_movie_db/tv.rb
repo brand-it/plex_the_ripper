@@ -71,6 +71,5 @@ module TheMovieDB
       update(TV.video(type: :tv, id: id))
       self.loaded = true
     end
-
   end
 end

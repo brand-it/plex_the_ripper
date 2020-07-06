@@ -33,7 +33,7 @@ require File.expand_path('../lib/plex_ripper', __dir__).to_s
 # directory. Alternatively, in the individual `*_spec.rb` files, manually
 # require only the support files necessary.
 #
-Dir[File.expand_path('../spec/support', __dir__) + '/**/*.rb'].each do |f|
+Dir[File.expand_path('../spec/support', __dir__) + '/**/*.rb'].sort.each do |f|
   require f
 end
 

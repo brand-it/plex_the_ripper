@@ -35,7 +35,6 @@ class AskForTVDetails
                        end
   end
 
-
   def ask_for_tv_episode
     config.episode = if season
                        select_episode_from_the_movie_db.episode_number
@@ -61,7 +60,6 @@ class AskForTVDetails
   end
 
   def select_episode_from_the_movie_db
-
     Shell.prompt.select('Select a Episode') do |menu|
       default = season.episodes.index do |e|
         e.episode_number == config.episode
@@ -79,7 +77,6 @@ class AskForTVDetails
     config.disc_number = Shell.ask_value_required(
       "What is the disc number for (#{config.disc_number}): ",
       type: Integer, default: config.disc_number
-
     )
   end
 
@@ -101,6 +98,7 @@ class AskForTVDetails
 
     season = tv_show.find_season(Config.configuration.tv_season)
     return [] if season.nil?
+
     @ripped_episodes ||= season.episodes
   end
 
@@ -117,9 +115,7 @@ class AskForTVDetails
       'Found a few options. Select the episodes on this disc', echo: false
     ) do |menu|
       config.selected_disc_info.friendly_details.each do |detail|
-        if show_all || titles.key?(detail[:title])
-          menu.choice detail[:name], detail[:title].to_i
-        end
+        menu.choice detail[:name], detail[:title].to_i if show_all || titles.key?(detail[:title])
       end
 
       menu.choice('Show All Titles', true) unless show_all

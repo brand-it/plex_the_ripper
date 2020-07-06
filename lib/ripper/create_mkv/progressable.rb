@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 class CreateMKV
   module Progressable
     NOTIFICATION_PERCENTAGES = [25.0, 50.0, 75.0, 99.0].freeze
 
     def set_progress_total(total)
       return if total == progressbar.total
+
       Logger.debug("Updating total to #{total} from #{progressbar.total}")
       progressbar.total = total
     end
@@ -45,7 +48,6 @@ class CreateMKV
         "Movie Progress #{Config.configuration.video_name}"
       end
     end
-
 
     def progress_done
       progressbar.finish

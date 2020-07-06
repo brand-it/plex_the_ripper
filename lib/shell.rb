@@ -57,16 +57,14 @@ class Shell
             still_waiting = (yield == true)
           end
           sleep(1) if Time.now < (started_at + 1)
-          if still_waiting
-            Logger.info "#{message} ... #{chars[(index += 1) % chars.length]}", rewrite: true
-          end
-        rescue Timeout::Error => exception
-          raise Plex::Ripper::Abort, "Timeout #{exception.message}"
+          Logger.info "#{message} ... #{chars[(index += 1) % chars.length]}", rewrite: true if still_waiting
+        rescue Timeout::Error => e
+          raise Plex::Ripper::Abort, "Timeout #{e.message}"
         end
       end
     end
 
-    def ask(question, type: String) # rubocop:disable CyclomaticComplexity
+    def ask(question, type: String) # rubocop:disable Metrics/CyclomaticComplexity
       answer = TTY::Prompt.new.ask(question.strip)
       Logger.debug("answer: #{answer}")
       return if answer == '' || answer.nil?

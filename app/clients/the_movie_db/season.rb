@@ -14,7 +14,7 @@ module TheMovieDB
     class << self
       include TheMovieDBAPI
 
-      def find(tv:, season_number:) # rubocop:disable UncommunicativeMethodParamName
+      def find(tv:, season_number:)
         response = request("tv/#{tv.id}/season/#{season_number}")
         return if response.nil?
 

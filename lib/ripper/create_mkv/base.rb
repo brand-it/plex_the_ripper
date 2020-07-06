@@ -27,9 +27,7 @@ class CreateMKV
         process_status!(response, title)
         # We want to rename the mkv file for each success. That was if there is a failure of
         # one of them it will still get he correct name for the rest of them.
-        if success?
-          rename_mkv(mkv_file_name: File.basename(newest_mkv_file_path), index: index)
-        end
+        rename_mkv(mkv_file_name: File.basename(newest_mkv_file_path), index: index) if success?
       end
       send_success_notification if success?
     end

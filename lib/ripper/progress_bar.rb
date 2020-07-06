@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Ripper
   class ProgressBar < ProgressBar
     PROGRESS_BAR_FORMATS = {

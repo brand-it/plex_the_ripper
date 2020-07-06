@@ -6,7 +6,7 @@ require 'ostruct'
 require 'pp'
 
 class OptParser
-  def self.parse(args) # rubocop:disable AbcSize, MethodLength, CyclomaticComplexity
+  def self.parse(args) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
     opt_parser = OptionParser.new do |opts| # rubocop:disable Metrics/BlockLength
       opts.banner = 'Usage: rip [options]'
 
@@ -133,7 +133,6 @@ class OptParser
         puts opts
         exit
       end
-
     end
     opt_parser.parse!(args)
   end

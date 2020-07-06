@@ -1,3 +1,4 @@
-class ApplicationController < Rack::App
+# frozen_string_literal: true
 
+class ApplicationController < Rack::App
 end

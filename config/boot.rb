@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 ENV['BUNDLE_GEMFILE'] ||= File.expand_path('../Gemfile', __dir__)
 require 'bundler'
 require 'bundler/setup'
 Bundler.require(:default, ENV['RACK_ENV'].to_sym)
 
-Dir[File.expand_path('./initializers/*', __dir__)].each do |helpers|
+Dir[File.expand_path('./initializers/*', __dir__)].sort.each do |helpers|
   require helpers
 end
 

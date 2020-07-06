@@ -4,7 +4,6 @@ class CreateMKV
   class MakeBackup
     include Progressable
 
-
     attr_accessor :directory, :backup_file, :progressbar, :success
 
     def initialize
@@ -62,7 +61,6 @@ class CreateMKV
         end.join
         wait_thr.value
       end
-
     end
 
     def process_status!(response)

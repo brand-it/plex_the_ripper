@@ -33,15 +33,13 @@ class AskForVideoDetails
               end
     config.type = Shell.prompt.select('Please select a video type', options)
     if config.type == 'eject disc'
-      config.selected_disc_info.eject if config.selected_disc_info
+      config.selected_disc_info&.eject
       update_type
     end
   end
 
   def ask_for_video_name
-    until video_name_present?
-      config.video_name = Shell.ask("What is the Name of this #{config.type}:", type: String)
-    end
+    config.video_name = Shell.ask("What is the Name of this #{config.type}:", type: String) until video_name_present?
   end
 
   def check_against_movie_database
