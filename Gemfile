@@ -1,20 +1,25 @@
 # frozen_string_literal: true
-
 source 'https://rubygems.org'
+git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+ruby '2.7.0'
+
+gem 'pragmatic_tokenizer'
+gem 'progress_bar'
 gem 'actioncable'
-gem 'activerecord'
+gem 'activerecord', require: 'active_record'
+gem 'activesupport', require: 'active_support'
+gem 'colorize'
+gem 'rake'
 gem 'dry-initializer'
 gem 'dry-types'
 gem 'httparty'
 gem 'net-scp'
 gem 'nokogiri'
 gem 'rack'
-gem 'rack-app', require: 'rack/app'
-gem 'rake'
-gem 'ruby-progressbar'
 gem 'slack-notifier'
 gem 'sqlite'
+gem 'slim'
 gem 'tty-prompt'
 gem 'webpacker'
 gem 'yarn'
@@ -27,9 +32,10 @@ group :development do
   gem 'faker'
   gem 'pry'
   gem 'rspec'
-  gem 'rubocop'
+  gem 'rubocop', '~> 0.86.0'
   gem 'selenium-webdriver'
   gem 'solargraph'
   gem 'vcr'
   gem 'webmock'
+  gem 'better_errors'
 end

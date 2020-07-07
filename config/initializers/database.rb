@@ -1,6 +1,3 @@
-# frozen_string_literal: true
-
-ActiveRecord::Base.establish_connection(
-  adapter: 'sqlite3',
-  database: 'db/ripper.db'
-)
+# ActiveRecord::Base.configurations = Application.config.database
+# ActiveRecord::Base.establish_connection Application.env.to_sym
+# ActiveRecord::Base.connection_handlers = { writing: ActiveRecord::Base.default_connection_handler }
