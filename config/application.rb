@@ -1,24 +1,19 @@
-# frozen_string_literal: true
 require_relative 'boot'
 
-require File.expand_path('../application', __dir__)
+require 'rails/all'
 
-Bundler.require(:default, Application.env)
+# Require the gems listed in Gemfile, including any gems
+# you've limited to :test, :development, or :production.
+Bundler.require(*Rails.groups)
 
-Dir[Application.root.join('config', 'initializers', '*')].sort.each do |intializer|
-  require intializer
-end
+module Myapp
+  class Application < Rails::Application
+    # Initialize configuration defaults for originally generated Rails version.
+    config.load_defaults 6.0
 
-module PlexTheRipper
-  class Application < ::Application
-    class Error < StandardError; end
-
-  #  configure :production, :development do
-  #     enable :logging
-  #   end
-  #   configure :development do
-  #     use BetterErrors::Middleware
-  #     BetterErrors.application_root = Application.root
-  #   end
+    # Settings in config/environments/* take precedence over those specified here.
+    # Application configuration can go into files in config/initializers
+    # -- all .rb files in that directory are automatically loaded after loading
+    # the framework and any gems in your application.
   end
 end

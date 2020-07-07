@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'active_support/all'
 require 'rack'
 
@@ -15,8 +17,8 @@ class Application < Rack::App
 
     def route!
       binding.pry
-      if @request.path == "/"
-        [200, { "Content-Type" => "text/plain" }, ["Hello from the Router"]]
+      if @request.path == '/'
+        [200, { 'Content-Type' => 'text/plain' }, ['Hello from the Router']]
       else
         not_found
       end
@@ -24,8 +26,8 @@ class Application < Rack::App
 
     private
 
-    def not_found(msg = "Not Found")
-      [404, { "Content-Type" => "text/plain" }, [msg]]
+    def not_found(msg = 'Not Found')
+      [404, { 'Content-Type' => 'text/plain' }, [msg]]
     end
   end
 
@@ -52,5 +54,4 @@ class Application < Rack::App
   def serve_request(request)
     Router.new(request).route!
   end
-
 end

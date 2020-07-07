@@ -1,5 +1,4 @@
 # frozen_string_literal: true
 
-class ApplicationController < Sinatra::Application
-  set :root, Application.root.join('app')
+class ApplicationController < ActionController::Base
 end

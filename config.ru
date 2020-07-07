@@ -1,3 +1,7 @@
-require File.expand_path('./config/application', __dir__)
+# frozen_string_literal: true
 
-run PlexTheRipper::Application
+# This file is used by Rack-based servers to start the application.
+
+require_relative 'config/environment'
+
+run Rails.application
