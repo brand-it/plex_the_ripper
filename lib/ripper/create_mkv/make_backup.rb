@@ -7,7 +7,7 @@ class CreateMKV
     attr_accessor :directory, :backup_file, :progressbar, :success
 
     def initialize
-      self.directory = AskForFilePathBuilder.path + '/backup'
+      self.directory = "#{AskForFilePathBuilder.path}/backup"
       self.progressbar = Ripper::ProgressBar.create
       self.success = false
     end

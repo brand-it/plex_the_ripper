@@ -10,6 +10,7 @@ class CreateMKV
       :run_time, :directory, :started_at, :completed_at, :status, :notification_percentages,
       :progressbar, :newest_mkv_file_path
     )
+
     def initialize
       self.started_at = nil
       self.completed_at = nil
@@ -142,7 +143,7 @@ class CreateMKV
     end
 
     def process_status!(response, title)
-      if response.success? && Dir[directory + '/*'].any?
+      if response.success? && Dir["#{directory}/*"].any?
         success!
       else
         Logger.error("Could not rip file #{Config.configuration.video_name}, #{mkv(title: title)}")

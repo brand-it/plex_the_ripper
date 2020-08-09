@@ -7,7 +7,7 @@ module Ripper
     end
 
     def logger
-      @logger ||= Logger.new(root + '/Applicationlog')
+      @logger ||= Logger.new("#{root}/Applicationlog")
     end
   end
 end
