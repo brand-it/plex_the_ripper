@@ -34,6 +34,7 @@ gem 'kaminari', '1.2.1'
 
 group :development, :test do
   gem 'pry'
+  gem 'rspec-rails'
   gem 'rubocop'
 end
 
