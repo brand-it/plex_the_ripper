@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
 class Config < ApplicationRecord
-  enum for: %i[the_movie_db user]
+  SETTINGS_DEFAULTS = {}.freeze
   serialize :settings, OpenStruct
 
   scope :newest, -> { order(updated_at: :desc) }
 
-  after_initialize :user_defaults, if: :user?
+  after_initialize :settings_defaults
 
   private
 
-  def user_defaults
-    settings.dark_mode = true
+  def settings_defaults
+    self.settings = OpenStruct.new(self.class::SETTINGS_DEFAULTS)
+  rescue NameError => e
+    raise "#{e.message} for #{self.class}"
   end
 end

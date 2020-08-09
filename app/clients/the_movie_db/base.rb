@@ -90,7 +90,7 @@ module TheMovieDb
     end
 
     def config
-      @config ||= Config.the_movie_db.newest.first || Config.new
+      @config ||= Config::TheMovieDb.newest.first || Config::TheMovieDb.new
     end
 
     # def config

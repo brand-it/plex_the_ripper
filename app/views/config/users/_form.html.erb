@@ -1,0 +1,17 @@
+<%= form_with(model: config_user, local: true) do |form| %>
+  <% if config_user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(config_user.errors.count, "error") %> prohibited this config_user from being saved:</h2>
+
+      <ul>
+        <% config_user.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

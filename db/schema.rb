@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 2020_07_26_194106) do
 
   create_table "configs", force: :cascade do |t|
-    t.string "for", null: false
+    t.string "type", default: "Config", null: false
     t.text "settings"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
