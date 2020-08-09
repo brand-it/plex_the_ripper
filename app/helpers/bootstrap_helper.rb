@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 module BootstrapHelper
+
+  def light_dark_mode
+    cookies[:light_dark_mode] || 'dark'
+  end
+
   def bootstrap_alerts
     alerts = []
     flash.each do |type, message|

@@ -1,7 +1,8 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resource :config
+  resources :configs
+  resource :user_config
 
-  root to: 'config#new'
+  root to: 'configs#new'
 end
