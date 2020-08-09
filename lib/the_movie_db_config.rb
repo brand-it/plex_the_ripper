@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Configuration Information for the ripper application
-class TheMovieDBConfig
+class TheMovieDbConfig
   attr_accessor :selected_video
   attr_reader :api_key
 
@@ -10,8 +10,9 @@ class TheMovieDBConfig
   end
 
   def valid_api_key?
-    TheMovieDB::Movie.request('movie/550') do |response|
-      Logger.debug(response.body)
+    return @valid_api_key if @valid_api_key
+
+    @valid_api_key = TheMovieDb::Movie.request('authentication/session/new') do |response|
       response.is_a?(Net::HTTPSuccess)
     end
   end

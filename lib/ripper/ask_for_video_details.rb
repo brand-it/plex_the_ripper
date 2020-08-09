@@ -91,13 +91,15 @@ class AskForVideoDetails
 
   def request_videos
     @request_videos ||= if config.type == :tv
-                          TheMovieDB::TV.search(config.video_name)
+                          TheMovieDb::TV.search(config.video_name)
                         else
-                          TheMovieDB::Movie.search(config.video_name)
+                          TheMovieDb::Movie.search(config.video_name)
                         end
   end
 
   def select_video_from_results(request_videos)
+    names = TheMovieDb::Movie.uniq_names(request_videos)
+
     answer = Shell.prompt.select(
       "Found multiple movies that matched #{config.video_name.inspect}. Pick one from below",
       per_page: 50, filter: true

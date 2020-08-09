@@ -12,19 +12,19 @@ RSpec.shared_context 'the_movie_db' do
   let(:set_api_key) { Config.configuration.the_movie_db_config.api_key = 'something' }
   let(:the_movie_db_tv) do
     VCR.use_cassette 'the_movie_db/tv_1' do
-      TheMovieDB::TV.find(tv_id)
+      TheMovieDb::TV.find(tv_id)
     end
   end
 
   let(:the_movie_db_season) do
     VCR.use_cassette 'the_movie_db/tv_1/season_1' do
-      TheMovieDB::Season.find(tv: TheMovieDB::TV.new(id: tv_id), season_number: season_number)
+      TheMovieDb::Season.find(tv: TheMovieDb::TV.new(id: tv_id), season_number: season_number)
     end
   end
 
   let(:the_movie_db_movie) do
     VCR.use_cassette 'the_movie_db/movie_1' do
-      TheMovieDB::Movie.find(movie_id)
+      TheMovieDb::Movie.find(movie_id)
     end
   end
 end

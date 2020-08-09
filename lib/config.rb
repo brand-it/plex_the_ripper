@@ -41,7 +41,7 @@ class Config
     self.include_extras = false
     self.tv_shows_directory_name = 'TV Shows'
     self.movies_directory_name = 'Movies'
-    self.the_movie_db_config = TheMovieDBConfig.new
+    self.the_movie_db_config = TheMovieDbConfig.new
     self.selected_titles = []
     self.slack_url = nil
     self.log_level = 'ERROR'

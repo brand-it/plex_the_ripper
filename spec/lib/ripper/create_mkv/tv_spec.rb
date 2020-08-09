@@ -48,7 +48,7 @@ describe CreateMKV::TV do
       before do
         stub_valid_api_key
         Config.configuration.the_movie_db_config.selected_video = the_movie_db_tv
-        allow(TheMovieDB::Season).to receive(:find).and_return(the_movie_db_season)
+        allow(TheMovieDb::Season).to receive(:find).and_return(the_movie_db_season)
         perform
       end
       it do
