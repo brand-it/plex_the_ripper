@@ -1,18 +1,14 @@
 # frozen_string_literal: true
 
 class Config < ApplicationRecord
-  SETTINGS_DEFAULTS = {}.freeze
-  serialize :settings, OpenStruct
-
   scope :newest, -> { order(updated_at: :desc) }
+  serialize :settings, Config::SettingSerializer
 
-  after_initialize :settings_defaults
+  def self.settings_defaults(values)
+    define_singleton_method(:defaults) { Config::SettingSerializer.new(values) }
+  end
 
-  private
-
-  def settings_defaults
-    self.settings = OpenStruct.new(self.class::SETTINGS_DEFAULTS)
-  rescue NameError => e
-    raise "#{e.message} for #{self.class}"
+  def settings
+    self.class.defaults.merge(super)
   end
 end

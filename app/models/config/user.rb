@@ -2,8 +2,8 @@
 
 class Config
   class User < Config
-    SETTINGS_DEFAULTS = {
-      api_key: nil
-    }.freeze
+    settings_defaults(
+      dark_mode: true
+    )
   end
 end

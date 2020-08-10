@@ -2,8 +2,8 @@
 
 class Config
   class TheMovieDb < Config
-    SETTINGS_DEFAULTS = {
-      dark_mode: true
-    }.freeze
+    settings_defaults(
+      api_key: nil
+    )
   end
 end
