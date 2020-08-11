@@ -24,6 +24,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'dry-initializer'
 gem 'dry-types'
 
+gem 'simple_form'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

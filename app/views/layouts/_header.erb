@@ -5,7 +5,11 @@
     </h3>
 
     <nav class="nav nav-masthead justify-content-center">
-      <%= link_to 'The Movie DB', new_config_the_movie_db_path, class: 'nav-link active' %>
+      <% if Config::TheMovieDb.any? %>
+        <%= link_to 'The Movie DB', edit_config_the_movie_db_path(Config::TheMovieDb.newest.first), class: 'nav-link active' %>
+      <% else %>
+        <%= link_to 'The Movie DB', new_config_the_movie_db_path, class: 'nav-link active' %>
+      <% end %>
       <a class="nav-link" href="#">Features</a>
       <a class="nav-link" href="#">Contact</a>
     </nav>
