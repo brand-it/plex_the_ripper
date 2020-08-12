@@ -1,8 +1,9 @@
 @import "bootstrap/scss/bootstrap";
-@import "./colors";
-@import "./dark";
-@import "./light";
-@import "./turbolinks";
+@import "colors";
+@import "dark";
+@import "light";
+@import "turbolinks";
+@import "minimal";
 
 // @import "./custom";
 // app/javascript/packs/stylesheets/_custom.scss
@@ -13,8 +14,10 @@ html, body {
   height: 100%;
 }
 body {
+  font-family: "Lucida Console", Monaco, monospace;
   display: -ms-flexbox;
   display: flex;
+  transition: all 1.4s;
 }
 
 /*

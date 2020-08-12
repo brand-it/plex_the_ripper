@@ -1,19 +1,6 @@
-<%= form_with(model: config_the_movie_db, local: true) do |form| %>
-  <% if config_the_movie_db.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(config_the_movie_db.errors.count, "error") %> prohibited this config_the_movie_db from being saved:</h2>
-
-      <ul>
-        <% config_the_movie_db.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
+<%= simple_form_for config_the_movie_db do |f| %>
+  <%= f.simple_fields_for :settings do |settings_form| %>
+    <%= settings_form.input :api_key, autofocus: true %>
   <% end %>
-
-  
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
+  <%= f.button :submit %>
 <% end %>

@@ -1,0 +1,75 @@
+.minimal-checkbox-input {
+  .pretty {
+    font-size: 32px;
+  }
+}
+
+.minimal-input {
+  margin-bottom: 37px;
+  position: relative;
+  width: 100%;
+
+  input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px lighten($dark-black, 4%) inset;
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: $white;
+  }
+
+  .error-message {
+    color: $red;
+    display: block;
+    font-size: 20px;
+    position: absolute;
+    right: 0;
+    top: 20px;
+  }
+
+  input {
+    border-radius: 2px 2px 0px 0px;
+    background-color: transparent;
+    border: 0;
+    color: $white;
+    display: block;
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 32px;
+    height: 55px;
+    line-height: 1.2;
+    outline: none;
+    width: 100%;
+    border-color: transparent;
+  }
+
+  label {
+    display: block;
+    height: 100%;
+    left: 0;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+    font-size: 22px;
+    top: 0px;
+    transition: all .4s;
+  }
+
+  input:focus + label, input.has-val + label {
+    color: $gray;
+    top: -35px;
+    height:90px;
+  }
+
+  label::before {
+    content: '';
+    background-color: $light-gray;
+    bottom: -2px;
+    display: block;
+    height: 2px;
+    left: 0;
+    position: absolute;
+    transition: all 1.0s;
+    width: 100%;
+  }
+  input:focus + label::before {
+    background: lighten($blue, 20%);
+    // background: linear-gradient(45deg, $red, lighten($red, 20%));
+  }
+}
