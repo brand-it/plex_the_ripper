@@ -2,7 +2,7 @@
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
   <%= f.simple_fields_for :settings, f.object.settings do |settings_form| %>
-    <%= settings_form.input :api_key, autofocus: true %>
+    <%= settings_form.input :api_key, autofocus: true, required: true %>
   <% end %>
   <%= f.button :submit %>
 <% end %>

@@ -26,6 +26,8 @@ gem 'dry-types'
 
 gem 'simple_form'
 
+gem 'workflow'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

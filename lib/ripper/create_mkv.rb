@@ -19,15 +19,6 @@ class CreateMKV
       )
     end
 
-    def disk_info_command
-      [
-        Config.configuration.makemkvcon_path,
-        'info',
-        Config.configuration.disk_source,
-        '-r'
-      ].join(' ')
-    end
-
     def raise_message_error(response)
       messages = response.stdout_str.split("\n").select { |m| m =~ /^MSG/ }
 

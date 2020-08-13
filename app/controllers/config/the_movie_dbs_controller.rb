@@ -3,16 +3,6 @@
 class Config::TheMovieDbsController < ApplicationController
   before_action :set_the_movie_db, only: %i[show edit update destroy]
 
-  # GET /config/users
-  # GET /config/users.json
-  def index
-    @config_the_movie_dbs = Config::TheMovieDb.all.page params[:page]
-  end
-
-  # GET /config/users/1
-  # GET /config/users/1.json
-  def show; end
-
   # GET /config/users/new
   def new
     @config_the_movie_db = Config::TheMovieDb.new
@@ -26,39 +16,13 @@ class Config::TheMovieDbsController < ApplicationController
   def create
     @config_the_movie_db = Config::TheMovieDb.new(the_movie_db_params)
 
-    respond_to do |format|
-      if @config_the_movie_db.save
-        format.html { redirect_to @config_the_movie_db, notice: 'User was successfully created.' }
-        format.json { render :show, status: :created, location: @config_the_movie_db }
-      else
-        format.html { render :new }
-        format.json { render json: @config_the_movie_db.errors, status: :unprocessable_entity }
-      end
-    end
+    @config_the_movie_db.save
+    render :new
   end
 
-  # PATCH/PUT /config/users/1
-  # PATCH/PUT /config/users/1.json
   def update
-    respond_to do |format|
-      if @config_the_movie_db.update(the_movie_db_params)
-        format.html { redirect_to @config_the_movie_db, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @config_the_movie_db }
-      else
-        format.html { render :edit }
-        format.json { render json: @config_the_movie_db.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /config/users/1
-  # DELETE /config/users/1.json
-  def destroy
-    @config_the_movie_db.destroy
-    respond_to do |format|
-      format.html { redirect_to the_movie_dbs_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+    @config_the_movie_db.update(the_movie_db_params)
+    render :edit
   end
 
   private
