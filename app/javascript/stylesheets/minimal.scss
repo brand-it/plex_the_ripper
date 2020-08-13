@@ -5,12 +5,13 @@
 }
 
 .minimal-input {
-  margin-bottom: 37px;
+  margin-bottom: 2.3rem;
+  margin-top: 2.3rem;
   position: relative;
   width: 100%;
 
   input:-webkit-autofill {
-    -webkit-box-shadow: 0 0 0px 1000px lighten($dark-black, 4%) inset;
+    box-shadow: 0 0 0px 1000px lighten($dark-black, 4%) inset;
     transition: background-color 5000s ease-in-out 0s;
     -webkit-text-fill-color: $white;
   }
@@ -70,6 +71,5 @@
   }
   input:focus + label::before {
     background: lighten($blue, 20%);
-    // background: linear-gradient(45deg, $red, lighten($red, 20%));
   }
 }

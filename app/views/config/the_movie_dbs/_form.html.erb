@@ -1,5 +1,7 @@
 <%= simple_form_for config_the_movie_db do |f| %>
-  <%= f.simple_fields_for :settings do |settings_form| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <%= f.simple_fields_for :settings, f.object.settings do |settings_form| %>
     <%= settings_form.input :api_key, autofocus: true %>
   <% end %>
   <%= f.button :submit %>

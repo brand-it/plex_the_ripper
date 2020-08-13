@@ -11,6 +11,10 @@
   a:hover {
     color:$white;
   }
+  .debug_dump {
+    color: $white;
+    background-color: $dark-gray;
+  }
 
   /* Custom default button */
   .btn-secondary,

@@ -3,13 +3,13 @@
 class Config
   class SettingSerializer < OpenStruct
     def self.load(object)
-      return new(@defaults) if object.blank?
+      return new if object.nil?
 
       JSON.parse(object, object_class: self)
     end
 
     def self.dump(object)
-      JSON.dump(@defaults.merge(object.to_h))
+      JSON.dump(object.to_h)
     end
 
     def merge(object)
