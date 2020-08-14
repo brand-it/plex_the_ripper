@@ -9,6 +9,7 @@ class CreateTvs < ActiveRecord::Migration[6.0]
       t.integer :the_movie_db_id
       t.integer :episode_run_time
       t.string :overview
+      t.belongs_to :disk
       t.timestamps
     end
   end

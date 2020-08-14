@@ -88,8 +88,10 @@ ActiveRecord::Schema.define(version: 2020_08_13_044833) do
     t.integer "the_movie_db_id"
     t.integer "episode_run_time"
     t.string "overview"
+    t.integer "disk_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["disk_id"], name: "index_tvs_on_disk_id"
   end
 
 end

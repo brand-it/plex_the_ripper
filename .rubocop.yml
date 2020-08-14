@@ -1,3 +1,5 @@
+require: rubocop-rspec
+
 Style/Documentation:
   Enabled: false
 
@@ -16,3 +18,9 @@ AllCops:
     - db/**/*
     - node_modules/**/*
     - vendor/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - config/routes.rb  # Rails
+    - lib/tasks/**/*    # Rake
+    - spec/**/*         # RSpec
