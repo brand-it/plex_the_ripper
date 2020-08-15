@@ -7,7 +7,11 @@ RSpec.describe Config::User, type: :model do
 
   describe '#default_settings' do
     let(:expected_settings) do
-      Config::SettingSerializer.new(dark_mode: true)
+      Config::SettingSerializer.new(
+        dark_mode: true,
+        the_movie_db_api_key: nil,
+        the_movie_db_session_id: nil
+      )
     end
 
     it 'has defaults' do

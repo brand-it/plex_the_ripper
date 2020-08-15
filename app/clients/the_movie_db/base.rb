@@ -17,9 +17,7 @@ module TheMovieDb
         new.results
       end
 
-      def session_id
-        @session_id
-      end
+      attr_reader :session_id
     end
 
     private

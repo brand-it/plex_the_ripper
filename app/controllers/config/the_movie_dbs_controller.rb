@@ -3,7 +3,6 @@
 class Config::TheMovieDbsController < ApplicationController
   before_action :set_the_movie_db, only: %i[show edit update destroy]
 
-  # GET /config/users/new
   def new
     if params[:request_token]
       newest_or_init.update!(settings: { api_key: params[:request_token], session: nil })
@@ -14,11 +13,8 @@ class Config::TheMovieDbsController < ApplicationController
     end
   end
 
-  # GET /config/users/1/edit
   def edit; end
 
-  # POST /config/users
-  # POST /config/users.json
   def create
     @config_the_movie_db = Config::TheMovieDb.new(the_movie_db_params)
 
