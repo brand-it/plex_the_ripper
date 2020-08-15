@@ -2,8 +2,11 @@
 
 class StartController < ApplicationController
   def new
-    if Config::TheMovieDb.authorized?
-      render :new
+    config = Config::TheMovieDb.newest.first
+    if config&.settings&.api_key
+      redirect_to the_movie_dbs_path
+    elsif config
+      redirect_to edit_config_the_movie_db_path(config)
     else
       redirect_to new_config_the_movie_db_path
     end

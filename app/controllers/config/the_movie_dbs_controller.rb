@@ -4,13 +4,14 @@ class Config::TheMovieDbsController < ApplicationController
   before_action :set_the_movie_db, only: %i[show edit update destroy]
 
   def new
-    if params[:request_token]
-      newest_or_init.update!(settings: { api_key: params[:request_token], session: nil })
-      redirect_to root_path
-    else
-      new_token = TheMovieDb::Authentication::Token::New.results
-      redirect_to new_token.request_url(redirect_to: request.url).to_s
-    end
+    @config_the_movie_db = Config::TheMovieDb.new
+    # if params[:request_token]
+    #   newest_or_init.update!(settings: { api_key: params[:request_token], session: nil })
+    #   redirect_to root_path
+    # else
+    #   new_token = TheMovieDb::Authentication::Token::New.results
+    #   redirect_to new_token.request_url(redirect_to: request.url).to_s
+    # end
   end
 
   def edit; end

@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 class TheMovieDbsController < ApplicationController
-  def index
-    render search_results
-  end
+  before_action :set_search, only: %i[index]
+
+  def index; end
 
   private
 
-  def search_results
-    TheMovieDb::Search::Movie.new(query: params[:query]).results +
-      TheMovieDb::Search::Tv.new(query: params[:query]).results
+  def set_search
+    @search = TheMovieDb::Search::Multi.new(query: params.dig(:search, :query))
   end
 end

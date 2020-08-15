@@ -2,15 +2,11 @@
  * Globals
  */
 
-
-
 .dark {
-  /* Links */
-  a,
-  a:focus,
-  a:hover {
-    color:$white;
+  .btn-outline-secondary {
+    color: $white;
   }
+  /* Links */
   .debug_dump {
     color: $white;
     background-color: $dark-gray;
@@ -28,12 +24,6 @@
 
   html, body {
     background-color: $dark-black;
-  }
-
-  body {
-    color: $white;
-    text-shadow: 0 .05rem .1rem rgba($black, .5);
-    box-shadow: inset 0 0 5rem rgba($black, .5);
   }
 
   .nav-masthead .nav-link {

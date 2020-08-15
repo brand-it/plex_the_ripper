@@ -40,8 +40,9 @@
     color: $white;
     display: block;
     font-family: "Lucida Console", Monaco, monospace;
-    font-size: 32px;
-    height: 55px;
+    font-size: 20px;
+    height: 35px;
+    padding-bottom: 3px;
     line-height: 1.2;
     outline: none;
     width: 100%;
@@ -63,7 +64,7 @@
   input:focus + label, input.has-val + label {
     color: $gray;
     top: -35px;
-    height:90px;
+    height:70px;
   }
 
   label::before {
