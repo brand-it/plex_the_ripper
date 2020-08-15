@@ -5,7 +5,13 @@ class Config::TheMovieDbsController < ApplicationController
 
   # GET /config/users/new
   def new
-    @config_the_movie_db = Config::TheMovieDb.new
+    if params[:request_token]
+      newest_or_init.update!(settings: { api_key: params[:request_token], session: nil })
+      redirect_to root_path
+    else
+      new_token = TheMovieDb::Authentication::Token::New.results
+      redirect_to new_token.request_url(redirect_to: request.url).to_s
+    end
   end
 
   # GET /config/users/1/edit
@@ -30,6 +36,10 @@ class Config::TheMovieDbsController < ApplicationController
   # Use callbacks to share common setup or constraints between actions.
   def set_the_movie_db
     @config_the_movie_db = Config::TheMovieDb.find(params[:id])
+  end
+
+  def user
+    @newest_or_init ||= Config::TheMovieDb.newest.first || Config::TheMovieDb.new
   end
 
   # Only allow a list of trusted parameters through.

@@ -8,7 +8,7 @@ module TheMovieDb
       option :year, type: Types::Integer.optional, optional: true
 
       def results
-        @results ||= OpenStruct.new(get)
+        @results ||= get
       end
 
       def next_page

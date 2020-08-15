@@ -7,25 +7,32 @@ module TheMovieDb
 
     HOST = 'api.themoviedb.org'
     VERSION = '3'
-    # BASE_CLASS = 'TheMovieDb'
 
     class << self
       def option_names
         @option_names ||= dry_initializer.options.map(&:target)
       end
+
+      def results
+        new.results
+      end
+
+      def session_id
+        @session_id
+      end
     end
 
     private
 
-    def get(redirect_uri: nil, limit: 10) # rubocop:disable Metrics/MethodLength
+    def get(redirect_uri: nil, limit: 10, object_class: OpenStruct) # rubocop:disable Metrics/MethodLength
       response = Net::HTTP.get_response(redirect_uri || uri)
       case response
       when Net::HTTPSuccess
-        JSON.parse(response.body, object_class: OpenStruct)
+        JSON.parse(response.body, object_class: object_class)
       when Net::HTTPRedirection
         location = response['location']
         Rails.logger.warn "redirected to #{location}"
-        get(redirect_uri: URI(location), limit: limit - 1)
+        get(redirect_uri: URI(location), limit: limit - 1, object_class: object_class)
       else
         error!(response)
       end

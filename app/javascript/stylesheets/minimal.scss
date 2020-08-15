@@ -10,6 +10,14 @@
   position: relative;
   width: 100%;
 
+  label.disabled {
+    color: $light-gray;
+  }
+
+  input.disabled {
+    background-color: $dark-gray;
+  }
+
   input:-webkit-autofill {
     box-shadow: 0 0 0px 1000px lighten($dark-black, 4%) inset;
     transition: background-color 5000s ease-in-out 0s;
