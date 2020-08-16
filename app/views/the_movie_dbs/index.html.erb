@@ -8,6 +8,7 @@
       <div class="col-md-4">
         <%= image_tag "https://image.tmdb.org/t/p/w500/#{result.poster_path}", class: "card-img-top" %>
       </div>
+
       <div class="col-md-8">
         <div class="card-body">
           <h5 class="card-title">
@@ -20,7 +21,7 @@
           </h5>
           <small class='text-muted'><%= result.original_title %></small>
           <p class="card-text"><%= result.overview %></p>
-          <p class="card-text"><small class="text-muted"><%= result.release_date %></small></p>
+          <p class="card-text"><small class="text-muted"><%= result.release_date || result.first_air_date %></small></p>
         </div>
       </div>
     </div>

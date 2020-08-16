@@ -26,6 +26,10 @@
     background-color: $dark-black;
   }
 
+  .masthead-brand a {
+    color: $white
+  }
+
   .nav-masthead .nav-link {
     color: rgba($white, .5);
   }
