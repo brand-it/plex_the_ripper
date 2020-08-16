@@ -1,0 +1,2 @@
+module Config::PlexesHelper
+end
