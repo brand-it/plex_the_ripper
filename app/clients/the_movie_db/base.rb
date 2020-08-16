@@ -13,11 +13,13 @@ module TheMovieDb
         @option_names ||= dry_initializer.options.map(&:target)
       end
 
+      def param_names
+        @param_names ||= dry_initializer.params.map(&:target)
+      end
+
       def results
         new.results
       end
-
-      attr_reader :session_id
     end
 
     private
@@ -37,30 +39,18 @@ module TheMovieDb
     end
 
     def error!(response)
-      Rails.logger.debug(
+      Rails.logger.error(
         "#{response.error_type} #{response.message} #{response.code} #{response.uri} #{response.body.strip}"
       )
       response.error!
     end
 
-    # def http
-    #   Net::HTTP.new(uri.host, uri.port)
-    # end
-
-    # def request
-    #   Net::HTTP::Get.new(uri).tap do |request|
-    #     # don't know why but they want data in the body but it creates problem if you don't have it
-    #     # really I not total sure it is needed however better safe then sorry.
-    #     request.body = body.to_json
-    #   end
-    # end
-
-    # def body
-    #   {}
-    # end
-
     def uri
-      URI::HTTPS.build(host: HOST, path: "/#{VERSION}/#{path}", query: URI.encode_www_form(params))
+      URI::HTTPS.build(
+        host: HOST,
+        path: ["/#{VERSION}", path, path_params].compact.join('/'),
+        query: URI.encode_www_form(query_params)
+      )
     end
 
     def path
@@ -71,7 +61,11 @@ module TheMovieDb
           .parameterize(separator: '/')
     end
 
-    def params
+    def path_params
+      self.class.param_names.map { |name| send(name) }.join('/')
+    end
+
+    def query_params
       { api_key: api_key, langauge: language }.tap do |hash|
         self.class.option_names.each do |name|
           hash[name] = send(name)

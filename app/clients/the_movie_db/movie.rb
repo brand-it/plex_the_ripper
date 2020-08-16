@@ -2,6 +2,11 @@
 
 module TheMovieDb
   class Movie < Base
+    param :movie_id, Types::Integer
+
+    def results
+      @results ||= get
+    end
     # attr_accessor(:loaded)
     # option :title, type: Types::String
     # option :id, type: Types::Integer
