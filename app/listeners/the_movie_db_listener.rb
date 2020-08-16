@@ -7,7 +7,7 @@ class TheMovieDbListener
 
   private
 
-  def serialize(movie) # rubocop:disable Metrics/AbcSize
+  def serialize(movie)
     keys = movie.attributes.keys.map(&:to_sym)
     results = the_movie_db_movie(movie)
     results.to_h.slice(*keys).except(:id).tap do |hash|

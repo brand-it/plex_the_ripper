@@ -4,8 +4,8 @@ class Config
   class TheMovieDb < Config
     settings_defaults(api_key: nil)
 
-    def self.authorized?
-      newest.first&.settings&.api_key.present?
+    def settings_invalid?
+      settings&.api_key.blank?
     end
   end
 end

@@ -13,3 +13,7 @@ git clone https://github.com/newdark/plex_the_ripper.git
 ```
 
 # Environment Variables
+
+
+  * MAKE_MKV_DISC_SOURCE
+  * MAKE_MKV_CON_PATH

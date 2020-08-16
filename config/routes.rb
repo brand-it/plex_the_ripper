@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   end
   resources :the_movie_dbs, only: %i[index show]
   resources :movies
-  resource :tv
+  resources :tvs
   resource :start
   root to: 'start#new'
 end
