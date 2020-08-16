@@ -2,7 +2,7 @@
   <%= f.input :query, autofocus: true, required: false %>
 <% end %>
 <div class='row'>
-  <% @search.results.results.select { |x| ['movie', 'tv'].include?(x.media_type) }.each do |result| %>
+  <% @search&.results&.results.to_a.select { |x| ['movie', 'tv'].include?(x.media_type) }.each do |result| %>
     <div class="card mb-3 col-md-6 text-white bg-dark col-md-6">
       <div class="row no-gutters">
         <div class="col-md-4">

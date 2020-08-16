@@ -2,17 +2,12 @@
 
 class Movie < ApplicationRecord
   include DiskWorkflow
+  include Wisper::Publisher
 
-  validates :title, presence: true
-  validates :original_title, presence: true
-
-  private
-
-  def update_from_the_movie_db
-    self.attributes = the_movie_db_movie.to_h
+  with_options unless: :the_movie_db_id do
+    validates :title, presence: true
+    validates :original_title, presence: true
   end
 
-  def the_movie_db_movie
-    @the_movie_db_movie ||= TheMovieDb::Movie.new(movie_id: params[:the_movie_db_id]).results
-  end
+  before_save { broadcast(:movie_saving, self) }
 end

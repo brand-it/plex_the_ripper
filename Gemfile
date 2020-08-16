@@ -28,6 +28,7 @@ gem 'dry-types'
 gem 'simple_form'
 
 gem 'workflow'
+gem 'wisper'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
@@ -38,6 +39,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'kaminari', '1.2.1'
 
 group :development, :test do
+  gem 'awesome_print'
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry'
@@ -47,6 +49,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'vcr'
   gem 'webmock'
+
 end
 
 group :development do
