@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Config::PlexesController < ApplicationController
-  before_action :set_config_plex, only: [:show, :edit, :update, :destroy]
+  before_action :set_config_plex, only: %i[show edit update destroy]
 
   # GET /config/plexes
   # GET /config/plexes.json
@@ -9,8 +11,7 @@ class Config::PlexesController < ApplicationController
 
   # GET /config/plexes/1
   # GET /config/plexes/1.json
-  def show
-  end
+  def show; end
 
   # GET /config/plexes/new
   def new
@@ -18,8 +19,7 @@ class Config::PlexesController < ApplicationController
   end
 
   # GET /config/plexes/1/edit
-  def edit
-  end
+  def edit; end
 
   # POST /config/plexes
   # POST /config/plexes.json
@@ -62,13 +62,14 @@ class Config::PlexesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_config_plex
-      @config_plex = Config::Plex.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def config_plex_params
-      params.fetch(:config_plex, {})
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_config_plex
+    @config_plex = Config::Plex.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def config_plex_params
+    params.fetch(:config_plex, {})
+  end
 end
