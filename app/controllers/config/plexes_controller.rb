@@ -4,14 +4,9 @@ class Config::PlexesController < ApplicationController
   before_action :set_config_plex, only: %i[show edit update destroy]
 
   # GET /config/plexes
-  # GET /config/plexes.json
-  def index
-    @config_plexes = Config::Plex.all
-  end
-
-  # GET /config/plexes/1
-  # GET /config/plexes/1.json
-  def show; end
+  # def index
+  #   @config_plexes = Config::Plex.all
+  # end
 
   # GET /config/plexes/new
   def new
@@ -22,17 +17,14 @@ class Config::PlexesController < ApplicationController
   def edit; end
 
   # POST /config/plexes
-  # POST /config/plexes.json
   def create
     @config_plex = Config::Plex.new(config_plex_params)
 
     respond_to do |format|
       if @config_plex.save
         format.html { redirect_to @config_plex, notice: 'Plex was successfully created.' }
-        format.json { render :show, status: :created, location: @config_plex }
       else
         format.html { render :new }
-        format.json { render json: @config_plex.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -43,21 +35,27 @@ class Config::PlexesController < ApplicationController
     respond_to do |format|
       if @config_plex.update(config_plex_params)
         format.html { redirect_to @config_plex, notice: 'Plex was successfully updated.' }
-        format.json { render :show, status: :ok, location: @config_plex }
       else
         format.html { render :edit }
-        format.json { render json: @config_plex.errors, status: :unprocessable_entity }
       end
     end
   end
 
   # DELETE /config/plexes/1
   # DELETE /config/plexes/1.json
-  def destroy
-    @config_plex.destroy
+  # def destroy
+  #   @config_plex.destroy
+  #   respond_to do |format|
+  #     format.html { redirect_to config_plexes_url, notice: 'Plex was successfully destroyed.' }
+  #   end
+  # end
+
+  def directories
+    dir_path = params.fetch(:directory, Dir.home)
+    entities = Dir.entries(dir_path)
+    entities = entities.map { |e| File.join(dir_path, e) }.select { |e| File.directory?(e) }
     respond_to do |format|
-      format.html { redirect_to config_plexes_url, notice: 'Plex was successfully destroyed.' }
-      format.json { head :no_content }
+      format.json { render json: entities }
     end
   end
 

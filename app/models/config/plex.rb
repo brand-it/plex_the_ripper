@@ -2,10 +2,12 @@
 
 class Config
   class Plex < Config
-    settings_defaults(movie_path: nil, video_path: nil)
+    settings_defaults(movie_path: nil, video_path: nil, remote: false, remote_host: nil)
 
     def settings_invalid?
-      settings&.movie_path.blank? || settings&.video_path.blank?
+      return false if settings.remote && settings.remote_host.present?
+
+      settings.movie_path.blank? || settings.video_path.blank?
     end
   end
 end

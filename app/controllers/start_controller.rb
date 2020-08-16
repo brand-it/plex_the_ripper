@@ -32,7 +32,7 @@ class StartController < ApplicationController
     if plex_config.persisted?
       redirect_to edit_config_plex_path(plex_confg)
     else
-      redirect_to edit_config_plex_path
+      redirect_to new_config_plex_path
     end
   end
 
