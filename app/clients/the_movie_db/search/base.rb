@@ -7,7 +7,7 @@ module TheMovieDb
     option :year, type: Types::Integer.optional, optional: true
 
     def results
-      return [] if query.blank?
+      return OpenStruct.new if query.blank?
 
       @results ||= get
     end

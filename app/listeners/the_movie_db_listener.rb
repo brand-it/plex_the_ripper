@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TheMoveDbListener
   def movie_saving(movie)
     movie.attributes = the_movie_db_movie.to_h

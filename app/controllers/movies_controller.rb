@@ -13,13 +13,8 @@ class MoviesController < ApplicationController
   end
 
   def create
-
     @movie = Movie.new(the_movie_db_id: params[:the_movie_db_id])
 
-    if @movie.save
-      render :new
-    else
-
-    end
+    render :new if @movie.save
   end
 end
