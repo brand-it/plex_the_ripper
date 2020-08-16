@@ -29,6 +29,12 @@ module BootstrapHelper
     case type
     when 'alert', 'info'
       'alert-info'
+    when 'success'
+      'alert-success'
+    when 'error'
+      'alert-danger'
+    when 'warn'
+      'alert-warning'
     else
       'alert-secondary'
     end

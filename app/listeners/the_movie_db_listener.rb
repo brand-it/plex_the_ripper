@@ -1,13 +1,22 @@
 # frozen_string_literal: true
 
-class TheMoveDbListener
+class TheMovieDbListener
   def movie_saving(movie)
-    movie.attributes = the_movie_db_movie.to_h
+    movie.attributes = serialize(movie)
   end
 
   private
 
-  def the_movie_db_movie
-    TheMovieDb::Movie.new(movie_id: the_movie_db_id).results
+  def serialize(movie) # rubocop:disable Metrics/AbcSize
+    keys = movie.attributes.keys.map(&:to_sym)
+    results = the_movie_db_movie(movie)
+    results.to_h.slice(*keys).except(:id).tap do |hash|
+      hash[:poster_url] = "https://image.tmdb.org/t/p/w500#{results.poster_path}" if results.poster_path
+      hash[:backdrop_url] = "https://image.tmdb.org/t/p/w500#{results.backdrop_path}" if results.backdrop_path
+    end
+  end
+
+  def the_movie_db_movie(movie)
+    TheMovieDb::Movie.new(movie.the_movie_db_id).results
   end
 end

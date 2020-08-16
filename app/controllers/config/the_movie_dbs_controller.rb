@@ -5,13 +5,6 @@ class Config::TheMovieDbsController < ApplicationController
 
   def new
     @config_the_movie_db = Config::TheMovieDb.new
-    # if params[:request_token]
-    #   newest_or_init.update!(settings: { api_key: params[:request_token], session: nil })
-    #   redirect_to root_path
-    # else
-    #   new_token = TheMovieDb::Authentication::Token::New.results
-    #   redirect_to new_token.request_url(redirect_to: request.url).to_s
-    # end
   end
 
   def edit; end
@@ -20,12 +13,12 @@ class Config::TheMovieDbsController < ApplicationController
     @config_the_movie_db = Config::TheMovieDb.new(the_movie_db_params)
 
     @config_the_movie_db.save
-    render :new
+    redirect_to root_path
   end
 
   def update
     @config_the_movie_db.update(the_movie_db_params)
-    render :edit
+    redirect_to root_path
   end
 
   private

@@ -3,7 +3,7 @@
 class StartController < ApplicationController
   def new
     config = Config::TheMovieDb.newest.first
-    if config&.settings&.api_key
+    if config&.settings&.api_key.present?
       redirect_to the_movie_dbs_path
     elsif config
       redirect_to edit_config_the_movie_db_path(config)

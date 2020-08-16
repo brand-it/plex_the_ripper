@@ -12,7 +12,7 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">
-              <a class='btn btn-outline-primary'>Select</a>
+              <%= link_to 'Select', movies_path(movie_id: result.id), method: :post, class: 'btn btn-outline-primary' %>
               <% if result.media_type == 'tv' %>
                 <i class="fas fa-tv"></i>
               <% else %>
