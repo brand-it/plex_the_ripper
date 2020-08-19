@@ -1,25 +1,29 @@
 require 'rails_helper'
 
 RSpec.describe Config::PlexesController, type: :controller do
+  let(:config) { create :plex_config }
+
   describe 'GET directories' do
-    subject(:get_folders) { get :directories, format: :json }
-    let(:params) { {} }
-    let(:expected_directories) do
-      dir_path = params.fetch(:directory, Dir.home)
-      entities = Dir.entries(dir_path)
-      entities.map { |e| File.join(dir_path, e) }.select { |e| File.directory?(e) }
-    end
+    subject(:get_folders) { get :directories, params: params, format: :json }
 
-    it 'Responds with the default home path' do
-      expect(JSON.parse(get_folders.body)).to eq expected_directories
-    end
+    let(:params) { { id: config.id } }
 
-    context 'when providing a dir params' do
-      let(:params) { { directory: Rails.root } }
+    context 'when not using ftp' do
+      let(:params) { super().merge(directory: Rails.root) }
+      let(:expected_directories) do
+        dir_path = params.fetch(:directory, Dir.home)
+        entities = Dir.entries(dir_path)
+        entities.map { |e| File.join(dir_path, e) }.select { |e| File.directory?(e) }
+      end
 
       it 'responds with all the files in rails root' do
         expect(JSON.parse(get_folders.body)).to eq expected_directories
       end
     end
+
+    context 'when using ftp' do
+
+    end
+
   end
 end

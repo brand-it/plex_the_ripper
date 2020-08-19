@@ -2,6 +2,16 @@
 
 module TheMovieDb
   class InvalidConfig < StandardError; end
+  class Error < StandardError
+    attr_reader :object, :body
+
+    def initialize(object)
+      @object = object
+      @body = JSON.parse(object.body, object_class: OpenStruct)
+      super("#{object.env.url} #{object.status} #{object.body}")
+    end
+  end
+
   class Base
     extend Dry::Initializer
 
@@ -24,18 +34,27 @@ module TheMovieDb
 
     private
 
-    def get(redirect_uri: nil, limit: 10, object_class: OpenStruct) # rubocop:disable Metrics/MethodLength
-      response = Net::HTTP.get_response(redirect_uri || uri)
-      case response
-      when Net::HTTPSuccess
-        JSON.parse(response.body, object_class: object_class)
-      when Net::HTTPRedirection
-        location = response['location']
-        Rails.logger.warn "redirected to #{location}"
-        get(redirect_uri: URI(location), limit: limit - 1, object_class: object_class)
-      else
-        error!(response)
-      end
+    def get(object_class: OpenStruct)
+      response = Faraday.get(uri, query_params)
+
+      return JSON.parse(response.body, object_class: object_class) if response.success?
+
+      raise Error, response
+
+    #   response = Net::HTTP.get_response(redirect_uri)
+    #   case response
+    #   when Net::HTTPSuccess
+    #     JSON.parse(response.body, object_class: object_class)
+    #   when Net::HTTPRedirection
+    #     location = response['location']
+    #     Rails.logger.warn "redirected to #{location}"
+    #     get(redirect_uri: URI(location), limit: limit - 1, object_class: object_class)
+    #   else
+    #     error!(response)
+    #   end
+
+    # rescue SocketError => e
+    #   raise ConnectionError, "Failed to connect to #{redirect_uri} #{e.message}"
     end
 
     def error!(response)
@@ -46,11 +65,7 @@ module TheMovieDb
     end
 
     def uri
-      URI::HTTPS.build(
-        host: HOST,
-        path: ["/#{VERSION}", path, path_params].compact.join('/'),
-        query: URI.encode_www_form(query_params)
-      )
+      URI::HTTPS.build(host: HOST, path: ["/#{VERSION}", path, path_params].compact.join('/'))
     end
 
     def path
@@ -62,7 +77,7 @@ module TheMovieDb
     end
 
     def path_params
-      self.class.param_names.map { |name| send(name) }.join('/')
+      self.class.param_names.map { |name| send(name) }.join('/').presence
     end
 
     def query_params

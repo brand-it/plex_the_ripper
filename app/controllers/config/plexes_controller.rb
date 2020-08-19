@@ -20,24 +20,19 @@ class Config::PlexesController < ApplicationController
   def create
     @config_plex = Config::Plex.new(config_plex_params)
 
-    respond_to do |format|
-      if @config_plex.save
-        format.html { redirect_to @config_plex, notice: 'Plex was successfully created.' }
-      else
-        format.html { render :new }
-      end
+    if @config_plex.save
+      redirect_to root_path, notice: 'Plex was successfully created.'
+    else
+      render :new
     end
   end
 
-  # PATCH/PUT /config/plexes/1
-  # PATCH/PUT /config/plexes/1.json
   def update
-    respond_to do |format|
-      if @config_plex.update(config_plex_params)
-        format.html { redirect_to @config_plex, notice: 'Plex was successfully updated.' }
-      else
-        format.html { render :edit }
-      end
+    if @config_plex.update(config_plex_params)
+      redirect_to
+      , notice: 'Plex was successfully updated.'
+    else
+      render :edit
     end
   end
 
@@ -63,11 +58,11 @@ class Config::PlexesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_config_plex
-    @config_plex = Config::Plex.find(params[:id])
+    @config_plex = Config::Plex.newest.first
   end
 
   # Only allow a list of trusted parameters through.
   def config_plex_params
-    params.fetch(:config_plex, {})
+    params.require(:config_plex).permit(settings: [:movie_path, :video_path, :ftp_username, :ftp_host, :ftp_password])
   end
 end

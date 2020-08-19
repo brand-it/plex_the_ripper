@@ -115,6 +115,8 @@ GEM
       railties (>= 5.0.0)
     faker (2.13.0)
       i18n (>= 1.6, < 2)
+    faraday (1.0.1)
+      multipart-post (>= 1.2, < 3)
     ffi (1.13.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -152,6 +154,7 @@ GEM
     mini_portile2 (2.4.0)
     minitest (5.14.1)
     msgpack (1.3.3)
+    multipart-post (2.1.1)
     nio4r (2.5.2)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
@@ -312,6 +315,7 @@ DEPENDENCIES
   dry-types
   factory_bot_rails
   faker
+  faraday
   jbuilder (~> 2.7)
   kaminari (= 1.2.1)
   listen (~> 3.2)
