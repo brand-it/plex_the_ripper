@@ -2,5 +2,7 @@
 
 FactoryBot.define do
   factory :tv do
+    name { Faker::Book.title }
+    original_name { Faker::Book.title }
   end
 end

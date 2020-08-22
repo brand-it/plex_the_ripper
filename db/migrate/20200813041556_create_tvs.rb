@@ -4,8 +4,8 @@ class CreateTvs < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :original_name
       t.string :year
-      t.string :poster_url
-      t.string :backdrop_url
+      t.string :poster_path
+      t.string :backdrop_path
       t.integer :the_movie_db_id
       t.integer :episode_run_time
       t.string :overview

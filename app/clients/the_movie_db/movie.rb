@@ -7,6 +7,7 @@ module TheMovieDb
     def results
       @results ||= get
     end
+
     # attr_accessor(:loaded)
     # option :title, type: Types::String
     # option :id, type: Types::Integer

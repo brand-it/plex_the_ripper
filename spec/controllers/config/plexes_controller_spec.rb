@@ -1,7 +1,9 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Config::PlexesController, type: :controller do
-  let(:config) { create :plex_config }
+  let(:config) { create :config_plex }
 
   describe 'GET directories' do
     subject(:get_folders) { get :directories, params: params, format: :json }
@@ -22,8 +24,6 @@ RSpec.describe Config::PlexesController, type: :controller do
     end
 
     context 'when using ftp' do
-
     end
-
   end
 end

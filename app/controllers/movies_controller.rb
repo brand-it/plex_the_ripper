@@ -6,8 +6,8 @@ class MoviesController < ApplicationController
   end
 
   def create
-    @movie = Movie.find_or_initialize_by(the_movie_db_id: params[:the_movie_db_id])
-    @movie.subscribe(TheMovieDbListener.new)
+    @movie = Movie.find_or_initialize_by(movie_params)
+    @movie.subscribe(TheMovieDbMovieListener.new) if @movie.the_movie_db_id
 
     if @movie.save
       flash[:success] = 'Movie was created successfully created'
@@ -15,5 +15,11 @@ class MoviesController < ApplicationController
     else
       render :new
     end
+  end
+
+  private
+
+  def movie_params
+    params.require(:movie).permit(:the_movie_db_id)
   end
 end

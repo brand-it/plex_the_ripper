@@ -41,20 +41,20 @@ module TheMovieDb
 
       raise Error, response
 
-    #   response = Net::HTTP.get_response(redirect_uri)
-    #   case response
-    #   when Net::HTTPSuccess
-    #     JSON.parse(response.body, object_class: object_class)
-    #   when Net::HTTPRedirection
-    #     location = response['location']
-    #     Rails.logger.warn "redirected to #{location}"
-    #     get(redirect_uri: URI(location), limit: limit - 1, object_class: object_class)
-    #   else
-    #     error!(response)
-    #   end
+      #   response = Net::HTTP.get_response(redirect_uri)
+      #   case response
+      #   when Net::HTTPSuccess
+      #     JSON.parse(response.body, object_class: object_class)
+      #   when Net::HTTPRedirection
+      #     location = response['location']
+      #     Rails.logger.warn "redirected to #{location}"
+      #     get(redirect_uri: URI(location), limit: limit - 1, object_class: object_class)
+      #   else
+      #     error!(response)
+      #   end
 
-    # rescue SocketError => e
-    #   raise ConnectionError, "Failed to connect to #{redirect_uri} #{e.message}"
+      # rescue SocketError => e
+      #   raise ConnectionError, "Failed to connect to #{redirect_uri} #{e.message}"
     end
 
     def error!(response)

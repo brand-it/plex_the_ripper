@@ -29,21 +29,11 @@ class Config::PlexesController < ApplicationController
 
   def update
     if @config_plex.update(config_plex_params)
-      redirect_to
-      , notice: 'Plex was successfully updated.'
+      redirect_to root_path, notice: 'Plex was successfully updated.'
     else
       render :edit
     end
   end
-
-  # DELETE /config/plexes/1
-  # DELETE /config/plexes/1.json
-  # def destroy
-  #   @config_plex.destroy
-  #   respond_to do |format|
-  #     format.html { redirect_to config_plexes_url, notice: 'Plex was successfully destroyed.' }
-  #   end
-  # end
 
   def directories
     dir_path = params.fetch(:directory, Dir.home)
@@ -63,6 +53,6 @@ class Config::PlexesController < ApplicationController
 
   # Only allow a list of trusted parameters through.
   def config_plex_params
-    params.require(:config_plex).permit(settings: [:movie_path, :video_path, :ftp_username, :ftp_host, :ftp_password])
+    params.require(:config_plex).permit(settings: %i[movie_path video_path ftp_username ftp_host ftp_password])
   end
 end

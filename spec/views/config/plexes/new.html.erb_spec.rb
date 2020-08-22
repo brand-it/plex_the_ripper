@@ -10,7 +10,7 @@ RSpec.describe 'config/plexes/new', type: :view do
   it 'renders new config_plex form' do
     render
 
-    assert_select 'form[action=?][method=?]', config_plexes_path, 'post' do
+    assert_select 'form[action=?][method=?]', config_plex_path, 'post' do
     end
   end
 end

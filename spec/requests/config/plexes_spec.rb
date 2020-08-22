@@ -28,15 +28,15 @@ RSpec.describe '/config/plexes', type: :request do
   describe 'GET /index' do
     it 'renders a successful response' do
       Config::Plex.create! valid_attributes
-      get config_plexes_url
+      get config_plex_url
       expect(response).to be_successful
     end
   end
 
   describe 'GET /show' do
     it 'renders a successful response' do
-      plex = Config::Plex.create! valid_attributes
-      get config_plex_url(config_plex)
+      create(:config_plex)
+      get config_plex_url
       expect(response).to be_successful
     end
   end
@@ -50,8 +50,8 @@ RSpec.describe '/config/plexes', type: :request do
 
   describe 'GET /edit' do
     it 'render a successful response' do
-      plex = Config::Plex.create! valid_attributes
-      get edit_config_plex_url(config_plex)
+      create(:config_plex)
+      get edit_config_plex_url
       expect(response).to be_successful
     end
   end
@@ -60,25 +60,25 @@ RSpec.describe '/config/plexes', type: :request do
     context 'with valid parameters' do
       it 'creates a new Config::Plex' do
         expect do
-          post config_plexes_url, params: { config_plex: valid_attributes }
+          post config_plex_url, params: { config_plex: valid_attributes }
         end.to change(Config::Plex, :count).by(1)
       end
 
       it 'redirects to the created config_plex' do
-        post config_plexes_url, params: { config_plex: valid_attributes }
-        expect(response).to redirect_to(config_plex_url(@config_plex))
+        post config_plex_url, params: { config_plex: valid_attributes }
+        expect(response).to redirect_to(config_plex_url)
       end
     end
 
     context 'with invalid parameters' do
       it 'does not create a new Config::Plex' do
         expect do
-          post config_plexes_url, params: { config_plex: invalid_attributes }
+          post config_plex_url, params: { config_plex: invalid_attributes }
         end.to change(Config::Plex, :count).by(0)
       end
 
       it "renders a successful response (i.e. to display the 'new' template)" do
-        post config_plexes_url, params: { config_plex: invalid_attributes }
+        post config_plex_url, params: { config_plex: invalid_attributes }
         expect(response).to be_successful
       end
     end
@@ -125,7 +125,7 @@ RSpec.describe '/config/plexes', type: :request do
     it 'redirects to the config_plexes list' do
       plex = Config::Plex.create! valid_attributes
       delete config_plex_url(config_plex)
-      expect(response).to redirect_to(config_plexes_url)
+      expect(response).to redirect_to(config_plex_url)
     end
   end
 end
