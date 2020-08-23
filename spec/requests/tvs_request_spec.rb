@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe 'Tvs', type: :request do
   let(:valid_attributes) do
     {
-      the_movie_db_id: 1
+      the_movie_db_id: 4629
     }
   end
 
@@ -19,7 +19,13 @@ RSpec.describe 'Tvs', type: :request do
 
   describe 'POST /create' do
     context 'with valid parameters' do
-      subject(:post_tv) { post tvs_url, params: { tv: valid_attributes } }
+      subject(:post_tv) do
+        VCR.use_cassette('the_movie_db/tv') do
+          post tvs_url, params: { tv: valid_attributes }
+        end
+      end
+
+      before { create :config_the_movie_db, settings: { api_key: '213' } }
 
       it 'creates a new TV' do
         expect { post_tv }.to change(Tv, :count).by(1)

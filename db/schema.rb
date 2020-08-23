@@ -71,7 +71,7 @@ ActiveRecord::Schema.define(version: 2020_08_15_204540) do
     t.string "overview"
     t.string "poster_path"
     t.integer "the_movie_db_id"
-    t.integer "seasons_number"
+    t.integer "season_number"
     t.date "air_date"
     t.integer "tv_id"
     t.datetime "created_at", precision: 6, null: false
@@ -82,11 +82,11 @@ ActiveRecord::Schema.define(version: 2020_08_15_204540) do
   create_table "tvs", force: :cascade do |t|
     t.string "name"
     t.string "original_name"
-    t.string "year"
+    t.string "first_air_date"
     t.string "poster_path"
     t.string "backdrop_path"
     t.integer "the_movie_db_id"
-    t.integer "episode_run_time"
+    t.string "episode_run_time"
     t.string "overview"
     t.integer "disk_id"
     t.datetime "created_at", precision: 6, null: false

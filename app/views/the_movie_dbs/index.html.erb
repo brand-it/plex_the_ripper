@@ -2,7 +2,17 @@
   <%= f.input :query, autofocus: true, required: false %>
 <% end %>
 <div class='row'>
-  <% @search&.results&.results.to_a.select { |x| ['movie', 'tv'].include?(x.media_type) }.each do |result| %>
+  <% if @search.results.results.blank? %>
+    <div class='col-md-12'>
+      <div class="jumbotron jumbotron-fluid">
+        <div class='container'>
+          <h1 class="display-4">Getting Started</h1>
+          <p class="lead">Get started by typing in the name of the TV show or movie.</p>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <% @search.results.results.to_a.select { |x| ['movie', 'tv'].include?(x.media_type) }.each do |result| %>
     <div class="card mb-3 col-md-6 text-white bg-dark col-md-6">
       <div class="row no-gutters">
         <div class="col-md-4">
@@ -24,7 +34,16 @@
             </h5>
             <small class='text-muted'><%= result.original_title %></small>
             <p class="card-text"><%= result.overview %></p>
-            <p class="card-text"><small class="text-muted"><%= result.release_date || result.first_air_date %></small></p>
+            <p class="card-text">
+              <small class="text-muted">
+                <%= result.release_date || result.first_air_date %>
+                <% if result.media_type == 'tv' %>
+                  <%= link_to 'view more', "https://www.themoviedb.org/tv/#{result.id}", target: :blank %>
+                <% else %>
+                  <%= link_to 'view more', "https://www.themoviedb.org/movie/#{result.id}", target: :blank %>
+                <% end %>
+              </small>
+            </p>
 
           </div>
         </div>

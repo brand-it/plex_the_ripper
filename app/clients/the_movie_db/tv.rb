@@ -2,6 +2,12 @@
 
 module TheMovieDb
   class Tv < Base
+    param :tv_id, Types::Integer
+
+    def results
+      @results ||= get
+    end
+
     # attr_accessor(:loaded)
     # columns(
     #   seasons: Array,

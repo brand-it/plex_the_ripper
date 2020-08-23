@@ -12,12 +12,14 @@ class Config::TheMovieDbsController < ApplicationController
   def create
     @config_the_movie_db = Config::TheMovieDb.new(the_movie_db_params)
 
-    @config_the_movie_db.save
+    flash[:success] = 'Created Movie DB API key' if @config_the_movie_db.save
     redirect_to root_path
   end
 
   def update
-    @config_the_movie_db.update(the_movie_db_params)
+    if @config_the_movie_db.update(the_movie_db_params)
+      flash[:success] = 'Updated Movie DB API key' if @config_the_movie_db.save
+    end
     redirect_to root_path
   end
 
