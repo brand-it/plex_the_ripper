@@ -15,19 +15,17 @@
   <% @search.results.results.to_a.select { |x| ['movie', 'tv'].include?(x.media_type) }.each do |result| %>
     <div class="card mb-3 col-md-6 text-white bg-dark col-md-6">
       <div class="row no-gutters">
-        <div class="col-md-4">
-          <%= image_tag "https://image.tmdb.org/t/p/w500/#{result.poster_path}", class: "card-img-top" %>
-        </div>
+        <div class="col-md-4"><%= imdb_image_tag result.poster_path %></div>
 
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">
 
               <% if result.media_type == 'tv' %>
-                <%= link_to 'Select', tvs_path(the_movie_db_id: result.id), method: :post, class: 'btn btn-outline-primary' %>
+                <%= link_to 'Select', tvs_path(tv: { the_movie_db_id: result.id }), method: :post, class: 'btn btn-outline-primary' %>
                 <i class="fas fa-tv"></i>
               <% else %>
-                <%= link_to 'Select', movies_path(the_movie_db_id: result.id), method: :post, class: 'btn btn-outline-primary' %>
+                <%= link_to 'Select', movies_path(tv: { the_movie_db_id: result.id }), method: :post, class: 'btn btn-outline-primary' %>
                 <i class="fas fa-film"></i>
               <% end %>
               <%= result.title || result.name %>
@@ -38,9 +36,9 @@
               <small class="text-muted">
                 <%= result.release_date || result.first_air_date %>
                 <% if result.media_type == 'tv' %>
-                  <%= link_to 'view more', "https://www.themoviedb.org/tv/#{result.id}", target: :blank %>
+                  <%= link_to_movie_db_tv result.id %>
                 <% else %>
-                  <%= link_to 'view more', "https://www.themoviedb.org/movie/#{result.id}", target: :blank %>
+                  <%= link_to_movie_db_movie result.id %>
                 <% end %>
               </small>
             </p>

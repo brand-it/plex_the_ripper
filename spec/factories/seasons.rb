@@ -2,5 +2,6 @@
 
 FactoryBot.define do
   factory :season do
+    tv
   end
 end

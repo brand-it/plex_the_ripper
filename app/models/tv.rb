@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class Tv < ApplicationRecord
-  include DiskWorkflow
   include Wisper::Publisher
 
   serialize :episode_run_time, Array

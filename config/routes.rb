@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :the_movie_dbs, only: %i[index show]
   resources :movies
   resources :tvs
+  resources :seasons
   resource :start
   root to: 'start#new'
 end

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class TheMovieDbTvListener
-  PERMITTED_PARAMS = %i[name original_name year poster_path backdrop_path overview episode_run_time].freeze
-  SEASON_PERMITTED_PARAMS = %i[name overview poster_path season_number air_date first_air_date].freeze
+  PERMITTED_PARAMS = %i[name original_name year poster_path backdrop_path overview episode_run_time first_air_date].freeze
+  SEASON_PERMITTED_PARAMS = %i[name overview poster_path season_number air_date].freeze
 
   def tv_saving(tv) # rubocop:disable Naming/MethodParameterName
     return if tv.the_movie_db_id.nil?

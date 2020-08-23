@@ -3,5 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe Tv, type: :model do
-  include_context 'DiskWorkflow'
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_presence_of(:original_name) }
+  end
+
+  describe 'associations' do
+    it { is_expected.to have_many(:seasons) }
+  end
 end
