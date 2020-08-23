@@ -5,6 +5,7 @@ class CreateEpisodes < ActiveRecord::Migration[6.0]
       t.integer :episode_number
       t.integer :the_movie_db_id
       t.string :overview
+      t.string :still_path
       t.date :air_date
       t.string :file_path
       t.string :workflow_state

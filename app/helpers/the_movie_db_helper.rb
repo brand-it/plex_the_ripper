@@ -14,4 +14,8 @@ module TheMovieDbHelper
   def link_to_movie_db_movie(movie_id, text: 'view more')
     link_to text, "https://#{HOST}/movie/#{movie_id}", target: :blank
   end
+
+  def link_to_movie_db_episode(tv_id, season_number, episode_number, text: 'view more')
+    link_to text, "https://#{HOST}/tv/#{tv_id}/season/#{season_number}/episode/#{episode_number}", target: :blank
+  end
 end

@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(version: 2020_08_15_204540) do
     t.integer "episode_number"
     t.integer "the_movie_db_id"
     t.string "overview"
+    t.string "still_path"
     t.date "air_date"
     t.string "file_path"
     t.string "workflow_state"

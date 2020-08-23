@@ -10,7 +10,6 @@ class SeasonsController < ApplicationController
     @season.subscribe(TheMovieDbSeasonListener.new)
 
     if @season.update(season_params)
-      flash[:success] = 'Season was updated successfully'
       redirect_to season_path(@season)
     else
       render :new

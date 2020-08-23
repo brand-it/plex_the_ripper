@@ -10,7 +10,6 @@ class TvsController < ApplicationController
     @tv.subscribe(TheMovieDbTvListener.new) if @tv.the_movie_db_id
 
     if @tv.save
-      flash[:success] = 'TV was created successfully created'
       redirect_to tv_path(@tv)
     else
       render :new
