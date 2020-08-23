@@ -8,7 +8,7 @@
           <h5 class="card-title">
             <%= season.name %>
           </h5>
-          <%= link_to 'Select', seasons_path(season: { the_movie_db_id: season.the_movie_db_id }), method: :post, class: 'btn btn-outline-primary' %>
+          <%= link_to 'Select', season_path(season, season: {}), method: :patch, class: 'btn btn-outline-primary' %>
           <p class="card-text"><%= season.overview %></p>
           <p class="card-text">
             <small class="text-muted">

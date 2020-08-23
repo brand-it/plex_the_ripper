@@ -1,14 +1,16 @@
+# frozen_string_literal: true
+
 class SeasonsController < ApplicationController
   def show
     @season = Season.find(params[:id])
   end
 
-  def create
-    @season = Season.find_or_initialize_by(season_params)
+  def update
+    @season = Season.find(params[:id])
     @season.subscribe(TheMovieDbSeasonListener.new)
 
-    if @season.save
-      flash[:success] = 'Season was created successfully created'
+    if @season.update(season_params)
+      flash[:success] = 'Season was updated successfully'
       redirect_to season_path(@season)
     else
       render :new
