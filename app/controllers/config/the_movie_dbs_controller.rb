@@ -25,16 +25,10 @@ class Config::TheMovieDbsController < ApplicationController
 
   private
 
-  # Use callbacks to share common setup or constraints between actions.
   def set_the_movie_db
-    @config_the_movie_db = Config::TheMovieDb.find(params[:id])
+    @config_the_movie_db = Config::TheMovieDb.newest.first
   end
 
-  def user
-    @newest_or_init ||= Config::TheMovieDb.newest.first || Config::TheMovieDb.new
-  end
-
-  # Only allow a list of trusted parameters through.
   def the_movie_db_params
     params.require(:config_the_movie_db).permit(settings: {})
   end

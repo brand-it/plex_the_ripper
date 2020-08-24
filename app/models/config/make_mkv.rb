@@ -2,30 +2,17 @@
 
 class Config
   class MakeMkv < Config
-    settings_defaults(
-      disk_source: ENV['MAKE_MKV_DISK_SOURCE'],
-      makemkvcon_path: ENV['MAKE_MKV_CON_PATH']
-    )
+    if OS.mac?
+      settings_defaults(
+        makemkvcon_path: File.join(%w[/ Applications MakeMKV.app Contents MacOS makemkvcon])
+      )
+    else
+      settings_defaults(makemkvcon_path: nil)
+    end
 
     validate :makemkvcon_path_executable
-    validate :disk_source_exists
-
-    def info_command
-      [
-        settings.makemkvcon_path,
-        'info',
-        settings.disk_source,
-        '-r'
-      ].join(' ')
-    end
 
     private
-
-    def disk_source_exists
-      return if File.exist?(settings.disk_source)
-
-      errors.add(:settings, "disk source #{settings.disk_source} does not exist")
-    end
 
     def makemkvcon_path_executable
       return if File.executable?(settings.makemkvcon_path)

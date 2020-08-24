@@ -7,6 +7,9 @@ class ApplicationController < ActionController::Base
               with: :render_movie_db_error
   rescue_from 'TheMovieDb::InvalidConfig',
               with: :movie_config_invalid
+  before_action :plex_config
+  before_action :movie_db_config
+  before_action :mkv_config
 
   def current_user
     return @current_user if defined? @current_user
@@ -24,38 +27,43 @@ class ApplicationController < ActionController::Base
   end
 
   def render_movie_db_error(exception)
-    # raise exception unless Rails.env.production?
-
     @exception = exception
     render 'exceptions/movie_db_error', status: 522
   end
 
   def movie_config_invalid(exception)
     flash[:error] = exception.message
-    redirect_to_config_the_movie_db
+    redirect_to modify_config_the_movie_db_path
   end
 
-  def redirect_to_config_the_movie_db
-    if movie_db_config.persisted?
-      redirect_to edit_config_the_movie_db_path(movie_db_config)
-    else
-      redirect_to new_config_the_movie_db_path
-    end
- end
-
-  def redirect_to_config_plex
-    if plex_config.persisted?
-      redirect_to edit_config_plex
-    else
-      redirect_to new_config_plex_path
-    end
+  def modify_config_the_movie_db_path
+    movie_db_config ? edit_config_the_movie_db_path : new_config_the_movie_db_path
   end
+  helper_method :modify_config_the_movie_db_path
+
+  def modify_config_plex_path
+    plex_config ? edit_config_plex_path : new_config_plex_path
+  end
+  helper_method :modify_config_plex_path
+
+  def modify_config_make_mkv_path
+    edit_config_make_mkv_path
+  end
+  helper_method :modify_config_make_mkv_path
 
   def plex_config
-    @plex_config ||= Config::Plex.newest.first || Config::Plex.new
+    return @plex_config if defined? @plex_config
+
+    @plex_config ||= Config::Plex.newest.first
   end
 
   def movie_db_config
-    @movie_db_config ||= Config::TheMovieDb.newest.first || Config::TheMovieDb.new
+    return @movie_db_config if defined? @movie_db_config
+
+    @movie_db_config ||= Config::TheMovieDb.newest.first
+  end
+
+  def mkv_config
+    @mkv_config ||= Config::MakeMkv.newest.first || Config::MakeMkv.create!
   end
 end

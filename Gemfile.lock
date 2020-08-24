@@ -162,6 +162,7 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.10)
       mini_portile2 (~> 2.4.0)
+    os (1.1.1)
     parallel (1.19.2)
     parser (2.7.1.4)
       ast (~> 2.4.1)
@@ -314,6 +315,7 @@ DEPENDENCIES
   awesome_print
   bootsnap (>= 1.4.2)
   capybara (>= 2.15)
+  concurrent-ruby
   database_cleaner-active_record
   dry-initializer
   dry-struct
@@ -324,6 +326,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   kaminari (= 1.2.1)
   listen (~> 3.2)
+  os (~> 1.1)
   pry
   puma (~> 4.1)
   rails (~> 6.0.3, >= 6.0.3.2)

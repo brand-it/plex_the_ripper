@@ -1,0 +1,17 @@
+# frozen_string_literal: true
+
+module Shell
+  def capture3(*cmd)
+    Rails.logger.debug(cmd)
+    stdout_str, stderr_str, status = Open3.capture3(*cmd)
+    Rails.logger.debug("Command finished #{stdout_str}, #{stderr_str}, #{status}")
+    OpenStruct.new(stdout_str: stdout_str, stderr_str: stderr_str, status: status)
+  end
+
+  def system!(*cmd)
+    response = capture3(*cmd)
+    raise Error, "#{cmd} - #{response.stderr_str}" unless response.status.success?
+
+    response
+  end
+end

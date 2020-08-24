@@ -19,5 +19,16 @@ module Myapp
     config.generators do |g|
       g.stylesheets false
     end
+
+    config.after_initialize do
+      pid = Process.fork do
+        # while true
+        #           puts "child, pid #{Process.pid} sleeping..."
+        # sleep 5
+        # puts "child exiting #{Tv.count}"
+        # end
+
+      end
+    end
   end
 end

@@ -9,7 +9,8 @@ Rails.application.routes.draw do
         get 'directories'
       end
     end
-    resources :the_movie_dbs, only: %i[edit update create new]
+    resource :the_movie_db, only: %i[edit update create new]
+    resource :make_mkv, only: %i[edit update]
   end
   resources :the_movie_dbs, only: %i[index show]
   resources :movies
