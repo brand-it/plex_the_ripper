@@ -17,7 +17,7 @@ class ListDrivesService
   param :make_mkv, Types.Instance(Config::MakeMkv), default: -> { Config::MakeMkv.newest.first }
 
   def call
-    drives.find(&:drive_name)
+    drives.find{ |d| d.drive_name.present? }
   end
 
   def makemkvcon_path

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Shell
+  class Error < StandardError; end
   def capture3(*cmd)
     Rails.logger.debug(cmd)
     stdout_str, stderr_str, status = Open3.capture3(*cmd)
