@@ -29,23 +29,28 @@ class DiskInfoService
   option :drive, Types.Instance(MkvParser::DRV), default: proc { ListDrivesService.new.call }
 
   def call
-    tinfo = parse_mkv_string(response.stdout_str).select { |line| line.is_a?(MkvParser::TINFO) }
-    tinfo.each do |info|
+    tinfos.each do |tinfo|
+      find_or_init_title_info(tinfo)
     end
+    title_info.values
   end
 
   def info
     @info ||= system!(
-      "#{config_make_mkv.settings.makemkvcon_path} info dev:#{drive.disk_name} -r"
+      "#{config_make_mkv.settings.makemkvcon_path} info dev:#{drive.disc_name} -r"
     )
   end
 
-  def find_or_init_title_info(id)
-    title_info[id] ||= TitleInfo.new(id)
-    attribute = CODE_LEGEND[values[1].to_i]
+  def tinfos
+    @tinfos ||= parse_mkv_string(info.stdout_str).select { |line| line.is_a?(MkvParser::TINFO) }
+  end
+
+  def find_or_init_title_info(tinfo)
+    title_info[tinfo.id.to_i] ||= TitleInfo.new(tinfo.id)
+    attribute = CODE_LEGEND[tinfo.type.to_i]
     return if attribute.nil?
 
-    title_info[id].send("#{attribute}=", values.last)
+    title_info[tinfo.id.to_i].send("#{attribute}=", tinfo.value)
   end
 
   def title_info
