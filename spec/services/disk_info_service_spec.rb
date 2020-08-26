@@ -10,7 +10,6 @@ RSpec.describe DiskInfoService do
       let(:stubbed_drive) do
       end
 
-
       before do
         allow(new).to receive(:info_response).and_return(stubbed_info_response)
         any_instance_of(ListDrivesService)
