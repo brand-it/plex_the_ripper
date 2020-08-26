@@ -1,27 +1,20 @@
 # frozen_string_literal: true
 
 class ListDrivesService
-  include Shell
   extend Dry::Initializer
-  DRIVE = 'DRV'
-  class Drive
-    extend Dry::Initializer
-    param :index, Types::Coercible::Integer
-    param :visible, Types::Coercible::Integer
-    param :enabled, Types::Coercible::Integer
-    param :flags, Types::Coercible::String
-    param :drive_name, Types::Coercible::String
-    param :disk_name, Types::Coercible::String
-  end
+  include Shell
+  include MkvParser
 
-  param :make_mkv, Types.Instance(Config::MakeMkv), default: -> { Config::MakeMkv.newest.first }
+  option :config_make_mkv, Types.Instance(Config::MakeMkv), default: -> { Config::MakeMkv.newest.first }
 
   def call
-    drives.find{ |d| d.drive_name.present? }
+    drives.find { |d| d.drive_name.present? }
   end
 
+  private
+
   def makemkvcon_path
-    make_mkv.settings.makemkvcon_path
+    config_make_mkv.settings.makemkvcon_path
   end
 
   def info
@@ -29,8 +22,6 @@ class ListDrivesService
   end
 
   def drives
-    @drives ||= info.stdout_str.lines.select { |x| x.starts_with?(DRIVE) }.map do |c|
-      Drive.new(*c.strip.split(',').map { |r| r.delete('"') }[1..])
-    end
+    @drives ||= parse_mkv_string(info.stdout_str).select { |i| i.is_a?(MkvParser::DRV) }
   end
 end

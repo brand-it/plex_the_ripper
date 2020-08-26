@@ -5,7 +5,7 @@ module Shell
   def capture3(*cmd)
     Rails.logger.debug(cmd)
     stdout_str, stderr_str, status = Open3.capture3(*cmd)
-    Rails.logger.debug("Command finished #{stdout_str}, #{stderr_str}, #{status}")
+    Rails.logger.debug("Command finished\n#{stdout_str}\n#{stderr_str}\n#{status}")
     OpenStruct.new(stdout_str: stdout_str, stderr_str: stderr_str, status: status)
   end
 
