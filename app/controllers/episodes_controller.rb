@@ -5,14 +5,8 @@ class EpisodesController < ApplicationController
     @season = Season.find(params[:id])
   end
 
-  def update
-    @season = Episode.find(params[:id])
-
-    if @season.update(season_params)
-      redirect_to season_path(@season)
-    else
-      render :new
-    end
+  def select
+    raise 'not implemented'
   end
 
   private

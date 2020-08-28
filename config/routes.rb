@@ -14,8 +14,13 @@ Rails.application.routes.draw do
   end
   resources :the_movie_dbs, only: %i[index show]
   resources :movies
+
   resources :tvs
   resources :seasons
+  resources :episodes do
+    collection { post 'select' }
+  end
+
   resource :start
   root to: 'start#new'
 end
