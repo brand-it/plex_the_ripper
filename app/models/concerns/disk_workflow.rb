@@ -12,6 +12,7 @@ module DiskWorkflow
         event :select, transitions_to: :selected
       end
       state :selected do
+        event :cancel, transitions_to: :new
         event :rip, transitions_to: :ripping
       end
       state :ripping do
@@ -19,6 +20,7 @@ module DiskWorkflow
         event :complete, transitions_to: :completed
       end
       state :failed do
+        event :cancel, transitions_to: :new
         event :rip, transitions_to: :ripping
       end
       state :completed

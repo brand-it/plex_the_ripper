@@ -21,6 +21,18 @@ RSpec.shared_examples 'DiskWorkflow' do |_parameter|
       expect { model.complete! }.to change { model.current_state.name }.from(:ripping).to(:completed)
     end
 
+    it 'handles transition to canceled' do # rubocop:disable RSpec/MultipleExpectations
+      expect { model.select! }.to change { model.current_state.name }.from(:new).to(:selected)
+      expect { model.cancel! }.to change { model.current_state.name }.from(:selected).to(:new)
+    end
+
+    it 'handles transition canceled from failed' do # rubocop:disable RSpec/MultipleExpectations
+      expect { model.select! }.to change { model.current_state.name }.from(:new).to(:selected)
+      expect { model.rip! }.to change { model.current_state.name }.from(:selected).to(:ripping)
+      expect { model.fail! }.to change { model.current_state.name }.from(:ripping).to(:failed)
+      expect { model.cancel! }.to change { model.current_state.name }.from(:failed).to(:new)
+    end
+
     it 'handles transition to failure' do # rubocop:disable RSpec/MultipleExpectations
       expect { model.select! }.to change { model.current_state.name }.from(:new).to(:selected)
       expect { model.rip! }.to change { model.current_state.name }.from(:selected).to(:ripping)
