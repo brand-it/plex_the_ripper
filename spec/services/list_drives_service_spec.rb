@@ -14,7 +14,7 @@ RSpec.describe ListDrivesService do
 
     let(:expected_response) do
       MkvParser::DRV.new(
-        0, '2', '999', '1', 'BD-ROM MATSHITA BD-CMB UJ141EL 1.10', '18384_SCN', '/dev/rdisk3'
+        0, '2', '999', '1', 'BD-ROM MATSHITA BD-CMB UJ141EL 1.10', '18384_SCN', '/dev/rdisk2'
       )
     end
 

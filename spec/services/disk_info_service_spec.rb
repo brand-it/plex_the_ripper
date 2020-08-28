@@ -4,16 +4,13 @@ require 'rails_helper'
 
 RSpec.describe DiskInfoService do
   include_context 'mkv_stubbs'
-  before do
-    allow(new_service).to receive(:info).and_return(title_info_object)
-    allow(list_drives_service).to receive(:info).and_return(drive_info_object)
-  end
+  before { allow(new_service).to receive(:info).and_return(title_info_object) }
 
   let(:list_drives_service) { ListDrivesService.new(config_make_mkv: config_make_mkv) }
 
   let(:config_make_mkv) { create :config_make_mkv }
   let(:new_service) do
-    described_class.new(config_make_mkv: config_make_mkv, drive: list_drives_service.call)
+    described_class.new(config_make_mkv: config_make_mkv, drive: MkvParser::DRV.new)
   end
 
   describe '#call' do

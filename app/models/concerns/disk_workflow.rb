@@ -9,6 +9,9 @@ module DiskWorkflow
 
     workflow do
       state :new do
+        event :select, transitions_to: :selected
+      end
+      state :selected do
         event :rip, transitions_to: :ripping
       end
       state :ripping do

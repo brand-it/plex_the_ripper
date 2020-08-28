@@ -16,12 +16,14 @@ RSpec.shared_examples 'DiskWorkflow' do |_parameter|
     end
 
     it 'handles transition to success' do # rubocop:disable RSpec/MultipleExpectations
-      expect { model.rip! }.to change { model.current_state.name }.from(:new).to(:ripping)
+      expect { model.select! }.to change { model.current_state.name }.from(:new).to(:selected)
+      expect { model.rip! }.to change { model.current_state.name }.from(:selected).to(:ripping)
       expect { model.complete! }.to change { model.current_state.name }.from(:ripping).to(:completed)
     end
 
     it 'handles transition to failure' do # rubocop:disable RSpec/MultipleExpectations
-      expect { model.rip! }.to change { model.current_state.name }.from(:new).to(:ripping)
+      expect { model.select! }.to change { model.current_state.name }.from(:new).to(:selected)
+      expect { model.rip! }.to change { model.current_state.name }.from(:selected).to(:ripping)
       expect { model.fail! }.to change { model.current_state.name }.from(:ripping).to(:failed)
     end
   end
