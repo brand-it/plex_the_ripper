@@ -1,6 +1,6 @@
 <%= simple_form_for :search, method: :get, html: { class: 'row' } do |f| %>
   <div class='col-md-11'>
-    <%= f.input :query, autofocus: true, required: false %>
+    <%= f.input :query, label: 'Search for TV or Movie', autofocus: true, required: false %>
   </div>
   <div class='col-md-1 mt-4'>
     <%= f.button :submit, 'Search' %>

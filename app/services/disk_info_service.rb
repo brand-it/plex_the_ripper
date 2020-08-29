@@ -15,7 +15,7 @@ class DiskInfoService
 
     def duration_seconds
       hours, minutes, seconds = duration.split(':')
-      seconds + (minutes * 60) + (hours * 60 * 60)
+      seconds.to_i + (minutes.to_i * 60) + (hours.to_i * 60 * 60)
     end
   end
 

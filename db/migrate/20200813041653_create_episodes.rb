@@ -11,6 +11,7 @@ class CreateEpisodes < ActiveRecord::Migration[6.0]
       t.string :workflow_state
       t.belongs_to :season
       t.belongs_to :disk
+      t.belongs_to :disk_title
     end
   end
 end

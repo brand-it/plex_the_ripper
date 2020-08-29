@@ -47,7 +47,9 @@ ActiveRecord::Schema.define(version: 2020_08_15_204540) do
     t.string "workflow_state"
     t.integer "season_id"
     t.integer "disk_id"
+    t.integer "disk_title_id"
     t.index ["disk_id"], name: "index_episodes_on_disk_id"
+    t.index ["disk_title_id"], name: "index_episodes_on_disk_title_id"
     t.index ["season_id"], name: "index_episodes_on_season_id"
   end
 

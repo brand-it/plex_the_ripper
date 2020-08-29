@@ -14,4 +14,8 @@ class Tv < ApplicationRecord
 
   before_save { broadcast(:tv_saving, self) }
   after_commit { broadcast(:tv_saved, id, async: true) }
+
+  def min_max_run_time_seconds
+    (episode_run_time.min * 60)..(episode_run_time.max * 60)
+  end
 end

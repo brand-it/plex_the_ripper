@@ -21,14 +21,10 @@ module Myapp
     end
 
     config.after_initialize do
-      pid = Process.fork do
-        # while true
-        #           puts "child, pid #{Process.pid} sleeping..."
-        # sleep 5
-        # puts "child exiting #{Tv.count}"
-        # end
 
-      end
+      # Concurrent::Channel.go do
+      #   puts "Goroutine thread: #{Thread.current}"
+      # end
     end
   end
 end
