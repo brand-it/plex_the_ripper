@@ -19,7 +19,7 @@ RSpec.describe ListDrivesService do
     end
 
     it 'responds with the first Drive it can find' do
-      expect(call).to eq expected_response
+      expect(call).to eq [expected_response]
     end
   end
 end

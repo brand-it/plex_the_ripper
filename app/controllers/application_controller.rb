@@ -17,6 +17,11 @@ class ApplicationController < ActionController::Base
     @current_user = User.find_by(id: cookies[:user_id])
   end
 
+  def disks
+    @disks ||= Disk.all
+  end
+  helper_method :disks
+
   private
 
   def render_timeout_connection(exception)

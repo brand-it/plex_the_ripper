@@ -26,7 +26,7 @@ class DiskInfoService
   }.freeze
 
   option :config_make_mkv, Types.Instance(Config::MakeMkv), default: proc { Config::MakeMkv.newest.first }
-  option :drive, Types.Instance(MkvParser::DRV), default: proc { ListDrivesService.new.call }
+  option :disk_name, Types::String
 
   def call
     tinfos.each do |tinfo|
@@ -37,7 +37,7 @@ class DiskInfoService
 
   def info
     @info ||= system!(
-      "#{config_make_mkv.settings.makemkvcon_path} info dev:#{drive.disc_name} -r"
+      "#{config_make_mkv.settings.makemkvcon_path} info dev:#{disk_name} -r"
     )
   end
 

@@ -11,7 +11,14 @@
       <%= bootstrap_alerts %>
 
       <main role="main" class="inner cover mb-auto">
-        <%= yield %>
+        <div class='row'>
+          <div class='col-md-2'>
+            <%= render(DiskCardComponent.new(disks: disks)) %>
+          </div>
+          <div class='col-md-10'>
+            <%= yield %>
+          </div>
+        </div>
       </main>
 
       <footer class="mastfoot mt-auto">

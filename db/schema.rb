@@ -32,6 +32,7 @@ ActiveRecord::Schema.define(version: 2020_08_15_204540) do
 
   create_table "disks", force: :cascade do |t|
     t.string "name"
+    t.string "disk_name"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

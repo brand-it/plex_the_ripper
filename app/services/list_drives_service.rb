@@ -5,10 +5,10 @@ class ListDrivesService
   include Shell
   include MkvParser
 
-  option :config_make_mkv, Types.Instance(Config::MakeMkv), default: -> { Config::MakeMkv.newest.first }
+  option :config_make_mkv, Types.Instance(Config::MakeMkv), default: -> { Config::MakeMkv.current }
 
   def call
-    drives.find { |d| d.drive_name.present? }
+    drives.select { |d| d.drive_name.present? }
   end
 
   private

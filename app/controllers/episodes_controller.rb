@@ -10,7 +10,6 @@ class EpisodesController < ApplicationController
     Disk.create!(name: drive.name)
     if drive
       disk_info = DiskInfoService.new(drive: drive).call
-      binding.pry
       episodes.each(&:select!)
     end
   end

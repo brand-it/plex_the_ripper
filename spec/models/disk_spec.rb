@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe Disk, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to(:episode) }
+    it { is_expected.to have_many(:episodes) }
     it { is_expected.to have_many(:disk_titles) }
   end
 end

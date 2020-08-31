@@ -1,11 +1,11 @@
 # frozen_string_literal: true
+
 # rubocop:disable Layout/LineLength
 RSpec.shared_context 'mkv_stubbs' do
   let(:drive_info_object) { OpenStruct.new(stdout_str: drive_info, stderr_str: '', status: nil) }
   let(:drive_info) do
     "MSG:1005,0,1,\"MakeMKV v1.15.2 darwin(x64-release) started\",\"%1 started\",\"MakeMKV v1.15.2 darwin(x64-release)\"\nMSG:2010,0,1,\"Optical drive \\\"BD-ROM MATSHITA BD-CMB UJ141EL 1.10d\\\" opened in OS access mode.\",\"Optical drive \\\"%1\\\" opened in OS access mode.\",\"BD-ROM MATSHITA BD-CMB UJ141EL 1.10d\"\nMSG:2003,0,3,\"Error 'Scsi error - ILLEGAL REQUEST:READ OF SCRAMBLED SECTOR WITHOUT AUTHENTICATION' occurred while reading 'BD-ROM MATSHITA BD-CMB UJ141EL 1.10' at offset '1048576'\",\"Error '%1' occurred while reading '%2' at offset '%3'\",\"Scsi error - ILLEGAL REQUEST:READ OF SCRAMBLED SECTOR WITHOUT AUTHENTICATION\",\"BD-ROM MATSHITA BD-CMB UJ141EL 1.10\",\"1048576\"\nDRV:0,2,999,1,\"BD-ROM MATSHITA BD-CMB UJ141EL 1.10\",\"18384_SCN\",\"/dev/rdisk2\"\nDRV:1,256,999,0,\"\",\"\",\"\"\nDRV:2,256,999,0,\"\",\"\",\"\"\nDRV:3,256,999,0,\"\",\"\",\"\"\nDRV:4,256,999,0,\"\",\"\",\"\"\nDRV:5,256,999,0,\"\",\"\",\"\"\nDRV:6,256,999,0,\"\",\"\",\"\"\nDRV:7,256,999,0,\"\",\"\",\"\"\nDRV:8,256,999,0,\"\",\"\",\"\"\nDRV:9,256,999,0,\"\",\"\",\"\"\nDRV:10,256,999,0,\"\",\"\",\"\"\nDRV:11,256,999,0,\"\",\"\",\"\"\nDRV:12,256,999,0,\"\",\"\",\"\"\nDRV:13,256,999,0,\"\",\"\",\"\"\nDRV:14,256,999,0,\"\",\"\",\"\"\nDRV:15,256,999,0,\"\",\"\",\"\"\nMSG:5010,0,0,\"Failed to open disc\",\"Failed to open disc\"\nTCOUNT:0\n"
   end
-
 
   let(:title_info_object) do
     OpenStruct.new(stdout_str: stubbed_info_response, stderr_str: '', status: nil)

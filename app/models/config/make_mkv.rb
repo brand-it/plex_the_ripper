@@ -12,6 +12,10 @@ class Config
 
     validate :makemkvcon_path_executable
 
+    def self.current
+      newest.first || create!
+    end
+
     private
 
     def makemkvcon_path_executable

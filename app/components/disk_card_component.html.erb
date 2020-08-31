@@ -1,0 +1,38 @@
+<div data-controller="disks" data-target="disks.cards" data-reload-url="<%= reload_disk_path %>">
+  <% if @disks.any? %>
+    <% @disks.each do |disk| %>
+      <div class="card border-info mb-3" id="disk-<%= disk.id %>">
+        <div class="card-body text-info">
+          <h5 class="card-title"><%= disk.name %></h5>
+          <p class="card-text">
+            <p><%= disk.disk_name %></p>
+            <% if LoadDiskJob.loading %>
+              <p>In Progress to get disk titles</p>
+            <% else %>
+              <% disk.disk_titles.each do |title| %>
+                <%= title.name%>
+              <% end %>
+            <% end %>
+          </p>
+        </div>
+      </div>
+    <% end %>
+    <% unless LoadDiskJob.loading %>
+      <button data-target="disks.reload" data-action="click->disks#reload" data-url="<%= reload_disk_path %>" class='btn btn-primary'>Reload Disks</button>
+    <% end %>
+  <% else %>
+    <div class="card border-danger mb-3">
+      <div class="card-body text-danger">
+        <h5 class="card-title">No Disk Found</h5>
+        <p class="card-text">
+          <% if LoadDiskJob.loading %>
+            In Progress to get disk info
+          <% else %>
+            There was no disk info found
+            <button data-target="disks.reload" data-action="click->disks#reload" data-url="<%= reload_disk_path %>" class='btn btn-primary'>Load Disks</button>
+          <% end %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+</div>
