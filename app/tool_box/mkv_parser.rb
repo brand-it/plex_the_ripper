@@ -6,9 +6,21 @@ module MkvParser
   SINFO = Struct.new(:id, :type, :code, :value)
   TCOUNT = Struct.new(:count)
   DRV = Struct.new(:index, :visible, :unknown, :enabled, :flags, :drive_name, :disc_name)
+  # Progress bar values for current and total progress
+  # PRGV:current,total,max
+  # current - current progress value
+  # total - total progress value
+  # max - maximum possible value for a progress bar, constant
   PRGV = Struct.new(:current, :total, :max)
+  # Current and total progress title
+  # PRGC:code,id,name
+  # PRGT:code,id,name
+  # code - unique message code
+  # id - operation sub-id
+  # name - name string
   PRGT = Struct.new(:code, :id, :name)
   PRGC = Struct.new(:code, :id, :name)
+
   MSG = Struct.new(:code, :flags, :count, :message, :format, :params)
 
   def parse_mkv_string(stdout_str)

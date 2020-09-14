@@ -3,9 +3,9 @@
 module Shell
   class Error < StandardError; end
   def capture3(*cmd)
-    Rails.logger.debug(cmd)
+    Rails.logger.debug(cmd.join(', '))
     stdout_str, stderr_str, status = Open3.capture3(*cmd)
-    Rails.logger.debug("Command finished\n#{stdout_str}\n#{stderr_str}\n#{status}")
+    Rails.logger.debug("\n#{stdout_str}\n#{stderr_str}\n#{status}")
     OpenStruct.new(stdout_str: stdout_str, stderr_str: stderr_str, status: status)
   end
 

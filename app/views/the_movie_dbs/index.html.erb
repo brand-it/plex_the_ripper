@@ -25,12 +25,11 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">
-
               <% if result.media_type == 'tv' %>
                 <%= link_to 'Select', tvs_path(tv: { the_movie_db_id: result.id }), method: :post, class: 'btn btn-outline-primary' %>
                 <i class="fas fa-tv"></i>
               <% else %>
-                <%= link_to 'Select', movies_path(tv: { the_movie_db_id: result.id }), method: :post, class: 'btn btn-outline-primary' %>
+                <%= link_to 'Select', movies_path(movie: { the_movie_db_id: result.id }), method: :post, class: 'btn btn-outline-primary' %>
                 <i class="fas fa-film"></i>
               <% end %>
               <%= result.title || result.name %>

@@ -2,29 +2,27 @@ import { Controller } from "stimulus"
 import consumer from "../../channels/consumer"
 
 export default class extends Controller {
-  static targets = ["reload", "cards", "create"]
+  static targets = ["card"]
   connect() {
     let controller = this;
-    consumer.subscriptions.create("DiskChannel", {
+    consumer.subscriptions.create(
+      {
+        channel: "VideoProgressChannel",
+        type: this.cardTarget.dataset.type,
+        video_id: this.cardTarget.dataset.video_id
+      }, {
       connected() {
-        console.log('connected DiskChannel')
+        // Called when the subscription is ready for use on the server
       },
 
       disconnected() {
-        console.log('disconnected DiskChannel')
+        // Called when the subscription has been terminated by the server
       },
 
       received(html) {
         controller.replaceCards(html)
       }
     });
-  }
-
-  reload() {
-    let reload_url = this.reloadTarget.dataset.url
-    fetch(reload_url)
-      .then(response => response.text())
-      .then(html => { this.replaceCards(html) })
   }
 
   replaceCards(html) {

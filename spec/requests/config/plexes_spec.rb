@@ -107,7 +107,7 @@ RSpec.describe '/config/plexes', type: :request do
 
     context 'with invalid parameters' do
       it "renders a successful response (i.e. to display the 'edit' template)" do
-        plex = Config::Plex.create! valid_attributes
+        Config::Plex.create! valid_attributes
         patch config_plex_url(config_plex), params: { config_plex: invalid_attributes }
         expect(response).to be_successful
       end
@@ -116,14 +116,14 @@ RSpec.describe '/config/plexes', type: :request do
 
   describe 'DELETE /destroy' do
     it 'destroys the requested config_plex' do
-      plex = Config::Plex.create! valid_attributes
+      Config::Plex.create! valid_attributes
       expect do
         delete config_plex_url(config_plex)
       end.to change(Config::Plex, :count).by(-1)
     end
 
     it 'redirects to the config_plexes list' do
-      plex = Config::Plex.create! valid_attributes
+      Config::Plex.create! valid_attributes
       delete config_plex_url(config_plex)
       expect(response).to redirect_to(config_plex_url)
     end

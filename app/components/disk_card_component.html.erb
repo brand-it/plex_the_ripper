@@ -6,7 +6,7 @@
           <h5 class="card-title"><%= disk.name %></h5>
           <p class="card-text">
             <p><%= disk.disk_name %></p>
-            <% if LoadDiskJob.loading %>
+            <% if @in_progress %>
               <p>In Progress to get disk titles</p>
             <% else %>
               <% disk.disk_titles.each do |title| %>
@@ -17,15 +17,18 @@
         </div>
       </div>
     <% end %>
-    <% unless LoadDiskJob.loading %>
+    <% unless @in_progress %>
       <button data-target="disks.reload" data-action="click->disks#reload" data-url="<%= reload_disk_path %>" class='btn btn-primary'>Reload Disks</button>
+      <% if @movie && @movie.selected? %>
+        <%= link_to 'Rip', rip_movie_path(@movie), method: :post, class: 'btn btn-primary' %>
+      <% end %>
     <% end %>
   <% else %>
     <div class="card border-danger mb-3">
       <div class="card-body text-danger">
         <h5 class="card-title">No Disk Found</h5>
         <p class="card-text">
-          <% if LoadDiskJob.loading %>
+          <% if @in_progress %>
             In Progress to get disk info
           <% else %>
             There was no disk info found

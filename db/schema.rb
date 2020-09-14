@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_08_15_204540) do
+ActiveRecord::Schema.define(version: 2020_09_07_015106) do
 
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
@@ -52,6 +52,18 @@ ActiveRecord::Schema.define(version: 2020_08_15_204540) do
     t.index ["disk_id"], name: "index_episodes_on_disk_id"
     t.index ["disk_title_id"], name: "index_episodes_on_disk_title_id"
     t.index ["season_id"], name: "index_episodes_on_season_id"
+  end
+
+  create_table "mkv_progresses", force: :cascade do |t|
+    t.string "name"
+    t.float "percentage"
+    t.datetime "completed_at"
+    t.datetime "failed_at"
+    t.string "video_type"
+    t.integer "video_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["video_type", "video_id"], name: "index_mkv_progresses_on_video_type_and_video_id"
   end
 
   create_table "movies", force: :cascade do |t|

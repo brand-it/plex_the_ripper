@@ -2,7 +2,7 @@
 
 RSpec.shared_examples 'DiskWorkflow' do |_parameter|
   let(:model_class) { described_class.model_name.singular.to_sym }
-  let(:model) { build_stubbed model_class }
+  let(:model) { create model_class }
   # A
   describe 'associations' do
     it { is_expected.to belong_to(:disk).optional }

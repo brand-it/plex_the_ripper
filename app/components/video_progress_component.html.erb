@@ -1,0 +1,7 @@
+<div class="card border-info mb-3" data-controller="video-progress">
+  <div>Add VideoProgress template here</div>
+  <% @video.mkv_progresses.each do |mkv_progress| %>
+    <p><%= mkv_progress.name %></p>
+    <p><%= number_to_percentage(mkv_progress.percentage) %></p>
+  <% end %>
+</div>

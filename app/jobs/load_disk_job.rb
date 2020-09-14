@@ -1,25 +1,12 @@
 # frozen_string_literal: true
 
-class LoadDiskJob
-  include Concurrent::Async
-
-  class << self
-    attr_accessor :loading
-
-    def perform
-      return if loading
-
-      self.loading = true
-      new.async.load
-    end
-  end
-
-  def load
+class LoadDiskJob < JobsBase
+  def call
+    broadcast(in_progress: true)
     disks
-    broadcast
+    broadcast(in_progress: true)
     create_disk_titles
-    self.class.loading = false
-    broadcast
+    broadcast(in_progress: false)
   end
 
   private
@@ -39,18 +26,15 @@ class LoadDiskJob
 
   def disks
     @disks ||= ListDrivesService.new.call.map do |drive|
-      disk = Disk.find_or_initialize_by(name: drive.disc_name)
-      disk.update!(name: drive.disc_name, disk_name: drive.drive_name)
-      disk
+      Disk.find_or_initialize_by(name: drive.disc_name).tap do |disk|
+        disk.update!(name: drive.disc_name, disk_name: drive.drive_name)
+      end
     end
   end
 
-  def broadcast
+  def broadcast(in_progress:)
     ActionCable.server.broadcast(
-      'disk',
-      ApplicationController.render(
-        DiskCardComponent.new(disks: disks)
-      )
+      'disk', ApplicationController.render(DiskCardComponent.new(disks: disks, in_progress: in_progress))
     )
   end
 end

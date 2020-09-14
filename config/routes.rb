@@ -13,7 +13,11 @@ Rails.application.routes.draw do
     resource :make_mkv, only: %i[edit update]
   end
   resources :the_movie_dbs, only: %i[index show]
-  resources :movies
+  resources :movies do
+    member do
+      patch :rip
+    end
+  end
 
   resources :tvs
   resources :seasons

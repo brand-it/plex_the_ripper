@@ -10,7 +10,7 @@ RSpec.describe DiskInfoService do
 
   let(:config_make_mkv) { create :config_make_mkv }
   let(:new_service) do
-    described_class.new(config_make_mkv: config_make_mkv, drive: MkvParser::DRV.new)
+    described_class.new(config_make_mkv: config_make_mkv, disk_name: '/dev/disk2')
   end
 
   describe '#call' do

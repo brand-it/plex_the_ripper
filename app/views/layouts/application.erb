@@ -13,7 +13,8 @@
       <main role="main" class="inner cover mb-auto">
         <div class='row'>
           <div class='col-md-2'>
-            <%= render(DiskCardComponent.new(disks: disks)) %>
+            <%= render DiskCardComponent.new(disks: disks) %>
+            <%= render VideoProgressComponent.new(video: Movie.first) %>
           </div>
           <div class='col-md-10'>
             <%= yield %>
