@@ -2,7 +2,7 @@
 
 class CreateMovieJob < JobsBase
   extend Dry::Initializer
-  option :video, Types::Integer
+  option :movie, Types.Instance(Movie)
   option :disk_title, Types.Instance(DiskTitle)
 
   def call
