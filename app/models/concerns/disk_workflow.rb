@@ -5,6 +5,7 @@ module DiskWorkflow
   included do # rubocop:disable Metrics/BlockLength
     include Workflow
     belongs_to :disk, optional: true
+    belongs_to :disk_title, optional: true
     scope :selected, -> { where(workflow_state: 'selected') }
     scope :ripping, -> { where(workflow_state: 'ripping') }
     scope :failed, -> { where(workflow_state: 'failed') }
@@ -34,7 +35,11 @@ module DiskWorkflow
     end
 
     def persist_workflow_state(new_value)
-      update_column(:workflow_state, new_value)
+      update!(workflow_state: new_value)
+    end
+
+    def complete(file_path:)
+      self.file_path = file_path
     end
   end
 end

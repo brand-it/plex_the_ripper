@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Config
+class Config
   class MakeMkvsController < ApplicationController
     before_action :set_make_mkv, only: %i[show edit update destroy]
 

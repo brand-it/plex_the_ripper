@@ -20,9 +20,9 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
   end
 
   create_table "disk_titles", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.integer "duration"
-    t.integer "title_id"
+    t.integer "title_id", null: false
     t.float "size"
     t.integer "disk_id"
     t.datetime "created_at", precision: 6, null: false
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
   create_table "disks", force: :cascade do |t|
     t.string "name"
     t.string "disk_name"
+    t.string "workflow_state"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

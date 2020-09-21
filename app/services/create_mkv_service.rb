@@ -2,52 +2,24 @@
 
 class CreateMkvService
   class Error < StandardError; end
-  class ProcessOutput
-    include MkvParser
-    extend Dry::Initializer
 
-    param :std_out_err
-    param :video
-
-    def gets
-      while line = std_out_err.gets
-        update_progress(line)
-      end
-    end
-
-    def update_progress(line)
-      parse_mkv_string(line).each do |progress|
-        Rails.logger.debug(progress)
-        case progress
-        when MkvParser::PRGV
-          mkv_progress.update!(percentage: progress.current.to_f)
-        when MkvParser::PRGC, MkvParser::PRGT
-          mkv_progress&.complete!
-          mkv_progress(progress)
-        end
-      end
-    end
-
-    def mkv_progress(progress = nil)
-      return @mkv_progress if progress.nil?
-
-      @mkv_progress = MkvProgress.find_or_initialize_by(name: progress.name, video: video)
-    end
-  end
-  Mkv = Struct.new(:file_path, :response)
   extend Dry::Initializer
 
-  TMP_DIRECTORY = Rails.root.join('tmp', 'videos')
+  Status = Struct.new(:dir, :mkv_path, :success)
+  TMP_DIR = Rails.root.join('tmp', 'videos')
 
   option :config_make_mkv, Types.Instance(Config::MakeMkv), default: proc { Config::MakeMkv.newest.first }
-
-  option :disk_name, Types::String
-  option :title, Types::Integer
+  option :disk_title, Types.Instance(DiskTitle)
   option :video
 
   def call
-    # Rails.logger.debug(mkv)
-    # Mkv.new(, create
+    Status.new(dir, '', create.success?).tap do |status|
+      if status.success
+        status.mkv_path = Dir[file_path.join('*.mkv')].first
+      else
+        FileUtils.remove_entry_secure(file_path)
+      end
+    end
   end
 
   private
@@ -64,16 +36,19 @@ class CreateMkvService
     [
       config_make_mkv.settings.makemkvcon_path,
       'mkv',
-      "dev:#{disk_name}",
-      title,
-      file_path,
+      "dev:#{disk_title.disk.disk_name}",
+      disk_title.title_id,
+      tmp_dir,
       '--progress=-same',
       '--robot',
       '--profile="FLAC"'
     ].join(' ')
   end
 
-  def file_path
-    TMP_DIRECTORY.join(video.model_name.singular, video.id.to_s)
+  def tmp_dir
+    @tmp_dir ||= TMP_DIR.join(video.model_name.singular, video.id.to_s).tap do |tmp_dir|
+      FileUtils.remove_entry_secure(tmp_dir)
+      FileUtils.mkdir_p(tmp_dir)
+    end
   end
 end

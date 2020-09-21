@@ -23,7 +23,7 @@ RSpec.describe Config::PlexesController, type: :controller do
       end
     end
 
-    context 'when using ftp' do
-    end
+    # context 'when using ftp' do
+    # end
   end
 end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Config
+class Config
   class PlexesController < ApplicationController
     before_action :set_config_plex, only: %i[show edit update destroy]
 

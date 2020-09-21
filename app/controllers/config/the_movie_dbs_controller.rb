@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Config
+class Config
   class TheMovieDbsController < ApplicationController
     before_action :set_the_movie_db, only: %i[show edit update destroy]
 

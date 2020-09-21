@@ -43,6 +43,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 gem 'kaminari', '>= 1.2.1'
 
 group :development, :test do
+  gem 'annotate'
   gem 'awesome_print'
   gem 'factory_bot_rails'
   gem 'faker'
