@@ -29,6 +29,7 @@ class Config
     private
 
     def makemkvcon_path_executable
+      return if settings.makemkvcon_path.blank?
       return if File.executable?(settings.makemkvcon_path)
 
       errors.add(:settings, "makemkvcon path #{settings.makemkvcon_path} is not an executable")
