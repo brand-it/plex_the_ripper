@@ -2,5 +2,6 @@
 
 FactoryBot.define do
   factory :mkv_progress do
+    video
   end
 end

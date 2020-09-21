@@ -14,6 +14,6 @@ class Movie < ApplicationRecord
   after_commit { broadcast(:movie_saved, id, async: true) }
 
   def rip
-    CreateMovieJob.perform
+    CreateMovieJob.perform(video_id: id, video_type: self.class.to_s)
   end
 end

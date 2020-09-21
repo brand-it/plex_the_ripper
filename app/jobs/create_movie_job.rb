@@ -1,16 +1,16 @@
 # frozen_string_literal: true
 
-class CreateMovieJob < Jobs::Base
+class CreateMovieJob < JobsBase
   extend Dry::Initializer
-  param :video_id, Types::Integer
-  param :video_type, proc(&:constantize)
+  option :video_id, Types::Integer
+  option :video_type, Types::String
 
   def call
     create_mkv
   end
 
   def video
-    @video ||= video_type.find(video_id)
+    @video ||= video_type.constantize.find(video_id)
   end
 
   def rename_mkv(mkv_file_name:)

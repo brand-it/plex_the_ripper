@@ -4,20 +4,22 @@ class JobsBase
     attr_accessor :process
 
     def perform(*args)
-      return process unless process_ready?
+      return unless ready?
 
-      self.process = new(*args).async.call
+      new(*args).tap do |job|
+        self.process = job.async.call
+      end
     end
 
-    def process_ready?
-      process.nil? || process_fulfilled?
+    def ready?
+      process.nil? || fulfilled?
     end
 
-    def process_fulfilled?
+    def fulfilled?
       !!process&.fulfilled?
     end
 
-    def process_pending?
+    def pending?
       !!process&.pending?
     end
   end
