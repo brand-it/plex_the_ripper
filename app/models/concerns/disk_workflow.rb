@@ -38,6 +38,13 @@ module DiskWorkflow
       update!(workflow_state: new_value)
     end
 
+    def select(disk_title:)
+      halt! 'disk title & disk is required' if disk_title&.disk.nil?
+
+      self.disk_title = disk_title
+      self.disk = disk_title.disk
+    end
+
     def complete(file_path:)
       self.file_path = file_path
     end

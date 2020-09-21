@@ -78,9 +78,11 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.string "overview"
     t.string "file_path"
     t.integer "disk_id"
+    t.integer "disk_title_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["disk_id"], name: "index_movies_on_disk_id"
+    t.index ["disk_title_id"], name: "index_movies_on_disk_title_id"
   end
 
   create_table "seasons", force: :cascade do |t|

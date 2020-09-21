@@ -11,6 +11,7 @@ class CreateVideos < ActiveRecord::Migration[6.0]
       t.string :overview
       t.string :file_path
       t.belongs_to :disk
+      t.belongs_to :disk_title
       t.timestamps
     end
   end

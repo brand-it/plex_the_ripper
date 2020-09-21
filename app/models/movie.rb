@@ -16,11 +16,13 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  disk_id         :integer
+#  disk_title_id   :integer
 #  the_movie_db_id :integer
 #
 # Indexes
 #
-#  index_movies_on_disk_id  (disk_id)
+#  index_movies_on_disk_id        (disk_id)
+#  index_movies_on_disk_title_id  (disk_title_id)
 #
 class Movie < ApplicationRecord
   include DiskWorkflow
@@ -36,6 +38,6 @@ class Movie < ApplicationRecord
   after_commit { broadcast(:movie_saved, id, async: true) }
 
   def rip
-    CreateMovieJob.perform(video_id: id, video_type: self.class.to_s)
+    CreateMovieJob.perform(video: self, disk_title: disk_title.includes(:disk))
   end
 end
