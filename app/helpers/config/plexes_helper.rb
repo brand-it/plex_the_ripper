@@ -1,4 +1,6 @@
 # frozen_string_literal: true
 
-module Config::PlexesHelper
+module Config
+  module PlexesHelper
+  end
 end

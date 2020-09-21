@@ -7,6 +7,7 @@ RSpec.shared_examples 'DiskWorkflow' do |_parameter|
   describe 'associations' do
     it { is_expected.to belong_to(:disk).optional }
   end
+  # W
 
   describe 'workflow' do
     subject(:workflow) { model.current_state }
