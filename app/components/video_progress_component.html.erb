@@ -1,9 +1,11 @@
-<div data-controller="video-progress" data-target="video-progress.card" class="card border-info mb-3" data-controller="video-progress" data-video-id="<%= @video.id %>" data-type="<%= @video.class.name %>">
-  <div>Add VideoProgress template here</div>
-  <% @mkv_progresses.each do |mkv_progress| %>
-    <p><%= mkv_progress.name %></p>
-    <p>Percentage Completed: <%= mkv_progress.percentage %></p>
-  <% end %>
-  <%= CreateMovieJob.pending? %>
-  <button data-target="video-progress.create" data-action="click->video-progress#create" data-url="<%= build_disk_path %>" class='btn btn-primary'>Create Movie</button>
-</div>
+<% if @video %>
+  <div data-controller="video-progress" data-target="video-progress.card" class="card border-info mb-3" data-controller="video-progress" data-video-id="<%= @video.id %>" data-type="<%= @video.class.name %>">
+    <div>Add VideoProgress template here</div>
+    <% @mkv_progresses.each do |mkv_progress| %>
+      <p><%= mkv_progress.name %></p>
+      <p>Percentage Completed: <%= mkv_progress.percentage %></p>
+    <% end %>
+    <%= CreateMovieJob.pending? %>
+    <button data-target="video-progress.create" data-action="click->video-progress#create" data-url="<%= build_disk_path %>" class='btn btn-primary'>Create Movie</button>
+  </div>
+<% end %>
