@@ -13,11 +13,11 @@ class CreateMkvService
   option :video
 
   def call
-    Status.new(dir, '', create.success?).tap do |status|
+    Status.new(tmp_dir, '', create.success?).tap do |status|
       if status.success
-        status.mkv_path = Dir[file_path.join('*.mkv')].first
+        status.mkv_path = tmp_dir.join(disk_title.name)
       else
-        FileUtils.remove_entry_secure(file_path)
+        recreate_dir(tmp_dir)
       end
     end
   end
@@ -36,7 +36,7 @@ class CreateMkvService
     [
       config_make_mkv.settings.makemkvcon_path,
       'mkv',
-      "dev:#{disk_title.disk.disk_name}",
+      "dev:#{disk_title.disk.name}",
       disk_title.title_id,
       tmp_dir,
       '--progress=-same',
@@ -47,8 +47,12 @@ class CreateMkvService
 
   def tmp_dir
     @tmp_dir ||= TMP_DIR.join(video.model_name.singular, video.id.to_s).tap do |tmp_dir|
-      FileUtils.remove_entry_secure(tmp_dir)
-      FileUtils.mkdir_p(tmp_dir)
+      recreate_dir(tmp_dir)
     end
+  end
+
+  def recreate_dir(dir)
+    FileUtils.remove_entry_secure(dir) if File.exist?(dir)
+    FileUtils.mkdir_p(dir)
   end
 end

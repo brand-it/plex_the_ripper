@@ -16,14 +16,10 @@ class CreateMovieJob < JobsBase
   private
 
   def create_status
-    @create_status ||= CreateMkvService.new(disk_title: disk_title, video: video).call
-  end
-
-  def video
-    @video ||= video_type.constantize.find(video_id)
+    @create_status ||= CreateMkvService.new(disk_title: disk_title, video: movie).call
   end
 
   def renamed_file_path
-    File.rename(create_status.mkv_path, create_status.dir.join("#{video.title}.mkv"))
+    File.rename(create_status.mkv_path, create_status.dir.join("#{movie.title}.mkv"))
   end
 end

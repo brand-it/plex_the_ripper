@@ -25,7 +25,10 @@ Rails.application.routes.draw do
     collection { post 'select' }
   end
   resource :disk, only: [] do
-    collection { get :reload }
+    collection do
+      get :reload
+      get :build
+    end
   end
   resource :start
   root to: 'start#new'

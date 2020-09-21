@@ -2,17 +2,17 @@ import { Controller } from "stimulus"
 import consumer from "../../channels/consumer"
 
 export default class extends Controller {
-  static targets = ["card"]
+  static targets = ["card", "create"]
   connect() {
     let controller = this;
     consumer.subscriptions.create(
       {
         channel: "VideoProgressChannel",
         type: this.cardTarget.dataset.type,
-        video_id: this.cardTarget.dataset.video_id
+        video_id: this.cardTarget.dataset.videoId
       }, {
       connected() {
-        // Called when the subscription is ready for use on the server
+        console.log('connected VideoProgressChannel')
       },
 
       disconnected() {
@@ -20,12 +20,20 @@ export default class extends Controller {
       },
 
       received(html) {
-        controller.replaceCards(html)
+        controller.replaceCard(html)
       }
     });
   }
 
-  replaceCards(html) {
-    this.cardsTarget.innerHTML = html
+  create() {
+    let createUrl = this.createTarget.dataset.url
+    fetch(createUrl)
+      .then(response => response.text())
+      .then(html => { this.replaceCard(html) })
+  }
+
+  replaceCard(html) {
+    console.log(html)
+    this.cardTarget.outerHTML = html
   }
 }

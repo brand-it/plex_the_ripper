@@ -4,33 +4,56 @@ class CreateMkvService
   class ProcessOutput
     include MkvParser
     extend Dry::Initializer
+    UPDATE_RATE_LIMIT = 1.second
 
     param :std_out_err
     param :video
 
-    def gets
-      while line = std_out_err.gets
-        update_progress(line)
-      end
+    def gets # rubocop:disable Metrics/MethodLength
+      Thread.new do
+        lines = ''
+        last_update = Time.current
+        while line = std_out_err.gets
+          Rails.logger.debug("Process Output #{line.strip}")
+          lines += line
+          next if (Time.current - last_update) <= UPDATE_RATE_LIMIT
+
+          Thread.new { update_progress(lines) }.join
+          last_update = Time.current
+          lines       = ''
+        end
+        update_progress(lines)
+      end.join
     end
 
-    def update_progress(line)
-      parse_mkv_string(line).each do |progress|
-        Rails.logger.debug(progress)
+    def update_progress(lines)
+      parse_mkv_string(lines).each do |progress|
         case progress
         when MkvParser::PRGV
-          mkv_progress.update!(percentage: progress.current.to_f)
-        when MkvParser::PRGC, MkvParser::PRGT
-          mkv_progress&.complete!
-          mkv_progress(progress)
+          Rails.logger.debug("#{mkv_progress&.name} #{percentage(progress.current, progress.max)}")
+          mkv_progress&.assign_attributes(percentage: percentage(progress.current, progress.max))
+        when MkvParser::PRGC
+          mkv_progress&.complete
+          mkv_progress(progress.name)
         end
       end
+      @mkv_progresses.values.each(&:save!)
     end
 
-    def mkv_progress(progress = nil)
-      return @mkv_progress if progress.nil?
+    def mkv_progress(progress_name = nil)
+      return @mkv_progress unless progress_name
 
-      @mkv_progress = MkvProgress.find_or_initialize_by(name: progress.name, video: video)
+      @mkv_progresses ||= {}
+      @mkv_progresses[progress_name] ||= MkvProgress.find_or_create_by!(
+        name: progress_name, video: video
+      )
+      @mkv_progress = @mkv_progresses[progress_name]
+    end
+
+    def percentage(current, max)
+      return 0 if max.to_f.zero?
+
+      (current.to_f / max.to_f) * 100.0 # rubocop:disable Style/FloatDivision
     end
   end
 end

@@ -31,12 +31,12 @@ class MkvProgress < ApplicationRecord
     failed_at.present?
   end
 
-  def complete!
-    update!(completed_at: Time.current, failed_at: nil)
+  def complete
+    assign_attributes(completed_at: Time.current, failed_at: nil, percentage: 100)
   end
 
-  def fail!
-    update!(completed_at: nil, failed_at: Time.current)
+  def fail
+    assign_attributes(completed_at: nil, failed_at: Time.current, percentage: 0)
   end
 
   private

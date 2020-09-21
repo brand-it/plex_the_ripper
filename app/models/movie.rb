@@ -35,7 +35,7 @@ class Movie < ApplicationRecord
   end
 
   before_save { broadcast(:movie_saving, self) }
-  after_commit { broadcast(:movie_saved, id, async: true) }
+  after_commit { broadcast(:movie_saved, id) }
 
   def rip
     CreateMovieJob.perform(movie: self, disk_title: disk_title)

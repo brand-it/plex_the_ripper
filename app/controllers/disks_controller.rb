@@ -2,13 +2,16 @@
 
 class DisksController < ApplicationController
   def reload
-    Disk.delete_all
+    Disk.destroy_all
     LoadDiskJob.perform
     Disk.all_valid?
     render DiskCardComponent.new(disks: [])
   end
 
-  def create
-    CreateMovieJob.perform
+  def build
+    movie = Movie.first
+    movie.mkv_progresses.destroy_all
+    CreateMovieJob.perform(movie: movie, disk_title: DiskTitle.first)
+    render VideoProgressComponent.new(video: movie)
   end
 end

@@ -40,5 +40,8 @@ module MkvParser
     else
       type.new(*line[0..(type.new.members.size - 2)], line[(type.new.members.size - 1)..])
     end
+  rescue NameError => e
+    Rails.logger.debug("NameError #{e.message} #{type} #{line}")
+    OpenStruct.new(type: type, line: line)
   end
 end

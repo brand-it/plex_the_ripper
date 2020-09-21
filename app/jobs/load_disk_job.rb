@@ -16,9 +16,8 @@ class LoadDiskJob < JobsBase
       titles = DiskInfoService.new(disk_name: disk.name).call
       titles.each do |title|
         disk.disk_titles.create!(
-          name: title.file_name,
-          size: title.size.to_f,
-          duration: title.duration_seconds
+          title_id: title.id, name: title.file_name,
+          size: title.size.to_f, duration: title.duration_seconds
         )
       end
     end
