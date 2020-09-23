@@ -31,5 +31,6 @@ Rails.application.routes.draw do
     end
   end
   resource :start
+  resources :jobs, only: %i[index show]
   root to: 'start#new'
 end

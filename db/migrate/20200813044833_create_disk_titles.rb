@@ -5,7 +5,7 @@ class CreateDiskTitles < ActiveRecord::Migration[6.0]
       t.integer :duration
       t.integer :title_id, null: false
       t.float :size
-      t.belongs_to :disk
+      t.references :disk
       t.timestamps
     end
   end

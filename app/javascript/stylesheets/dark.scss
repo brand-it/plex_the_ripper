@@ -3,6 +3,10 @@
  */
 
 .dark {
+  body {
+    background-image: url("../images/irongrip_@2X.png");
+    background-repeat: repeat;
+  }
   .btn-outline-secondary {
     color: $white;
   }

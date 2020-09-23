@@ -38,6 +38,6 @@ class Movie < ApplicationRecord
   after_commit { broadcast(:movie_saved, id) }
 
   def rip
-    CreateMovieJob.perform(movie: self, disk_title: disk_title)
+    CreateMovieWorker.perform(movie: self, disk_title: disk_title)
   end
 end

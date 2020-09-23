@@ -5,7 +5,7 @@
       <p><%= mkv_progress.name %></p>
       <p>Percentage Completed: <%= mkv_progress.percentage %></p>
     <% end %>
-    <%= CreateMovieJob.pending? %>
+    <%= CreateMovieWorker.job.pending? %>
     <button data-target="video-progress.create" data-action="click->video-progress#create" data-url="<%= build_disk_path %>" class='btn btn-primary'>Create Movie</button>
   </div>
 <% end %>

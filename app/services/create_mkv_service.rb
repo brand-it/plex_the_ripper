@@ -5,7 +5,7 @@ class CreateMkvService
 
   extend Dry::Initializer
 
-  Status = Struct.new(:dir, :mkv_path, :success)
+  Status = Struct.new(:dir, :mkv_path, :success?)
   TMP_DIR = Rails.root.join('tmp', 'videos')
 
   option :config_make_mkv, Types.Instance(Config::MakeMkv), default: proc { Config::MakeMkv.newest.first }
@@ -14,7 +14,7 @@ class CreateMkvService
 
   def call
     Status.new(tmp_dir, '', create.success?).tap do |status|
-      if status.success
+      if status.success?
         status.mkv_path = tmp_dir.join(disk_title.name)
       else
         recreate_dir(tmp_dir)

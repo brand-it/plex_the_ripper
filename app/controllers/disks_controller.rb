@@ -3,7 +3,7 @@
 class DisksController < ApplicationController
   def reload
     Disk.destroy_all
-    LoadDiskJob.perform
+    LoadDiskWorker.perform
     Disk.all_valid?
     render DiskCardComponent.new(disks: [])
   end
@@ -11,7 +11,7 @@ class DisksController < ApplicationController
   def build
     movie = Movie.first
     movie.mkv_progresses.destroy_all
-    CreateMovieJob.perform(movie: movie, disk_title: DiskTitle.first)
+    CreateMovieWorker.perform(movie: movie, disk_title: DiskTitle.first)
     render VideoProgressComponent.new(video: movie)
   end
 end

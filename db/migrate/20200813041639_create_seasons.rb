@@ -7,7 +7,7 @@ class CreateSeasons < ActiveRecord::Migration[6.0]
       t.integer :the_movie_db_id
       t.integer :season_number
       t.date :air_date
-      t.belongs_to :tv
+      t.references :tv
       t.timestamps
     end
   end

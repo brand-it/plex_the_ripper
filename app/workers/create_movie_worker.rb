@@ -1,15 +1,14 @@
 # frozen_string_literal: true
 
-class CreateMovieJob < JobsBase
-  extend Dry::Initializer
+class CreateMovieWorker < ApplicationWorker
   option :movie, Types.Instance(Movie)
   option :disk_title, Types.Instance(DiskTitle)
 
   def call
     if create_status.success?
-      video.complete!(file_path: renamed_file_path)
+      movie.complete!(file_path: renamed_file_path)
     else
-      video.fail!
+      movie.fail!
     end
   end
 

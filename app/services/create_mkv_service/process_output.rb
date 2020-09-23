@@ -29,8 +29,8 @@ class CreateMkvService
     def update_progress(lines)
       parse_mkv_string(lines).each do |progress|
         case progress
+        when MkvParser::MSG
         when MkvParser::PRGV
-          Rails.logger.debug("#{mkv_progress&.name} #{percentage(progress.current, progress.max)}")
           mkv_progress&.assign_attributes(percentage: percentage(progress.current, progress.max))
         when MkvParser::PRGC
           mkv_progress&.complete

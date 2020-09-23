@@ -11,6 +11,7 @@ RSpec.shared_examples 'DiskWorkflow' do |_parameter|
 
   describe 'workflow' do
     subject(:workflow) { model.current_state }
+
     let(:disk_title) { build_stubbed :disk_title }
 
     context 'when initialize' do

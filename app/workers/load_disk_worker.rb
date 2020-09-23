@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class LoadDiskJob < JobsBase
+class LoadDiskWorker < ApplicationWorker
   def call
     broadcast(in_progress: true)
     disks

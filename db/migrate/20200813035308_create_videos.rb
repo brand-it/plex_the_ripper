@@ -10,8 +10,8 @@ class CreateVideos < ActiveRecord::Migration[6.0]
       t.integer :the_movie_db_id
       t.string :overview
       t.string :file_path
-      t.belongs_to :disk
-      t.belongs_to :disk_title
+      t.references :disk
+      t.references :disk_title
       t.timestamps
     end
   end

@@ -1,15 +1,15 @@
 <%= simple_form_for :search, method: :get, html: { class: 'row' } do |f| %>
-  <div class='col-md-11'>
+  <div class='col-10'>
     <%= f.input :query, label: 'Search for TV or Movie', autofocus: true, required: false %>
   </div>
-  <div class='col-md-1 mt-4'>
+  <div class='col-2 mt-4'>
     <%= f.button :submit, 'Search' %>
   </div>
 <% end %>
 <div class='row'>
   <% if @search.results.results.blank? %>
     <div class='col-md-12'>
-      <div class="jumbotron jumbotron-fluid">
+      <div class="jumbotron jumbotron-fluid rounded">
         <div class='container'>
           <h1 class="display-4">Getting Started</h1>
           <p class="lead">Get started by typing in the name of the TV show or movie.</p>

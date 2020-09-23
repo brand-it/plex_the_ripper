@@ -60,10 +60,12 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.float "percentage"
     t.datetime "completed_at"
     t.datetime "failed_at"
+    t.integer "disk_id"
     t.string "video_type"
     t.integer "video_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["disk_id"], name: "index_mkv_progresses_on_disk_id"
     t.index ["video_type", "video_id"], name: "index_mkv_progresses_on_video_type_and_video_id"
   end
 

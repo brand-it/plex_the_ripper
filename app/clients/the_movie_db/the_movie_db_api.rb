@@ -38,7 +38,7 @@ module TheMovieDBAPI
     end
   end
 
-  def search(page: 1, query:, type:)
+  def search(query:, type:, page: 1)
     results = []
     more_pages = true
     while more_pages
@@ -77,6 +77,7 @@ module TheMovieDBAPI
   def uniq_titles(search_results)
     search_results.each do |result|
       next unless result.release_date_present?
+
       result.title = "#{result.name} (#{result.release_date_to_time.year})"
     end
     search_results

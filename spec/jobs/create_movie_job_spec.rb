@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe CreateMovieJob, type: :model do
+RSpec.describe CreateMovieWorker, type: :model do
   describe '#call' do
     context 'when movie does not exist' do
     end

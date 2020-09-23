@@ -12,10 +12,12 @@
 #  video_type   :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  disk_id      :integer
 #  video_id     :integer
 #
 # Indexes
 #
+#  index_mkv_progresses_on_disk_id                  (disk_id)
 #  index_mkv_progresses_on_video_type_and_video_id  (video_type,video_id)
 #
 class MkvProgress < ApplicationRecord

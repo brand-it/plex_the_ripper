@@ -6,6 +6,7 @@ class CreateMkvProgresses < ActiveRecord::Migration[6.0]
       t.datetime :completed_at
       t.datetime :failed_at
 
+      t.references :disk
       t.references :video, polymorphic: true
       t.timestamps
     end
