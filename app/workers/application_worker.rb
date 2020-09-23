@@ -32,7 +32,7 @@ class ApplicationWorker
     end
 
     def find(id)
-      @jobs[id.to_i]
+      jobs[id.to_i]
     end
   end
 

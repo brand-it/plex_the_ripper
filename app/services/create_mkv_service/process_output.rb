@@ -27,10 +27,11 @@ class CreateMkvService
       end.join
     end
 
-    def update_progress(lines)
+    def update_progress(lines) # rubocop:disable Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/AbcSize
       parse_mkv_string(lines).each do |progress|
         case progress
         when MkvParser::MSG
+          mkv_progress&.assign_attributes(message: "#{mkv_progress.message}\n#{progress.message}")
         when MkvParser::PRGV
           mkv_progress&.assign_attributes(percentage: percentage(progress.current, progress.max))
         when MkvParser::PRGC
@@ -46,8 +47,10 @@ class CreateMkvService
 
       @mkv_progresses ||= {}
       @mkv_progresses[progress_name] ||= MkvProgress.find_or_create_by!(
-        name: progress_name, video: video
-      )
+        name: progress_name, video: video, disk_title: disk_title
+      ).tap do |progress|
+        video.mkv_progresses << progress
+      end
       @mkv_progress = @mkv_progresses[progress_name]
     end
 

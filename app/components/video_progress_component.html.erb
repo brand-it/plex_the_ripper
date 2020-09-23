@@ -1,6 +1,6 @@
 <% if @video %>
   <div data-controller="video-progress" data-target="video-progress.card" class="card border-info mb-3" data-controller="video-progress" data-video-id="<%= @video.id %>" data-type="<%= @video.class.name %>">
-    <div>Add VideoProgress template here</div>
+    <div>VideoProgress</div>
     <% @mkv_progresses.each do |mkv_progress| %>
       <p><%= mkv_progress.name %></p>
       <p>Percentage Completed: <%= mkv_progress.percentage %></p>

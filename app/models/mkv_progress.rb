@@ -7,6 +7,7 @@
 #  id            :integer          not null, primary key
 #  completed_at  :datetime
 #  failed_at     :datetime
+#  message       :text
 #  name          :string
 #  percentage    :float
 #  video_type    :string
@@ -22,6 +23,7 @@
 #
 class MkvProgress < ApplicationRecord
   belongs_to :video, polymorphic: true
+  belongs_to :disk_title
 
   after_commit :broadcast_video_progress
 

@@ -28,6 +28,7 @@ export default class extends Controller {
   }
 
   replaceCards(html) {
-    this.cardsTarget.innerHTML = html
+    html = new DOMParser().parseFromString(html, 'text/html')
+    this.cardsTarget.innerHTML = html.body.firstElementChild.innerHTML
   }
 }

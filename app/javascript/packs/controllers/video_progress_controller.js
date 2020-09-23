@@ -33,7 +33,7 @@ export default class extends Controller {
   }
 
   replaceCard(html) {
-    console.log(html)
-    this.cardTarget.outerHTML = html
+    html = new DOMParser().parseFromString(html, 'text/html')
+    this.cardTarget.innerHTML = html.body.firstElementChild.innerHTML
   }
 }

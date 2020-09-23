@@ -2,7 +2,9 @@
   <%= @job.worker.class %>
   <small class="text-muted"><%= @job.process.state %></small>
 </h3>
-<div class='bg-light text-dark p-2 border-bottom p-2 rounded-top'><%= @job.process.reason.message %></div>
-<div class='bg-light text-dark p-2 rounded-bottom'>
-  <code class="overflow-auto"><%= @job.process.reason.backtrace.join("\n") %></code>
-</div>
+<% if @job.process.reason %>
+  <div class='bg-light text-dark p-2 border-bottom p-2 rounded-top'><%= @job.process.reason.message %></div>
+  <div class='bg-light text-dark p-2 rounded-bottom'>
+    <code class="overflow-auto"><%= @job.process.reason.backtrace.join("\n") %></code>
+  </div>
+<% end %>

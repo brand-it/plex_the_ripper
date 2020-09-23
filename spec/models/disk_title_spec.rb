@@ -6,7 +6,6 @@
 #
 #  id         :integer          not null, primary key
 #  duration   :integer
-#  message    :text
 #  name       :string           not null
 #  size       :float
 #  created_at :datetime         not null
@@ -23,5 +22,6 @@ require 'rails_helper'
 RSpec.describe DiskTitle, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:disk) }
+    it { is_expected.to has_many(:mkv_progresses) }
   end
 end

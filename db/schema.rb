@@ -24,7 +24,6 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.integer "duration"
     t.integer "title_id", null: false
     t.float "size"
-    t.text "message"
     t.integer "disk_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -61,6 +60,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.float "percentage"
     t.datetime "completed_at"
     t.datetime "failed_at"
+    t.text "message"
     t.integer "disk_title_id"
     t.string "video_type"
     t.integer "video_id"

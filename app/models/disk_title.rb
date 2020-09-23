@@ -6,7 +6,6 @@
 #
 #  id         :integer          not null, primary key
 #  duration   :integer
-#  message    :text
 #  name       :string           not null
 #  size       :float
 #  created_at :datetime         not null
@@ -20,4 +19,5 @@
 #
 class DiskTitle < ApplicationRecord
   belongs_to :disk
+  has_many :mkv_progresses
 end

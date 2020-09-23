@@ -5,6 +5,7 @@ class CreateMkvProgresses < ActiveRecord::Migration[6.0]
       t.float :percentage
       t.datetime :completed_at
       t.datetime :failed_at
+      t.text :message
 
       t.references :disk_title
       t.references :video, polymorphic: true

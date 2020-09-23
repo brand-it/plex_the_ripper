@@ -15,7 +15,7 @@
         <th scope="row"><%= id %></th>
         <td><%= job.process.state %></td>
         <td><%= job.worker.class %></td>
-        <td><%= job.process.reason.message %></td>
+        <td><%= job.process.reason&.message %></td>
         <td><%= link_to 'details', job_path(id), class: 'btn btn-secondary' %></td>
       </tr>
 

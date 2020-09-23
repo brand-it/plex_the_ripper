@@ -7,6 +7,7 @@
 #  id            :integer          not null, primary key
 #  completed_at  :datetime
 #  failed_at     :datetime
+#  message       :text
 #  name          :string
 #  percentage    :float
 #  video_type    :string
@@ -23,5 +24,8 @@
 require 'rails_helper'
 
 RSpec.describe MkvProgress, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'associations' do
+    it { is_expected.to belong_to(:disk_title) }
+    it { is_expected.to belong_to(:video) }
+  end
 end

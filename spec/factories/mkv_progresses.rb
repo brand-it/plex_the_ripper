@@ -7,6 +7,7 @@
 #  id            :integer          not null, primary key
 #  completed_at  :datetime
 #  failed_at     :datetime
+#  message       :text
 #  name          :string
 #  percentage    :float
 #  video_type    :string
