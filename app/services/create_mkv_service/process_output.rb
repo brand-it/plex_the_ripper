@@ -8,6 +8,7 @@ class CreateMkvService
 
     param :std_out_err
     param :video
+    param :disk_title, Types.Instance(DiskTitle)
 
     def gets # rubocop:disable Metrics/MethodLength
       Thread.new do

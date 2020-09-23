@@ -27,7 +27,7 @@ class CreateMkvService
   def create
     Open3.popen2e({}, cmd) do |stdin, std_out_err, wait_thr|
       stdin.close
-      ProcessOutput.new(std_out_err, video).gets
+      ProcessOutput.new(std_out_err, video, disk_title).gets
       wait_thr.value
     end
   end
