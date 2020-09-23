@@ -14,22 +14,42 @@ on:
     branches: [ master ]
 
 jobs:
-  test:
-
+  rspec:
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
-    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
-    # change this to (see https://github.com/ruby/setup-ruby#versioning):
-    # uses: ruby/setup-ruby@v1
-      uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+      uses: ruby/setup-ruby@v1
       with:
+        bundler-cache: true
         ruby-version: 2.7
-    - name: Install dependencies
-      run: bundle install
-    - name: Yarn Install
-      run: yarn install
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: 14.6.0
+    - name: Find yarn cache location
+      id: yarn-cache
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+    - name: JS package cache
+      uses: actions/cache@v1
+      with:
+        path: ${{ steps.yarn-cache.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-yarn-
+    - name: Install packages
+      run: |
+        yarn install --pure-lockfile
     - name: Run tests
       run: bundle exec rspec
+
+  rubocop:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+        ruby-version: 2.7
+    - name: Run tests
+      run: bundle exec rubocop
