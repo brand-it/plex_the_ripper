@@ -14,10 +14,11 @@ class Config
   class MakeMkv < Config
     if OS.mac?
       settings_defaults(
-        makemkvcon_path: File.join(%w[/ Applications MakeMKV.app Contents MacOS makemkvcon])
+        makemkvcon_path: File.join(%w[/ Applications MakeMKV.app Contents MacOS makemkvcon]),
+        version: nil
       )
     else
-      settings_defaults(makemkvcon_path: nil)
+      settings_defaults makemkvcon_path: nil, version: nil
     end
 
     validate :makemkvcon_path_executable

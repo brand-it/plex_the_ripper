@@ -40,21 +40,6 @@ module TheMovieDb
       return JSON.parse(response.body, object_class: object_class) if response.success?
 
       raise Error, response
-
-      #   response = Net::HTTP.get_response(redirect_uri)
-      #   case response
-      #   when Net::HTTPSuccess
-      #     JSON.parse(response.body, object_class: object_class)
-      #   when Net::HTTPRedirection
-      #     location = response['location']
-      #     Rails.logger.warn "redirected to #{location}"
-      #     get(redirect_uri: URI(location), limit: limit - 1, object_class: object_class)
-      #   else
-      #     error!(response)
-      #   end
-
-      # rescue SocketError => e
-      #   raise ConnectionError, "Failed to connect to #{redirect_uri} #{e.message}"
     end
 
     def error!(response)
@@ -106,17 +91,5 @@ module TheMovieDb
     def config
       @config ||= Config::TheMovieDb.newest.first || Config::TheMovieDb.new
     end
-
-    # def config
-    #   return @config if @config
-
-    #   @config = Config.configuration.the_movie_db_config
-    #   return @config if @config.is_a?(TheMovieDbConfig)
-
-    #   raise(
-    #     Plex::Ripper::Abort,
-    #     'The Movie DB Config should not be nil but some how it is. Create a issue in github please'
-    #   )
-    # end
   end
 end
