@@ -62,3 +62,5 @@ end
 # gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
 gem 'os', '>= 1.1'
+
+gem "stimulus_reflex", "~> 3.3"
