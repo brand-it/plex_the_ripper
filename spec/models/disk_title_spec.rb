@@ -22,6 +22,6 @@ require 'rails_helper'
 RSpec.describe DiskTitle, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:disk) }
-    it { is_expected.to has_many(:mkv_progresses) }
+    it { is_expected.to have_many(:mkv_progresses) }
   end
 end

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class ApplicationController < ActionController::Base
-  include Rescuer
+  # include Rescuer
 
   before_action :plex_config
   before_action :movie_db_config

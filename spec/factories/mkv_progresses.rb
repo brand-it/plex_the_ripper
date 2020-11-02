@@ -24,5 +24,6 @@
 FactoryBot.define do
   factory :mkv_progress do
     video
+    disk_title
   end
 end
