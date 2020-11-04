@@ -1,4 +1,4 @@
-<div data-controller="disks" data-target="disks.cards" data-reload-url="<%= reload_disk_path %>">
+<div id='disk-card' data-controller="disks" data-target="disks.cards" data-reload-url="<%= reload_disk_path %>">
   <% if @disks.any? %>
     <% @disks.each do |disk| %>
       <div class="card border-info mb-3" id="disk-<%= disk.id %>">

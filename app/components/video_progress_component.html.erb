@@ -1,5 +1,5 @@
 <% if @video %>
-  <div data-controller="video-progress" data-target="video-progress.card" class="card border-info mb-3" data-controller="video-progress" data-video-id="<%= @video.id %>" data-type="<%= @video.class.name %>">
+  <div data-controller="video-progress" class="card border-info mb-3" id="<%= dom_id(@video, :progress) %>" data-type="<%= @video.class.name %>">
     <div>VideoProgress</div>
     <% @mkv_progresses.each do |mkv_progress| %>
       <p><%= mkv_progress.name %></p>

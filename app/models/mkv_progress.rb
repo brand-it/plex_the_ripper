@@ -22,6 +22,9 @@
 #  index_mkv_progresses_on_video_type_and_video_id  (video_type,video_id)
 #
 class MkvProgress < ApplicationRecord
+  include CableReady::Broadcaster
+  delegate :render, to: ApplicationController
+
   belongs_to :video, polymorphic: true
   belongs_to :disk_title
 
@@ -46,9 +49,10 @@ class MkvProgress < ApplicationRecord
   private
 
   def broadcast_video_progress
-    VideoProgressChannel.broadcast_to(
-      video,
-      ApplicationController.render(VideoProgressComponent.new(video: video))
+    cable_ready[VideoProgressChannel.channel_name].morph(
+      selector: dom_id(video, :progress),
+      html: render(VideoProgressComponent.new(video: video))
     )
+    cable_ready.broadcast
   end
 end

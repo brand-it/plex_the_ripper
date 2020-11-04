@@ -4,6 +4,7 @@ class DiskInfoService
   extend Dry::Initializer
   include Shell
   include MkvParser
+  include Wisper::Publisher
   class TitleInfo
     extend Dry::Initializer
     attr_writer :duration, :size, :file_name
@@ -28,10 +29,11 @@ class DiskInfoService
   option :config_make_mkv, Types.Instance(Config::MakeMkv), default: proc { Config::MakeMkv.newest.first }
   option :disk_name, Types::String
 
-  def call
+  def results
     tinfos.each do |tinfo|
       find_or_init_title_info(tinfo)
     end
+    broadcast(:disk_titles_loaded, title_info.values)
     title_info.values
   end
 

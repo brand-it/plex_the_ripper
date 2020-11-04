@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :plex_config
   before_action :movie_db_config
   before_action :mkv_config
+  before_action :load_disk
 
   def current_user
     return @current_user if defined? @current_user
@@ -13,12 +14,11 @@ class ApplicationController < ActionController::Base
     @current_user = User.find_by(id: cookies[:user_id])
   end
 
-  def disks
-    @disks ||= Disk.all
-  end
-  helper_method :disks
-
   private
+
+  def load_disk
+    LoadDiskWorker.perform
+  end
 
   def modify_config_the_movie_db_path
     movie_db_config ? edit_config_the_movie_db_path : new_config_the_movie_db_path

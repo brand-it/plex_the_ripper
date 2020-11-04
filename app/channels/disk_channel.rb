@@ -2,7 +2,7 @@
 
 class DiskChannel < ApplicationCable::Channel
   def subscribed
-    stream_from 'disk'
+    stream_from channel_name
   end
 
   def unsubscribed

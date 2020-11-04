@@ -19,20 +19,20 @@ class ApplicationWorker
       return if job.pending?
 
       new(*args).tap do |worker|
-        ApplicationWorker.jobs[object_id] = Job.new(worker, worker.async.call)
+        ApplicationWorker.jobs[self] = Job.new(worker, worker.async.call)
       end
     end
 
     def job
-      ApplicationWorker.jobs[object_id] || Job.new
+      ApplicationWorker.jobs[self] || Job.new
     end
 
     def jobs
-      @jobs ||= {}
+      @jobs ||= {}.compare_by_identity
     end
 
-    def find(id)
-      jobs[id.to_i]
+    def find(key)
+      jobs[key.constantize]
     end
   end
 

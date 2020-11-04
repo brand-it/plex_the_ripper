@@ -6,10 +6,10 @@ class EpisodesController < ApplicationController
   end
 
   def select
-    drive = ListDrivesService.new.call
+    drive = ListDrivesService.new.results
     Disk.create!(name: drive.name)
     if drive
-      disk_info = DiskInfoService.new(drive: drive).call
+      disk_info = DiskInfoService.new(drive: drive).results
       episodes.each(&:select!)
     end
   end

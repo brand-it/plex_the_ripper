@@ -7,22 +7,27 @@
   </head>
   <body>
     <div class="d-flex w-100 h-100 p-3 mx-auto flex-column">
-      <%= render 'layouts/header' %>
       <%= bootstrap_alerts %>
 
       <main role="main" class="inner cover mb-auto">
         <div class='row'>
-          <div class='col-md-2'>
-            <%= render DiskCardComponent.new(disks: disks) %>
-            <%= render VideoProgressComponent.new(video: Movie.first) %>
+          <div class='col-12'>
+            <div id='progress-bar'>
+              <%= render ProgressBarComponent.new(label: Disk.model_name.name) %>
+            </div>
+            <%#= render DiskCardComponent.new(disks: disks) %>
+            <%#= render VideoProgressComponent.new(video: Movie.first) %>
           </div>
-          <div class='col-md-10'>
+        </div>
+        <div class='row'>
+          <div class='col-12'>
             <%= yield %>
           </div>
         </div>
       </main>
 
       <footer class="mastfoot mt-auto">
+        <%= render 'layouts/header' %>
         <div class="inner">
         </div>
       </footer>

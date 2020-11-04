@@ -7,6 +7,7 @@
 #  id             :integer          not null, primary key
 #  disk_name      :string
 #  name           :string
+#  scanned        :boolean
 #  workflow_state :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -19,7 +20,7 @@ class Disk < ApplicationRecord
   before_update :destroy_disk_titles, if: :disk_name_changed?
 
   def self.all_valid?
-    Rails.cache.fetch(Disk.all.cache_key, namespace: 'v1/all_valid', expires_in: 1.minute) do
+    Rails.cache.fetch(Disk.all, namespace: 'all_valid', expires_in: 1.minute) do
       Disk.all.pluck(:disk_name) == ListDrivesService.new.call
     end
   end

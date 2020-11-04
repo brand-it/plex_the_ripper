@@ -1,17 +1,12 @@
-<div class="jumbotron jumbotron-fluid">
-  <div class='container'>
-    <h1 class="display-4">Select Episodes</h1>
-    <p class="lead">Select episodes on the disk that you want to rip to plex</p>
-  </div>
-</div>
+<%= render 'the_movie_dbs/search' %>
 <%= simple_form_for :episodes, url: select_episodes_path do |f| %>
   <div class='row'>
     <% @season.episodes.each do |episode| %>
-      <div class="card mb-3 col-md-6 text-white bg-dark col-md-6">
+      <div class="card col-6 text-white bg-dark">
         <div class="row no-gutters">
-          <div class="col-md-4"><%= imdb_image_tag episode.still_path %></div>
+          <div class="col-4"><%= imdb_image_tag episode.still_path %></div>
 
-          <div class="col-md-8">
+          <div class="col-8">
             <div class="card-body">
               <h5 class="card-title">
                 <%= f.fields :selected, model: episode do |form| %>
@@ -34,9 +29,8 @@
         </div>
       </div>
     <% end %>
-    <div class='fixed-footer'>
+    <div class='position-sticky bg-dark w-100 fixed-bottom mt-1 text-right p-3'>
       <%= f.button :submit, 'Rip Disk' %>
     </div>
-
   </div>
 <% end %>

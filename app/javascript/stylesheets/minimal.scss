@@ -58,6 +58,9 @@
     font-size: 22px;
     top: 0px;
     transition: all .4s;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
 
   input:focus + label, input.has-val + label {
@@ -69,7 +72,7 @@
   label::before {
     content: '';
     background-color: $light-gray;
-    bottom: -2px;
+    bottom: 0px;
     display: block;
     height: 2px;
     left: 0;

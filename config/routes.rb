@@ -24,12 +24,7 @@ Rails.application.routes.draw do
   resources :episodes do
     collection { post 'select' }
   end
-  resource :disk, only: [] do
-    collection do
-      get :reload
-      get :build
-    end
-  end
+  resources :disks, only: [:index]
   resource :start
   resources :jobs, only: %i[index show]
   root to: 'start#new'

@@ -2,8 +2,7 @@
 
 class VideoProgressChannel < ApplicationCable::Channel
   def subscribed
-    video = params[:type].constantize.find(params[:video_id])
-    stream_for video
+    stream_from channel_name
   end
 
   def unsubscribed

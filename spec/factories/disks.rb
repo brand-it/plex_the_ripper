@@ -7,6 +7,7 @@
 #  id             :integer          not null, primary key
 #  disk_name      :string
 #  name           :string
+#  scanned        :boolean
 #  workflow_state :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null

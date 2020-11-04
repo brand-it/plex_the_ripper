@@ -2,38 +2,35 @@
 
 class LoadDiskWorker < ApplicationWorker
   def call
-    broadcast(in_progress: true)
-    disks
-    broadcast(in_progress: true)
-    create_disk_titles
-    broadcast(in_progress: false)
-  end
-
-  private
-
-  def create_disk_titles
     disks.each do |disk|
-      titles = DiskInfoService.new(disk_name: disk.name).call
-      titles.each do |title|
+      disk_info(disk.name).results.each do |title|
         disk.disk_titles.create!(
-          title_id: title.id, name: title.file_name,
-          size: title.size.to_f, duration: title.duration_seconds
+          title_id: title.id,
+          name: title.file_name,
+          size: title.size,
+          duration: title.duration_seconds
         )
       end
     end
   end
 
+  private
+
   def disks
-    @disks ||= ListDrivesService.new.call.map do |drive|
+    @disks ||= list_disks.results.map do |drive|
       Disk.find_or_initialize_by(name: drive.disc_name).tap do |disk|
         disk.update!(name: drive.disc_name, disk_name: drive.drive_name)
       end
     end
   end
 
-  def broadcast(in_progress:)
-    ActionCable.server.broadcast(
-      'disk', ApplicationController.render(DiskCardComponent.new(disks: disks, in_progress: in_progress))
-    )
+  def list_disks
+    @list_disks ||= ListDrivesService.new
+  end
+
+  def disk_info(disk_name)
+    DiskInfoService.new(disk_name: disk_name).tap do |info|
+      info.subscribe(DiskProgressListener.new)
+    end
   end
 end

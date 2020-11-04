@@ -330,6 +330,7 @@ DEPENDENCIES
   annotate
   awesome_print
   bootsnap (>= 1.4.2)
+  cable_ready (~> 4.3)
   capybara (>= 2.15)
   concurrent-ruby
   database_cleaner-active_record
