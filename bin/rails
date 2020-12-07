@@ -1,58 +1,5 @@
 #!/usr/bin/env ruby
 APP_PATH = File.expand_path('../config/application', __dir__)
 
-class Tool
-  TOOLS = File.read('.tool-versions').lines.map(&:strip)
-  def self.version(name)
-    TOOLS.find { |x| x.match('nodejs' )}.scan(/\d*\.\d*\.\d*/).first
-  end
-end
-class ColorString < String
-  # https://no-color.org/
-  NO_COLOR = ENV.key?('NO_COLOR') || `tput colors`.chomp.to_i < 8
-  ANSI_COLORS = {
-    red: 31,
-    green: 32,
-    yellow: 33,
-    blue: 34,
-    magenta: 35
-  }.freeze
-
-  ANSI_COLORS.each do |name, code|
-    define_method(name) { NO_COLOR ? self : "\e[#{code}m#{self}\e[0m" }
-  end
-end
-
-def log(text, color = :blue)
-  ColorString.new(text).send(color)
-end
-
-def node_setup
-  log 'Checking node version...', :blue
-  if !system('which node')
-    error <<~MSG.chomp
-      Node.js is not installed!
-      Since there are multiple ways to install node, this script won't do it for you.
-      Please install node #{Tool.current('nodejs')} from your preferred source.
-    MSG
-  end
-  node_version = `node --version`.chomp
-  if node_version != "v#{Tool.version('nodejs')}"
-    error <<~MSG.chomp
-      Node.js #{Tool.version('nodejs')} required, #{node_version} in use.
-      Please install the correct version of node from your preferred source.
-    MSG
-  end
-  log "Node.js #{node_version} installed!", :green
-  log 'Installing yarn...', :blue
-  system 'npm install -g npm'
-  system 'npm install -g yarn'
-  log 'Installing npm packages...', :blue
-  system 'yarn install'
-  log 'Javascript dependencies installed!', :green
-end
-
-node_setup
-
 require_relative '../config/boot'
 require 'rails/commands'

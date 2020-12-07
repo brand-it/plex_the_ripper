@@ -1,0 +1,291 @@
+#!/usr/bin/env ruby
+
+class Tool
+  TOOLS = File.read('.tool-versions').lines.map(&:strip)
+  def self.version(name)
+    TOOLS.find { |x| x.match('nodejs' ) }.scan(/\d*\.\d*\.\d*/).first
+  end
+end
+
+class ColorString < String
+  # https://no-color.org/
+  NO_COLOR = ENV.key?('NO_COLOR') || `tput colors`.chomp.to_i < 8
+  ANSI_COLORS = {
+    red: 31,
+    green: 32,
+    yellow: 33,
+    blue: 34,
+    magenta: 35
+  }.freeze
+
+  ANSI_COLORS.each do |name, code|
+    define_method(name) { NO_COLOR ? self : "\e[#{code}m#{self}\e[0m" }
+  end
+end
+
+def log(message)
+  puts PrettyString.new(message).blue
+end
+
+def info(message)
+  puts "  #{message}"
+end
+
+def error(message, exit_code = 1)
+  puts PrettyString.new(message).red
+  exit exit_code
+end
+
+def success(message)
+  puts PrettyString.new(message).green
+end
+
+def warn(message)
+  puts PrettyString.new(message).yellow
+end
+
+#---------------------#
+#      Setup Steps    #
+#---------------------#
+
+def check_ruby_version
+  log 'Checking Ruby version...'
+  system 'ruby --version'
+  unless RUBY_VERSION == DESIRED_RUBY_VERSION
+    error <<~MSG.chomp
+      This application requires Ruby #{DESIRED_RUBY_VERSION}!
+      Since there are multiple ways to install Ruby, this script won't do it for you.
+      Please install Ruby #{DESIRED_RUBY_VERSION} from your preferred source.
+    MSG
+  end
+  success "Ruby #{RUBY_VERSION} installed!"
+end
+
+def setup_mac
+  log 'Mac OS detected. Installing system packages...'
+
+  # Install Xcode developer tools. This includes essential packages like
+  # git, make, gcc, etc. There will be a system prompt if the tools aren't
+  # installed already, so be sure to watch for that and click "Install".
+  system 'xcode-select --install'
+
+  # Either install or update Homebrew. Homebrew installation depends on a
+  # script from Github, so we default to not installing for safety reasons.
+  # Never run code from the internet that you haven't looked at yourself!
+  if !system('which brew')
+    warn 'Homebrew is not installed.'
+    info 'The command to install Homebrew is:'
+    info HOMEBREW_INSTALL_CMD
+    info 'This will download and execute a script from the internet.'
+    info "Make sure you're comfortable with that before proceeding."
+    if prompt 'Do you want to install Homebrew?'
+      log 'Installing Homebrew...'
+      system(HOMEBREW_INSTALL_CMD) || error('Error installing Homebrew!')
+      system 'brew analytics off'
+    else
+      error 'You need to install Homebrew first.'
+    end
+  else
+    success 'Homebrew is installed!'
+    log 'Updating taps...'
+    system 'brew update'
+  end
+  # Once Homebrew is installed and up to date, install required packages.
+  log 'Installing packages...'
+  HOMEBREW_PACKAGES.each do |dep|
+    versions = `brew ls --versions #{dep}`.chomp
+    next info(versions) unless versions == ''
+    system("brew install #{dep}") || error("Error installing #{dep}!")
+  end
+  success 'Homebrew packages installed!'
+end
+
+def ruby_setup
+  log 'Updating Rubygems...'
+  system 'gem update --system'
+  bundler_version = `grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1`.strip
+  error "Couldn't determine the version of bundler to use!" if bundler_version == ''
+  log "Installing bundler #{bundler_version}..."
+  system("gem install bundler -v #{bundler_version}") || error('Error installing bundler!')
+  log 'Configuring build flags...'
+  # RGeo needs to be pointed at the GEOS package from Homebrew (comes with PostGIS)
+  system 'bundle config set build.rgeo "--with-geos-dir=\'$(/usr/local/bin/geos-config --prefix)\'"'
+  # As of EventMachine 1.0.9, it will auto-detect OpenSSL from Homebrew,
+  # so we no longer need custom build flags.
+  system 'bundle config unset build.eventmachine'
+  # You are no longer required to party hard when using HTTParty.
+  system 'bundle config set ignore_messages.httparty true'
+  log 'Installing gems...'
+  system('bundle check') || system('bundle install') || error('Error installing gems!')
+  success 'Gems installed!'
+end
+
+def node_setup
+  log 'Checking node version...'
+  if !system('which node')
+    error <<~MSG.chomp
+      Node.js is not installed!
+      Since there are multiple ways to install node, this script won't do it for you.
+      Please install node #{Tool.current('nodejs')} from your preferred source.
+    MSG
+  end
+  node_version = `node --version`.chomp
+  if node_version != "v#{Tool.version('nodejs')}"
+    error <<~MSG.chomp
+      Node.js #{Tool.version('nodejs')} required, #{node_version} in use.
+      Please install the correct version of node from your preferred source.
+    MSG
+  end
+  success "Node.js #{node_version} installed!"
+  log 'Installing yarn...'
+  system 'npm install -g npm'
+  system 'npm install -g yarn'
+  log 'Installing npm packages...'
+  system 'bin/yarn install'
+  success 'Javascript dependencies installed!'
+end
+
+
+def application_setup
+  log 'Initializing Rails application...'
+  # Log files can get out of control if the app has been around for a while.
+  # It's good to periodically truncate them to recover disk space.
+  if prompt 'Truncate log files?'
+    Dir['log/**/*.log'].each do |filename|
+      info "Truncating #{filename}..."
+      File.truncate(filename, 0)
+    end
+    success 'Log files truncated.'
+  else
+    warn 'Leaving log files as-is.'
+  end
+
+  # Remove stale PID
+  if File.exist? 'tmp/pids/server.pid'
+    system 'kill -9 $(cat tmp/pids/server.pid)'
+    File.delete 'tmp/pids/server.pid'
+    warn 'Removed stale PID file.'
+  end
+
+  # We have to run several rake tasks as part of app setup. It's faster to load
+  # the application once and run tasks using Rake::Task.invoke rather than making
+  # system calls, since each system call will independently load the application.
+  info 'Loading Rails...'
+  require "#{APP_ROOT}/config/environment"
+  Rails.application.load_tasks
+
+  success 'Application initialized!'
+end
+
+def database_setup
+  log 'Setting up databases...'
+  success 'Database setup complete!'
+  log 'Seeding database...'
+  Rake::Task['db:migrate'].invoke
+  success 'Database seeded!'
+end
+
+def compile_assets
+  log 'Compiling assets...'
+  Rake::Task['assets:precompile'].invoke
+  success 'Assets compiled!'
+end
+
+Dir.chdir APP_ROOT do
+  # check_ruby_version
+  # system_setup
+  # ruby_setup
+  # node_setup
+  # check_rails_env
+  # service_setup
+  # application_setup
+  # compile_assets
+  # database_setup
+
+  case RUBY_PLATFORM
+  when /darwin/
+    setup_mac
+  else
+    warn 'Not running on a Mac. Skipping package installation.'
+  end
+  ruby_setup
+  node_setup
+end
+
+
+
+info 'Loading Rails...'
+require "#{APP_ROOT}/config/environment"
+Rails.application.load_tasks
+
+def database_setup
+  log 'Setting up databases...'
+  # See if we need to initialize the database or just run migrations
+  DATABASE_MODELS.each do |db_name, class_name|
+    model = class_name.constantize
+    log "Checking #{db_name} database version..."
+    # There's no db:version task for multiple databases, so we have to reach into
+    # the migration context for each model to get the individual version numbers.
+    begin
+      version = model.connection.migration_context.current_version
+    rescue ActiveRecord::NoDatabaseError
+      # If the database doesn't exist, there's no way to load the version, so we'll
+      # default to zero and perform first-time setup.
+      version = 0
+    end
+    info "Current version: #{version}"
+    if version.zero?
+      # Version zero means the database hasn't been initialized.
+      # Let's do first-time setup!
+      log 'Performing first-time database setup...'
+      Rake::Task["db:create:#{db_name}"].invoke
+      # Right now, there are no rake tasks for loading schema for a specific database.
+      # So we'll directly call the method from DatabaseTasks.
+      # https://github.com/rails/rails/blob/v6.0.2.2/activerecord/lib/active_record/tasks/database_tasks.rb#L319
+      ActiveRecord::Tasks::DatabaseTasks.load_schema(
+        # Configuration hash for the database in question.
+        # https://github.com/rails/rails/blob/v6.0.2.2/activerecord/lib/active_record/database_configurations.rb#L38
+        ActiveRecord::Base.configurations.configs_for(env_name: Rails.env, spec_name: db_name.to_s).config,
+        :ruby,       # schema format, :ruby for schema.rb, :sql for structure.sql
+        nil,         # optionally specify a filename, inferred by default
+        Rails.env,   # current environment
+        db_name.to_s # spec_name, same as in the call to configs_for
+      )
+      success "#{db_name.capitalize} database initialized!"
+    else
+      # Version not-zero means the database at least has its schema loaded.
+      # Let's run migrations to make sure it's up to date.
+      info 'Database already initialized.'
+    end
+    log 'Running migrations...'
+    # TODO: This could probably check Model.connection.migration_context.needs_migration?
+    Rake::Task["db:migrate:#{db_name}"].invoke
+    success "#{db_name.capitalize} database migrated!"
+  end
+  success 'Database setup complete!'
+  if prompt 'Do you want to seed your database?'
+    log 'Seeding database...'
+    Rake::Task['dev:prime'].invoke
+    success 'Database seeded!'
+  else
+    warn 'Skipping seeds.'
+  end
+end
+
+def compile_assets
+  log 'Compiling assets...'
+  Rake::Task['assets:precompile'].invoke
+  success 'Assets compiled!'
+end
+
+Dir.chdir APP_ROOT do
+  check_ruby_version
+  system_setup
+  ruby_setup
+  node_setup
+  check_rails_env
+  service_setup
+  application_setup
+  compile_assets
+  database_setup
+end
