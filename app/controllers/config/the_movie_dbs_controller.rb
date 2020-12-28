@@ -18,8 +18,8 @@ class Config
     end
 
     def update
-      if @config_the_movie_db.update(the_movie_db_params)
-        flash[:success] = 'Updated Movie DB API key' if @config_the_movie_db.save
+      if @config_the_movie_db.update(the_movie_db_params) && @config_the_movie_db.save
+        flash[:success] = 'Updated Movie DB API key'
       end
       redirect_to root_path
     end

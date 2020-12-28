@@ -12,6 +12,6 @@
 #  updated_at     :datetime         not null
 #
 FactoryBot.define do
-  factory :disk do
+  factory :disk do # rubocop:disable Lint/EmptyBlock
   end
 end

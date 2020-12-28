@@ -7,8 +7,8 @@ RSpec.describe TheMovieDbTvListener do
 
   before { create :config_the_movie_db, settings: { api_key: '12345' } }
 
-  describe '#tv_saving', :use_vcr_cassette do
-    subject(:tv_saving) { VCR.use_cassette('the_movie_db/tv') { described_class.new.tv_saving(tv) } }
+  describe '#tv_saving', use_vcr_cassette: 'the_movie_db/tv' do
+    subject(:tv_saving) { described_class.new.tv_saving(tv) }
 
     let(:expected_attributes) do
       {

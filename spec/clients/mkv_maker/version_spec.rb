@@ -3,7 +3,6 @@
 require 'rails_helper'
 
 RSpec.describe MkvMaker::Version do
-
   describe '#results', :vcr do
     subject(:results) { described_class.new.results }
 

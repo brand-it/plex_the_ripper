@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProgressBarComponent < ViewComponent::Base
   extend Dry::Initializer
   option :label

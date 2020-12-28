@@ -13,9 +13,9 @@ class CreateMovieWorker < ApplicationWorker
     # end
 
     # if create_status.success?
-      # movie.complete!(file_path: renamed_file_path)
+    # movie.complete!(file_path: renamed_file_path)
     # else
-      # movie.fail!
+    # movie.fail!
     # end
   end
 

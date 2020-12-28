@@ -3,7 +3,6 @@
 class DisksController < ApplicationController
   def index
     @disks = Disk.all
-
   end
   # def reload
   #   Disk.destroy_all

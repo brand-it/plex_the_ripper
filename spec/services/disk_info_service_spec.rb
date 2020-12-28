@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe DiskInfoService do
-  include_context 'mkv_stubbs'
+  include_context 'with mkv_stubbs'
   before { allow(new_service).to receive(:info).and_return(title_info_object) }
 
   let(:list_drives_service) { ListDrivesService.new(config_make_mkv: config_make_mkv) }

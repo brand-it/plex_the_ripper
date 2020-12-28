@@ -4,7 +4,7 @@ class VideoScannerService
   def call
     return if settings.nil?
 
-    binding.pry
+    raise 'Not yet completed WIP'
   end
 
   def ftp

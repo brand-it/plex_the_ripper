@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 module MkvMaker
   class Version < Base
     extend Dry::Initializer
 
     HOST = 'www.makemkv.com'
 
-    # Note: I could use nokogiri to parse this html however the time to install the gem
+    # NOTE: I could use nokogiri to parse this html however the time to install the gem
     # along with just the over kill of what I need this was just not worth it.
     # Time to use simple string match :D
     #

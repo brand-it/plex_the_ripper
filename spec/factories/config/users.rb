@@ -11,6 +11,6 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory :config_user, class: 'Config::User' do
+  factory :config_user, class: 'Config::User' do # rubocop:disable Lint/EmptyBlock
   end
 end

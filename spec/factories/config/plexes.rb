@@ -11,6 +11,6 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory :config_plex, class: 'Config::Plex' do
+  factory :config_plex, class: 'Config::Plex' do # rubocop:disable Lint/EmptyBlock
   end
 end

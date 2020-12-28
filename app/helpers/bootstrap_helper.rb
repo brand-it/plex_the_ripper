@@ -27,16 +27,10 @@ module BootstrapHelper
 
   def type_to_boostrap_class(type)
     case type
-    when 'alert', 'info'
-      'alert-info'
-    when 'success'
-      'alert-success'
-    when 'error'
-      'alert-danger'
-    when 'warn'
-      'alert-warning'
-    else
-      'alert-secondary'
-    end
+    when 'alert', 'info' then 'alert-info'
+    when 'success' then 'alert-success'
+    when 'error' then 'alert-danger'
+    when 'warn' then 'alert-warning'
+    else 'alert-secondary' end
   end
 end

@@ -2,6 +2,7 @@
 
 module TheMovieDb
   class InvalidConfig < StandardError; end
+
   class Error < StandardError
     attr_reader :object, :body
 

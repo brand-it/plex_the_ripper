@@ -11,6 +11,6 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory :config_the_movie_db, class: 'Config::TheMovieDb' do
+  factory :config_the_movie_db, class: 'Config::TheMovieDb' do # rubocop:disable Lint/EmptyBlock
   end
 end

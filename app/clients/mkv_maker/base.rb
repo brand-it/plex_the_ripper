@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module MkvMaker
   class Base
     extend Dry::Initializer

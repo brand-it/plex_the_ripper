@@ -10,7 +10,7 @@ RSpec.describe 'config/plexes/edit', type: :view do
   it 'renders the edit config_plex form' do
     render
 
-    assert_select 'form[action=?][method=?]', config_plex_path, 'post' do
+    assert_select 'form[action=?][method=?]', config_plex_path, 'post' do # rubocop:disable Lint/EmptyBlock
     end
   end
 end

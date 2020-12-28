@@ -11,6 +11,6 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory :config_make_mkv, class: 'Config::MakeMkv' do
+  factory :config_make_mkv, class: 'Config::MakeMkv' do # rubocop:disable Lint/EmptyBlock
   end
 end
