@@ -4,13 +4,11 @@ class ListDrivesService
   extend Dry::Initializer
   include Shell
   include MkvParser
-  include Wisper::Publisher
 
   option :config_make_mkv, Types.Instance(Config::MakeMkv), default: -> { Config::MakeMkv.current }
   option :noscan, Types::Bool, default: -> { false }
 
   def results
-    broadcast(:drives_loaded, drives)
     drives
   end
 
@@ -35,7 +33,7 @@ class ListDrivesService
 
   def drives
     @drives ||= parse_mkv_string(info.stdout_str).select do |i|
-      i.is_a?(MkvParser::DRV) && d.enabled.to_i == 1
+      i.is_a?(MkvParser::DRV) && i.enabled.to_i.positive?
     end
   end
 end

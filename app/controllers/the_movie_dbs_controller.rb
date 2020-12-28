@@ -4,7 +4,7 @@ class TheMovieDbsController < ApplicationController
   before_action :set_search, only: %i[index]
 
   def index
-    CreateMovieWorker.perform
+    # CreateMovieWorker.perform
     # MkvProgress.last.update!(percentage: 2 % MkvProgress.last.percentage)
   end
 

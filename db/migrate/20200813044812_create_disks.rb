@@ -4,7 +4,6 @@ class CreateDisks < ActiveRecord::Migration[6.0]
       t.string :name
       t.string :disk_name
       t.string :workflow_state
-      t.boolean :scanned
       t.timestamps
     end
   end

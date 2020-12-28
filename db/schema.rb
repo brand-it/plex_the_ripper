@@ -34,7 +34,6 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.string "name"
     t.string "disk_name"
     t.string "workflow_state"
-    t.boolean "scanned"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

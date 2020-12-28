@@ -4,14 +4,15 @@ module MkvParser
   CINFO = Struct.new(:id, :type, :code, :value)
   TINFO = Struct.new(:id, :type, :code, :value)
   SINFO = Struct.new(:id, :type, :code, :value)
-  TCOUNT = Struct.new(:count)
+  TCOUNT = Struct.new(:title_count)
+  # 0,2,999,12,"BD-ROM MATSHITA BD-CMB UJ141EL 1.10","Eureka D9","/dev/rdisk2"
   DRV = Struct.new(:index, :visible, :unknown, :enabled, :flags, :drive_name, :disc_name)
   # Progress bar values for current and total progress
   # PRGV:current,total,max
   # current - current progress value
   # total - total progress value
   # max - maximum possible value for a progress bar, constant
-  PRGV = Struct.new(:current, :total, :max)
+  PRGV = Struct.new(:current, :total, :pmax)
   # Current and total progress title
   # PRGC:code,id,name
   # PRGT:code,id,name
@@ -21,7 +22,7 @@ module MkvParser
   PRGT = Struct.new(:code, :id, :name)
   PRGC = Struct.new(:code, :id, :name)
 
-  MSG = Struct.new(:code, :flags, :count, :message, :format, :params)
+  MSG = Struct.new(:code, :flags, :mcount, :message, :format, :params)
 
   def parse_mkv_string(stdout_str)
     return [] if stdout_str.blank?

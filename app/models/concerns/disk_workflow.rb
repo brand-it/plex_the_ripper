@@ -3,7 +3,7 @@
 module DiskWorkflow
   extend ActiveSupport::Concern
   included do # rubocop:disable Metrics/BlockLength
-    include Workflow
+    include PersistedWorkflow
     belongs_to :disk, optional: true
     belongs_to :disk_title, optional: true
     scope :selected, -> { where(workflow_state: 'selected') }
@@ -28,14 +28,6 @@ module DiskWorkflow
         event :rip, transitions_to: :ripping
       end
       state :completed
-    end
-
-    def load_workflow_state
-      self[:workflow_state]
-    end
-
-    def persist_workflow_state(new_value)
-      update!(workflow_state: new_value)
     end
 
     def select(disk_title:)

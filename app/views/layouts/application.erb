@@ -13,7 +13,7 @@
         <div class='row'>
           <div class='col-12'>
             <div id='progress-bar'>
-              <%= render ProgressBarComponent.new(label: Disk.model_name.name) %>
+              <%= render ProgressBarComponent.new(label: Disk.model_name.name, completed: Disk.percentage_completed, status: (Disk.all_valid? ? 'success' : 'info')) %>
             </div>
             <%#= render DiskCardComponent.new(disks: disks) %>
             <%#= render VideoProgressComponent.new(video: Movie.first) %>

@@ -9,4 +9,6 @@ class JobsController < ApplicationController
     @job = ApplicationWorker.find(params[:id])
     redirect_to jobs_path if @job.nil?
   end
+
+  def load_disk; end
 end

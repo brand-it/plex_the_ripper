@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   private
 
   def load_disk
-    LoadDiskWorker.perform
+    LoadDiskWorker.perform unless Disk.all_valid?
   end
 
   def modify_config_the_movie_db_path
