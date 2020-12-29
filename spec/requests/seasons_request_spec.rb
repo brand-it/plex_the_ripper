@@ -14,7 +14,7 @@ RSpec.describe 'Seasons', type: :request do
         end
       end
 
-      before { create :config_the_movie_db, settings: { api_key: '213' } }
+      before { create :config_the_movie_db }
 
       it 'redirects to the updated sesson' do
         patch_season

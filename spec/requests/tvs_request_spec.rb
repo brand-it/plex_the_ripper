@@ -17,15 +17,13 @@ RSpec.describe 'Tvs', type: :request do
     }
   end
 
-  describe 'POST /create' do
+  describe 'POST /create', :vcr do
     context 'with valid parameters' do
       subject(:post_tv) do
-        VCR.use_cassette('the_movie_db/tv') do
-          post tvs_url, params: { tv: valid_attributes }
-        end
+        post tvs_url, params: { tv: valid_attributes }
       end
 
-      before { create :config_the_movie_db, settings: { api_key: '213' } }
+      before { create :config_the_movie_db }
 
       it 'creates a new TV' do
         expect { post_tv }.to change(Tv, :count).by(1)

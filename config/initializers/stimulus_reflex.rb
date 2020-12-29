@@ -3,8 +3,11 @@
 StimulusReflex.configure do |config|
   # Enable/disable exiting / warning when the sanity checks fail options:
   # `:exit` or `:warn` or `:ignore`
-
-  # config.on_failed_sanity_checks = :exit
+  if Rails.env.test?
+    config.on_failed_sanity_checks = :ignore
+  else
+    config.on_failed_sanity_checks = :exit
+  end
 
   # Override the parent class that the StimulusReflex ActionCable channel inherits from
 

@@ -11,6 +11,7 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory :config_the_movie_db, class: 'Config::TheMovieDb' do # rubocop:disable Lint/EmptyBlock
+  factory :config_the_movie_db, class: 'Config::TheMovieDb' do
+    settings { { api_key: ENV.fetch('MOVIE_DB_TEST_API_KEY', 12345) } }
   end
 end

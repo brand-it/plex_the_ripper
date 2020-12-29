@@ -40,6 +40,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'vcr'
   gem 'webmock'
+  gem 'super_diff'
 end
 
 group :development do

@@ -5,14 +5,14 @@ require 'rails_helper'
 RSpec.describe TheMovieDbTvListener do
   let(:tv) { build :tv, the_movie_db_id: 4629 }
 
-  before { create :config_the_movie_db, settings: { api_key: '12345' } }
+  before { create :config_the_movie_db }
 
-  describe '#tv_saving', use_vcr_cassette: 'the_movie_db/tv' do
+  describe '#tv_saving', :vcr do
     subject(:tv_saving) { described_class.new.tv_saving(tv) }
 
     let(:expected_attributes) do
       {
-        'backdrop_path' => '/ul7W8lwLIgxre1LXigFw55upfZ5.jpg',
+        'backdrop_path' => '/li9SZBpVzJz81ouqifVuH5C7Nod.jpg',
         'created_at' => nil,
         'disk_id' => nil,
         'episode_run_time' => [42, 60, 43, 45],
@@ -26,7 +26,7 @@ RSpec.describe TheMovieDbTvListener do
         ' Air Force special operations team, one of more than two dozen teams '\
         'from Earth who explore the galaxy and defend against alien threats such'\
         " as the Goa'uld, Replicators, and the Ori.",
-        'poster_path' => '/rst5xc4f7v1KiDiQjzDiZqLtBpl.jpg',
+        "poster_path" => "/9Jegw0yle4x8jlmLNZon37Os27h.jpg",
         'the_movie_db_id' => 4629,
         'updated_at' => nil,
         'first_air_date' => '1997-07-27'

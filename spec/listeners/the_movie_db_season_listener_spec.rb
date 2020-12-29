@@ -6,7 +6,7 @@ RSpec.describe TheMovieDbSeasonListener do
   let(:tv) { build_stubbed :tv, the_movie_db_id: 4629 }
   let(:season) { build :season, season_number: 1, tv: tv }
 
-  before { create :config_the_movie_db, settings: { api_key: 'a15f04ccfb72f83614f8ad670acc7574' } }
+  before { create :config_the_movie_db }
 
   describe '#season_saving', :use_vcr_cassette do
     subject(:season_saving) { VCR.use_cassette('the_movie_db/season') { described_class.new.season_saving(season) } }
