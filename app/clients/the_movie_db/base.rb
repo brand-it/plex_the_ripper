@@ -28,9 +28,7 @@ module TheMovieDb
         @param_names ||= dry_initializer.params.map(&:target)
       end
 
-      def results
-        new.results
-      end
+      delegate :results, to: :new
     end
 
     private

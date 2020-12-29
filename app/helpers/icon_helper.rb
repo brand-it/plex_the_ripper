@@ -10,7 +10,7 @@ module IconHelper
       "fa-#{icon_name}",
       options[:class]
     ].compact
-    content_tag :i, nil, class: classes
+    tag.i(nil, class: classes)
   end
 
   private
