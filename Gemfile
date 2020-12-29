@@ -38,9 +38,9 @@ group :development, :test do
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
   gem 'shoulda-matchers'
+  gem 'super_diff'
   gem 'vcr'
   gem 'webmock'
-  gem 'super_diff'
 end
 
 group :development do

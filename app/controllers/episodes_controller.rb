@@ -8,10 +8,10 @@ class EpisodesController < ApplicationController
   def select
     drive = ListDrivesService.new.results
     Disk.create!(name: drive.name)
-    if drive
-      disk_info = DiskInfoService.new(drive: drive).results
-      episodes.each(&:select!)
-    end
+    return if drive.nil?
+
+    # disk_info = DiskInfoService.new(drive: drive).results
+    episodes.each(&:select!)
   end
 
   private

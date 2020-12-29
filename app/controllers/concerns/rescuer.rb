@@ -10,8 +10,6 @@ module Rescuer
                 with: :render_movie_db_error
     rescue_from 'TheMovieDb::InvalidConfig',
                 with: :movie_config_invalid
-    rescue_from ActiveRecord::PendingMigrationError,
-                with: :migrate_and_redirect
 
     private
 
@@ -28,12 +26,6 @@ module Rescuer
     def render_timeout_connection(exception)
       @exception = exception
       render 'exceptions/522', status: 522
-    end
-
-    def migrate_and_redirect(exception)
-      success = ActiveRecord::Tasks::DatabaseTasks.migrate
-      binding.pry
-      redirect_to
     end
   end
 end

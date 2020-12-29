@@ -26,7 +26,7 @@ RSpec.describe TheMovieDbTvListener do
         ' Air Force special operations team, one of more than two dozen teams '\
         'from Earth who explore the galaxy and defend against alien threats such'\
         " as the Goa'uld, Replicators, and the Ori.",
-        "poster_path" => "/9Jegw0yle4x8jlmLNZon37Os27h.jpg",
+        'poster_path' => '/9Jegw0yle4x8jlmLNZon37Os27h.jpg',
         'the_movie_db_id' => 4629,
         'updated_at' => nil,
         'first_air_date' => '1997-07-27'

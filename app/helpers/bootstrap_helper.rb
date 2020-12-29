@@ -10,19 +10,19 @@ module BootstrapHelper
     flash.each do |type, message|
       alerts << content_tag(:div, class: "alert #{type_to_boostrap_class(type)} alert-dismissiable fade show") do
         concat message
-        concat(
-          content_tag(
-            :button,
-            icon('times-circle'),
-            type: 'button',
-            class: 'close',
-            data: { dismiss: 'alert' },
-            'aria-label' => 'Close'
-          )
-        )
+        concat close_button
       end
     end
     safe_join(alerts)
+  end
+
+  def close_button
+    content_tag :button,
+                icon('times-circle'),
+                type: 'button',
+                class: 'close',
+                data: { dismiss: 'alert' },
+                'aria-label' => 'Close'
   end
 
   def type_to_boostrap_class(type)
