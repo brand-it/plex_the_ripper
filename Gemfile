@@ -41,6 +41,7 @@ group :development, :test do
   gem 'super_diff'
   gem 'vcr'
   gem 'webmock'
+  gem 'rspec-github', require: false
 end
 
 group :development do

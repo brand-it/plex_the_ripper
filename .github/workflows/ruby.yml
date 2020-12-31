@@ -40,7 +40,7 @@ jobs:
       run: |
         yarn install --pure-lockfile
     - name: Run tests
-      run: bundle exec rspec
+      run: bundle exec rspec --format RSpec::Github::Formatter --format documentation
 
   rubocop:
     runs-on: ubuntu-latest
