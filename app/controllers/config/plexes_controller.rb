@@ -2,7 +2,7 @@
 
 class Config
   class PlexesController < ApplicationController
-    before_action :set_config_plex, only: %i[show edit update destroy]
+    before_action :set_config_plex, only: %i[edit update]
 
     # GET /config/plexes
     # def index

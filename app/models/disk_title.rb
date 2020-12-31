@@ -18,6 +18,6 @@
 #  index_disk_titles_on_disk_id  (disk_id)
 #
 class DiskTitle < ApplicationRecord
+  include HasProgress
   belongs_to :disk
-  has_many :mkv_progresses
 end

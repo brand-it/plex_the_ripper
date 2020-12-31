@@ -31,7 +31,7 @@ class Tv < ApplicationRecord
     validates :original_name, presence: true
   end
 
-  has_many :seasons
+  has_many :seasons, dependent: :destroy
 
   before_save { broadcast(:tv_saving, self) }
   after_commit { broadcast(:tv_saved, id, async: true) }

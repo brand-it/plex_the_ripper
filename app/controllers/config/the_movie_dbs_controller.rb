@@ -2,7 +2,7 @@
 
 class Config
   class TheMovieDbsController < ApplicationController
-    before_action :set_the_movie_db, only: %i[show edit update destroy]
+    before_action :set_the_movie_db, only: %i[edit update]
 
     def new
       @config_the_movie_db = Config::TheMovieDb.new

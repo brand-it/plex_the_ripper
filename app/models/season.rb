@@ -22,7 +22,7 @@
 class Season < ApplicationRecord
   include Wisper::Publisher
 
-  has_many :episodes
+  has_many :episodes, dependent: :destroy
   belongs_to :tv
 
   validates :season_number, presence: true
