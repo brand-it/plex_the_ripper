@@ -33,6 +33,7 @@ group :development, :test do
   gem 'factory_bot_rails'
   gem 'faker'
   gem 'pry'
+  gem 'rspec-github', require: false
   gem 'rspec-rails'
   gem 'rubocop'
   gem 'rubocop-rails'
@@ -41,7 +42,6 @@ group :development, :test do
   gem 'super_diff'
   gem 'vcr'
   gem 'webmock'
-  gem 'rspec-github', require: false
 end
 
 group :development do

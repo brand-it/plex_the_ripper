@@ -13,8 +13,11 @@
 class Config
   class Plex < Config
     settings_defaults(
-      movie_path: nil, video_path: nil,
-      ftp_username: nil, ftp_host: nil, ftp_password: nil,
+      movie_path: nil,
+      video_path: nil,
+      ftp_username: nil,
+      ftp_host: nil,
+      ftp_password: nil,
       use_ftp: false
     )
 

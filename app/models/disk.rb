@@ -40,9 +40,9 @@ class Disk < ApplicationRecord
   end
 
   def self.all_valid?
-    Rails.cache.fetch(Disk.all, namespace: 'all_valid', expires_in: 10.seconds) do
-      Disk.all.pluck(:disk_name) == ListDrivesService.new.results
-    end
+    # Rails.cache.fetch(Disk.all, namespace: 'all_valid', expires_in: 10.seconds) do
+    Disk.all.pluck(:disk_name) == ListDrivesService.new.results
+    # end
   end
 
   def load_titles
