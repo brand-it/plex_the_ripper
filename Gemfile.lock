@@ -363,6 +363,7 @@ DEPENDENCIES
   pry
   puma (>= 4.1)
   rails (~> 6.1.0, >= 6.1.0)
+  rainbow
   rspec-github
   rspec-rails
   rubocop

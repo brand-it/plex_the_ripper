@@ -3,7 +3,7 @@
 class Tool
   TOOLS = File.read('.tool-versions').lines.map(&:strip)
   def self.version(name)
-    TOOLS.find { |x| x.match('nodejs' ) }.scan(/\d*\.\d*\.\d*/).first
+    TOOLS.find { |x| x.match(name) }.scan(/\d*\.\d*\.\d*/).first
   end
 end
 
@@ -23,8 +23,14 @@ class ColorString < String
   end
 end
 
+def prompt(message)
+  return false if ENV['IN_DOCKER'] # Docker container setup is non-interactive
+  print ColorString.new("#{message} [y/N] ").magenta
+  ['y', 'yes'].include? gets.chomp
+end
+
 def log(message)
-  puts PrettyString.new(message).blue
+  puts ColorString.new(message).blue
 end
 
 def info(message)
@@ -32,18 +38,26 @@ def info(message)
 end
 
 def error(message, exit_code = 1)
-  puts PrettyString.new(message).red
+  puts ColorString.new(message).red
   exit exit_code
 end
 
 def success(message)
-  puts PrettyString.new(message).green
+  puts ColorString.new(message).green
 end
 
 def warn(message)
-  puts PrettyString.new(message).yellow
+  puts ColorString.new(message).yellow
 end
-
+APP_ROOT = File.expand_path '..', __dir__
+HOMEBREW_INSTALL_CMD = '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"'
+HOMEBREW_PACKAGES = %i[
+  libxml2
+  libxslt
+  makedepend
+  openssl
+  readline
+]
 #---------------------#
 #      Setup Steps    #
 #---------------------#
@@ -51,14 +65,14 @@ end
 def check_ruby_version
   log 'Checking Ruby version...'
   system 'ruby --version'
-  unless RUBY_VERSION == DESIRED_RUBY_VERSION
+  unless RUBY_VERSION == Tool.version('ruby')
     error <<~MSG.chomp
-      This application requires Ruby #{DESIRED_RUBY_VERSION}!
+      This application requires Ruby #{Tool.version('ruby')}!
       Since there are multiple ways to install Ruby, this script won't do it for you.
-      Please install Ruby #{DESIRED_RUBY_VERSION} from your preferred source.
+      Please install Ruby #{Tool.version('ruby')} from your preferred source.
     MSG
   end
-  success "Ruby #{RUBY_VERSION} installed!"
+  success "Ruby #{Tool.version('ruby')} installed!"
 end
 
 def setup_mac
@@ -95,6 +109,7 @@ def setup_mac
   HOMEBREW_PACKAGES.each do |dep|
     versions = `brew ls --versions #{dep}`.chomp
     next info(versions) unless versions == ''
+    info("installing #{dep}")
     system("brew install #{dep}") || error("Error installing #{dep}!")
   end
   success 'Homebrew packages installed!'
@@ -145,20 +160,8 @@ def node_setup
   success 'Javascript dependencies installed!'
 end
 
-
 def application_setup
   log 'Initializing Rails application...'
-  # Log files can get out of control if the app has been around for a while.
-  # It's good to periodically truncate them to recover disk space.
-  if prompt 'Truncate log files?'
-    Dir['log/**/*.log'].each do |filename|
-      info "Truncating #{filename}..."
-      File.truncate(filename, 0)
-    end
-    success 'Log files truncated.'
-  else
-    warn 'Leaving log files as-is.'
-  end
 
   # Remove stale PID
   if File.exist? 'tmp/pids/server.pid'
@@ -179,10 +182,8 @@ end
 
 def database_setup
   log 'Setting up databases...'
+  Rake::Task['db:setup'].invoke
   success 'Database setup complete!'
-  log 'Seeding database...'
-  Rake::Task['db:migrate'].invoke
-  success 'Database seeded!'
 end
 
 def compile_assets
@@ -191,101 +192,22 @@ def compile_assets
   success 'Assets compiled!'
 end
 
-Dir.chdir APP_ROOT do
-  # check_ruby_version
-  # system_setup
-  # ruby_setup
-  # node_setup
-  # check_rails_env
-  # service_setup
-  # application_setup
-  # compile_assets
-  # database_setup
+def install_mkv
+  Rake::Task['mkv:install'].invoke
+end
 
+Dir.chdir APP_ROOT do
   case RUBY_PLATFORM
   when /darwin/
     setup_mac
   else
     warn 'Not running on a Mac. Skipping package installation.'
   end
-  ruby_setup
-  node_setup
-end
-
-
-
-info 'Loading Rails...'
-require "#{APP_ROOT}/config/environment"
-Rails.application.load_tasks
-
-def database_setup
-  log 'Setting up databases...'
-  # See if we need to initialize the database or just run migrations
-  DATABASE_MODELS.each do |db_name, class_name|
-    model = class_name.constantize
-    log "Checking #{db_name} database version..."
-    # There's no db:version task for multiple databases, so we have to reach into
-    # the migration context for each model to get the individual version numbers.
-    begin
-      version = model.connection.migration_context.current_version
-    rescue ActiveRecord::NoDatabaseError
-      # If the database doesn't exist, there's no way to load the version, so we'll
-      # default to zero and perform first-time setup.
-      version = 0
-    end
-    info "Current version: #{version}"
-    if version.zero?
-      # Version zero means the database hasn't been initialized.
-      # Let's do first-time setup!
-      log 'Performing first-time database setup...'
-      Rake::Task["db:create:#{db_name}"].invoke
-      # Right now, there are no rake tasks for loading schema for a specific database.
-      # So we'll directly call the method from DatabaseTasks.
-      # https://github.com/rails/rails/blob/v6.0.2.2/activerecord/lib/active_record/tasks/database_tasks.rb#L319
-      ActiveRecord::Tasks::DatabaseTasks.load_schema(
-        # Configuration hash for the database in question.
-        # https://github.com/rails/rails/blob/v6.0.2.2/activerecord/lib/active_record/database_configurations.rb#L38
-        ActiveRecord::Base.configurations.configs_for(env_name: Rails.env, spec_name: db_name.to_s).config,
-        :ruby,       # schema format, :ruby for schema.rb, :sql for structure.sql
-        nil,         # optionally specify a filename, inferred by default
-        Rails.env,   # current environment
-        db_name.to_s # spec_name, same as in the call to configs_for
-      )
-      success "#{db_name.capitalize} database initialized!"
-    else
-      # Version not-zero means the database at least has its schema loaded.
-      # Let's run migrations to make sure it's up to date.
-      info 'Database already initialized.'
-    end
-    log 'Running migrations...'
-    # TODO: This could probably check Model.connection.migration_context.needs_migration?
-    Rake::Task["db:migrate:#{db_name}"].invoke
-    success "#{db_name.capitalize} database migrated!"
-  end
-  success 'Database setup complete!'
-  if prompt 'Do you want to seed your database?'
-    log 'Seeding database...'
-    Rake::Task['dev:prime'].invoke
-    success 'Database seeded!'
-  else
-    warn 'Skipping seeds.'
-  end
-end
-
-def compile_assets
-  log 'Compiling assets...'
-  Rake::Task['assets:precompile'].invoke
-  success 'Assets compiled!'
-end
-
-Dir.chdir APP_ROOT do
   check_ruby_version
-  system_setup
   ruby_setup
   node_setup
-  check_rails_env
-  service_setup
   application_setup
-  compile_assets
   database_setup
+  compile_assets
+  install_mkv
 end

@@ -26,6 +26,7 @@ gem 'view_component', '>= 2.18'
 gem 'webpacker', '>= 5.0'
 gem 'wisper'
 gem 'workflow'
+gem 'rainbow'
 
 group :development, :test do
   gem 'annotate'

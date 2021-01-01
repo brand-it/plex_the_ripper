@@ -11,10 +11,20 @@ The goal it to hopefully make it work on windows as well. But I have to keep wor
 
 
 ## Setup
+
+### 1. Clone Repo
 ```shell
 git clone https://github.com/newdark/plex_the_ripper.git
 ```
 
+### 2. Run Setup
+```shell
+bin/setup
+```
+### 3. Start Server
+```shell
+bin/rails s
+```
 # Environment Variables
 
   * MAKE_MKV_DISC_SOURCE
