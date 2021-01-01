@@ -122,14 +122,6 @@ def ruby_setup
   error "Couldn't determine the version of bundler to use!" if bundler_version == ''
   log "Installing bundler #{bundler_version}..."
   system("gem install bundler -v #{bundler_version}") || error('Error installing bundler!')
-  log 'Configuring build flags...'
-  # RGeo needs to be pointed at the GEOS package from Homebrew (comes with PostGIS)
-  system 'bundle config set build.rgeo "--with-geos-dir=\'$(/usr/local/bin/geos-config --prefix)\'"'
-  # As of EventMachine 1.0.9, it will auto-detect OpenSSL from Homebrew,
-  # so we no longer need custom build flags.
-  system 'bundle config unset build.eventmachine'
-  # You are no longer required to party hard when using HTTParty.
-  system 'bundle config set ignore_messages.httparty true'
   log 'Installing gems...'
   system('bundle check') || system('bundle install') || error('Error installing gems!')
   success 'Gems installed!'
@@ -168,6 +160,11 @@ def application_setup
     system 'kill -9 $(cat tmp/pids/server.pid)'
     File.delete 'tmp/pids/server.pid'
     warn 'Removed stale PID file.'
+  end
+
+  unless File.exist? 'tmp/caching-dev.txt'
+    info 'Enabling dev cache'
+    Rake::Task['dev:cache'].invoke
   end
 
   # We have to run several rake tasks as part of app setup. It's faster to load
