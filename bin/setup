@@ -164,7 +164,7 @@ def application_setup
 
   unless File.exist? 'tmp/caching-dev.txt'
     info 'Enabling dev cache'
-    Rake::Task['dev:cache'].invoke
+    FileUtil.touch 'tmp/caching-dev.txt'
   end
 
   # We have to run several rake tasks as part of app setup. It's faster to load
