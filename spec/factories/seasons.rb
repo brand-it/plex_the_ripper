@@ -23,5 +23,6 @@ FactoryBot.define do
   factory :season do
     season_number { 1 }
     tv
+    the_movie_db_id { Faker::Number.number }
   end
 end

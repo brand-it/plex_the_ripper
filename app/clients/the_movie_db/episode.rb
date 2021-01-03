@@ -2,7 +2,18 @@
 
 module TheMovieDb
   class Episode < Base
-    option :name, type: Types::String
-    option :episode_number, type: Types::Integer
+    param :tv_id, Types::Integer
+    param :season_number, Types::Integer
+    param :episode_number, type: Types::Integer
+
+    def results
+      @results ||= get
+    end
+
+    private
+
+    def path
+      "tv/#{tv_id}/season/#{season_number}/episode/#{episode_number}"
+    end
   end
 end

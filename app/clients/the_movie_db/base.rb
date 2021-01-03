@@ -43,13 +43,14 @@ module TheMovieDb
 
     def error!(response)
       Rails.logger.error(
-        "#{response.error_type} #{response.message} #{response.code} #{response.uri} #{response.body.strip}"
+        "#{response.error_type} #{response.message}"\
+        " #{response.code} #{response.uri} #{response.body.strip}"
       )
       response.error!
     end
 
     def uri
-      URI::HTTPS.build(host: HOST, path: ["/#{VERSION}", path, path_params].compact.join('/'))
+      URI::HTTPS.build(host: HOST, path: ["/#{VERSION}", path].compact.join('/'))
     end
 
     def path
@@ -58,10 +59,6 @@ module TheMovieDb
           .split('::')[1..]
           .join('::')
           .parameterize(separator: '/')
-    end
-
-    def path_params
-      self.class.param_names.map { |name| send(name) }.join('/').presence
     end
 
     def query_params

@@ -7,5 +7,11 @@ module TheMovieDb
     def results
       @results ||= get
     end
+
+    private
+
+    def path
+      "tv/#{tv_id}"
+    end
   end
 end

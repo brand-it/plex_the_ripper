@@ -9,12 +9,10 @@ module TheMovieDb
       @results ||= get
     end
 
+    private
+
     def path
       "tv/#{tv_id}/season/#{season_number}"
-    end
-
-    def path_params
-      nil
     end
   end
 end

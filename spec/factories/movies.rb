@@ -21,5 +21,6 @@ FactoryBot.define do
   factory :movie, aliases: [:video] do
     title { Faker::Book.title }
     original_title { Faker::Book.title }
+    the_movie_db_id { Faker::Number.number }
   end
 end

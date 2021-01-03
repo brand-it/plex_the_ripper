@@ -2,14 +2,14 @@
 
 require 'rails_helper'
 
-RSpec.describe TheMovieDb::Episode do
+RSpec.describe TheMovieDb::Season do
   before { create :config_the_movie_db }
 
   describe '#results', :vcr do
-    subject(:results) { described_class.new(66_732, 1, 1).results }
+    subject(:results) { described_class.new(66_732, 1).results }
 
     it 'responds with success' do
-      expect(results.id).to eq 1198665
+      expect(results._id).to eq '57599ae2c3a3684ea900242d'
     end
   end
 end

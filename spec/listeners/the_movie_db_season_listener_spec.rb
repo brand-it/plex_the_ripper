@@ -8,8 +8,8 @@ RSpec.describe TheMovieDbSeasonListener do
 
   before { create :config_the_movie_db }
 
-  describe '#season_saving', :use_vcr_cassette do
-    subject(:season_saving) { VCR.use_cassette('the_movie_db/season') { described_class.new.season_saving(season) } }
+  describe '#season_saving', :vcr do
+    subject(:season_saving) { described_class.new.season_saving(season) }
 
     let(:expected_attributes) do
       {
@@ -28,7 +28,7 @@ RSpec.describe TheMovieDbSeasonListener do
   " enemy in the film named the Goa'uld, which is bent on destroying Earth and all that"\
   ' opposes them.',
         'poster_path' => '/tiib6A0kZ0NoUeuUbcU0hIu2jlM.jpg',
-        'the_movie_db_id' => nil,
+        'the_movie_db_id' => season.the_movie_db_id,
         'season_number' => 1,
         'air_date' => '1997-07-27',
         'tv_id' => tv.id,

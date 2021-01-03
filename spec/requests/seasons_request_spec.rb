@@ -6,13 +6,9 @@ RSpec.describe 'Seasons', type: :request do
   let(:tv) { create :tv, the_movie_db_id: 4629 }
   let(:season) { create :season, season_number: 1, tv: tv }
 
-  describe 'POST /update' do
+  describe 'POST /update', :vcr do
     context 'with valid parameters' do
-      subject(:patch_season) do
-        VCR.use_cassette('the_movie_db/season') do
-          patch season_url(season), params: { season: { somthing: 1 } }
-        end
-      end
+      subject(:patch_season) { patch season_url(season), params: { season: { somthing: 1 } } }
 
       before { create :config_the_movie_db }
 
