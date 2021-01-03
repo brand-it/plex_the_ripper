@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Config::PlexesController, type: :controller do
+  before { create :config_make_mkv }
+
   let(:config) { create :config_plex }
 
   describe 'GET directories' do

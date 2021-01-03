@@ -11,6 +11,7 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory :config_make_mkv, class: 'Config::MakeMkv' do # rubocop:disable Lint/EmptyBlock
+  factory :config_make_mkv, class: 'Config::MakeMkv' do
+    settings { { makemkvcon_path: Rails.root.join('spec/bin/makemkvcon') } }
   end
 end

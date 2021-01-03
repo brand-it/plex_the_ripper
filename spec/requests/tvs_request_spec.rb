@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Tvs', type: :request do
+  before { create :config_make_mkv }
+
   let(:valid_attributes) do
     {
       the_movie_db_id: 4629

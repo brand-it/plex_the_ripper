@@ -17,16 +17,13 @@ class Config
                               elsif OS.posix?
                                 '/usr/bin/makemkv/makemkvcon'
                               end
-    settings_defaults(
-      makemkvcon_path: DEFAULT_MAKEMKVCON_PATH,
-      version: nil
-    )
+    settings_defaults makemkvcon_path: DEFAULT_MAKEMKVCON_PATH
 
     validate :mkvemkvcon_path_present
     validate :makemkvcon_path_executable
 
     def self.current
-      newest.first || create!
+      newest.first || raise(ActiveRecord::RecordNotFound, 'Could not find current Config::MakeMkv')
     end
 
     private

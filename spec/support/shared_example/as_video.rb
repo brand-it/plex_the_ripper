@@ -5,7 +5,7 @@ RSpec.shared_examples 'AsVideo' do |_parameter|
   let(:video_one) { create model_class }
   let(:video_two) { create model_class }
   describe 'validations' do
-    
+
   end
   describe '.find_video' do
     subject(:find_video) { model_class.find_video(id) }
@@ -35,7 +35,7 @@ RSpec.shared_examples 'AsVideo' do |_parameter|
       let(:id) { 0 }
 
       it 'finds the video' do
-        expect { find_video }.not_to raise_error
+        expect { find_video }.to raise_error ActiveRecord::RecordNotFound
       end
     end
   end

@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe 'Seasons', type: :request do
+  before { create :config_make_mkv }
+
   let(:tv) { create :tv, the_movie_db_id: 4629 }
   let(:season) { create :season, season_number: 1, tv: tv }
 
