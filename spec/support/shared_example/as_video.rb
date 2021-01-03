@@ -4,9 +4,7 @@ RSpec.shared_examples 'AsVideo' do |_parameter|
   let(:model_class) { described_class.model_name.singular.to_sym }
   let(:video_one) { create model_class }
   let(:video_two) { create model_class }
-  describe 'validations' do
 
-  end
   describe '.find_video' do
     subject(:find_video) { model_class.find_video(id) }
 
@@ -15,7 +13,7 @@ RSpec.shared_examples 'AsVideo' do |_parameter|
       video_two
     end
 
-    context 'find by the the_movie_db_id' do
+    context 'when find by the the_movie_db_id' do
       let(:id) { video_one.the_movie_db_id }
 
       it 'finds a video' do
@@ -23,7 +21,7 @@ RSpec.shared_examples 'AsVideo' do |_parameter|
       end
     end
 
-    context 'find by the id' do
+    context 'when find by the id' do
       let(:id) { video_one.id }
 
       it 'finds the video' do

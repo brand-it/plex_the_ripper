@@ -6,6 +6,7 @@ RSpec.describe 'Movies', type: :request do
   let(:tv) { create :tv, the_movie_db_id: 4629 }
   let(:season) { create :season, season_number: 1, tv: tv }
 
-  describe 'get /select/:the_movie_db_id' do
-  end
+  pending "add some examples to (or delete) #{__FILE__}"
+  # describe 'get /select/:the_movie_db_id' do
+  # end
 end

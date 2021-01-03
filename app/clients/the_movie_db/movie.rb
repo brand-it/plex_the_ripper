@@ -11,7 +11,7 @@ module TheMovieDb
     private
 
     def path
-      "movie/#{movie_id"
+      "movie/#{movie_id}"
     end
   end
 end

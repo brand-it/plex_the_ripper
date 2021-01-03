@@ -8,10 +8,5 @@ module AsVideo
         find_by(the_movie_db_id: id) || find(id)
       end
     end
-
-    with_options unless: :the_movie_db_id do
-      validates :title, presence: true
-      validates :original_title, presence: true
-    end
   end
 end

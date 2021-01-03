@@ -29,7 +29,9 @@ RSpec.shared_examples 'DiskWorkflow' do |_parameter|
       before { model.workflow_state = 'selected' }
 
       it 'changes state from selected to ready to rip' do
-        expect { model.select_disk_titles!([disk_title]) }.to change { model.current_state.name }.from(:selected).to(:ready_to_rip)
+        expect { model.select_disk_titles!([disk_title]) }.to change {
+                                                                model.current_state.name
+                                                              }.from(:selected).to(:ready_to_rip)
       end
     end
 

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :mkv  do
   desc 'Install MKV'
   task install: :environment do

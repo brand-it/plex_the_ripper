@@ -26,6 +26,10 @@ class Movie < ApplicationRecord
   before_save { broadcast(:movie_saving, self) }
   after_commit { broadcast(:movie_saved, id) }
 
+  with_options unless: :the_movie_db_id do
+    validates :title, presence: true
+    validates :original_title, presence: true
+  end
 
   def rip
     # CreateMovieWorker.perform(movie: self, disk_title: disk_titles)
