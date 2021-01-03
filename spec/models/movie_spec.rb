@@ -15,19 +15,14 @@
 #  workflow_state  :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
-#  disk_id         :integer
-#  disk_title_id   :integer
 #  the_movie_db_id :integer
-#
-# Indexes
-#
-#  index_movies_on_disk_id        (disk_id)
-#  index_movies_on_disk_title_id  (disk_title_id)
 #
 require 'rails_helper'
 
 RSpec.describe Movie, type: :model do
   include_context 'DiskWorkflow'
+  include_context 'HasProgress'
+
   # V
   describe 'validations' do
     it { is_expected.to validate_presence_of(:title) }

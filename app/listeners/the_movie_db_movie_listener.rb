@@ -1,7 +1,14 @@
 # frozen_string_literal: true
 
 class TheMovieDbMovieListener
-  PERMITTED_PARAMS = %i[title original_title release_date poster_path backdrop_path overview].freeze
+  PERMITTED_PARAMS = %i[
+    title
+    original_title
+    release_date
+    poster_path
+    backdrop_path
+    overview
+  ].freeze
 
   def movie_saving(movie)
     return if movie.the_movie_db_id.nil?

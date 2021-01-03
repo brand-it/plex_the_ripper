@@ -13,7 +13,7 @@
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  the_movie_db_id :integer
-#  tv_id           :integer
+#  tv_id           :bigint
 #
 # Indexes
 #

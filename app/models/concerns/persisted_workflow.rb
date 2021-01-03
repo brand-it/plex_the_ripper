@@ -10,7 +10,8 @@ module PersistedWorkflow
     end
 
     def persist_workflow_state(new_value)
-      update!(workflow_state: new_value)
+      # update!(workflow_state: new_value)
+      self[:workflow_state] = new_value
     end
   end
 end

@@ -12,16 +12,12 @@
 #  overview        :string
 #  still_path      :string
 #  workflow_state  :string
-#  disk_id         :integer
-#  disk_title_id   :integer
-#  season_id       :integer
+#  season_id       :bigint
 #  the_movie_db_id :integer
 #
 # Indexes
 #
-#  index_episodes_on_disk_id        (disk_id)
-#  index_episodes_on_disk_title_id  (disk_title_id)
-#  index_episodes_on_season_id      (season_id)
+#  index_episodes_on_season_id  (season_id)
 #
 class Episode < ApplicationRecord
   include DiskWorkflow

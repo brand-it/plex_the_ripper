@@ -2,46 +2,71 @@
 
 RSpec.shared_examples 'DiskWorkflow' do |_parameter|
   let(:model_class) { described_class.model_name.singular.to_sym }
-  let(:model) { create model_class }
+  let(:model) { build_stubbed model_class }
+
   # A
   describe 'associations' do
-    it { is_expected.to belong_to(:disk).optional }
+    it { is_expected.to have_many(:disk_titles) }
   end
-  # W
 
+  # W
   describe 'workflow' do
     subject(:workflow) { model.current_state }
 
-    let(:disk_title) { build_stubbed :disk_title }
+    let(:disk_title) { create :disk_title }
 
     context 'when initialize' do
       it { is_expected.to eq :new }
     end
 
-    it 'handles transition to success' do # rubocop:disable RSpec/MultipleExpectations
-      expect { model.select!(disk_title: disk_title) }.to change { model.current_state.name }.from(:new).to(:selected)
-      expect { model.rip! }.to change { model.current_state.name }.from(:selected).to(:ripping)
-      expect do
-        model.complete!(file_path: Rails.root.join('tmp'))
-      end.to change { model.current_state.name }.from(:ripping).to(:completed)
+    context 'when event select!' do
+      before { model.workflow_state = nil }
+
+      it { expect { model.select! }.to change { model.current_state.name }.from(:new).to(:selected) }
     end
 
-    it 'handles transition to canceled' do # rubocop:disable RSpec/MultipleExpectations
-      expect { model.select!(disk_title: disk_title) }.to change { model.current_state.name }.from(:new).to(:selected)
-      expect { model.cancel! }.to change { model.current_state.name }.from(:selected).to(:new)
+    context 'when event select_disk_titles!' do
+      before { model.workflow_state = 'selected' }
+
+      it 'changes state from selected to ready to rip' do
+        expect { model.select_disk_titles!([disk_title]) }.to change { model.current_state.name }.from(:selected).to(:ready_to_rip)
+      end
     end
 
-    it 'handles transition canceled from failed' do # rubocop:disable RSpec/MultipleExpectations
-      expect { model.select!(disk_title: disk_title) }.to change { model.current_state.name }.from(:new).to(:selected)
-      expect { model.rip! }.to change { model.current_state.name }.from(:selected).to(:ripping)
-      expect { model.fail! }.to change { model.current_state.name }.from(:ripping).to(:failed)
-      expect { model.cancel! }.to change { model.current_state.name }.from(:failed).to(:new)
+    context 'when event cancel!' do
+      it 'changes state from selected to new' do
+        model.workflow_state = 'selected'
+        expect { model.cancel! }.to change { model.current_state.name }.from(:selected).to(:new)
+      end
+
+      it 'changes state from ready_to_rip to new' do
+        model.workflow_state = 'ready_to_rip'
+        expect { model.cancel! }.to change { model.current_state.name }.from(:ready_to_rip).to(:new)
+      end
     end
 
-    it 'handles transition to failure' do # rubocop:disable RSpec/MultipleExpectations
-      expect { model.select!(disk_title: disk_title) }.to change { model.current_state.name }.from(:new).to(:selected)
-      expect { model.rip! }.to change { model.current_state.name }.from(:selected).to(:ripping)
-      expect { model.fail! }.to change { model.current_state.name }.from(:ripping).to(:failed)
+    context 'when event rip!' do
+      before { model.workflow_state = 'ready_to_rip' }
+
+      it { expect { model.rip! }.to change { model.current_state.name }.from(:ready_to_rip).to(:ripping) }
+    end
+
+    context 'when event fail!' do
+      before { model.workflow_state = 'ripping' }
+
+      it { expect { model.fail! }.to change { model.current_state.name }.from(:ripping).to(:failed) }
+    end
+
+    context 'when event complete!' do
+      before { model.workflow_state = 'ripping' }
+
+      it { expect { model.complete! }.to change { model.current_state.name }.from(:ripping).to(:completed) }
+    end
+
+    context 'when event retry!' do
+      before { model.workflow_state = 'failed' }
+
+      it { expect { model.retry! }.to change { model.current_state.name }.from(:failed).to(:ripping) }
     end
   end
 end

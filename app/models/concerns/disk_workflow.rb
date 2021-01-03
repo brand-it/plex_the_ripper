@@ -5,7 +5,7 @@ module DiskWorkflow
   included do # rubocop:disable Metrics/BlockLength
     include PersistedWorkflow
     belongs_to :disk, optional: true
-    belongs_to :disk_title, optional: true
+    has_many :disk_titles, as: :video, dependent: :destroy
     scope :selected, -> { where(workflow_state: 'selected') }
     scope :ripping, -> { where(workflow_state: 'ripping') }
     scope :failed, -> { where(workflow_state: 'failed') }
@@ -16,6 +16,10 @@ module DiskWorkflow
         event :select, transitions_to: :selected
       end
       state :selected do
+        event :select_disk_titles, transitions_to: :ready_to_rip
+        event :cancel, transitions_to: :new
+      end
+      state :ready_to_rip do
         event :cancel, transitions_to: :new
         event :rip, transitions_to: :ripping
       end
@@ -24,21 +28,15 @@ module DiskWorkflow
         event :complete, transitions_to: :completed
       end
       state :failed do
-        event :cancel, transitions_to: :new
-        event :rip, transitions_to: :ripping
+        event :retry, transitions_to: :ripping
       end
       state :completed
     end
 
-    def select(disk_title:)
-      halt! 'disk title & disk is required' if disk_title&.disk.nil?
+    def select_disk_titles(disk_titles)
+      halt! 'Disk Title is required' if disk_titles&.empty?
 
-      self.disk_title = disk_title
-      self.disk = disk_title.disk
-    end
-
-    def complete(file_path:)
-      self.file_path = file_path
+      self.disk_titles = disk_titles
     end
   end
 end

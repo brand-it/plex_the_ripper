@@ -5,11 +5,11 @@
 # Table name: users
 #
 #  id          :integer          not null, primary key
-#  config_type :string           not null
+#  config_type :string
 #  name        :string           not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
-#  config_id   :integer          not null
+#  config_id   :bigint
 #
 # Indexes
 #

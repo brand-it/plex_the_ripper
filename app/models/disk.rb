@@ -18,8 +18,6 @@ class Disk < ApplicationRecord
   after_commit { broadcast(:disk_updated, self) }
 
   has_many :disk_titles, dependent: :destroy
-  has_many :episodes, dependent: :nullify
-  has_one :movie, dependent: :nullify
 
   workflow do
     state :new do

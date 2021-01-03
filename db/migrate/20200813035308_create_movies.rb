@@ -1,4 +1,4 @@
-class CreateVideos < ActiveRecord::Migration[6.0]
+class CreateMovies < ActiveRecord::Migration[6.0]
   def change
     create_table :movies do |t|
       t.string :title
@@ -10,8 +10,6 @@ class CreateVideos < ActiveRecord::Migration[6.0]
       t.integer :the_movie_db_id
       t.string :overview
       t.string :file_path
-      t.references :disk
-      t.references :disk_title
       t.timestamps
     end
   end

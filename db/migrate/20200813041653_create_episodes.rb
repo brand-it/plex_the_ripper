@@ -10,8 +10,6 @@ class CreateEpisodes < ActiveRecord::Migration[6.0]
       t.string :file_path
       t.string :workflow_state
       t.references :season
-      t.references :disk
-      t.references :disk_title
     end
   end
 end

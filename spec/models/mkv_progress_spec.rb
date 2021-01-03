@@ -13,8 +13,8 @@
 #  video_type    :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
-#  disk_title_id :integer
-#  video_id      :integer
+#  disk_title_id :bigint
+#  video_id      :bigint
 #
 # Indexes
 #

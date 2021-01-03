@@ -9,9 +9,7 @@ RSpec.describe DiskInfoService do
   let(:list_drives_service) { ListDrivesService.new(config_make_mkv: config_make_mkv) }
 
   let(:config_make_mkv) { create :config_make_mkv }
-  let(:new_service) do
-    described_class.new(config_make_mkv: config_make_mkv, disk_name: '/dev/disk2')
-  end
+  let(:new_service) { described_class.new(config_make_mkv: config_make_mkv, disk_name: '/dev/disk2') }
 
   describe '#results' do
     subject(:call) { new_service.results }

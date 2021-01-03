@@ -15,8 +15,6 @@
             <div id='progress-bar'>
               <%= render ProgressBarComponent.new(label: Disk.model_name.name, completed: Disk.percentage_completed, status: (Disk.all_valid? ? 'success' : 'info')) %>
             </div>
-            <%#= render DiskCardComponent.new(disks: disks) %>
-            <%#= render VideoProgressComponent.new(video: Movie.first) %>
           </div>
         </div>
         <div class='row'>

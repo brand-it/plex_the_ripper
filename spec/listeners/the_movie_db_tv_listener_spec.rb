@@ -12,13 +12,14 @@ RSpec.describe TheMovieDbTvListener do
 
     let(:expected_attributes) do
       {
-        'backdrop_path' => '/li9SZBpVzJz81ouqifVuH5C7Nod.jpg',
-        'created_at' => nil,
-        'disk_id' => nil,
-        'episode_run_time' => [42, 60, 43, 45],
         'id' => nil,
         'name' => 'Stargate SG-1',
         'original_name' => 'Stargate SG-1',
+        'first_air_date' => '1997-07-27',
+        'poster_path' => '/9Jegw0yle4x8jlmLNZon37Os27h.jpg',
+        'backdrop_path' => '/li9SZBpVzJz81ouqifVuH5C7Nod.jpg',
+        'episode_run_time' => [42, 60, 43, 45],
+        'the_movie_db_id' => 4629,
         'overview' => 'The story of Stargate SG-1 begins about a year after '\
         'the events of the feature film, when the United States government '\
         'learns that an ancient alien device called the Stargate can access'\
@@ -26,10 +27,8 @@ RSpec.describe TheMovieDbTvListener do
         ' Air Force special operations team, one of more than two dozen teams '\
         'from Earth who explore the galaxy and defend against alien threats such'\
         " as the Goa'uld, Replicators, and the Ori.",
-        'poster_path' => '/9Jegw0yle4x8jlmLNZon37Os27h.jpg',
-        'the_movie_db_id' => 4629,
         'updated_at' => nil,
-        'first_air_date' => '1997-07-27'
+        'created_at' => nil
       }
     end
 

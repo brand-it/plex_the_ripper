@@ -14,12 +14,7 @@
 #  poster_path      :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
-#  disk_id          :integer
 #  the_movie_db_id  :integer
-#
-# Indexes
-#
-#  index_tvs_on_disk_id  (disk_id)
 #
 class Tv < ApplicationRecord
   include Wisper::Publisher
