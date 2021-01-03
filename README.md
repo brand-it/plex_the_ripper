@@ -1,4 +1,4 @@
-![Ruby](https://github.com/brand-it/plex_the_ripper/workflows/Ruby/badge.svg)
+![Status](https://github.com/brand-it/plex_the_ripper/workflows/Status/badge.svg)
 
 # plex_the_ripper
 
