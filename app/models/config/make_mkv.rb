@@ -17,9 +17,9 @@ class Config
                               elsif OS.posix?
                                 '/usr/bin/makemkv/makemkvcon'
                               end
-    settings_defaults makemkvcon_path: DEFAULT_MAKEMKVCON_PATH
+    settings makemkvcon_path: DEFAULT_MAKEMKVCON_PATH
 
-    validate :mkvemkvcon_path_present
+    validates :settings_makemkvcon_path, presence: true
     validate :makemkvcon_path_executable
 
     def self.current
@@ -32,13 +32,7 @@ class Config
       return if settings.makemkvcon_path.blank?
       return if File.executable?(settings.makemkvcon_path)
 
-      errors.add(:settings, "makemkvcon path #{settings.makemkvcon_path} is not an executable")
-    end
-
-    def mkvemkvcon_path_present
-      return if settings.makemkvcon_path.present?
-
-      errors.add(:settings, 'makemkvcon path is required')
+      errors.add(:settings_makemkvcon_path, 'is required to be an executable')
     end
   end
 end

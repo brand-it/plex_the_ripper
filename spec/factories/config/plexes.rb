@@ -12,5 +12,7 @@
 #
 FactoryBot.define do
   factory :config_plex, class: 'Config::Plex' do # rubocop:disable Lint/EmptyBlock
+    settings_movie_path { '/it/is/not/real' }
+    settings_video_path { '/there/is/no/video/path' }
   end
 end

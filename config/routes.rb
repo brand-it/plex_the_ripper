@@ -2,10 +2,8 @@
 
 Rails.application.routes.draw do
   concern :disk_workflow do
-    member do
-      patch :rip
-      post :select
-    end
+    get :select, on: :collection
+    get :rip, on: :member
   end
 
   resources :users
@@ -18,7 +16,7 @@ Rails.application.routes.draw do
       member { get 'directories' }
     end
     resource :the_movie_db, only: %i[edit update create new]
-    resource :make_mkv, only: %i[edit update]
+    resource :make_mkv, only: %i[edit update create new]
   end
   resources :the_movie_dbs, only: %i[index show]
 

@@ -4,6 +4,20 @@ class Config
   class MakeMkvsController < ApplicationController
     before_action :set_make_mkv, only: %i[edit update]
 
+    def new
+      @config_make_mkv = Config::MakeMkv.new
+    end
+
+    def create
+      @config_make_mkv = Config::MakeMkv.new(make_mkv_params)
+
+      if @config_make_mkv.save
+        redirect_to root_path, notice: 'Make MKV Config was successfully created.'
+      else
+        render :new
+      end
+    end
+
     def edit; end
 
     def update

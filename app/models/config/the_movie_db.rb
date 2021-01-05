@@ -12,10 +12,8 @@
 #
 class Config
   class TheMovieDb < Config
-    settings_defaults(api_key: nil)
+    settings(api_key: nil)
 
-    def settings_invalid?
-      settings&.api_key.blank?
-    end
+    validates :settings_api_key, presence: true
   end
 end

@@ -12,7 +12,7 @@
 #
 class Config
   class Plex < Config
-    settings_defaults(
+    settings(
       movie_path: nil,
       video_path: nil,
       ftp_username: nil,
@@ -21,12 +21,7 @@ class Config
       use_ftp: false
     )
 
-    def settings_invalid?
-      settings.movie_path.blank? || settings.video_path.blank?
-    end
-
-    def settings_use_ftp?
-      settings.use_ftp == true
-    end
+    validates :settings_movie_path, presence: true
+    validates :settings_video_path, presence: true
   end
 end

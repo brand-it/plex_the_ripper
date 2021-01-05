@@ -1,8 +1,7 @@
-<%= simple_form_for config_make_mkv do |f| %>
+
+<%= simple_form_for config_make_mkv, url: config_make_mkv_path do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-  <%= f.simple_fields_for :settings, f.object.settings do |settings_form| %>
-    <%= settings_form.input :makemkvcon_path, autofocus: true, required: true %>
-  <% end %>
+  <%= f.input :settings_makemkvcon_path, autofocus: true %>
   <%= f.button :submit %>
 <% end %>

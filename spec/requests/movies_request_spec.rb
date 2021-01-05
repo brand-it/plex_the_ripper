@@ -3,10 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Movies', type: :request do
-  let(:tv) { create :tv, the_movie_db_id: 4629 }
-  let(:season) { create :season, season_number: 1, tv: tv }
+  let(:movie) { create :movie }
 
-  pending "add some examples to (or delete) #{__FILE__}"
-  # describe 'get /select/:the_movie_db_id' do
-  # end
+  # pending "add some examples to (or delete) #{__FILE__}"
+
+  describe 'get /movies/:id/select' do
+    subject(:select) { get select_movie_path(season) } }
+    subject(:patch_season) { patch season_url(season), params: { season: { somthing: 1 } } }
+
+  end
 end

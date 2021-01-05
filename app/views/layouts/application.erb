@@ -12,13 +12,6 @@
       <main role="main" class="inner cover mb-auto">
         <div class='row'>
           <div class='col-12'>
-            <div id='progress-bar'>
-              <%= render ProgressBarComponent.new(label: Disk.model_name.name, completed: Disk.percentage_completed, status: (Disk.all_valid? ? 'success' : 'info')) %>
-            </div>
-          </div>
-        </div>
-        <div class='row'>
-          <div class='col-12'>
             <%= yield %>
           </div>
         </div>
