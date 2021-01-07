@@ -11,9 +11,5 @@ class Config
     def self.dump(object)
       JSON.dump(object.to_h)
     end
-
-    def merge(object)
-      self.class.new(to_h.merge(object.to_h))
-    end
   end
 end

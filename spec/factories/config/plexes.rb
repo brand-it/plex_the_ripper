@@ -11,7 +11,7 @@
 #  updated_at :datetime         not null
 #
 FactoryBot.define do
-  factory :config_plex, class: 'Config::Plex' do # rubocop:disable Lint/EmptyBlock
+  factory :config_plex, class: 'Config::Plex' do
     settings_movie_path { '/it/is/not/real' }
     settings_video_path { '/there/is/no/video/path' }
   end

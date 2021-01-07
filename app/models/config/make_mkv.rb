@@ -12,12 +12,7 @@
 #
 class Config
   class MakeMkv < Config
-    DEFAULT_MAKEMKVCON_PATH = if OS.mac?
-                                '/Applications/MakeMKV.app/Contents/MacOS/makemkvcon'
-                              elsif OS.posix?
-                                '/usr/bin/makemkv/makemkvcon'
-                              end
-    settings makemkvcon_path: DEFAULT_MAKEMKVCON_PATH
+    setting :makemkvcon_path, default: -> { default_makemkvcon_path }
 
     validates :settings_makemkvcon_path, presence: true
     validate :makemkvcon_path_executable
@@ -28,9 +23,16 @@ class Config
 
     private
 
+    def default_makemkvcon_path
+      if OS.mac?
+        `locate makemkvcon`
+      elsif OS.posix?
+        '/usr/bin/makemkv/makemkvcon'
+      end
+    end
+
     def makemkvcon_path_executable
-      return if settings.makemkvcon_path.blank?
-      return if File.executable?(settings.makemkvcon_path)
+      return if File.executable?(settings.makemkvcon_path.to_s)
 
       errors.add(:settings_makemkvcon_path, 'is required to be an executable')
     end

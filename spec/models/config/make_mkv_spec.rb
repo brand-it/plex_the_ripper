@@ -22,7 +22,9 @@ RSpec.describe Config::MakeMkv, type: :model do
       it 'does not raise validation error if makemkvcon_path blank' do
         config_make_mkv.settings = { makemkvcon_path: '' }
         config_make_mkv.valid?
-        expect(config_make_mkv.errors['settings_makemkvcon_path']).to eq ['is required to be an executable']
+        expect(config_make_mkv.errors['settings_makemkvcon_path']).to eq(
+          ["can't be blank", 'is required to be an executable']
+        )
       end
 
       it 'raise validation error if makemkvcon_path is not a executable' do

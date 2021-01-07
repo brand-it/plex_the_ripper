@@ -28,9 +28,9 @@ class MoviesController < ApplicationController
 
   def movie
     @movie ||= if params.key?(:the_movie_db_id)
-      Movie.find_or_initialize_by(the_movie_db_id: movie_params[:the_movie_db_id])
-    else
-      Movie.find(params[:id])
-    end
+                 Movie.find_or_initialize_by(the_movie_db_id: movie_params[:the_movie_db_id])
+               else
+                 Movie.find(params[:id])
+               end
   end
 end

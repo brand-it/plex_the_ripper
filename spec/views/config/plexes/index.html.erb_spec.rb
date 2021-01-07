@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe 'config/plexes/index', type: :view do
   before do
     assign(:config_plexes, [
-             Config::Plex.create!,
-             Config::Plex.create!
+             build_stubbed(:config_plex),
+             build_stubbed(:config_plex)
            ])
   end
 

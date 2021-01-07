@@ -12,10 +12,8 @@
 #
 class Config
   class User < Config
-    settings(
-      dark_mode: true,
-      the_movie_db_api_key: nil,
-      the_movie_db_session_id: nil
-    )
+    setting :dark_mode, default: -> { true }
+    setting :the_movie_db_api_key
+    setting :the_movie_db_session_id
   end
 end

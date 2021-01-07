@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'config/plexes/show', type: :view do
   before do
-    @config_plex = assign(:config_plex, Config::Plex.create!)
+    @config_plex = assign(:config_plex, build_stubbed(:config_plex))
   end
 
   it 'renders attributes in <p>' do

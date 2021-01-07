@@ -12,14 +12,12 @@
 #
 class Config
   class Plex < Config
-    settings(
-      movie_path: nil,
-      video_path: nil,
-      ftp_username: nil,
-      ftp_host: nil,
-      ftp_password: nil,
-      use_ftp: false
-    )
+    setting :movie_path
+    setting :video_path
+    setting :ftp_username
+    setting :ftp_host
+    setting :ftp_password
+    setting :use_ftp
 
     validates :settings_movie_path, presence: true
     validates :settings_video_path, presence: true
