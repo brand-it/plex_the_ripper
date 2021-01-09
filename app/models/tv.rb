@@ -7,7 +7,6 @@
 #  id               :integer          not null, primary key
 #  backdrop_path    :string
 #  episode_run_time :string
-#  file_path        :string
 #  first_air_date   :string
 #  original_title   :string
 #  overview         :string
@@ -22,6 +21,8 @@
 #
 class Tv < Video
   include Wisper::Publisher
+  alias_attribute :name, :title
+  alias_attribute :original_name, :original_title
 
   serialize :episode_run_time, Array
 

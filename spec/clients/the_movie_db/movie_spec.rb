@@ -6,7 +6,7 @@ RSpec.describe TheMovieDb::Movie do
   before { create :config_the_movie_db }
 
   describe '#results', :vcr do
-    subject(:results) { described_class.new(577_922).results }
+    subject(:results) { described_class.new(577_922).body }
 
     it 'responds with success' do
       expect(results.title).to eq 'Tenet'

@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
 class TheMovieDbsController < ApplicationController
-
   def index
-    Movie.insert_all
-    TV
-    @movies = Movie.
+    # Movie.insert_all
+    # TV
+    # @movies = Movie.
   end
 
   private

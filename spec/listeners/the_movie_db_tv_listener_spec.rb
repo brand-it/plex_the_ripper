@@ -13,8 +13,8 @@ RSpec.describe TheMovieDbTvListener do
     let(:expected_attributes) do
       {
         'id' => nil,
-        'name' => 'Stargate SG-1',
-        'original_name' => 'Stargate SG-1',
+        'title' => 'Stargate SG-1',
+        'original_title' => 'Stargate SG-1',
         'first_air_date' => '1997-07-27',
         'poster_path' => '/9Jegw0yle4x8jlmLNZon37Os27h.jpg',
         'backdrop_path' => '/li9SZBpVzJz81ouqifVuH5C7Nod.jpg',
@@ -27,14 +27,17 @@ RSpec.describe TheMovieDbTvListener do
         ' Air Force special operations team, one of more than two dozen teams '\
         'from Earth who explore the galaxy and defend against alien threats such'\
         " as the Goa'uld, Replicators, and the Ori.",
+        'type' => 'Tv',
+        'workflow_state' => nil,
         'updated_at' => nil,
-        'created_at' => nil
-      }
+        'created_at' => nil,
+        'release_date' => nil
+      }.sort.to_h
     end
 
     it 'updates attributes using tv name' do
       tv_saving
-      expect(tv.attributes).to eq expected_attributes
+      expect(tv.attributes.sort.to_h).to eq expected_attributes
     end
 
     it 'creates seasons' do

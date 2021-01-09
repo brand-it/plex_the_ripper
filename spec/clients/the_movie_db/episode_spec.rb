@@ -6,7 +6,7 @@ RSpec.describe TheMovieDb::Episode do
   before { create :config_the_movie_db }
 
   describe '#results', :vcr do
-    subject(:results) { described_class.new(66_732, 1, 1).results }
+    subject(:results) { described_class.new(66_732, 1, 1).body }
 
     it 'responds with success' do
       expect(results.id).to eq 1_198_665

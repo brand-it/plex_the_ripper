@@ -100,7 +100,6 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.string "backdrop_path"
     t.integer "the_movie_db_id"
     t.string "overview"
-    t.string "file_path"
     t.string "first_air_date"
     t.string "episode_run_time"
     t.string "type"

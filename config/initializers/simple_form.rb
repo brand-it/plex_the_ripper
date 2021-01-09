@@ -178,15 +178,22 @@ SimpleForm.setup do |config|
 end
 
 module DisableDoubleClickOnSimpleForms
+  PROCESSING = 'Processing...'
   def submit(field, options = {})
-    if field.is_a?(Hash)
-      field[:data] ||= {}
-      field[:data][:disable_with] ||= field[:value] || 'Processing...'
-    else
-      options[:data] ||= {}
-      options[:data][:disable_with] ||= options[:value] || 'Processing...'
-    end
+    field.is_a?(Hash) ? field_disable_with(field) : options_disable_with(options)
     super(field, options)
+  end
+
+  private
+
+  def field_disable_with(field)
+    field[:data] ||= {}
+    field[:data][:disable_with] ||= field[:value] || PROCESSING
+  end
+
+  def options_disable_with(options)
+    options[:data] ||= {}
+    options[:data][:disable_with] ||= options[:value] || PROCESSING
   end
 end
 
