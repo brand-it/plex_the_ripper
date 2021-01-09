@@ -9,6 +9,7 @@
     <%= settings_form.input :ftp_host, required: false %>
     <%= settings_form.input :ftp_password, required: false %>
   <% end %>
-
-  <%= f.button :submit %>
+  <div class='bg-dark w-100 fixed-bottom mt-1 text-right p-3 border-top'>
+    <%= f.button :submit %>
+  </div>
 <% end %>

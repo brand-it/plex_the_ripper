@@ -4,8 +4,8 @@ module TheMovieDb
   module Authentication
     module Session
       class New < Base
-        def results
-          @results ||= get
+        def body
+          @body ||= get
         end
       end
     end

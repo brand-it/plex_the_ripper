@@ -12,6 +12,6 @@
 #
 FactoryBot.define do
   factory :config_make_mkv, class: 'Config::MakeMkv' do
-    settings { { makemkvcon_path: Rails.root.join('spec/bin/makemkvcon') } }
+    settings { { makemkvcon_path: Rails.root.join('spec/bin/makemkvcon_test') } }
   end
 end

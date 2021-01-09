@@ -2,21 +2,25 @@
 
 # == Schema Information
 #
-# Table name: tvs
+# Table name: videos
 #
 #  id               :integer          not null, primary key
 #  backdrop_path    :string
 #  episode_run_time :string
+#  file_path        :string
 #  first_air_date   :string
-#  name             :string
-#  original_name    :string
+#  original_title   :string
 #  overview         :string
 #  poster_path      :string
+#  release_date     :date
+#  title            :string
+#  type             :string
+#  workflow_state   :string
 #  created_at       :datetime         not null
 #  updated_at       :datetime         not null
 #  the_movie_db_id  :integer
 #
-class Tv < ApplicationRecord
+class Tv < Video
   include Wisper::Publisher
 
   serialize :episode_run_time, Array

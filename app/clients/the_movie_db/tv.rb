@@ -4,8 +4,8 @@ module TheMovieDb
   class Tv < Base
     param :tv_id, Types::Integer
 
-    def results
-      @results ||= get
+    def body
+      @body ||= get
     end
 
     private

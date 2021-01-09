@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # == Schema Information
 #
 # Table name: videos
@@ -20,21 +18,5 @@
 #  updated_at       :datetime         not null
 #  the_movie_db_id  :integer
 #
-class Movie < Video
-  include DiskWorkflow
-  include HasProgress
-  include Wisper::Publisher
-  include AsVideo
-
-  before_save { broadcast(:movie_saving, self) }
-  after_commit { broadcast(:movie_saved, id) }
-
-  with_options unless: :the_movie_db_id do
-    validates :title, presence: true
-    validates :original_title, presence: true
-  end
-
-  def rip
-    # CreateMovieWorker.perform(movie: self, disk_title: disk_titles)
-  end
+class Video < ApplicationRecord
 end

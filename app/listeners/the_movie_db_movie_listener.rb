@@ -13,7 +13,7 @@ class TheMovieDbMovieListener
   def movie_saving(movie)
     return if movie.the_movie_db_id.nil?
 
-    db_movie = TheMovieDb::Movie.new(movie.the_movie_db_id).results
+    db_movie = TheMovieDb::Movie.new(movie.the_movie_db_id).body
     movie.attributes = movie_params(db_movie)
   end
 

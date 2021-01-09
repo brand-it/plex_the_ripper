@@ -1,8 +1,8 @@
 <%= simple_form_for :search, url: the_movie_dbs_path, method: :get, html: { class: 'row' } do |f| %>
-  <div class='col-8 col-md-10 col-lg-11'>
+  <div class='col-8 col-md-10 col-lg-10'>
     <%= f.input :query, label: 'Search for TV or Movie', autofocus: true, required: false %>
   </div>
-  <div class='col align-self-center p-0'>
-    <%= f.button :submit, 'Search' %>
+  <div class='col align-self-center p-0 text-right'>
+    <%= f.button :submit, 'Search', data: { disable_with: 'Searching' } %>
   </div>
 <% end %>

@@ -25,6 +25,16 @@ class Config
       redirect_to root_path
     end
 
+    def install
+      if OS.mac?
+        MkvInstaller::MacOs.call
+      elsif OS.posix?
+        MkvInstaller::Posix.call
+      end
+
+      redirect_to modify_config_make_mkv_path, notice: 'Make MKV has been installed'
+    end
+
     private
 
     def set_make_mkv

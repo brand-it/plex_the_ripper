@@ -33,6 +33,10 @@ module DiskWorkflow
       state :completed
     end
 
+    def select
+      selected.each(&:cancel!)
+    end
+
     def select_disk_titles(disk_titles)
       halt! 'Disk Title is required' if disk_titles&.empty?
 

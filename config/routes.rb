@@ -16,7 +16,9 @@ Rails.application.routes.draw do
       member { get 'directories' }
     end
     resource :the_movie_db, only: %i[edit update create new]
-    resource :make_mkv, only: %i[edit update create new]
+    resource :make_mkv, only: %i[edit update create new] do
+      collection { get :install }
+    end
   end
   resources :the_movie_dbs, only: %i[index show]
 

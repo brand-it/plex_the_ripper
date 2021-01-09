@@ -13,8 +13,8 @@ module TheMovieDb
       end
 
       class New < Base
-        def results
-          @results ||= get(object_class: Response)
+        def body
+          @body ||= get(object_class: Response)
         end
       end
     end

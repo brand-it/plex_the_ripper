@@ -23,18 +23,25 @@ class Config
 
     private
 
-    def default_makemkvcon_path
-      if OS.mac?
-        `locate makemkvcon`
-      elsif OS.posix?
-        '/usr/bin/makemkv/makemkvcon'
-      end
-    end
-
     def makemkvcon_path_executable
       return if File.executable?(settings.makemkvcon_path.to_s)
 
       errors.add(:settings_makemkvcon_path, 'is required to be an executable')
+    end
+
+    def default_makemkvcon_path
+      if OS.mac?
+        locate_mac_makemkvcon
+      elsif OS.posix?
+        '/usr/bin/makemkv/makemkvcon_test'
+      end
+    end
+
+    def locate_mac_makemkvcon
+      makeconmkv = '/Applications/MakeMKV.app/Contents/MacOS/makemkvcon'
+      return makeconmkv if File.executable?(makeconmkv)
+
+      `locate makemkvcon`.split.find { |f| File.executable? f }
     end
   end
 end

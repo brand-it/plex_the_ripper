@@ -4,7 +4,7 @@ class TheMovieDbSeasonListener
   PERMITTED_PARAMS = %i[name overview poster_path season_number air_date].freeze
   EPISODE_PERMITTED_PARAMS = %i[name episode_number overview air_date still_path].freeze
   def season_saving(season)
-    db_season = TheMovieDb::Season.new(season.tv.the_movie_db_id, season.season_number).results
+    db_season = TheMovieDb::Season.new(season.tv.the_movie_db_id, season.season_number).body
     season.attributes = season_params(db_season)
     build_episodes(season, db_season)
   end

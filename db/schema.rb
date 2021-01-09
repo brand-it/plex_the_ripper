@@ -69,20 +69,6 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.index ["video_type", "video_id"], name: "index_mkv_progresses_on_video_type_and_video_id"
   end
 
-  create_table "movies", force: :cascade do |t|
-    t.string "title"
-    t.string "original_title"
-    t.string "workflow_state"
-    t.date "release_date"
-    t.string "poster_path"
-    t.string "backdrop_path"
-    t.integer "the_movie_db_id"
-    t.string "overview"
-    t.string "file_path"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "seasons", force: :cascade do |t|
     t.string "name"
     t.string "overview"
@@ -96,19 +82,6 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.index ["tv_id"], name: "index_seasons_on_tv_id"
   end
 
-  create_table "tvs", force: :cascade do |t|
-    t.string "name"
-    t.string "original_name"
-    t.string "first_air_date"
-    t.string "poster_path"
-    t.string "backdrop_path"
-    t.integer "the_movie_db_id"
-    t.string "episode_run_time"
-    t.string "overview"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "config_type"
@@ -116,6 +89,23 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["config_type", "config_id"], name: "index_users_on_config_type_and_config_id"
+  end
+
+  create_table "videos", force: :cascade do |t|
+    t.string "title"
+    t.string "original_title"
+    t.string "workflow_state"
+    t.date "release_date"
+    t.string "poster_path"
+    t.string "backdrop_path"
+    t.integer "the_movie_db_id"
+    t.string "overview"
+    t.string "file_path"
+    t.string "first_air_date"
+    t.string "episode_run_time"
+    t.string "type"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
 end

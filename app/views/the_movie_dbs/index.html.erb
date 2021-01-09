@@ -1,6 +1,6 @@
 <%= render 'search' %>
 <div class='row'>
-  <% if @search.results.results.blank? %>
+  <% if @search.body.results.blank? %>
     <div class='col-md-12'>
       <div class="jumbotron jumbotron-fluid rounded">
         <div class='container'>
@@ -10,15 +10,15 @@
       </div>
     </div>
   <% end %>
-  <% @search.results.results.to_a.select { |x| ['movie', 'tv'].include?(x.media_type) }.each do |result| %>
+  <% @search.body.results.select { |x| ['movie', 'tv'].include?(x.media_type) }.each do |result| %>
     <div class="card col-6 text-white bg-dark p-0">
       <div class="row no-gutters">
         <div class="col-4 mb-3">
           <%= imdb_image_tag result.poster_path %>
           <% if result.media_type == 'tv' %>
-            <%= link_to 'Select', tvs_path(tv: { the_movie_db_id: result.id }), method: :post, class: 'btn btn-outline-light w-100 rounded-0' %>
+            <%= link_to 'Select', tvs_path(the_movie_db_id: result.id), method: :post, class: 'btn btn-outline-light w-100 rounded-0' %>
           <% else %>
-            <%= link_to 'Select', movies_path(movie: { the_movie_db_id: result.id }), method: :post, class: 'btn btn-outline-light w-100 rounded-0' %>
+            <%= link_to 'Select', movies_path(the_movie_db_id: result.id), method: :post, class: 'btn btn-outline-light w-100 rounded-0' %>
           <% end %>
         </div>
         <div class="col-8">
