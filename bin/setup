@@ -186,18 +186,18 @@ end
 
 def database_setup
   log 'Setting up databases...'
-  Rake::Task['db:setup'].invoke
+  system 'bin/rails db:setup'
   success 'Database setup complete!'
 end
 
 def compile_assets
   log 'Compiling assets...'
-  Rake::Task['assets:precompile'].invoke
+  system 'bin/rails assets:precompile'
   success 'Assets compiled!'
 end
 
 def install_mkv
-  Rake::Task['mkv:install'].invoke
+  system 'bin/rails mkv:install'
 end
 
 Dir.chdir APP_ROOT do
