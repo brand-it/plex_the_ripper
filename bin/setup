@@ -177,27 +177,27 @@ def application_setup
   # We have to run several rake tasks as part of app setup. It's faster to load
   # the application once and run tasks using Rake::Task.invoke rather than making
   # system calls, since each system call will independently load the application.
-  # info 'Loading Rails...'
-  # require "#{APP_ROOT}/config/environment"
-  # Rails.application.load_tasks
+  info 'Loading Rails...'
+  require "#{APP_ROOT}/config/environment"
+  Rails.application.load_tasks
 
-  # success 'Application initialized!'
+  success 'Application initialized!'
 end
 
 def database_setup
   log 'Setting up databases...'
-  system 'bin/rails db:setup'
+  Rake::Task['db:setup'].invoke
   success 'Database setup complete!'
 end
 
 def compile_assets
   log 'Compiling assets...'
-  system 'bin/rails assets:precompile'
+  Rake::Task['assets:precompile'].invoke
   success 'Assets compiled!'
 end
 
 def install_mkv
-  system 'bin/rails mkv:install'
+  Rake::Task['mkv:install'].invoke
 end
 
 Dir.chdir APP_ROOT do
