@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 require 'optparse'
+require 'fileutils'
 APP_ROOT = File.expand_path '..', __dir__
 HOMEBREW_PACKAGES = %i[
   libxml2
