@@ -1,6 +1,31 @@
 #!/usr/bin/env ruby
+require 'optparse'
+APP_ROOT = File.expand_path '..', __dir__
+HOMEBREW_PACKAGES = %i[
+  libxml2
+  libxslt
+  makedepend
+  openssl
+  readline
+]
+@bundler_options = []
+@deployment = false
+install_packages = false
+OptionParser.new do |opts|
+  opts.on('--path [path]', String) do |path|
+    @bundler_options << ['path', path]
+    FileUtils.mkdir(path) unless Dir.exist? path
+  end
+
+  opts.on('--deployment') do
+    @bundler_options << ['deployment', true]
+    @bundler_options << ['without', 'development test']
+    @deployment = true
+  end
+end.parse!(ARGV)
+
 class Tool
-  TOOLS = File.read('.tool-versions').lines.map(&:strip)
+  TOOLS = File.read("#{APP_ROOT}/.tool-versions").lines.map(&:strip)
   def self.version(name)
     TOOLS.find { |x| x.match(name) }.scan(/\d*\.\d*\.\d*/).first
   end
@@ -20,12 +45,6 @@ class ColorString < String
   ANSI_COLORS.each do |name, code|
     define_method(name) { NO_COLOR ? self : "\e[#{code}m#{self}\e[0m" }
   end
-end
-
-def prompt(message)
-  return false if ENV['IN_DOCKER'] # Docker container setup is non-interactive
-  print ColorString.new("#{message} [y/N] ").magenta
-  ['y', 'yes'].include? gets.chomp
 end
 
 def log(message)
@@ -48,15 +67,6 @@ end
 def warn(message)
   puts ColorString.new(message).yellow
 end
-APP_ROOT = File.expand_path '..', __dir__
-HOMEBREW_INSTALL_CMD = '/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install.sh)"'
-HOMEBREW_PACKAGES = %i[
-  libxml2
-  libxslt
-  makedepend
-  openssl
-  readline
-]
 #---------------------#
 #      Setup Steps    #
 #---------------------#
@@ -80,24 +90,17 @@ def setup_mac
   # Install Xcode developer tools. This includes essential packages like
   # git, make, gcc, etc. There will be a system prompt if the tools aren't
   # installed already, so be sure to watch for that and click "Install".
-  system 'xcode-select --install'
+  system 'xcode-select --install' unless @deployment
 
   # Either install or update Homebrew. Homebrew installation depends on a
   # script from Github, so we default to not installing for safety reasons.
   # Never run code from the internet that you haven't looked at yourself!
   if !system('which brew')
     warn 'Homebrew is not installed.'
-    info 'The command to install Homebrew is:'
-    info HOMEBREW_INSTALL_CMD
-    info 'This will download and execute a script from the internet.'
-    info "Make sure you're comfortable with that before proceeding."
-    if prompt 'Do you want to install Homebrew?'
-      log 'Installing Homebrew...'
-      system(HOMEBREW_INSTALL_CMD) || error('Error installing Homebrew!')
-      system 'brew analytics off'
-    else
-      error 'You need to install Homebrew first.'
-    end
+
+    log 'Installing Homebrew...'
+    system("sudo #{HOMEBREW_INSTALL_CMD}") || error('Error installing Homebrew!')
+    system 'brew analytics off'
   else
     success 'Homebrew is installed!'
     log 'Updating taps...'
@@ -122,6 +125,10 @@ def ruby_setup
   log "Installing bundler #{bundler_version}..."
   system("gem install bundler -v #{bundler_version}") || error('Error installing bundler!')
   log 'Installing gems...'
+  @bundler_options.each do |option, value|
+    system("bundle config set #{option} '#{value}' --local")
+    info "Added bundle config #{option} '#{value}'"
+  end
   system('bundle check') || system('bundle install') || error('Error installing gems!')
   success 'Gems installed!'
 end
