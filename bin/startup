@@ -1,0 +1,8 @@
+#!/bin/bash
+
+# Building out the simpler path info to avoid any issues from any user settings
+export PATH=/usr/local/Cellar/ruby@2.7/2.7.2/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+
+bin/install_ruby
+bin/setup --path tmp/gems --deployment
+bin/rails s -e production
