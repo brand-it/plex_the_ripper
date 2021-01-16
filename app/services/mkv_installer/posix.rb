@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module MkvDownloader
+module MkvInstaller
   class Posix < Base
     private
 
