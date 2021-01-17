@@ -214,4 +214,5 @@ Dir.chdir APP_ROOT do
   database_setup
   compile_assets
   install_mkv
+  FileUtils.touch('tmp/setup_complete')
 end

@@ -4,6 +4,8 @@
 export PATH=/usr/local/Cellar/ruby@2.7/2.7.2/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 export RAILS_ENV=production
 export RAILS_SERVE_STATIC_FILES=true
-bin/install_ruby
-bin/setup --path tmp/gems --deployment
+if [ ! -f "tmp/setup_complete" ]; then
+  bin/install_ruby
+  bin/setup --path tmp/gems --deployment
+fi
 bin/rails s -e production
