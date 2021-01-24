@@ -26,3 +26,6 @@ Metrics/BlockLength:
     - config/routes.rb  # Rails
     - lib/tasks/**/*    # Rake
     - spec/**/*         # RSpec
+
+RSpec/MultipleMemoizedHelpers:
+  Max: 6
