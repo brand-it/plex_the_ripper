@@ -11,7 +11,7 @@ module DiskWorkflow
     scope :failed, -> { where(workflow_state: 'failed') }
     scope :completed, -> { where(workflow_state: 'completed') }
 
-    after_commit :only_one_selected
+    after_commit :only_one_selected, if: :selected?
 
     workflow do
       state :new do

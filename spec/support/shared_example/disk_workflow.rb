@@ -38,6 +38,7 @@ RSpec.shared_examples 'DiskWorkflow' do |_parameter|
     context 'when two videos are selected' do
       let(:model_one) { create model_class }
       let(:model_two) { create model_class }
+      let(:disk_title) { create :disk_title }
 
       it 'changes state from selected to new' do
         model_one.select!
@@ -45,6 +46,16 @@ RSpec.shared_examples 'DiskWorkflow' do |_parameter|
         model_two.select!
         model_two.save!
         expect(described_class.selected.first.id).to eq(model_two.id)
+      end
+
+      it 'does not unset other videos if this video is not selected' do
+        model_two.select!
+        model_two.select_disk_titles!([disk_title])
+        model_two.save!
+        model_one.select!
+        model_one.save!
+        expect(model_two.reload.workflow_state).to eq('ready_to_rip')
+        expect(model_one.reload.workflow_state).to eq('selected')
       end
     end
 
