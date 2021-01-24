@@ -4,11 +4,11 @@ module Rescuer
   extend ActiveSupport::Concern
 
   included do
-    rescue_from 'Faraday::ConnectionFailed',
+    rescue_from Faraday::ConnectionFailed,
                 with: :render_timeout_connection
-    rescue_from 'TheMovieDb::Error',
+    rescue_from TheMovieDb::Error,
                 with: :render_movie_db_error
-    rescue_from 'TheMovieDb::InvalidConfig',
+    rescue_from TheMovieDb::InvalidConfig,
                 with: :movie_config_invalid
 
     private

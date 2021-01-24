@@ -8,6 +8,7 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.find_or_initialize_by(the_movie_db_id: params[:the_movie_db_id])
     @movie.subscribe(TheMovieDbMovieListener.new)
+    @movie.select!
 
     if @movie.save
       redirect_to @movie

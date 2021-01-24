@@ -35,6 +35,19 @@ RSpec.shared_examples 'DiskWorkflow' do |_parameter|
       end
     end
 
+    context 'when two videos are selected' do
+      let(:model_one) { create model_class }
+      let(:model_two) { create model_class }
+
+      it 'changes state from selected to new' do
+        model_one.select!
+        model_one.save!
+        model_two.select!
+        model_two.save!
+        expect(described_class.selected.first.id).to eq(model_two.id)
+      end
+    end
+
     context 'when event cancel!' do
       it 'changes state from selected to new' do
         model.workflow_state = 'selected'

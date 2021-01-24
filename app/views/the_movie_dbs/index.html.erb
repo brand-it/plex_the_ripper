@@ -1,6 +1,6 @@
 <%= render 'search' %>
 <div class='row'>
-  <% if @search.body.results.blank? %>
+  <% if @search.results.blank? %>
     <div class='col-md-12'>
       <div class="jumbotron jumbotron-fluid rounded">
         <div class='container'>
@@ -10,7 +10,7 @@
       </div>
     </div>
   <% end %>
-  <% @search.body.results.select { |x| ['movie', 'tv'].include?(x.media_type) }.each do |result| %>
+  <% @search.results.select { |x| ['movie', 'tv'].include?(x.media_type) }.each do |result| %>
     <div class="card col-6 text-white bg-dark p-0">
       <div class="row no-gutters">
         <div class="col-4 mb-3">

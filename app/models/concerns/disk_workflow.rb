@@ -11,6 +11,8 @@ module DiskWorkflow
     scope :failed, -> { where(workflow_state: 'failed') }
     scope :completed, -> { where(workflow_state: 'completed') }
 
+    after_commit :only_one_selected
+
     workflow do
       state :new do
         event :select, transitions_to: :selected
@@ -31,6 +33,13 @@ module DiskWorkflow
         event :retry, transitions_to: :ripping
       end
       state :completed
+    end
+
+    def only_one_selected
+      self.class
+          .selected
+          .where.not(id: id)
+          .update_all(workflow_state: nil) # rubocop:disable Rails/SkipsModelValidations
     end
 
     def select_disk_titles(disk_titles)

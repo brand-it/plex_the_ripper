@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe 'the_movie_dbs/index', type: :view do
-  let(:search) { TheMovieDb::Search::Multi.new(query: nil) }
+  let(:search) { TheMovieDb::Search::Multi.new(query: nil).body }
 
   before { assign(:search, search) }
 

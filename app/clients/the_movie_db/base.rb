@@ -1,18 +1,6 @@
 # frozen_string_literal: true
 
 module TheMovieDb
-  class InvalidConfig < StandardError; end
-
-  class Error < StandardError
-    attr_reader :object, :body
-
-    def initialize(object)
-      @object = object
-      @body = JSON.parse(object.body, object_class: OpenStruct)
-      super("#{object.env.url} #{object.status} #{object.body}")
-    end
-  end
-
   class Base
     extend Dry::Initializer
 
