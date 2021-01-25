@@ -7,7 +7,7 @@ RSpec.describe TheMovieDbTvListener do
 
   before { create :config_the_movie_db }
 
-  describe '#tv_saving', :vcr do
+  describe '#tv_saving', :vcr, freeze: Time.zone.local(1990) do
     subject(:tv_saving) { described_class.new.tv_saving(tv) }
 
     let(:expected_attributes) do
@@ -28,6 +28,7 @@ RSpec.describe TheMovieDbTvListener do
         'from Earth who explore the galaxy and defend against alien threats such'\
         " as the Goa'uld, Replicators, and the Ori.",
         'type' => 'Tv',
+        'synced_on' => Time.zone.local(1990),
         'workflow_state' => nil,
         'updated_at' => nil,
         'created_at' => nil,

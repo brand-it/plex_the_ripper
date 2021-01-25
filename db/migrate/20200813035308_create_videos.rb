@@ -12,7 +12,9 @@ class CreateVideos < ActiveRecord::Migration[6.0]
       t.string :first_air_date # Tv Show
       t.string :episode_run_time # Tv Show
       t.string :type
+      t.datetime :synced_on
       t.timestamps
+      t.index [:type, :the_movie_db_id], unique: true
     end
   end
 end

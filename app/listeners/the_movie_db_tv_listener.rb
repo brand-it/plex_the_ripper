@@ -9,7 +9,7 @@ class TheMovieDbTvListener
     return if tv.the_movie_db_id.nil?
 
     db_tv = TheMovieDb::Tv.new(tv.the_movie_db_id).body
-    tv.attributes = tv_params(db_tv)
+    tv.attributes = tv_params(db_tv).merge(synced_on: Time.current)
     build_seasons(tv, db_tv)
   end
 

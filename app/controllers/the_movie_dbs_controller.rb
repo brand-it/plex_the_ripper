@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
 class TheMovieDbsController < ApplicationController
-  before_action :set_search, only: %i[index]
+  helper_method :search_params
 
   def index
-    # CreateMovieWorker.perform
-    # MkvProgress.last.update!(percentage: 2 % MkvProgress.last.percentage)
+    @videos = VideoSearchService.new(query: search_params.query).results
   end
 
   private
 
-  def set_search
-    @search = TheMovieDb::Search::Multi.new(query: params.dig(:search, :query)).body
+  def search_params
+    OpenStruct.new(query: params.dig(:search, :query))
   end
 end

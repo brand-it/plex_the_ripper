@@ -103,8 +103,10 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.string "first_air_date"
     t.string "episode_run_time"
     t.string "type"
+    t.datetime "synced_on"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["type", "the_movie_db_id"], name: "index_videos_on_type_and_the_movie_db_id", unique: true
   end
 
 end

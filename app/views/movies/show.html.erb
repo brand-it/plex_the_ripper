@@ -1,1 +1,23 @@
-<%= debug @movie %>
+  <div class="card col-12 text-white bg-dark p-0">
+    <div class="row no-gutters">
+      <div class="col-4 mb-3">
+        <%= imdb_image_tag @movie.poster_path %>
+      </div>
+      <div class="col-8">
+        <div class="card-body">
+          <h5 class="card-title">
+            <%= icon('film', type: 'fas') %>
+            <%= @movie.title %>
+          </h5>
+          <small class='text-muted'><%= @movie.original_title %></small>
+          <p class="card-text"><%= @movie.overview %></p>
+          <p class="card-text">
+            <small class="text-muted">
+              <%= @movie.release_date || @movie.first_air_date %>
+              <%= link_to_movie_db_movie @movie.the_movie_db_id %>
+            </small>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
