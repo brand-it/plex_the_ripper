@@ -20,22 +20,6 @@ module TheMovieDb
       def previous_page
         @previous_page ||= self.class.new(page: page - 1, query: query, year: year)
       end
-
-      # def model_name
-      #   OpenStruct.new(param_key: 'search')
-      # end
-
-      # def to_key
-      #   nil
-      # end
-
-      # def to_model
-      #   self
-      # end
-
-      # def persisted?
-      #   true
-      # end
     end
   end
 end

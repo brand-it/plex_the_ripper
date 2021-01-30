@@ -3,6 +3,8 @@
 class VideoSearchService
   extend Dry::Initializer
   option :query, Types::Coercible::String, optional: true
+  VIDEOS_MEDIA_TYPE = %w[movie tv].freeze
+  CACHE_TTL = 1.day
 
   def results
     return Video.order(synced_on: :desc).limit(200) if query.blank?
@@ -18,8 +20,14 @@ class VideoSearchService
     @search ||= TheMovieDb::Search::Multi.new(query: query).body
   end
 
+  def video_results
+    Rails.cache.fetch(query, namespace: 'video_search_service', expires_in: CACHE_TTL) do
+      search.results.select { |r| VIDEOS_MEDIA_TYPE.include?(r.media_type) }
+    end
+  end
+
   def the_movie_db_ids
-    search.results.map { |r| { id: r.id, type: r.media_type.classify } }.reverse
+    video_results.map { |r| { id: r.id, type: r.media_type.classify } }.reverse
   end
 
   def find_video(id: nil, type: nil)
