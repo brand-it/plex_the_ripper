@@ -19,9 +19,10 @@
 #
 #  index_episodes_on_season_id  (season_id)
 #
+# TODO: Need to make this into a Video
 class Episode < ApplicationRecord
   include DiskWorkflow
-  # include AsVideo
+
   belongs_to :season
   belongs_to :disk, optional: true
   belongs_to :disk_title, optional: true

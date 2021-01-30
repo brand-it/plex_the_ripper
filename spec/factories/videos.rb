@@ -24,17 +24,13 @@
 #
 #  index_videos_on_type_and_the_movie_db_id  (type,the_movie_db_id) UNIQUE
 #
-require 'rails_helper'
+FactoryBot.define do
+  factory :video do
+    title { Faker::Book.title }
+    original_title { Faker::Book.title }
 
-RSpec.describe Tv, type: :model do
-  include_context 'IsVideo'
-
-  describe 'validations' do
-    it { is_expected.to validate_presence_of(:name) }
-    it { is_expected.to validate_presence_of(:original_name) }
-  end
-
-  describe 'associations' do
-    it { is_expected.to have_many(:seasons) }
+    trait :with_movie_db_id do
+      the_movie_db_id { Faker::Number.number }
+    end
   end
 end

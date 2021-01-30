@@ -7,7 +7,7 @@
 #  id               :integer          not null, primary key
 #  backdrop_path    :string
 #  episode_run_time :string
-#  first_air_date   :string
+#  first_air_date   :date
 #  original_title   :string
 #  overview         :string
 #  poster_path      :string
@@ -27,8 +27,9 @@
 require 'rails_helper'
 
 RSpec.describe Movie, type: :model do
-  include_context 'DiskWorkflow'
-  include_context 'HasProgress'
+  include_examples 'DiskWorkflow'
+  include_examples 'HasProgress'
+  include_examples 'IsVideo'
 
   # V
   describe 'validations' do

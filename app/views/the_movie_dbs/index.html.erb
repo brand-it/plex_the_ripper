@@ -27,7 +27,7 @@
             <p class="card-text"><%= video.overview %></p>
             <p class="card-text">
               <small class="text-muted">
-                <%= video.release_date || video.first_air_date %>
+                <%= video.release_or_air_date %>
                 <% if video.is_a?(Tv) %>
                   <%= link_to_movie_db_tv video.the_movie_db_id %>
                 <% else %>

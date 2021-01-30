@@ -7,7 +7,7 @@
 #  id               :integer          not null, primary key
 #  backdrop_path    :string
 #  episode_run_time :string
-#  first_air_date   :string
+#  first_air_date   :date
 #  original_title   :string
 #  overview         :string
 #  poster_path      :string
@@ -25,9 +25,6 @@
 #  index_videos_on_type_and_the_movie_db_id  (type,the_movie_db_id) UNIQUE
 #
 FactoryBot.define do
-  factory :movie, aliases: [:video] do
-    title { Faker::Book.title }
-    original_title { Faker::Book.title }
-    the_movie_db_id { Faker::Number.number }
+  factory :movie, parent: :video, class: 'Movie' do # rubocop:disable Lint/EmptyBlock
   end
 end

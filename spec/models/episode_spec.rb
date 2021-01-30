@@ -22,7 +22,8 @@
 require 'rails_helper'
 
 RSpec.describe Episode, type: :model do
-  include_context 'DiskWorkflow'
+  include_examples 'DiskWorkflow'
+
   describe 'associations' do
     it { is_expected.to belong_to(:season) }
   end

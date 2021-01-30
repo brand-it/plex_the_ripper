@@ -7,7 +7,7 @@
 #  id               :integer          not null, primary key
 #  backdrop_path    :string
 #  episode_run_time :string
-#  first_air_date   :string
+#  first_air_date   :date
 #  original_title   :string
 #  overview         :string
 #  poster_path      :string
@@ -25,11 +25,6 @@
 #  index_videos_on_type_and_the_movie_db_id  (type,the_movie_db_id) UNIQUE
 #
 class Movie < Video
-  include DiskWorkflow
-  include HasProgress
-  include Wisper::Publisher
-  include AsVideo
-
   before_save { broadcast(:movie_saving, self) }
   after_commit { broadcast(:movie_saved, id) }
 
