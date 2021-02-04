@@ -5,7 +5,14 @@ class DiskProgressListener
   delegate :render, to: ApplicationController
 
   def disk_updated(_disk)
-    component = ProgressBarComponent.new(label: Disk.model_name.name, completed: Disk.percentage_completed)
-    cable_ready[DiskChannel.channel_name].morph(selector: component.id, html: render(component))
+    component = ProgressBarComponent.new(
+      label: Disk.model_name.name,
+      completed: Disk.percentage_completed
+    )
+    cable_ready[DiskChannel.channel_name].replace(
+      selector: component.dom_id,
+      html: render(component)
+    )
+    cable_ready.broadcast
   end
 end

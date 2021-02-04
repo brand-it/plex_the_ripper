@@ -5,8 +5,9 @@ class ProgressBarComponent < ViewComponent::Base
   option :label
   option :completed, Types::Integer, default: -> { 0 }
   option :status, default: -> { 'info' }
+  option :message, optional: true
 
-  def id
+  def dom_id
     "#{label.downcase}-progress-bar"
   end
 end

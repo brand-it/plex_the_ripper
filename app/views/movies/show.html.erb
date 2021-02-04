@@ -13,10 +13,11 @@
           <p class="card-text"><%= @movie.overview %></p>
           <p class="card-text">
             <small class="text-muted">
-              <%= @movie.release_date || @movie.first_air_date %>
+              <%= @movie.release_or_air_date %>
               <%= link_to_movie_db_movie @movie.the_movie_db_id %>
             </small>
           </p>
+          <%= render ProgressBarComponent.new(label: Disk.model_name.name, completed: Disk.percentage_completed) %>
         </div>
       </div>
     </div>

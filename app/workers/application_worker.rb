@@ -2,9 +2,14 @@
 
 class ApplicationWorker
   include Concurrent::Async
+  include CableReady::Broadcaster
+
   extend Dry::Initializer
+  delegate :render, to: :ApplicationController
+
   class Job
     extend Dry::Initializer
+
     param :worker, optional: true
     param :process, Types.Instance(Concurrent::IVar), default: -> { Concurrent::IVar.new }
     delegate :fulfilled?, to: :process

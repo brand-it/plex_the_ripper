@@ -1,5 +1,12 @@
-<div class="progress mb-2" id="<%= id %>">
-  <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100">
-    Loading <%= label %> ... <%= number_to_percentage completed, precision: 0 %>
+<div id="<%= dom_id %>">
+  <div class="progress mb-2">
+    <div class="progress-bar progress-bar-striped progress-bar-animated bg-<%= status %>" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= completed %>%">
+    </div>
   </div>
-</div>
+  <% if message %>
+    <%= message %>
+  <% else %>
+    Loading <%= label %> ... <%= number_to_percentage completed, precision: 0 %>
+  <% end %>
+
+<div/>

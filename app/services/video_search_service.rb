@@ -21,7 +21,12 @@ class VideoSearchService
   end
 
   def video_results
-    Rails.cache.fetch(query, namespace: 'video_search_service', expires_in: CACHE_TTL) do
+    Rails.cache.fetch(
+      query,
+      namespace: 'video_search_service',
+      expires_in: CACHE_TTL,
+      force: Rails.env.test?
+    ) do
       search.results.select { |r| VIDEOS_MEDIA_TYPE.include?(r.media_type) }
     end
   end

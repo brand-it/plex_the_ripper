@@ -2,15 +2,15 @@
   "name": "plex_the_ripper",
   "private": true,
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.14.0",
-    "@rails/actioncable": "^6.1.0",
-    "@rails/activestorage": "^6.1.0",
-    "@rails/ujs": "^6.1.0",
+    "@fortawesome/fontawesome-free": "^5.15.2",
+    "@rails/actioncable": "^6.1.1",
+    "@rails/activestorage": "^6.1.1",
+    "@rails/ujs": "^6.1.1",
     "@rails/webpacker": "5.2.1",
     "autoprefixer": "9.8.6",
     "boostrap": "^2.0.0",
-    "bootstrap": "^4.5.3",
-    "cable_ready": "^4.4.6",
+    "bootstrap": "^4.6.0",
+    "cable_ready": "^4.5.0",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
     "postcss": "7.0.33",
@@ -18,11 +18,11 @@
     "postcss-loader": "~3.0.0",
     "postcss-preset-env": "^6.7.0",
     "stimulus": "^2.0.0",
-    "stimulus_reflex": "^3.4.0",
+    "stimulus_reflex": "^3.4.1",
     "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
   "devDependencies": {
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.2"
   }
 }
