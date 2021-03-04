@@ -6,7 +6,7 @@
   <% if message %>
     <%= message %>
   <% else %>
-    Loading <%= label %> ... <%= number_to_percentage completed, precision: 0 %>
+    Loading <%= model.model_name.singular %> ... <%= number_to_percentage completed, precision: 0 %>
   <% end %>
 
 <div/>
