@@ -2,12 +2,12 @@
 
 class ProgressBarComponent < ViewComponent::Base
   extend Dry::Initializer
-  option :label
+  option :model
   option :completed, Types::Integer, default: -> { 0 }
   option :status, default: -> { 'info' }
   option :message, optional: true
 
   def dom_id
-    "#{label.downcase}-progress-bar"
+    "#{model.model_name.name}-progress-bar"
   end
 end

@@ -24,7 +24,7 @@ class LoadDiskWorker < ApplicationWorker
 
   def update_progress(completed, message: nil, status: :info)
     component = ProgressBarComponent.new(
-      label: Disk.model_name.name,
+      model: Disk,
       completed: completed, status: status, message: message
     )
     cable_ready[DiskChannel.channel_name].morph(

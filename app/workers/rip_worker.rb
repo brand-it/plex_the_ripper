@@ -18,7 +18,7 @@ class RipWorker < ApplicationWorker
 
     def update_progress_bar(completed)
       component = ProgressBarComponent.new(
-        label: Disk.model_name.name,
+        model: Disk,
         completed: completed, status: :info, message: title
       )
       cable_ready[DiskChannel.channel_name].morph(
