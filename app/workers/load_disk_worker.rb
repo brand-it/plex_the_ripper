@@ -1,31 +1,31 @@
 # frozen_string_literal: true
 
 class LoadDiskWorker < ApplicationWorker
-
-  def call
+  def call # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     Disk.destroy_all
-    sleep 10
-    return load_failure if drives.empty?
+    return update_progress(100, message: 'Could not load disk', status: :danger) if drives.empty?
 
     drives.map do |drive|
-      Disk.new(name: drive.disc_name, disk_name: drive.drive_name).tap do |disk|
-        disk.subscribe(DiskProgressListener.new)
-        disk.save!
+      update_progress(50, message: "Loading titles for #{drive.drive_name}")
+      Disk.create!(name: drive.disc_name, disk_name: drive.drive_name).tap do |disk|
         disk.load_titles!
+        disk.save!
       end
     end
+    update_progress(100, message: 'Ready', status: :success)
+  rescue StandardError => e
+    update_progress(100, message: e.message, status: :danger)
+    raise e
   end
 
   def drives
     @drives ||= ListDrivesService.new.results
   end
 
-  def load_failure
+  def update_progress(completed, message: nil, status: :info)
     component = ProgressBarComponent.new(
       label: Disk.model_name.name,
-      completed: 100,
-      status: :danger,
-      message: 'Could not load disk'
+      completed: completed, status: status, message: message
     )
     cable_ready[DiskChannel.channel_name].morph(
       selector: "##{component.dom_id}",

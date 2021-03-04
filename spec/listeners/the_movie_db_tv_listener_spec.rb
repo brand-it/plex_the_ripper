@@ -15,10 +15,11 @@ RSpec.describe TheMovieDbTvListener do
         'id' => nil,
         'title' => 'Stargate SG-1',
         'original_title' => 'Stargate SG-1',
-        'first_air_date' => Date.parse('1997-07-27'),
+        'episode_first_air_date' => Date.parse('1997-07-27'),
         'poster_path' => '/9Jegw0yle4x8jlmLNZon37Os27h.jpg',
         'backdrop_path' => '/li9SZBpVzJz81ouqifVuH5C7Nod.jpg',
-        'episode_run_time' => [42, 60, 43, 45],
+        'episode_distribution_runtime' => [42, 43, 45, 60],
+        'movie_runtime' => nil,
         'the_movie_db_id' => 4629,
         'overview' => 'The story of Stargate SG-1 begins about a year after '\
         'the events of the feature film, when the United States government '\

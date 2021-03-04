@@ -47,5 +47,9 @@ module DiskWorkflow
 
       self.disk_titles = disk_titles
     end
+
+    def rip
+      RipWorker.perform(video_id: id)
+    end
   end
 end

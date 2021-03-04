@@ -20,6 +20,8 @@ class TheMovieDbMovieListener
   private
 
   def movie_params(db_movie)
-    db_movie.to_h.slice(*PERMITTED_PARAMS)
+    db_movie.to_h.slice(*PERMITTED_PARAMS).tap do |params|
+      params[:movie_runtime] = db_movie.runtime
+    end
   end
 end

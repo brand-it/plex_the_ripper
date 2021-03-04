@@ -2,15 +2,15 @@
 
 class CreateMkvService
   class Error < StandardError; end
-
   extend Dry::Initializer
+  include MkvParser
 
   Status = Struct.new(:dir, :mkv_path, :success?)
   TMP_DIR = Rails.root.join('tmp/videos')
 
   option :config_make_mkv, Types.Instance(Config::MakeMkv), default: proc { Config::MakeMkv.newest.first }
   option :disk_title, Types.Instance(DiskTitle)
-  option :video
+  option :notify_progress, Types.Interface(:call)
 
   def call
     Status.new(tmp_dir, '', create.success?).tap do |status|
@@ -27,7 +27,7 @@ class CreateMkvService
   def create
     Open3.popen2e({}, cmd) do |stdin, std_out_err, wait_thr|
       stdin.close
-      ProcessOutput.new(std_out_err, video, disk_title).gets
+      notify_progress.call(parse_mkv_string(std_out_err))
       wait_thr.value
     end
   end

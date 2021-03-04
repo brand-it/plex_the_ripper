@@ -100,8 +100,9 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.string "backdrop_path"
     t.integer "the_movie_db_id"
     t.string "overview"
-    t.date "first_air_date"
-    t.string "episode_run_time"
+    t.date "episode_first_air_date"
+    t.string "episode_distribution_runtime"
+    t.string "movie_runtime"
     t.string "type"
     t.datetime "synced_on"
     t.datetime "created_at", precision: 6, null: false

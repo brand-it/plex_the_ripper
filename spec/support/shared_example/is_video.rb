@@ -11,23 +11,23 @@ RSpec.shared_examples 'IsVideo' do |_parameter|
     let(:unexpected_date) { 2.days.ago }
 
     context 'when release_date is present' do
-      let(:video) { build_stubbed model_class, release_date: expected_date, first_air_date: nil }
+      let(:video) { build_stubbed model_class, release_date: expected_date, episode_first_air_date: nil }
 
       it { is_expected.to eq expected_date }
     end
 
-    context 'when first_air_date is present' do
-      let(:video) { build_stubbed model_class, release_date: nil, first_air_date: expected_date }
+    context 'when episode_first_air_date is present' do
+      let(:video) { build_stubbed model_class, release_date: nil, episode_first_air_date: expected_date }
 
       it { is_expected.to eq expected_date }
     end
 
-    context 'when both release_date & first_air_date is present' do
+    context 'when both release_date & episode_first_air_date is present' do
       let(:video) do
         build_stubbed\
           model_class,
           release_date: expected_date,
-          first_air_date: unexpected_date
+          episode_first_air_date: unexpected_date
       end
 
       it { is_expected.to eq expected_date }

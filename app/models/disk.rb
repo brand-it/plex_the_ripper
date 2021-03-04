@@ -30,29 +30,19 @@ class Disk < ApplicationRecord
 
   scope :completed, -> { where(workflow_state: :completed) }
 
-  def self.percentage_completed
-    total = count.to_f
-    return 0 if total.zero?
-
-    ((completed.count / total) * 100).to_i
-  end
-
-  def self.all_valid?
-    # Rails.cache.fetch(Disk.all, namespace: 'all_valid', expires_in: 10.seconds) do
-    Disk.all.pluck(:disk_name) == ListDrivesService.new.results
-    # end
-  end
-
   def load_titles
-    DiskInfoService.new(disk_name: disk_name).results.each do |title|
+    DiskInfoService.new(disk_name: name).results.each do |title|
       disk_titles.create!(
         title_id: title.id,
         name: title.file_name,
         size: title.size,
+        video: self,
         duration: title.duration_seconds
       )
     end
   end
+
+  def completed; end
 
   def restart
     disk_titles.destroy_all

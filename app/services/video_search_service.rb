@@ -7,7 +7,7 @@ class VideoSearchService
   CACHE_TTL = 1.day
 
   def results
-    return Video.order(synced_on: :desc).limit(200) if query.blank?
+    return Video.order(updated_at: :desc, synced_on: :desc).limit(200) if query.blank?
 
     the_movie_db_ids.map do |db|
       find_video(**db) || create_video(**db)

@@ -17,7 +17,12 @@
               <%= link_to_movie_db_movie @movie.the_movie_db_id %>
             </small>
           </p>
-          <%= render ProgressBarComponent.new(label: Disk.model_name.name, completed: Disk.percentage_completed) %>
+          <%= render ProgressBarComponent.new(label: Disk.model_name.name) %>
+          <div id='disk-selector'>
+            <% @disk.disk_titles.each do |title| %>
+              <%= title.%>
+            <% end %>
+          </div>
         </div>
       </div>
     </div>

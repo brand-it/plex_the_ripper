@@ -12,7 +12,15 @@ module MkvParser
   # current - current progress value
   # total - total progress value
   # max - maximum possible value for a progress bar, constant
-  PRGV = Struct.new(:current, :total, :pmax)
+  PRGV = Struct.new(:current, :total, :pmax) do
+    def current
+      super.presence&.to_f
+    end
+
+    def total
+      super.presence&.to_f
+    end
+  end
   # Current and total progress title
   # PRGC:code,id,name
   # PRGT:code,id,name
