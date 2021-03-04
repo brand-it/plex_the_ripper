@@ -10,7 +10,7 @@ class MoviesController < ApplicationController
     else
       @movie.touch # rubocop:disable Rails/SkipsModelValidations
     end
-    LoadDiskWorker.perform unless @disk.completed?
+    LoadDiskWorker.perform unless @disk&.completed?
   end
 
   def rip
