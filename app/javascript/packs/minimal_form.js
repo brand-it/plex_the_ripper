@@ -1,6 +1,6 @@
-document.addEventListener("turbolinks:load", function () {
-  document.querySelectorAll('.minimal-input input').forEach(function(input) {
-    addHasValue = function(input) {
+document.addEventListener("turbo:load", function () {
+  document.querySelectorAll('.minimal-input input').forEach(function (input) {
+    addHasValue = function (input) {
       if (input.value.trim() != '') {
         input.classList.add('has-val')
       } else {

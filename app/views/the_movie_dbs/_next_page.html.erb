@@ -1,0 +1,3 @@
+<% if search_service.next_query %>
+  <%= button_to 'Show More', next_page_the_movie_dbs_path(search: search_service.next_query), data: { 'pagination-target': 'showMore' } %>
+<% end %>

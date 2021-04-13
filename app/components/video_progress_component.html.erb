@@ -5,6 +5,6 @@
       <p><%= mkv_progress.name %></p>
       <p>Percentage Completed: <%= mkv_progress.percentage %></p>
     <% end %>
-    <button data-target="video-progress.create" data-action="click->video-progress#create" data-url="<%#= build_disk_path %>" class='btn btn-primary'>Create Movie</button>
+    <button data-video-progress-target="create" data-action="click->video-progress#create" data-url="<%#= build_disk_path %>" class='btn btn-primary'>Create Movie</button>
   </div>
 <% end %>

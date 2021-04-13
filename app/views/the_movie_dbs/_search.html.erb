@@ -1,4 +1,4 @@
-<%= simple_form_for search_params, as: :search, object: params[:search], url: the_movie_dbs_path, method: :get, html: { class: 'row' } do |f| %>
+<%= simple_form_for search_service, as: :search, object: params[:search], url: the_movie_dbs_path, method: :get, html: { class: 'row' } do |f| %>
   <div class='col-8 col-md-10 col-lg-10'>
     <%= f.input :query, label: 'Search for TV or Movie', autofocus: true, required: false %>
   </div>

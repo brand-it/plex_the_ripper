@@ -1,4 +1,4 @@
-<div id='disk-card' data-controller="disks" data-target="disks.cards" data-reload-url="<%= reload_disk_path %>">
+<div id='disk-card' data-controller="disks" data-disks-target="cards" data-reload-url="<%= reload_disk_path %>">
   <% if @disks.any? %>
     <% @disks.each do |disk| %>
       <div class="card border-info mb-3" id="disk-<%= disk.id %>">
@@ -18,7 +18,7 @@
       </div>
     <% end %>
     <% unless @in_progress %>
-      <button data-target="disks.reload" data-action="click->disks#reload" data-url="<%= reload_disk_path %>" class='btn btn-primary'>Reload Disks</button>
+      <button data-disks-target="reload" data-action="click->disks#reload" data-url="<%= reload_disk_path %>" class='btn btn-primary'>Reload Disks</button>
       <% if @movie && @movie.selected? %>
         <%= link_to 'Rip', rip_movie_path(@movie), method: :post, class: 'btn btn-primary' %>
       <% end %>
@@ -32,7 +32,7 @@
             In Progress to get disk info
           <% else %>
             There was no disk info found
-            <button data-target="disks.reload" data-action="click->disks#reload" data-url="<%= reload_disk_path %>" class='btn btn-primary'>Load Disks</button>
+            <button data-disks-target="reload" data-action="click->disks#reload" data-url="<%= reload_disk_path %>" class='btn btn-primary'>Load Disks</button>
           <% end %>
         </p>
       </div>

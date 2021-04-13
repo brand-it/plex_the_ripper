@@ -20,7 +20,9 @@ Rails.application.routes.draw do
       collection { get :install }
     end
   end
-  resources :the_movie_dbs, only: %i[index show]
+  resources :the_movie_dbs, only: %i[index] do
+    collection { post 'next_page' }
+  end
 
   #--------#
   # Movies #

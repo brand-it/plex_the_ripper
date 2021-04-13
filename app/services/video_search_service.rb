@@ -2,27 +2,35 @@
 
 class VideoSearchService
   extend Dry::Initializer
-  option :query, Types::Coercible::String, optional: true
+
   VIDEOS_MEDIA_TYPE = %w[movie tv].freeze
   CACHE_TTL = 1.day
 
-  def results
-    return Video.order(updated_at: :desc, synced_on: :desc).limit(200) if query.blank?
+  option :query, Types::Coercible::String, optional: true
+  option :page, Types::Coercible::Integer, default: -> { 1 }, optional: true, null: nil
 
-    the_movie_db_ids.map do |db|
-      find_video(**db) || create_video(**db)
-    end.reverse
+  def results
+    return @results if defined?(@results)
+    return @results = Video.order(updated_at: :desc, synced_on: :desc).limit(200) if query.blank?
+
+    @results = the_movie_db_ids.map { |db| find_video(**db) || create_video(**db) }.reverse
+  end
+
+  def next_query
+    return if search.total_pages && search.total_pages < page
+
+    { query: query, page: page + 1 }
   end
 
   private
 
   def search
-    @search ||= TheMovieDb::Search::Multi.new(query: query).body
+    @search ||= TheMovieDb::Search::Multi.new(query: query, page: page).body
   end
 
   def video_results
     Rails.cache.fetch(
-      query,
+      { query: query, page: page },
       namespace: 'video_search_service',
       expires_in: CACHE_TTL,
       force: Rails.env.test?

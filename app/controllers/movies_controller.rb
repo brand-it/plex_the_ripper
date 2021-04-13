@@ -3,7 +3,7 @@
 class MoviesController < ApplicationController
   def show
     @movie = movie
-    fetch_disk
+    @disk  = disk
     if @movie.new?
       @movie.select!
       @movie.save!
@@ -14,22 +14,23 @@ class MoviesController < ApplicationController
   end
 
   def rip
-    fetch_disk_titles
+    @movie       = movie
+    @disk_titles = disk_titles
     @movie.select_disk_titles!(@disk_titles)
     @movie.save!
     @movie.rip!
     @movie.save!
   end
 
-  def fetch_disk
-    @disk = Disk.first
+  def disk
+    Disk.first
   end
 
   def movie
     Movie.find(params[:id])
   end
 
-  def fetch_disk_titles
-    @disk_titles = DiskTitle.where(id: params[:disk_title_ids])
+  def disk_titles
+    DiskTitle.where(id: params[:disk_title_ids])
   end
 end
