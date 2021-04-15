@@ -6,7 +6,7 @@ class CreateDiskTitles < ActiveRecord::Migration[6.0]
       t.integer :title_id, null: false
       t.float :size
 
-      t.references :video, polymorphic: true
+      t.references :mkv_progress 
       t.references :disk
       t.timestamps
     end

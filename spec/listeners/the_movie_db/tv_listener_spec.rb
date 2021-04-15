@@ -30,7 +30,6 @@ RSpec.describe TheMovieDb::TvListener do
         " as the Goa'uld, Replicators, and the Ori.",
         'type' => 'Tv',
         'synced_on' => Time.zone.local(1990),
-        'workflow_state' => nil,
         'updated_at' => nil,
         'created_at' => nil,
         'release_date' => nil

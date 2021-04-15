@@ -24,13 +24,12 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.integer "duration"
     t.integer "title_id", null: false
     t.float "size"
-    t.string "video_type"
-    t.bigint "video_id"
+    t.bigint "mkv_progress_id"
     t.bigint "disk_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["disk_id"], name: "index_disk_titles_on_disk_id"
-    t.index ["video_type", "video_id"], name: "index_disk_titles_on_video_type_and_video_id"
+    t.index ["mkv_progress_id"], name: "index_disk_titles_on_mkv_progress_id"
   end
 
   create_table "disks", force: :cascade do |t|
@@ -61,11 +60,15 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.datetime "failed_at"
     t.text "message"
     t.bigint "disk_title_id"
+    t.bigint "disk_id"
     t.string "video_type"
     t.bigint "video_id"
+    t.bigint "episode_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["disk_id"], name: "index_mkv_progresses_on_disk_id"
     t.index ["disk_title_id"], name: "index_mkv_progresses_on_disk_title_id"
+    t.index ["episode_id"], name: "index_mkv_progresses_on_episode_id"
     t.index ["video_type", "video_id"], name: "index_mkv_progresses_on_video_type_and_video_id"
   end
 
@@ -94,7 +97,6 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
   create_table "videos", force: :cascade do |t|
     t.string "title"
     t.string "original_title"
-    t.string "workflow_state"
     t.date "release_date"
     t.string "poster_path"
     t.string "backdrop_path"

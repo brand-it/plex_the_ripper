@@ -16,7 +16,6 @@
 #  synced_on                    :datetime
 #  title                        :string
 #  type                         :string
-#  workflow_state               :string
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
 #  the_movie_db_id              :integer
@@ -28,7 +27,6 @@
 require 'rails_helper'
 
 RSpec.describe Movie, type: :model do
-  include_examples 'DiskWorkflow'
   include_examples 'HasProgress'
   include_examples 'IsVideo'
 

@@ -1,11 +1,6 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  concern :disk_workflow do
-    get :select, on: :collection
-    get :rip, on: :member
-  end
-
   resources :users
   #--------#
   # Config #
@@ -27,14 +22,14 @@ Rails.application.routes.draw do
   #--------#
   # Movies #
   #--------#
-  resources :movies, concerns: :disk_workflow
+  resources :movies
 
   #----------#
   # TV Shows #
   #----------#
   resources :tvs
   resources :seasons
-  resources :episodes, concerns: :disk_workflow
+  resources :episodes
 
   resources :disks, only: [:index]
   resource :start

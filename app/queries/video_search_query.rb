@@ -13,7 +13,7 @@ class VideoSearchQuery
     return @results if defined?(@results)
     return @results = Video.order(updated_at: :desc, synced_on: :desc).limit(20) if query.blank?
 
-    @results = the_movie_db_ids.map { |db| find_video(**db) || create_video(**db) }.reverse
+    @results = the_movie_db_ids.map { |db| find_video(**db) || build_video(**db) }.reverse
   end
 
   def next_query
@@ -51,10 +51,9 @@ class VideoSearchQuery
     @videos ||= VideosQuery.new(types_and_ids: the_movie_db_ids).relation
   end
 
-  def create_video(id: nil, type: nil)
+  def build_video(id: nil, type: nil)
     Video.new(the_movie_db_id: id, type: type).tap do |video|
-      video.subscribe("TheMovieDb::#{video.type}Listener".constantize.new)
-      video.save!
+      "TheMovieDb::#{video.type}UpdateService".constantize.call(video)
     end
   end
 end

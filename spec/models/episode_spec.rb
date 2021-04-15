@@ -2,28 +2,31 @@
 
 # == Schema Information
 #
-# Table name: episodes
+# Table name: videos
 #
-#  id              :integer          not null, primary key
-#  air_date        :date
-#  episode_number  :integer
-#  file_path       :string
-#  name            :string
-#  overview        :string
-#  still_path      :string
-#  workflow_state  :string
-#  season_id       :bigint
-#  the_movie_db_id :integer
+#  id                           :integer          not null, primary key
+#  backdrop_path                :string
+#  episode_distribution_runtime :string
+#  episode_first_air_date       :date
+#  movie_runtime                :integer
+#  original_title               :string
+#  overview                     :string
+#  poster_path                  :string
+#  release_date                 :date
+#  synced_on                    :datetime
+#  title                        :string
+#  type                         :string
+#  created_at                   :datetime         not null
+#  updated_at                   :datetime         not null
+#  the_movie_db_id              :integer
 #
 # Indexes
 #
-#  index_episodes_on_season_id  (season_id)
+#  index_videos_on_type_and_the_movie_db_id  (type,the_movie_db_id) UNIQUE
 #
 require 'rails_helper'
 
 RSpec.describe Episode, type: :model do
-  include_examples 'DiskWorkflow'
-
   describe 'associations' do
     it { is_expected.to belong_to(:season) }
   end

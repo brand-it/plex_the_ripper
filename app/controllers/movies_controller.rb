@@ -4,23 +4,28 @@ class MoviesController < ApplicationController
   def show
     @movie = movie
     @disk  = disk
-    if @movie.new?
-      @movie.select!
-      @movie.save!
-    else
-      @movie.touch # rubocop:disable Rails/SkipsModelValidations
-    end
-    LoadDiskWorker.perform unless @disk&.completed?
   end
 
-  def rip
-    @movie       = movie
-    @disk_titles = disk_titles
-    @movie.select_disk_titles!(@disk_titles)
-    @movie.save!
-    @movie.rip!
-    @movie.save!
+  def create
+    movie = Movie.new(the_movie_db_id: params[:the_movie_db_id])
+    movie.subscribe(TheMovieDb::MovieListener.new)
+    if movie.save
+      redirect_to movie
+    else
+      redirect_to the_movie_dbs_path, flash: { error: movie.errors.full_messages }
+    end
   end
+
+  # def rip
+  #   @movie       = movie
+  #   @disk_titles = disk_titles
+  #   @movie.select_disk_titles!(@disk_titles)
+  #   @movie.save!
+  #   @movie.rip!
+  #   @movie.save!
+  # end
+
+  private
 
   def disk
     Disk.first

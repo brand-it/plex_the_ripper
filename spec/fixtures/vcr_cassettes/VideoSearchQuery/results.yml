@@ -25,7 +25,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 15 Apr 2021 17:50:23 GMT
+      - Thu, 15 Apr 2021 18:43:13 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -42,13 +42,13 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 4eef074c708dc507931831218d0d5d48.cloudfront.net (CloudFront)
+      - 1.1 a91f9752f88d12f73d321bf3ae28a162.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - JiK0JiqBnPgEEPN1uXXxsJQdYHZzqqq0UmtWkcoMNmZL_ywEnq24bg==
+      - qVwGeTvWIalu2aPZcWGODJ9YUjdXl30AWqX4FnqLBF9BxUr3S07PKQ==
       Age:
-      - '1'
+      - '496'
     body:
       encoding: ASCII-8BIT
       string: '{"page":1,"results":[{"backdrop_path":"/li9SZBpVzJz81ouqifVuH5C7Nod.jpg","first_air_date":"1997-07-27","genre_ids":[10765,10759,9648],"id":4629,"media_type":"tv","name":"Stargate
@@ -152,7 +152,7 @@ http_interactions:
         universe and was able to access hidden dimensions and make contact with extraterrestrial
         races.","popularity":1.4,"poster_path":"/hjJuPZeuuU2Ou4VK37t6litEewW.jpg","release_date":"","title":"Aliens
         and Atlantis: Stargates and Hidden Realms","video":false,"vote_average":0,"vote_count":0}],"total_pages":1,"total_results":15}'
-  recorded_at: Thu, 15 Apr 2021 17:50:24 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/movie/720733?api_key=<API_KEY>
@@ -205,13 +205,13 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 c806365ba43eabe769161a7b339ff969.cloudfront.net (CloudFront)
+      - 1.1 7489ca2b63d10f9195cd257d7fdcba14.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - uIVubnbDQ_656LKIbCZWWvKSG2uYKb8LV4WESB6uBQ74KFJu3kzCMA==
+      - omjkeQi2ml1T5ieC1nnGraAYDHh9WXG_-xdoFaUid1u8d-iO0EstPA==
       Age:
-      - '804'
+      - '4469'
     body:
       encoding: ASCII-8BIT
       string: '{"adult":false,"backdrop_path":null,"belongs_to_collection":null,"budget":1000000,"genres":[{"id":99,"name":"Documentary"}],"homepage":"http://www.reality-entertainment.com/films/","id":720733,"imdb_id":"tt5299146","original_language":"en","original_title":"Aliens
@@ -231,7 +231,7 @@ http_interactions:
         races.","popularity":1.4,"poster_path":"/hjJuPZeuuU2Ou4VK37t6litEewW.jpg","production_companies":[{"id":12885,"logo_path":null,"name":"Reality
         Entertainment","origin_country":"US"}],"production_countries":[],"release_date":"","revenue":0,"runtime":60,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"","title":"Aliens
         and Atlantis: Stargates and Hidden Realms","video":false,"vote_average":0.0,"vote_count":0}'
-  recorded_at: Thu, 15 Apr 2021 17:50:24 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/tv/46852?api_key=<API_KEY>
@@ -257,7 +257,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 15 Apr 2021 17:37:00 GMT
+      - Thu, 15 Apr 2021 18:43:13 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -284,13 +284,13 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 a65d4c73d0dccfbca53c6259a6c33b27.cloudfront.net (CloudFront)
+      - 1.1 c806365ba43eabe769161a7b339ff969.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - ZiwrHe2gzATF4xdqX5gVZDcctU78ud9PvhRSWB146_rkpHyX20Oysw==
+      - VgK4OgpPwnBl8JNLh5Mq4usYRGnZmXdzkRzL6gaAzg1XIEndymmPUQ==
       Age:
-      - '804'
+      - '496'
     body:
       encoding: ASCII-8BIT
       string: '{"backdrop_path":null,"created_by":[],"episode_run_time":[],"first_air_date":null,"genres":[{"id":99,"name":"Documentary"}],"homepage":"","id":46852,"in_production":true,"languages":[],"last_air_date":null,"last_episode_to_air":null,"name":"Stargate
@@ -298,7 +298,7 @@ http_interactions:
         2012","overview":"","popularity":1.4,"poster_path":null,"production_companies":[],"production_countries":[],"seasons":[{"air_date":null,"episode_count":2,"id":55033,"name":"Season
         1","overview":"","poster_path":null,"season_number":1}],"spoken_languages":[],"status":"Returning
         Series","tagline":"","type":"Scripted","vote_average":0.0,"vote_count":0}'
-  recorded_at: Thu, 15 Apr 2021 17:50:24 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/movie/226412?api_key=<API_KEY>
@@ -351,13 +351,13 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 7489ca2b63d10f9195cd257d7fdcba14.cloudfront.net (CloudFront)
+      - 1.1 c806365ba43eabe769161a7b339ff969.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - L7SYPW63QtnGjE7lYBAqDhqA7ZYK2dssT9DMxk7JNLNxU-Pfdcjcig==
+      - uE8IPbrOsEWk2EvSw64y0xtPioeyrgndurVS8HFgtszTqM9sXg_hxQ==
       Age:
-      - '804'
+      - '4468'
     body:
       encoding: ASCII-8BIT
       string: '{"adult":false,"backdrop_path":null,"belongs_to_collection":null,"budget":0,"genres":[{"id":99,"name":"Documentary"},{"id":10770,"name":"TV
@@ -365,7 +365,7 @@ http_interactions:
         There a Stargate?","overview":"Documentary about possible ancient alien visitors
         to Earth.","popularity":2.7,"poster_path":"/pV8gWYeIQruSZ7tInBI01dYTw5c.jpg","production_companies":[],"production_countries":[],"release_date":"2003-02-18","revenue":0,"runtime":12,"spoken_languages":[],"status":"Released","tagline":"","title":"Is
         There a Stargate?","video":false,"vote_average":10.0,"vote_count":2}'
-  recorded_at: Thu, 15 Apr 2021 17:50:24 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/movie/698008?api_key=<API_KEY>
@@ -418,19 +418,19 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 6152d4e35099aaa5ec23aec50cd7a8c5.cloudfront.net (CloudFront)
+      - 1.1 207df1932a3ef8ff529fa368bf612240.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - fNcQJS0H6yNpD-Fc2_DtpqQ0V3OtWK8M2-DOCT8sFIIfrsaTVyNAuA==
+      - "-ENAvuFqwfPCEgkFpySKN5_ZE87VTC7SF8n4QFXIpT5zN_Z0_oANJg=="
       Age:
-      - '804'
+      - '4468'
     body:
       encoding: ASCII-8BIT
       string: '{"adult":false,"backdrop_path":null,"belongs_to_collection":null,"budget":0,"genres":[{"id":99,"name":"Documentary"}],"homepage":"","id":698008,"imdb_id":null,"original_language":"fr","original_title":"La
         saga Stargate","overview":"","popularity":2.005,"poster_path":"/nEvXPsgFQJl4KTcXPBfABo6XYwV.jpg","production_companies":[],"production_countries":[],"release_date":"","revenue":0,"runtime":0,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"","title":"La
         saga Stargate","video":false,"vote_average":0.0,"vote_count":0}'
-  recorded_at: Thu, 15 Apr 2021 17:50:25 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/movie/784993?api_key=<API_KEY>
@@ -483,13 +483,13 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 a91f9752f88d12f73d321bf3ae28a162.cloudfront.net (CloudFront)
+      - 1.1 65734c1b2d30e126d5bc1c66cd7b6f0b.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - bMvv_YM8ATRhNZtlhPL34Q2_WXVmwVkFD3tYbUv7MsGMejz1ox_0Og==
+      - fhkEXb18bxYZ7h0IDEdk-Ez3KpPvgqaRG9fcctAGmgc9hZyAJWIuZQ==
       Age:
-      - '804'
+      - '4469'
     body:
       encoding: ASCII-8BIT
       string: '{"adult":false,"backdrop_path":"/3iN6451vIjgBSYFFzzpVQYYVc0r.jpg","belongs_to_collection":null,"budget":0,"genres":[{"id":28,"name":"Action"},{"id":12,"name":"Adventure"},{"id":18,"name":"Drama"},{"id":878,"name":"Science
@@ -501,7 +501,7 @@ http_interactions:
         how Ra could still be alive. Meanwhile, the alien Goa''uld kidnap Sha''re
         and Skaara, implanting them with symbiotes and making them Goa''uld hosts.","popularity":4.936,"poster_path":"/3HOystOCjvi3o1ufOtvj7chDQkd.jpg","production_companies":[],"production_countries":[],"release_date":"1997-07-27","revenue":0,"runtime":92,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"","title":"Stargate
         SG-1: Children of the Gods","video":false,"vote_average":7.0,"vote_count":3}'
-  recorded_at: Thu, 15 Apr 2021 17:50:25 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/movie/574161?api_key=<API_KEY>
@@ -554,18 +554,18 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 83fb8fa820a10369f86ee48b015d2677.cloudfront.net (CloudFront)
+      - 1.1 0a183988a665a39a6d1ac5c64d3626da.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - XoppX_T4opFPiXXGTSMMAiEbY4bvz9H_ejwhRnT7e5llf0vUJB8kYQ==
+      - OMaEA43UNgqMzOZiQKtzSdUaDMG87zmqZnIcHTMKA6jEbZIKg0Q7iA==
       Age:
-      - '804'
+      - '4469'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
         eyJhZHVsdCI6ZmFsc2UsImJhY2tkcm9wX3BhdGgiOiIvbjlVdE1rU2xldjdUd0RsYVh2cUx5VmYxeWlRLmpwZyIsImJlbG9uZ3NfdG9fY29sbGVjdGlvbiI6eyJpZCI6NDQyMTUsIm5hbWUiOiJTdGFyZ2F0ZSBTRy0xIENvbGxlY3Rpb24iLCJwb3N0ZXJfcGF0aCI6Ii8xaVQyblNoRlJTQnNkVDcxYTFNVXN5UHBvVEwuanBnIiwiYmFja2Ryb3BfcGF0aCI6Ii9md1ZWaDlvMFdac1pOc3RwWDNPNTVmZjdIczguanBnIn0sImJ1ZGdldCI6MCwiZ2VucmVzIjpbeyJpZCI6ODc4LCJuYW1lIjoiU2NpZW5jZSBGaWN0aW9uIn0seyJpZCI6MjgsIm5hbWUiOiJBY3Rpb24ifSx7ImlkIjoxMiwibmFtZSI6IkFkdmVudHVyZSJ9LHsiaWQiOjEwNzcwLCJuYW1lIjoiVFYgTW92aWUifV0sImhvbWVwYWdlIjoiaHR0cDovL3d3dy53YXJnYW1lcGljdHVyZXMuYy5sYS8iLCJpZCI6NTc0MTYxLCJpbWRiX2lkIjoidHQ5NTMxMDgwIiwib3JpZ2luYWxfbGFuZ3VhZ2UiOiJmciIsIm9yaWdpbmFsX3RpdGxlIjoiU3RhcmdhdGU6IEJhc2UgR2FtbWEiLCJvdmVydmlldyI6IkZvbGxvd2luZyBhbiBleHBsb3JhdGlvbiBtaXNzaW9uIG9uIFAyUy01NjksIGFuZCB0aGUgZGlzY292ZXJ5IG9mIGFuIHVuZGVyZ3JvdW5kIGZhY2lsaXR5IGludGFjdCwgdGhlIFNHQyBtYWRlIHRoZSBkZWNpc2lvbiB0byB1c2UgdGhlIGV4aXN0aW5nIGluZnJhc3RydWN0dXJlIHRvIGRldmVsb3AgYSBuZXcgc2l0ZTogdGhlIEdhbW1hIEJhc2UuIEJ5IHRoZSB0aW1lIHRoZSBsYXR0ZXIgaXMgZnVsbHkgb3BlcmF0aW9uYWwsIEdlbmVyYWwgTydOZWlsbCBoYXMgYXNzaWduZWQgdGhlIG1ham9yaXR5IG9mIGhpcyBtYW5wb3dlciBhdmFpbGFibGUgZm9yIGRlZmVuc2UuIEluIHBhcmFsbGVsLCBhcyBwYXJ0IG9mIHRoZSBhbGxpYW5jZSBhZ2FpbnN0IHRoZSBHb2Enb2xkJ3MsIGEgZmxlZXQgb2YgUmViZWxzIEphZmZhcyBpcyBleHBlY3RlZCBpbiB0aGUgc3lzdGVtIGZvciBtaWxpdGFyeSBleGVyY2lzZXMgYW5kIHNjaWVudGlmaWMgdHJpYWxzLiBFdmVuIG1vcmUgdGhhbiB0aGUgc2hpcCBhcm1pbmcgdGVzdHMsIHRoZSBnb2FsIG9mIHRoZSBhbGxpZXMgaXMgdGhlIHVuZGVyc3RhbmRpbmcgb2YgdGhlIFwid2hpdGUgZHdhcmYgcGhlbm9tZW5vblwiIHRoYXQgc3RyZXRjaGVzIGFyb3VuZCB0aGUgcGxhbmV0LCBiZWNhdXNlIGl0IHNlZW1zIHRvIGFmZmVjdCBtb3N0IGFkdmFuY2VkIHRlY2hub2xvZ2llcy4gVGhlIFNHQyBnYXJyaXNvbiBpcyBwcmVwYXJpbmcgdG8gcmVjZWl2ZSB0aGVpciBhbGxpZXMuIEhvd2V2ZXIsIHRoZSBKYWZmYXMgZG8gbm90IHNlZW0gdG8gYmUgdGhlIG9uZXMgcGxhbm5lZCwgYW5kIHRoZWlyIGdvYWxzIGFyZSBtb3JlIG9ic2N1cmUuIiwicG9wdWxhcml0eSI6Mi42OTcsInBvc3Rlcl9wYXRoIjoiL3ZsSWtzc0NTUXljRW9jWkJsSTQzT2ZuRldLTS5qcGciLCJwcm9kdWN0aW9uX2NvbXBhbmllcyI6W3siaWQiOjExMzMzMSwibG9nb19wYXRoIjpudWxsLCJuYW1lIjoid2FyZ2FtZSBwaWN0dXJlcyIsIm9yaWdpbl9jb3VudHJ5IjoiIn1dLCJwcm9kdWN0aW9uX2NvdW50cmllcyI6W3siaXNvXzMxNjZfMSI6IkZSIiwibmFtZSI6IkZyYW5jZSJ9XSwicmVsZWFzZV9kYXRlIjoiMjAxNy0wOS0xMyIsInJldmVudWUiOjAsInJ1bnRpbWUiOjEyNywic3Bva2VuX2xhbmd1YWdlcyI6W3siZW5nbGlzaF9uYW1lIjoiRnJlbmNoIiwiaXNvXzYzOV8xIjoiZnIiLCJuYW1lIjoiRnJhbsOnYWlzIn1dLCJzdGF0dXMiOiJSZWxlYXNlZCIsInRhZ2xpbmUiOiIiLCJ0aXRsZSI6IlN0YXJnYXRlOiBCYXNlIEdhbW1hIiwidmlkZW8iOmZhbHNlLCJ2b3RlX2F2ZXJhZ2UiOjEwLjAsInZvdGVfY291bnQiOjF9
-  recorded_at: Thu, 15 Apr 2021 17:50:25 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/movie/376268?api_key=<API_KEY>
@@ -618,13 +618,13 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 5792646b96b78d9b3be62c41ca3393cd.cloudfront.net (CloudFront)
+      - 1.1 6f9c977a59db9a95a2e65aaab6409f3c.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - o-zTYSZsDWo6S2R5zEusq7v5Z6NTFveJ0rDQRKIUEYYllL80fGbFYw==
+      - 4yuZ2N1ukzLGdsy68UTqUENcR32dUoGuysm5rdcGdoK8PAMmlGedQg==
       Age:
-      - '804'
+      - '4469'
     body:
       encoding: ASCII-8BIT
       string: '{"adult":false,"backdrop_path":"/jCcvhae8MmkqYtR1EGtMYFdpQud.jpg","belongs_to_collection":null,"budget":0,"genres":[{"id":878,"name":"Science
@@ -636,7 +636,7 @@ http_interactions:
         Scientific Films","origin_country":"GB"}],"production_countries":[{"iso_3166_1":"CA","name":"Canada"},{"iso_3166_1":"US","name":"United
         States of America"}],"release_date":"2006-01-03","revenue":0,"runtime":45,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"","title":"Stargate
         SG-1: True Science","video":false,"vote_average":8.1,"vote_count":7}'
-  recorded_at: Thu, 15 Apr 2021 17:50:25 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/tv/2580?api_key=<API_KEY>
@@ -661,8 +661,6 @@ http_interactions:
       - chunked
       Connection:
       - keep-alive
-      Date:
-      - Thu, 15 Apr 2021 17:37:02 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -672,8 +670,6 @@ http_interactions:
       Access-Control-Expose-Headers:
       - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
         Content-Length, Content-Range
-      Cache-Control:
-      - public, max-age=3600
       X-Memc:
       - HIT
       X-Memc-Key:
@@ -682,6 +678,10 @@ http_interactions:
       - '2438'
       X-Memc-Expires:
       - '1162'
+      Date:
+      - Thu, 15 Apr 2021 18:43:14 GMT
+      Cache-Control:
+      - public, max-age=3600
       Etag:
       - W/"22469285a16a55ec19e8ab44d26f827c"
       Vary:
@@ -689,18 +689,18 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 12435f922f48ee227c1e888952ed66ac.cloudfront.net (CloudFront)
+      - 1.1 42b10ce0efa243af420d08c395787243.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - ehm9505yJd9CqSvwHae1rtnDxfZ0j7igggfJSWeMnucJ26lJ69rb6g==
+      - 7-mcWQJGnBMAp_0hrBDt-9jKUH6hyqLJrdF0wwqunBbwnI4Xm4EVTQ==
       Age:
-      - '803'
+      - '496'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
         eyJiYWNrZHJvcF9wYXRoIjpudWxsLCJjcmVhdGVkX2J5IjpbXSwiZXBpc29kZV9ydW5fdGltZSI6WzMwXSwiZmlyc3RfYWlyX2RhdGUiOiIyMDAyLTA5LTE0IiwiZ2VucmVzIjpbeyJpZCI6MTYsIm5hbWUiOiJBbmltYXRpb24ifV0sImhvbWVwYWdlIjoiaHR0cDovL3d3dy5jamFyLmNvbS9jal9zaG93c19zdGFyZ2F0ZS5waHAiLCJpZCI6MjU4MCwiaW5fcHJvZHVjdGlvbiI6ZmFsc2UsImxhbmd1YWdlcyI6WyJlbiJdLCJsYXN0X2Fpcl9kYXRlIjoiMjAwMy0wMy0yNCIsImxhc3RfZXBpc29kZV90b19haXIiOnsiYWlyX2RhdGUiOiIyMDAzLTAzLTI0IiwiZXBpc29kZV9udW1iZXIiOjI2LCJpZCI6MTk4OTE1LCJuYW1lIjoiVGhlIExvbmcgSGF1bCIsIm92ZXJ2aWV3IjoiQWZ0ZXIgYmVpbmcgY2hhc2VkIGJ5IGNyZWF0dXJlcyBhbmQgdmlzaXRpbmcgYW4gaWNlIHBsYW5ldCwgdGhlIHRlYW0gYmVnaW5zIHRvIHdvbmRlciBpZiB0aGV5IGFyZSBvbiBhIHBvaW50bGVzcyBxdWVzdC4gRHJhZ2Egb3BlbnMgYSBnYXRlIHRvIFwiXCJ3aGVyZSB0aGV5IHdpc2ggdG8gZ29cIlwiIGFuZCB0aGV5IGVuZCB1cCBvbiBFYXJ0aCBpbiB0aGUgWXVjYXRhbiwgd2hlcmUgYSBsb2NhbCBwcm9mZXNzb3Igd29ya2luZyBmb3IgYSBIb3JhY2UgVmFuIEdlbGRlciByZXZlYWxzIHNoZSBkaXNjb3ZlcmVkIHRoZSBuZXcgZ2F0ZS4gVGhlIHNoYXBlc2hpZnRlciBOZXBoZXN0dXMsIGRpc2d1aXNlZCBhcyBHcmltZXMsIGlzIHdvcmtpbmcgd2l0aCBWYW4gR2VsZGVyIGFuZCBnZXRzIHdvcmQgdGhlIHRlYW0gaXMgcHJlc2VudCB3aGVuIHRoZXkgY29udGFjdCBTdGFyZ2F0ZSBDb21tYW5kLiBEaXNndWlzZWQgYXMgU3RvbmVtYW4sIE5lcGhlc3R1cyB3ZWxjb21lcyB0aGVtIGFuZCBjbGFpbXMgaGUnbGwgaGVscCB0aGVtIGNsZWFyIHRoZWlyIG5hbWVzLCB0aGVuIHN1bW1vbnMgRGEna3lsbCBhbmQgaGlzIFRsYWsna2hhbi4gRHJhZ2Egc3VzcGVjdHMgc29tZXRoaW5nIGFzIFN0b25lbWFuIHNlbmRzIHRoZSBjYWRldHMgaW50byBDYW5jdW4gw6LigqzigJwgaW4gZmFjdCBpdCdzIGFuIGFtYnVzaCBidXQgdGhleSB0dXJuIGFyb3VuZCBhbmQgcmV0dXJuLiBHdXMgYW5kIERyYWdhIGNhdGNoIG9uIGFuZCBtYWtlIHRoZWlyIGVzY2FwZSB3aGlsZSB0aGUgb3RoZXJzIHJldHVybiBpbiBqdXN0IGluIHRpbWUgdG8gcmVzY3VlIHRoZW0uIFRoZSB0ZWFtIGlzIGZvcmNlZCB0byBlc2NhcGUgdGhyb3VnaCB0aGUgR2F0ZSBhbmQgZ28gb24gdGhlIHJ1biBvbmNlIG1vcmUgYmVmb3JlIHRoZXkgY2FuIGNsZWFyIHRoZWlyIG5hbWVzLCBhbmQgdGhlIFRsYWsna2hhbiBhbmQgTmVwaGVzdHVzIGRlcGFydCB3aXRoIFZhbiBHZWxkZXIgYXMgTmVwaGVzdHVzIHRha2VzIGhpcyBwbGFjZSB0byIsInByb2R1Y3Rpb25fY29kZSI6IiIsInNlYXNvbl9udW1iZXIiOjEsInN0aWxsX3BhdGgiOiIvdlpXMjM4cDB1UGFobHJlb1JhMHlibnpDblo3LmpwZyIsInZvdGVfYXZlcmFnZSI6MC4wLCJ2b3RlX2NvdW50IjowfSwibmFtZSI6IlN0YXJnYXRlIEluZmluaXR5IiwibmV4dF9lcGlzb2RlX3RvX2FpciI6bnVsbCwibmV0d29ya3MiOlt7Im5hbWUiOiJGT1giLCJpZCI6MTksImxvZ29fcGF0aCI6Ii8xRFNwSHJXeU9PUmtMOU4yUUhYN0FkdDMxbVEucG5nIiwib3JpZ2luX2NvdW50cnkiOiJVUyJ9XSwibnVtYmVyX29mX2VwaXNvZGVzIjoyNiwibnVtYmVyX29mX3NlYXNvbnMiOjEsIm9yaWdpbl9jb3VudHJ5IjpbIlVTIl0sIm9yaWdpbmFsX2xhbmd1YWdlIjoiZW4iLCJvcmlnaW5hbF9uYW1lIjoiU3RhcmdhdGUgSW5maW5pdHkiLCJvdmVydmlldyI6IlN0YXJnYXRlIEluZmluaXR5IGlzIGFuIEFtZXJpY2FuIGFuaW1hdGVkIHNjaWVuY2UgZmljdGlvbiB0ZWxldmlzaW9uIHNlcmllcyBhbmQgcGFydCBvZiBNZXRyby1Hb2xkd3luLU1heWVyJ3MgU3RhcmdhdGUgZnJhbmNoaXNlLCBidXQgaXMgbm90IGNvbnNpZGVyZWQgb2ZmaWNpYWwgU3RhcmdhdGUgY2Fub24uIFRoZSBzaG93IHdhcyBjcmVhdGVkIGJ5IEVyaWMgTGV3YWxkIGFuZCBNaWNoYWVsIE1hbGlhbmksIGFzIGEgc3Bpbi1vZmYgc2VyaWVzIG9mIFN0YXJnYXRlIFNHLTEgY3JlYXRlZCBieSBCcmFkIFdyaWdodCBhbmQgSm9uYXRoYW4gR2xhc3NuZXIgYWZ0ZXIgdGhlIHJlbGVhc2Ugb2YgU3RhcmdhdGUuIFRoZSBjYXJ0b29uIGhhZCBhIGxvdyB2aWV3ZXJzaGlwIHJhdGluZyBhbmQgcG9vciByZWNlcHRpb247IGl0IHdhcyBjYW5jZWxlZCBhZnRlciBvbmUgc2Vhc29uLiBDby1wcm9kdWNlZCBieSBNR00gVGVsZXZpc2lvbiBhbmQgRElDIEVudGVydGFpbm1lbnQgYW5kIGRpcmVjdGVkIGJ5IFdpbGwgTWV1Z25pb3QuXG5cblRoZSBzdG9yeSBhcmMgb2YgU3RhcmdhdGUgSW5maW5pdHkgZm9sbG93cyBHdXMgQm9ubmVyIGJlaW5nIGZyYW1lZCBmb3Igb3BlbmluZyB0aGUgU3RhcmdhdGUgZm9yIGFsaWVuIGVuZW1pZXMgaW4gYSBmdXR1cmUgdmVyc2lvbiBvZiBTdGFyZ2F0ZSBDb21tYW5kLiBCb25uZXIgZXNjYXBlcyB3aXRoIGEgZ3JvdXAgb2YgZnJlc2ggcmVjcnVpdHMgdGhyb3VnaCB0aGUgU3RhcmdhdGUuIFRoZSB0ZWFtIGNhbiBub3QgcmV0dXJuIHRvIEVhcnRoIGJlZm9yZSB0aGV5IGhhdmUgY2xlYXJlZCB0aGVpciBuYW1lcy4gVGhlIHNob3cgd2FzIGNhbmNlbGxlZCBiZWZvcmUgYW55IG9mIGl0cyBtYWpvciBwbG90cyBjb3VsZCBiZSByZXNvbHZlZC4gVGhlIHN0b3J5IHVuZm9sZHMgd2hlbiB0aGUgbWVtYmVycyBvZiB0aGUgdGVhbSBlbmNvdW50ZXJzIGRpZmZlcmVudCBhbGllbiByYWNlcyBmcm9tIG90aGVyIHBsYW5ldHMuIiwicG9wdWxhcml0eSI6Ni4wMzcsInBvc3Rlcl9wYXRoIjoiL2dpSFJIbG9vd2FEbXNtMnhUUVYxSlhWM2NORy5qcGciLCJwcm9kdWN0aW9uX2NvbXBhbmllcyI6W10sInByb2R1Y3Rpb25fY291bnRyaWVzIjpbXSwic2Vhc29ucyI6W3siYWlyX2RhdGUiOiIyMDAyLTA5LTE0IiwiZXBpc29kZV9jb3VudCI6MjYsImlkIjo4MjQ3LCJuYW1lIjoiU3RhcmdhdGU6IGluZmluaXR5IHNlYXNvbiAxIiwib3ZlcnZpZXciOiIiLCJwb3N0ZXJfcGF0aCI6Ii9uaVM5OGZzNk9TZEo4T29VNVJxT21HMWZoWVMuanBnIiwic2Vhc29uX251bWJlciI6MX1dLCJzcG9rZW5fbGFuZ3VhZ2VzIjpbeyJlbmdsaXNoX25hbWUiOiJFbmdsaXNoIiwiaXNvXzYzOV8xIjoiZW4iLCJuYW1lIjoiRW5nbGlzaCJ9XSwic3RhdHVzIjoiRW5kZWQiLCJ0YWdsaW5lIjoiIiwidHlwZSI6IlNjcmlwdGVkIiwidm90ZV9hdmVyYWdlIjozLjgsInZvdGVfY291bnQiOjZ9
-  recorded_at: Thu, 15 Apr 2021 17:50:25 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/movie/13001?api_key=<API_KEY>
@@ -753,13 +753,13 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 65734c1b2d30e126d5bc1c66cd7b6f0b.cloudfront.net (CloudFront)
+      - 1.1 7006fa5c7e5a6cffa765fbfee7b6d7f2.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - MgHARg675idQBAs8o668LVmNpW9-77LpNgFz59COACAkvoLnqMfm2w==
+      - dL3vkQEDvEkYqmZaqZo_RXFGIKguDHYB81W3gDJNB-28nUn1LUsF_Q==
       Age:
-      - '803'
+      - '4468'
     body:
       encoding: ASCII-8BIT
       string: '{"adult":false,"backdrop_path":"/c7zQHgs0AAuKRN3yqghIkLN8QiU.jpg","belongs_to_collection":{"id":44215,"name":"Stargate
@@ -775,7 +775,7 @@ http_interactions:
         States of America"}],"release_date":"2008-03-11","revenue":8900000,"runtime":97,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"The
         lines have been drawn. The battle has been waged. Only one thing can save
         us...","title":"Stargate: The Ark of Truth","video":false,"vote_average":7.2,"vote_count":308}'
-  recorded_at: Thu, 15 Apr 2021 17:50:25 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/tv/72925?api_key=<API_KEY>
@@ -800,8 +800,6 @@ http_interactions:
       - chunked
       Connection:
       - keep-alive
-      Date:
-      - Thu, 15 Apr 2021 17:37:02 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -811,8 +809,6 @@ http_interactions:
       Access-Control-Expose-Headers:
       - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
         Content-Length, Content-Range
-      Cache-Control:
-      - public, max-age=3600
       X-Memc:
       - HIT
       X-Memc-Key:
@@ -821,6 +817,10 @@ http_interactions:
       - '3473'
       X-Memc-Expires:
       - '127'
+      Date:
+      - Thu, 15 Apr 2021 18:43:14 GMT
+      Cache-Control:
+      - public, max-age=3600
       Etag:
       - W/"d5a1223bf68a4cd0f7ee8878f5a1df16"
       Vary:
@@ -828,13 +828,13 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 1f2a017323162153f3cbc068c08d683d.cloudfront.net (CloudFront)
+      - 1.1 5792646b96b78d9b3be62c41ca3393cd.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - tkSyazugN57P_hoGyMvDrRvLpliyavVGbsQvnG37nYH6Y5iGuZOYwA==
+      - EcILgMPU_tLpreR2pA9EKV5HJzkO_UoK4TQ-mY9ShCjd0QJ2DRlRiQ==
       Age:
-      - '803'
+      - '496'
     body:
       encoding: ASCII-8BIT
       string: '{"backdrop_path":"/4wN8ciEk2sE3YrET9osXR2AhSaZ.jpg","created_by":[],"episode_run_time":[10],"first_air_date":"2018-02-14","genres":[{"id":10759,"name":"Action
@@ -853,7 +853,7 @@ http_interactions:
         1","overview":"Young Catherine Langford embarks on an unexpected adventure
         to unlock the mystery of what lies beyond the Stargate in order to save the
         Earth from darkness.","poster_path":"/wu2J4oAzx2F6nAtGqxYD5ysq4np.jpg","season_number":1}],"spoken_languages":[{"english_name":"German","iso_639_1":"de","name":"Deutsch"},{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Ended","tagline":"","type":"Miniseries","vote_average":4.3,"vote_count":66}'
-  recorded_at: Thu, 15 Apr 2021 17:50:25 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/movie/12914?api_key=<API_KEY>
@@ -906,13 +906,13 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 4d0d70ec0eabd0560d63af069388e374.cloudfront.net (CloudFront)
+      - 1.1 7489ca2b63d10f9195cd257d7fdcba14.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - 9gLe5A2HTesYoJPn_6TqJKtKuFDCH199fMXps2NAGf4Ujr6w1E3J_g==
+      - HYB5qAwwJrrDYQz_Mr6oJPViLltE6RJQD9BS8qVDMTxPqXmamNGiHg==
       Age:
-      - '803'
+      - '4468'
     body:
       encoding: ASCII-8BIT
       string: '{"adult":false,"backdrop_path":"/jT7tdu9ksHkdS4R13ieXNs5efYW.jpg","belongs_to_collection":{"id":44215,"name":"Stargate
@@ -925,7 +925,7 @@ http_interactions:
         Global Holdings","origin_country":""},{"id":21,"logo_path":"/aOWKh4gkNrfFZ3Ep7n0ckPhoGb5.png","name":"Metro-Goldwyn-Mayer","origin_country":"US"}],"production_countries":[{"iso_3166_1":"CA","name":"Canada"},{"iso_3166_1":"US","name":"United
         States of America"}],"release_date":"2008-07-29","revenue":0,"runtime":98,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"History
         may never repeat itself again.","title":"Stargate: Continuum","video":false,"vote_average":7.0,"vote_count":320}'
-  recorded_at: Thu, 15 Apr 2021 17:50:25 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/tv/5148?api_key=<API_KEY>
@@ -950,8 +950,6 @@ http_interactions:
       - chunked
       Connection:
       - keep-alive
-      Date:
-      - Thu, 15 Apr 2021 17:37:02 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -961,8 +959,6 @@ http_interactions:
       Access-Control-Expose-Headers:
       - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
         Content-Length, Content-Range
-      Cache-Control:
-      - public, max-age=3600
       X-Memc:
       - HIT
       X-Memc-Key:
@@ -971,6 +967,10 @@ http_interactions:
       - '1642'
       X-Memc-Expires:
       - '1958'
+      Date:
+      - Thu, 15 Apr 2021 18:43:14 GMT
+      Cache-Control:
+      - public, max-age=3600
       Etag:
       - W/"cf685b44c8d35b70fbf0e1e9664cd765"
       Vary:
@@ -978,13 +978,13 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 7489ca2b63d10f9195cd257d7fdcba14.cloudfront.net (CloudFront)
+      - 1.1 30a008d85df71a65d24879648931496c.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - etjESYK5fPmRepu7rernt0zMtoZoVi9O_nbQuhMMNJS7XdbCH87wFA==
+      - HgjWDsmvl5E0xGRL_q1c62TvKqucRNZ44jGXO2_kz4jHPBxzukRxew==
       Age:
-      - '802'
+      - '496'
     body:
       encoding: ASCII-8BIT
       string: '{"backdrop_path":"/tK8eRUWVY8AVdDUPUxSzrmlLb0R.jpg","created_by":[{"id":72082,"credit_id":"52577e1c760ee36aaa5b4024","name":"Brad
@@ -1019,7 +1019,7 @@ http_interactions:
         crew clash. Facing uncharted space and enemies who would take the ship by
         force, the Destiny crew persevere in their struggle to stay alive and find
         a way home.","poster_path":"/3vGy8NVfX0bis3YyTwJw3z5JAAQ.jpg","season_number":2}],"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Canceled","tagline":"","type":"Scripted","vote_average":7.3,"vote_count":431}'
-  recorded_at: Thu, 15 Apr 2021 17:50:25 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/movie/2164?api_key=<API_KEY>
@@ -1072,13 +1072,13 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 a363cb2607688e592410896234cdb47d.cloudfront.net (CloudFront)
+      - 1.1 12435f922f48ee227c1e888952ed66ac.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - xj3839kGdZsIy73IbRR9vg6aacFBP0OzLRtPnpSM44MOcqv8QFWCcQ==
+      - P1OK7NKt2pUQ_X6v1VGFCrFQN-baHcRrUgLVKMa_H96mFQtxkTvVSg==
       Age:
-      - '803'
+      - '4467'
     body:
       encoding: ASCII-8BIT
       string: '{"adult":false,"backdrop_path":"/34wSdldOfJ43JXXraD4GxkdX0j1.jpg","belongs_to_collection":{"id":44215,"name":"Stargate
@@ -1090,7 +1090,7 @@ http_interactions:
         Entertainment","origin_country":""},{"id":104,"logo_path":"/9aotxauvc9685tq9pTcRJszuT06.png","name":"Canal+","origin_country":"FR"}],"production_countries":[{"iso_3166_1":"FR","name":"France"},{"iso_3166_1":"US","name":"United
         States of America"}],"release_date":"1994-10-27","revenue":196567262,"runtime":121,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"},{"english_name":"Norwegian","iso_639_1":"no","name":"Norsk"},{"english_name":"Swedish","iso_639_1":"sv","name":"svenska"}],"status":"Released","tagline":"It
         will take you a million light years from home. But will it bring you back?","title":"Stargate","video":false,"vote_average":7.0,"vote_count":2331}'
-  recorded_at: Thu, 15 Apr 2021 17:50:25 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/tv/2290?api_key=<API_KEY>
@@ -1115,8 +1115,6 @@ http_interactions:
       - chunked
       Connection:
       - keep-alive
-      Date:
-      - Thu, 15 Apr 2021 17:37:03 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -1126,8 +1124,6 @@ http_interactions:
       Access-Control-Expose-Headers:
       - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
         Content-Length, Content-Range
-      Cache-Control:
-      - public, max-age=3600
       X-Memc:
       - HIT
       X-Memc-Key:
@@ -1136,6 +1132,10 @@ http_interactions:
       - '3203'
       X-Memc-Expires:
       - '397'
+      Date:
+      - Thu, 15 Apr 2021 18:43:14 GMT
+      Cache-Control:
+      - public, max-age=3600
       Etag:
       - W/"d6b02303661c792e5966f0b6028c1172"
       Vary:
@@ -1143,13 +1143,13 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 a363cb2607688e592410896234cdb47d.cloudfront.net (CloudFront)
+      - 1.1 4a7d33ed6e1269d258afa1464fe1d544.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - 5Ee7IadJeudXRUSJltPJqJOgmIXd5ur6X66FQVymumyj5ee5Gxux7g==
+      - f_jFaadD-KmLzvGmmZIswi4yF_o_HcSp2G7N2rt54ulatTajWig5Bg==
       Age:
-      - '803'
+      - '496'
     body:
       encoding: ASCII-8BIT
       string: '{"backdrop_path":"/sOJjqxfGAcmG3pKS8mbQLweoPSQ.jpg","created_by":[{"id":72082,"credit_id":"52572f50760ee3776a324ff0","name":"Brad
@@ -1180,7 +1180,7 @@ http_interactions:
         4","overview":"","poster_path":"/6YAykJHxa2OWf3eZxKq2uaz9wZe.jpg","season_number":4},{"air_date":"2008-07-10","episode_count":20,"id":7145,"name":"Season
         5","overview":"","poster_path":"/ysIj54F4yzl7KnhfuZDTwcA6Fc1.jpg","season_number":5}],"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Ended","tagline":"A
         new gate will open. A lost city will rise again.","type":"Scripted","vote_average":7.9,"vote_count":612}'
-  recorded_at: Thu, 15 Apr 2021 17:50:26 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
 - request:
     method: get
     uri: https://api.themoviedb.org/3/tv/4629?api_key=<API_KEY>
@@ -1205,8 +1205,6 @@ http_interactions:
       - chunked
       Connection:
       - keep-alive
-      Date:
-      - Thu, 15 Apr 2021 17:36:59 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -1216,8 +1214,6 @@ http_interactions:
       Access-Control-Expose-Headers:
       - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
         Content-Length, Content-Range
-      Cache-Control:
-      - public, max-age=3600
       X-Memc:
       - HIT
       X-Memc-Key:
@@ -1226,6 +1222,10 @@ http_interactions:
       - '1238'
       X-Memc-Expires:
       - '2362'
+      Date:
+      - Thu, 15 Apr 2021 18:43:15 GMT
+      Cache-Control:
+      - public, max-age=3600
       Etag:
       - W/"5a82acce912e8e167529fb53f992e7fd"
       Vary:
@@ -1233,16 +1233,16 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 f7e7ff7c4baf897c3283c9d2e14182e1.cloudfront.net (CloudFront)
+      - 1.1 fd450117df0639d714d4dd6d760d6213.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - M-hBOr6__WkHwh-WiNC6z7tzbXpynzcgCxflp4GmdDUTD-4_Rv5mPQ==
+      - QH3Tdp7wzls9zCWeUCmJsKKAB9CKJIbJmeGVQorU9Vk6C6hLngylng==
       Age:
-      - '807'
+      - '496'
     body:
       encoding: ASCII-8BIT
       string: !binary |-
         eyJiYWNrZHJvcF9wYXRoIjoiL2xpOVNaQnBWekp6ODFvdXFpZlZ1SDVDN05vZC5qcGciLCJjcmVhdGVkX2J5IjpbeyJpZCI6NzIwODIsImNyZWRpdF9pZCI6IjUyNTc3ODFkNzYwZWUzNmFhYTU0YzFhMSIsIm5hbWUiOiJCcmFkIFdyaWdodCIsImdlbmRlciI6MiwicHJvZmlsZV9wYXRoIjpudWxsfSx7ImlkIjoxMjI0OTA0LCJjcmVkaXRfaWQiOiI1MjU3NzgxZDc2MGVlMzZhYWE1NGMxOWIiLCJuYW1lIjoiSm9uYXRoYW4gR2xhc3NuZXIiLCJnZW5kZXIiOjIsInByb2ZpbGVfcGF0aCI6bnVsbH1dLCJlcGlzb2RlX3J1bl90aW1lIjpbNDIsNjAsNDMsNDVdLCJmaXJzdF9haXJfZGF0ZSI6IjE5OTctMDctMjciLCJnZW5yZXMiOlt7ImlkIjoxMDc2NSwibmFtZSI6IlNjaS1GaSAmIEZhbnRhc3kifSx7ImlkIjoxMDc1OSwibmFtZSI6IkFjdGlvbiAmIEFkdmVudHVyZSJ9LHsiaWQiOjk2NDgsIm5hbWUiOiJNeXN0ZXJ5In1dLCJob21lcGFnZSI6Imh0dHA6Ly9zdGFyZ2F0ZS5tZ20uY29tL3ZpZXcvc2VyaWVzLzEvaW5kZXguaHRtbCIsImlkIjo0NjI5LCJpbl9wcm9kdWN0aW9uIjpmYWxzZSwibGFuZ3VhZ2VzIjpbImVuIl0sImxhc3RfYWlyX2RhdGUiOiIyMDA3LTA2LTIyIiwibGFzdF9lcGlzb2RlX3RvX2FpciI6eyJhaXJfZGF0ZSI6IjIwMDctMDYtMjIiLCJlcGlzb2RlX251bWJlciI6MjAsImlkIjozMzYwMzUsIm5hbWUiOiJVbmVuZGluZyIsIm92ZXJ2aWV3IjoiVHJhcHBlZCBvbiBib2FyZCB0aGUgT2R5c3NleSwgdGhlIG1lbWJlcnMgb2YgU0ctMSBtdXN0IGxpdmUgb3V0IHRoZSByZXN0IG9mIHRoZWlyIGxpdmVzIHRvZ2V0aGVyIHdoZW4gQ2FydGVyIGFjdGl2YXRlcyBhIHRpbWUgZGlsYXRpb24gZmllbGQgdG8gc2F2ZSB0aGUgc2hpcCBmcm9tIGRlc3RydWN0aW9uLiIsInByb2R1Y3Rpb25fY29kZSI6IiIsInNlYXNvbl9udW1iZXIiOjEwLCJzdGlsbF9wYXRoIjoiL29ZMEpRdjNueDd4OGNVZ28ycWxBOGFxTnRZcy5qcGciLCJ2b3RlX2F2ZXJhZ2UiOjguNSwidm90ZV9jb3VudCI6MTF9LCJuYW1lIjoiU3RhcmdhdGUgU0ctMSIsIm5leHRfZXBpc29kZV90b19haXIiOm51bGwsIm5ldHdvcmtzIjpbeyJuYW1lIjoiU2hvd3RpbWUiLCJpZCI6NjcsImxvZ29fcGF0aCI6Ii9BbGxzZTlrYmppUDZFeGFRcm5TcEloa3VyRWkucG5nIiwib3JpZ2luX2NvdW50cnkiOiJVUyJ9LHsibmFtZSI6IlN5ZnkiLCJpZCI6NzcsImxvZ29fcGF0aCI6Ii9pWWZya29id0RoVE9GSjRBWFlQU0xJRWVhQVQucG5nIiwib3JpZ2luX2NvdW50cnkiOiJVUyJ9XSwibnVtYmVyX29mX2VwaXNvZGVzIjoyMTQsIm51bWJlcl9vZl9zZWFzb25zIjoxMCwib3JpZ2luX2NvdW50cnkiOlsiQ0EiLCJVUyJdLCJvcmlnaW5hbF9sYW5ndWFnZSI6ImVuIiwib3JpZ2luYWxfbmFtZSI6IlN0YXJnYXRlIFNHLTEiLCJvdmVydmlldyI6IlRoZSBzdG9yeSBvZiBTdGFyZ2F0ZSBTRy0xIGJlZ2lucyBhYm91dCBhIHllYXIgYWZ0ZXIgdGhlIGV2ZW50cyBvZiB0aGUgZmVhdHVyZSBmaWxtLCB3aGVuIHRoZSBVbml0ZWQgU3RhdGVzIGdvdmVybm1lbnQgbGVhcm5zIHRoYXQgYW4gYW5jaWVudCBhbGllbiBkZXZpY2UgY2FsbGVkIHRoZSBTdGFyZ2F0ZSBjYW4gYWNjZXNzIGEgbmV0d29yayBvZiBzdWNoIGRldmljZXMgb24gYSBtdWx0aXR1ZGUgb2YgcGxhbmV0cy4gU0ctMSBpcyBhbiBlbGl0ZSBBaXIgRm9yY2Ugc3BlY2lhbCBvcGVyYXRpb25zIHRlYW0sIG9uZSBvZiBtb3JlIHRoYW4gdHdvIGRvemVuIHRlYW1zIGZyb20gRWFydGggd2hvIGV4cGxvcmUgdGhlIGdhbGF4eSBhbmQgZGVmZW5kIGFnYWluc3QgYWxpZW4gdGhyZWF0cyBzdWNoIGFzIHRoZSBHb2EndWxkLCBSZXBsaWNhdG9ycywgYW5kIHRoZSBPcmkuIiwicG9wdWxhcml0eSI6NjguNzk5LCJwb3N0ZXJfcGF0aCI6Ii85SmVndzB5bGU0eDhqbG1MTlpvbjM3T3MyN2guanBnIiwicHJvZHVjdGlvbl9jb21wYW5pZXMiOlt7ImlkIjoyMjMwLCJsb2dvX3BhdGgiOiIvOFVIUE5abkNmMmdmSHM5RHJTdkpNYTh0N1J5LnBuZyIsIm5hbWUiOiJNR00gVGVsZXZpc2lvbiIsIm9yaWdpbl9jb3VudHJ5IjoiVVMifV0sInByb2R1Y3Rpb25fY291bnRyaWVzIjpbeyJpc29fMzE2Nl8xIjoiQ0EiLCJuYW1lIjoiQ2FuYWRhIn1dLCJzZWFzb25zIjpbeyJhaXJfZGF0ZSI6IjE5OTQtMTAtMjgiLCJlcGlzb2RlX2NvdW50Ijo5LCJpZCI6MTQxNTAsIm5hbWUiOiJTcGVjaWFscyIsIm92ZXJ2aWV3IjoiIiwicG9zdGVyX3BhdGgiOiIvbzkzNHA1a0tUSVJUbzgwekF6anl5S25FekhlLmpwZyIsInNlYXNvbl9udW1iZXIiOjB9LHsiYWlyX2RhdGUiOiIxOTk3LTA3LTI3IiwiZXBpc29kZV9jb3VudCI6MjIsImlkIjoxNDE1MSwibmFtZSI6IlNlYXNvbiAxIiwib3ZlcnZpZXciOiJUaGUgZmlyc3Qgc2Vhc29uIG9mIHRoZSBtaWxpdGFyeSBzY2llbmNlIGZpY3Rpb24gdGVsZXZpc2lvbiBzZXJpZXMgU3RhcmdhdGUgU0ctMSBjb21tZW5jZWQgYWlyaW5nIG9uIHRoZSBTaG93dGltZSBjaGFubmVsIGluIHRoZSBVbml0ZWQgU3RhdGVzIG9uIEp1bHkgMjcsIDE5OTcsIGNvbmNsdWRlZCBvbiB0aGUgc2FtZSBjaGFubmVsIG9uIE1hcmNoIDYsIDE5OTgsIGFuZCBjb250YWluZWQgMjIgZXBpc29kZXMuIFRoZSBzaG93IGl0c2VsZiBpcyBhIHNwaW4gb2ZmIGZyb20gdGhlIDE5OTQgaGl0IG1vdmllLCBTdGFyZ2F0ZSB3cml0dGVuIGJ5IERlYW4gRGV2bGluIGFuZCBSb2xhbmQgRW1tZXJpY2guIFN0YXJnYXRlIFNHLTEgcmUtaW50cm9kdWNlZCBzdXBwb3J0aW5nIGNoYXJhY3RlcnMgZnJvbSB0aGUgZmlsbSB1bml2ZXJzZSwgc3VjaCBhcyBKb25hdGhhbiBcIkphY2tcIiBPJ05laWxsIGFuZCBEYW5pZWwgSmFja3NvbiBhbmQgaW5jbHVkZWQgbmV3IGNoYXJhY3RlcnMgc3VjaCBhcyBUZWFsJ2MsIEdlb3JnZSBIYW1tb25kIGFuZCBTYW1hbnRoYSBcIlNhbVwiIENhcnRlci4gVGhlIGZpcnN0IHNlYXNvbiB3YXMgYWJvdXQgYSBtaWxpdGFyeS1zY2llbmNlIGV4cGVkaXRpb24gdGVhbSBkaXNjb3ZlcmluZyBob3cgdG8gdXNlIHRoZSBhbmNpZW50IGRldmljZSwgbmFtZWQgdGhlIFN0YXJnYXRlLCB0byBleHBsb3JlIHRoZSBnYWxheHkuIEhvd2V2ZXIsIHRoZXkgZW5jb3VudGVyZWQgYSBwb3dlcmZ1bCBlbmVteSBpbiB0aGUgZmlsbSBuYW1lZCB0aGUgR29hJ3VsZCwgd2hpY2ggaXMgYmVudCBvbiBkZXN0cm95aW5nIEVhcnRoIGFuZCBhbGwgdGhhdCBvcHBvc2VzIHRoZW0uIiwicG9zdGVyX3BhdGgiOiIvdGlpYjZBMGtaME5vVWV1VWJjVTBoSXUyamxNLmpwZyIsInNlYXNvbl9udW1iZXIiOjF9LHsiYWlyX2RhdGUiOiIxOTk4LTA2LTI2IiwiZXBpc29kZV9jb3VudCI6MjIsImlkIjoxNDE0MSwibmFtZSI6IlNlYXNvbiAyIiwib3ZlcnZpZXciOiJTZWFzb24gdHdvIG9mIFN0YXJnYXRlIFNHLTEsIGFuIEFtZXJpY2FuLUNhbmFkaWFuIHRlbGV2aXNpb24gc2VyaWVzLCBiZWdhbiBhaXJpbmcgb24gSnVuZSAyNiwgMTk5OCBvbiBTaG93dGltZS4gVGhlIHNlY29uZCBzZWFzb24gY29uY2x1ZGVkIGFmdGVyIDIyIGVwaXNvZGVzIG9uIEZlYnJ1YXJ5IDEwLCAxOTk5IG9uIEJyaXRpc2ggU2t5IE9uZSwgd2hpY2ggb3ZlcnRvb2sgU2hvd3RpbWUgaW4gbWlkLXNlYXNvbi4gVGhlIHNlcmllcyB3YXMgZGV2ZWxvcGVkIGJ5IEJyYWQgV3JpZ2h0IGFuZCBKb25hdGhhbiBHbGFzc25lciwgd2hvIGFsc28gc2VydmVkIGFzIGV4ZWN1dGl2ZSBwcm9kdWNlcnMuIFNlYXNvbiB0d28gcmVndWxhciBjYXN0IG1lbWJlcnMgaW5jbHVkZSBSaWNoYXJkIERlYW4gQW5kZXJzb24sIE1pY2hhZWwgU2hhbmtzLCBBbWFuZGEgVGFwcGluZywgQ2hyaXN0b3BoZXIgSnVkZ2UsIGFuZCBEb24gUy4gRGF2aXMuIiwicG9zdGVyX3BhdGgiOiIvaU51N2RpSUhPQ1ZxdVMxNDNWN2FvRkJ2NjNrLmpwZyIsInNlYXNvbl9udW1iZXIiOjJ9LHsiYWlyX2RhdGUiOiIxOTk5LTA2LTI1IiwiZXBpc29kZV9jb3VudCI6MjIsImlkIjoxNDE0MiwibmFtZSI6IlNlYXNvbiAzIiwib3ZlcnZpZXciOiJUaGUgdGhpcmQgc2Vhc29uIG9mIHRoZSBtaWxpdGFyeSBzY2llbmNlIGZpY3Rpb24gdGVsZXZpc2lvbiBzZXJpZXMgU3RhcmdhdGUgU0ctMSBjb21tZW5jZWQgYWlyaW5nIG9uIFNob3d0aW1lIGluIHRoZSBVbml0ZWQgU3RhdGVzIG9uIEp1bmUgMjUsIDE5OTksIGNvbmNsdWRlZCBvbiBTa3kxIGluIHRoZSBVbml0ZWQgS2luZ2RvbSBvbiBNYXJjaCA4LCAyMDAwLCBhbmQgY29udGFpbmVkIDIyIGVwaXNvZGVzLiBUaGUgdGhpcmQgY29udGludWVzIHRoZSBwbG90IHN0YXJ0ZWQgaW4gc2Vhc29uIG9uZSwgdGhlIHRoaXJkIHNlYXNvbiBmb2xsb3dzIFNHLTEgaW4gdGhlaXIgZmlnaHQgYWdhaW5zdCB0aGUgR29hJ3VsZCBFbXBpcmUncyBTeXN0ZW0gTG9yZHMsIHRoZSBtYWluIGJlaW5nIFNva2FyIHVudGlsIFwiVGhlIERldmlsIFlvdSBLbm93XCIgYW5kIHRoZW4gQXBvcGhpcyBhZnRlciByZWdhaW5pbmcgcG93ZXIgYWZ0ZXIgdGhlIGV2ZW50IGluIFwiVGhlIERldmlsIFlvdSBLbm93LlwiIFRoZSBzZWFzb24gaW50cm9kdWNlcyB0aGUgbG9uZyB1bnNlZW4gYW5kIHVubmFtZWQgZW5lbXkgb2YgdGhlIEFzZ2FyZHMsIHRoZSBSZXBsaWNhdG9ycyB3aG8gYXJlIHNlbGYtcmVwbGljYXRpbmcgbWFjaGluZXMgdGhhdCBzZWVrIHRvIGNvbnZlcnQgYWxsIGNpdmlsaXphdGlvbnMgaW50byBtb3JlIG9mIHRoZW1zZWx2ZXMsIHRodXMgcG9zaW5nIGEgZGlyZSB0aHJlYXQgdG8gYWxsIG90aGVyIGJlaW5ncy4gVGhlIFJlcGxpY2F0b3JzIGFyZSBmaXJzdCBtZW50aW9uZWQsIGJ1dCBub3QgbmFtZWQsIGluIHNlYXNvbiB0aHJlZSBlcGlzb2RlIFwiRmFpciBHYW1lXCIuXG5cblRoZSBvbmUtaG91ciBwcmVtaWVyZSBcIkludG8gdGhlIEZpcmVcIiwgd2hpY2ggZGVidXRlZCBvbiBKdW5lIDI1LCAxOTk5IG9uIFNob3d0aW1lIGRpZCBub3QgcmVjZWl2ZSBhbnkgc3luZGljYXRpb24gcmF0aW5nLCBidXQgb3ZlcmFsbCBnb3QgYSBoaWdoIHZpZXdlcnNoaXAgbGV2ZWwuIFRoZSBzZXJpZXMgd2FzIGRldmVsb3BlZCBieSBCcmFkIFdyaWdodCBhbmQgSm9uYXRoYW4gR2xhc3NuZXIsIHdobyBhbHNvIHNlcnZlZCBhcyBleGVjdXRpdmUgcHJvZHVjZXJzLiBTZWFzb24gMyByZWd1bGFyIGNhc3QgbWVtYmVycyBpbmNsdWRlIFJpY2hhcmQgRGVhbiBBbmRlcnNvbiwgTWljaGFlbCBTaGFua3MsIEFtYW5kYSBUYXBwaW5nLCBDaHJpc3RvcGhlciBKdWRnZSwgYW5kIERvbiBTLiBEYXZpcy4iLCJwb3N0ZXJfcGF0aCI6Ii9RS3o1YW0ybWNlUDZSQTloUFZ1cFduTzB4aC5qcGciLCJzZWFzb25fbnVtYmVyIjozfSx7ImFpcl9kYXRlIjoiMjAwMC0wNi0zMCIsImVwaXNvZGVfY291bnQiOjIyLCJpZCI6MTQxNDMsIm5hbWUiOiJTZWFzb24gNCIsIm92ZXJ2aWV3IjoiU2Vhc29uIGZvdXIgb2YgU3RhcmdhdGUgU0ctMSwgYW4gQW1lcmljYW4tQ2FuYWRpYW4gdGVsZXZpc2lvbiBzZXJpZXMsIGJlZ2FuIGFpcmluZyBvbiBKdW5lIDMwLCAyMDAwIG9uIFNob3d0aW1lLiBUaGUgZm91cnRoIHNlYXNvbiBjb25jbHVkZWQgYWZ0ZXIgMjIgZXBpc29kZXMgb24gRmVicnVhcnkgMTQsIDIwMDEgb24gQnJpdGlzaCBTa3kgT25lLCB3aGljaCBvdmVydG9vayBTaG93dGltZSBpbiBtaWQtc2Vhc29uLiBUaGUgc2VyaWVzIHdhcyBkZXZlbG9wZWQgYnkgQnJhZCBXcmlnaHQgYW5kIEpvbmF0aGFuIEdsYXNzbmVyLiBTZWFzb24gZm91ciByZWd1bGFyIGNhc3QgbWVtYmVycyBpbmNsdWRlIFJpY2hhcmQgRGVhbiBBbmRlcnNvbiwgTWljaGFlbCBTaGFua3MsIEFtYW5kYSBUYXBwaW5nLCBDaHJpc3RvcGhlciBKdWRnZSwgYW5kIERvbiBTLiBEYXZpcy4iLCJwb3N0ZXJfcGF0aCI6Ii92cFBFYTh2cU1yMVd0WGJFNmZBMEFCR2VGb2UuanBnIiwic2Vhc29uX251bWJlciI6NH0seyJhaXJfZGF0ZSI6IjIwMDEtMDYtMjkiLCJlcGlzb2RlX2NvdW50IjoyMiwiaWQiOjE0MTQ0LCJuYW1lIjoiU2Vhc29uIDUiLCJvdmVydmlldyI6IlRoZSBmaWZ0aCBzZWFzb24gb2YgdGhlIG1pbGl0YXJ5IHNjaWVuY2UgZmljdGlvbiB0ZWxldmlzaW9uIHNlcmllcyBTdGFyZ2F0ZSBTRy0xIGNvbW1lbmNlZCBhaXJpbmcgb24gU2hvd3RpbWUgaW4gdGhlIFVuaXRlZCBTdGF0ZXMgb24gSnVuZSAyOSwgMjAwMSwgY29uY2x1ZGVkIG9uIFNreTEgaW4gdGhlIFVuaXRlZCBLaW5nZG9tIG9uIEZlYnJ1YXJ5IDYsIDIwMDIsIGFuZCBjb250YWluZWQgMjIgZXBpc29kZXMuIFRoZSBmaWZ0aCBzZWFzb24gaW50cm9kdWNlcyBmdXR1cmUgbWFpbiBjaGFyYWN0ZXIgZnJvbSBKb25hcyBRdWlubiBwb3J0cmF5ZWQgYnkgQ29yaW4gTmVtZWMgZnJvbSAyMDAy4oCTMjAwNC4gVGhlIGZpZnRoIHNlYXNvbiBpcyBhYm91dCB0aGUgb25nb2luZyB3YXIgd2l0aCB0aGUgR29hJ3VsZCBFbXBpcmUgYWZ0ZXIgdGhlIGRlYXRoIG9mIEFwb3BoaXMgYXQgdGhlIHN0YXJ0IG9mIHRoZSBzZWFzb24gYW5kIHRoZSByaXNlIG9mIGEgbmV3IFN5c3RlbSBMb3JkIG5hbWVkIEFudWJpcy4gU0ctMSwgYSBtaWxpdGFyeS1zY2llbmNlIHRlYW0sIGFyZSBzZXQgdG8gZXhwbG9yZSB0aGUgTWlsa3kgV2F5IEdhbGF4eS5cblxuVGhlIG9uZS1ob3VyIHByZW1pZXJlIFwiRW5lbWllc1wiLCB3aGljaCBkZWJ1dGVkIG9uIEp1bmUgMjksIDIwMDEgb24gU2hvd3RpbWUgaGFkIHRoZSBsb3dlc3Qgc3luZGljYXRpb24gb2YgdGhlIHNlYXNvbnMgZXBpc29kZSwgYnV0IG92ZXJhbGwgZ290IGEgaGlnaCB2aWV3ZXJzaGlwIGxldmVsLiBUaGlzIHdvdWxkIGJlIHRoZSBsYXN0IHNlYXNvbiB0byBmZWF0dXJlIEFwb3BoaXMgYWxpdmUsIGJ1dCBoZSB3b3VsZCByZXR1cm4gaW4gZHJlYW1zIGFuZCBhbHRlcm5hdGUgcmVhbGl0aWVzIGFuZCB0aW1lbGluZXMuIFRoZSBzZXJpZXMgd2FzIGRldmVsb3BlZCBieSBCcmFkIFdyaWdodCBhbmQgSm9uYXRoYW4gR2xhc3NuZXIuIFNlYXNvbiBmaXZlIHJlZ3VsYXIgY2FzdCBtZW1iZXJzIGluY2x1ZGUgUmljaGFyZCBEZWFuIEFuZGVyc29uLCBNaWNoYWVsIFNoYW5rcywgQW1hbmRhIFRhcHBpbmcsIENocmlzdG9waGVyIEp1ZGdlLCBhbmQgRG9uIFMuIERhdmlzLiIsInBvc3Rlcl9wYXRoIjoiL3RuMFZyRWFEZGllZk9HbnBoSGtUSk5BZXF4TS5qcGciLCJzZWFzb25fbnVtYmVyIjo1fSx7ImFpcl9kYXRlIjoiMjAwMi0wNi0wNyIsImVwaXNvZGVfY291bnQiOjIyLCJpZCI6MTQxNDUsIm5hbWUiOiJTZWFzb24gNiIsIm92ZXJ2aWV3IjoiU2Vhc29uIHNpeCBvZiBTdGFyZ2F0ZSBTRy0xLCBhbiBBbWVyaWNhbi1DYW5hZGlhbiB0ZWxldmlzaW9uIHNlcmllcywgYmVnYW4gYWlyaW5nIG9uIEp1bmUgNywgMjAwMiBvbiBTY2kgRmkuIFRoZSBzaXh0aCBzZWFzb24gY29uY2x1ZGVkIGFmdGVyIDIyIGVwaXNvZGVzIG9uIEZlYnJ1YXJ5IDE5LCAyMDAzIG9uIEJyaXRpc2ggU2t5IE9uZSwgd2hpY2ggb3ZlcnRvb2sgdGhlIFNjaS1GaSBDaGFubmVsIGluIG1pZC1zZWFzb24uIFRoZSBzZXJpZXMgd2FzIGRldmVsb3BlZCBieSBCcmFkIFdyaWdodCBhbmQgSm9uYXRoYW4gR2xhc3NuZXIuIFNlYXNvbiBzaXggcmVndWxhciBjYXN0IG1lbWJlcnMgaW5jbHVkZSBSaWNoYXJkIERlYW4gQW5kZXJzb24sIEFtYW5kYSBUYXBwaW5nLCBDaHJpc3RvcGhlciBKdWRnZSwgQ29yaW4gTmVtZWMsIGFuZCBEb24gUy4gRGF2aXMuIiwicG9zdGVyX3BhdGgiOiIvaEZTTGp1NjFvT29ncnFpcTBWRDRlTGRqVjg0LmpwZyIsInNlYXNvbl9udW1iZXIiOjZ9LHsiYWlyX2RhdGUiOiIyMDAzLTA2LTEzIiwiZXBpc29kZV9jb3VudCI6MjIsImlkIjoxNDE0NiwibmFtZSI6IlNlYXNvbiA3Iiwib3ZlcnZpZXciOiJTZWFzb24gc2V2ZW4gb2YgU3RhcmdhdGUgU0ctMSwgYW4gQW1lcmljYW4tQ2FuYWRpYW4gdGVsZXZpc2lvbiBzZXJpZXMsIGJlZ2FuIGFpcmluZyBvbiBKdW5lIDEzLCAyMDAzIG9uIFNjaSBGaS4gVGhlIHNldmVudGggc2Vhc29uIGNvbmNsdWRlZCBhZnRlciAyMiBlcGlzb2RlcyBvbiBNYXJjaCA5LCAyMDA0IG9uIEJyaXRpc2ggU2t5IE9uZSwgd2hpY2ggb3ZlcnRvb2sgdGhlIFNjaS1GaSBDaGFubmVsIGluIG1pZC1zZWFzb24uIFRoZSBzZXJpZXMgd2FzIGRldmVsb3BlZCBieSBCcmFkIFdyaWdodCBhbmQgSm9uYXRoYW4gR2xhc3NuZXIuIFNlYXNvbiBzZXZlbiByZWd1bGFyIGNhc3QgbWVtYmVycyBpbmNsdWRlIFJpY2hhcmQgRGVhbiBBbmRlcnNvbiwgQW1hbmRhIFRhcHBpbmcsIENocmlzdG9waGVyIEp1ZGdlLCBNaWNoYWVsIFNoYW5rcywgYW5kIERvbiBTLiBEYXZpcy4iLCJwb3N0ZXJfcGF0aCI6Ii9yMTZOeUh2c09GYm05NWo3ZXpmRDJabU1pNWwuanBnIiwic2Vhc29uX251bWJlciI6N30seyJhaXJfZGF0ZSI6IjIwMDQtMDctMDkiLCJlcGlzb2RlX2NvdW50IjoyMCwiaWQiOjE0MTQ3LCJuYW1lIjoiU2Vhc29uIDgiLCJvdmVydmlldyI6IlNlYXNvbiBlaWdodCBvZiBTdGFyZ2F0ZSBTRy0xLCBhbiBBbWVyaWNhbi1DYW5hZGlhbiBtaWxpdGFyeSBzY2llbmNlIGZpY3Rpb24gdGVsZXZpc2lvbiBzZXJpZXMsIGJlZ2FuIGFpcmluZyBvbiBKdWx5IDksIDIwMDQgb24gdGhlIFNjaSBGaSBjaGFubmVsLiBUaGUgZWlnaHRoIHNlYXNvbiBjb25jbHVkZWQgb24gRmVicnVhcnkgMjIsIDIwMDUsIGFmdGVyIDIwIGVwaXNvZGVzIG9uIEJyaXRpc2ggU2t5IE9uZSwgd2hpY2ggb3ZlcnRvb2sgdGhlIFNjaSBGaSBDaGFubmVsIGluIG1pZC1zZWFzb24uIFRoaXMgd2FzIHRoZSBmaXJzdCBzZWFzb24gb2YgdGhlIHNob3cgdG8gaGF2ZSAyMCBlcGlzb2RlcyBpbnN0ZWFkIG9mIDIyLCBhcyB3ZWxsIGFzIHRoZSBmaXJzdCB0byBhaXIgY29uY3VycmVudGx5IHdpdGggU3RhcmdhdGUgU0ctMSBzcGlub2ZmIHNlcmllcyBTdGFyZ2F0ZSBBdGxhbnRpcy4gVGhlIHNlcmllcyB3YXMgb3JpZ2luYWxseSBkZXZlbG9wZWQgYnkgQnJhZCBXcmlnaHQgYW5kIEpvbmF0aGFuIEdsYXNzbmVyLCB3aGlsZSBCcmFkIFdyaWdodCBhbmQgUm9iZXJ0IEMuIENvb3BlciBzZXJ2ZWQgYXMgZXhlY3V0aXZlIHByb2R1Y2Vycy4gU2Vhc29uIGVpZ2h0IHJlZ3VsYXIgY2FzdCBtZW1iZXJzIGluY2x1ZGUgUmljaGFyZCBEZWFuIEFuZGVyc29uLCBBbWFuZGEgVGFwcGluZywgQ2hyaXN0b3BoZXIgSnVkZ2UsIGFuZCBNaWNoYWVsIFNoYW5rcy4gVGhlIGVpZ2h0aCBzZWFzb24gYmVnaW5zIHdpdGggdGhlIFNHLTEgdGVhbSB0cnlpbmcgdG8gcmV2aXZlIENvbG9uZWwgSmFjayBPJ05laWxsIGFmdGVyIHRoZSBldmVudHMgb2YgdGhlIHNldmVudGggc2Vhc29uLiBBdCB0aGUgZW5kIG9mIHRoZSB0d28tZXBpc29kZSBzZWFzb24gb3BlbmVyLCBDb2xvbmVsIE8nTmVpbGwgaXMgcHJvbW90ZWQgdG8gR2VuZXJhbCBhbmQgYXNzdW1lcyBjb21tYW5kIG9mIFN0YXJnYXRlIENvbW1hbmQsIHdoaWxlIE1ham9yIFNhbWFudGhhIENhcnRlciBpcyBwcm9tb3RlZCB0byBMaWV1dGVuYW50IENvbG9uZWwgYW5kIGFzc3VtZXMgY29tbWFuZCBvZiBTRy0xLiBUaGUgc2Vhc29uIGFyYyBjZW50ZXJzIGFyb3VuZCB0aGUgZ3Jvd2luZyB0aHJlYXQgYW5kIHNlZW1pbmdseSBmaW5hbCBkZWZlYXQgb2YgdGhlIEdvYSd1bGQgYW5kIHRoZSBSZXBsaWNhdG9ycywgcmFjZXMgd2hvIHdlcmUgaW50cm9kdWNlZCBpbiB0aGUgZmlyc3QgYW5kIHRoaXJkIHNlYXNvbiBvZiB0aGUgc2hvdywgcmVzcGVjdGl2ZWx5LiIsInBvc3Rlcl9wYXRoIjoiLzQ3dnViREExMUIweTZlZFhiZ1Z1blFoOVNCRi5qcGciLCJzZWFzb25fbnVtYmVyIjo4fSx7ImFpcl9kYXRlIjoiMjAwNS0wNy0xNSIsImVwaXNvZGVfY291bnQiOjIwLCJpZCI6MTQxNDgsIm5hbWUiOiJTZWFzb24gOSIsIm92ZXJ2aWV3IjoiQXMgb25lIHRlYW0gbWVtYmVyIHRyYW5zaXRpb25zIGludG8gYSBuZXcgcm9sZSwgYW5vdGhlciBpcyBtZXQgd2l0aCBoZXNpdGF0aW9uIGluIHNlYXNvbiBuaW5lLiBIYXZpbmcgbGVhcm5lZCBvZiB0aGUgT3JpJ3MgcGxhbiB0byBjb250cm9sIHRoZSBtb3J0YWwgcGxhbmUsIHRoZSB0ZWFtIG11c3QgZmluZCBNZXJsaW4ncyBzZWNyZXQgd2VhcG9uIHRoYXQgbWF5IGRlc3Ryb3kgdGhlIE9yaSBhbmQgZW5zdXJlIHRoZSBzYWZldHkgb2YgRWFydGguIiwicG9zdGVyX3BhdGgiOiIvcXRoenduM3d2cmE3VVhIZXVHT05hY1RPMGxULmpwZyIsInNlYXNvbl9udW1iZXIiOjl9LHsiYWlyX2RhdGUiOiIyMDA2LTA3LTE0IiwiZXBpc29kZV9jb3VudCI6MjAsImlkIjoxNDE0OSwibmFtZSI6IlNlYXNvbiAxMCIsIm92ZXJ2aWV3IjoiQXMgdGhlIHRlYW0gZW1iYXJrcyB1cG9uIGl0cyB0ZW50aCB5ZWFyLCBWYWxhLCBhIGZvcm1lciBHb2EndWxkIGhvc3QgdHVybmVkIGZyZWVkb20tZmlnaHRlciwgam9pbnMgU0ctMSBpbiB0aGVpciBiYXR0bGUgdG8gZGVmZW5kIHRoZSBnYWxheHkgZnJvbSB0aGUgaG9seSB3YXIgb2YgdGhlIE9yaS4gSGF2aW5nIGRpc2NvdmVyZWQgdGhlIGV4aXN0ZW5jZSBvZiBhIHdlYXBvbiBjYXBhYmxlIG9mIGRlZmVhdGluZyB0aGUgT3JpLCB0aGUgdGVhbSBpcyBub3cgaW4gYSByYWNlIGFnYWluc3QgdGltZSB0byBmaW5kIGl0IGJlZm9yZSBtb3JlIHN5c3RlbXMgZmFsbCB0byB0aGUgaW5mbHVlbmNlIG9mIHRoZSBQcmlvcnMgYW5kIHRoZSB0aHJlYXQgb2YgdGhlIG5ld2x5IGFycml2ZWQgT3JpZ2luIGZsZWV0LiAgXG5cblRoZSBzZWFzb24gaXMgY29udGludWVkIHdpdGggZGlyZWN0LXRvLURWRCBmaWxtIFN0YXJnYXRlOiBUaGUgQXJrIG9mIFRydXRoLiIsInBvc3Rlcl9wYXRoIjoiL3pXUVVXSjFOYkxMUWhNRGN5UTlPSW1HNm9HZy5qcGciLCJzZWFzb25fbnVtYmVyIjoxMH1dLCJzcG9rZW5fbGFuZ3VhZ2VzIjpbeyJlbmdsaXNoX25hbWUiOiJFbmdsaXNoIiwiaXNvXzYzOV8xIjoiZW4iLCJuYW1lIjoiRW5nbGlzaCJ9XSwic3RhdHVzIjoiRW5kZWQiLCJ0YWdsaW5lIjoiU2F2aW5nIHRoZSB3b3JsZC4uLiBvbmUgZXBpc29kZSBhdCBhIHRpbWUiLCJ0eXBlIjoiU2NyaXB0ZWQiLCJ2b3RlX2F2ZXJhZ2UiOjguMiwidm90ZV9jb3VudCI6OTAwfQ==
-  recorded_at: Thu, 15 Apr 2021 17:50:26 GMT
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
 recorded_with: VCR 6.0.0

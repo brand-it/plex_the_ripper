@@ -2,7 +2,11 @@
   <div class="row no-gutters">
     <div class="col-4 mb-3">
       <%= imdb_image_tag video.poster_path %>
-      <%= link_to 'Select', video, class: 'btn btn-outline-light w-100 rounded-0' %>
+      <% if video.new_record? %>
+        <%= link_to 'Select', movies_path(the_movie_db_id: video.the_movie_db_id), method: :post, class: 'btn btn-outline-light w-100 rounded-0' %>
+      <% else %>
+        <%= link_to 'Select', video, class: 'btn btn-outline-light w-100 rounded-0' %>
+      <% end %>
     </div>
     <div class="col-8">
       <div class="card-body">

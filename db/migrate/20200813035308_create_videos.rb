@@ -3,7 +3,6 @@ class CreateVideos < ActiveRecord::Migration[6.0]
     create_table :videos do |t|
       t.string :title
       t.string :original_title
-      t.string :workflow_state
       t.date :release_date
       t.string :poster_path
       t.string :backdrop_path

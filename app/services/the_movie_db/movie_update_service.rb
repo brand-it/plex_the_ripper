@@ -13,11 +13,11 @@ module TheMovieDb
       overview
     ].freeze
 
-    option :movie, Types.Instance(::Movie)
+    param :movie, Types.Instance(::Movie)
 
     class << self
-      def call(**args)
-        new(**args).call
+      def call(*args)
+        new(*args).call
       end
     end
 

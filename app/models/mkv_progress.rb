@@ -13,12 +13,16 @@
 #  video_type    :string
 #  created_at    :datetime         not null
 #  updated_at    :datetime         not null
+#  disk_id       :bigint
 #  disk_title_id :bigint
+#  episode_id    :bigint
 #  video_id      :bigint
 #
 # Indexes
 #
+#  index_mkv_progresses_on_disk_id                  (disk_id)
 #  index_mkv_progresses_on_disk_title_id            (disk_title_id)
+#  index_mkv_progresses_on_episode_id               (episode_id)
 #  index_mkv_progresses_on_video_type_and_video_id  (video_type,video_id)
 #
 class MkvProgress < ApplicationRecord
@@ -27,6 +31,7 @@ class MkvProgress < ApplicationRecord
 
   belongs_to :video, polymorphic: true
   belongs_to :disk_title
+  belongs_to :disk
 
   after_commit :broadcast_video_progress
 

@@ -16,7 +16,6 @@
 #  synced_on                    :datetime
 #  title                        :string
 #  type                         :string
-#  workflow_state               :string
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
 #  the_movie_db_id              :integer
@@ -26,7 +25,6 @@
 #  index_videos_on_type_and_the_movie_db_id  (type,the_movie_db_id) UNIQUE
 #
 class Video < ApplicationRecord
-  include DiskWorkflow
   include HasProgress
   include Wisper::Publisher
   class << self

@@ -6,7 +6,7 @@ RSpec.describe TheMovieDb::MovieUpdateService, type: :service do
   before { create :config_the_movie_db }
 
   let(:movie) { build_stubbed(:movie, the_movie_db_id: 399_566) }
-  let(:new_description_class) { described_class.new(movie: movie) }
+  let(:new_description_class) { described_class.new(movie) }
 
   describe '.call', vcr: { record: :new_episodes, cassette_name: "#{described_class}/_call" } do
     subject(:call) { new_description_class.call }

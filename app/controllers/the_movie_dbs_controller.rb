@@ -15,6 +15,10 @@ class TheMovieDbsController < ApplicationController
   private
 
   def search_service
-    @search_service ||= VideoSearchService.new(query: params.dig(:search, :query), page: params.dig(:search, :page))
+    @search_service ||= VideoSearchQuery.new(search_params)
+  end
+
+  def search_params
+    params[:search]&.permit(:query, :page).to_h.symbolize_keys || {}
   end
 end
