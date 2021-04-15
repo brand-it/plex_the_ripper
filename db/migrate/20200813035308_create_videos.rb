@@ -11,7 +11,7 @@ class CreateVideos < ActiveRecord::Migration[6.0]
       t.string :overview
       t.date :episode_first_air_date
       t.string :episode_distribution_runtime
-      t.string :movie_runtime
+      t.integer :movie_runtime
       t.string :type
       t.datetime :synced_on
       t.timestamps

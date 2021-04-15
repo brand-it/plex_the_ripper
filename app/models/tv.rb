@@ -8,7 +8,7 @@
 #  backdrop_path                :string
 #  episode_distribution_runtime :string
 #  episode_first_air_date       :date
-#  movie_runtime                :string
+#  movie_runtime                :integer
 #  original_title               :string
 #  overview                     :string
 #  poster_path                  :string
