@@ -18,12 +18,11 @@ export default class extends Controller {
   showMoreVisable() {
       if (this.loading == true || !this.hasShowMoreTarget) return false
       var showMoreBox = this.showMoreTarget.getBoundingClientRect();
-      return showMoreBox.top >= 0 && showMoreBox.left >= 0 && showMoreBox.right <= window.innerWidth && (showMoreBox.bottom - 2000) <= window.innerHeight
+      return showMoreBox.top >= 0 && showMoreBox.left >= 0 && showMoreBox.right <= window.innerWidth && showMoreBox.bottom <= window.innerHeight
   }
 
   clickShowMore() {
     this.loading = true
     this.showMoreTarget.click();
-    this.showMoreTarget.remove();
   }
 }

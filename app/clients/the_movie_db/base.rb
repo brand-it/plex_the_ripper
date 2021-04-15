@@ -6,7 +6,7 @@ module TheMovieDb
 
     HOST = 'api.themoviedb.org'
     VERSION = '3'
-
+    DEFAULT_CACHE_TTL = 5.minutes
     class << self
       def option_names
         @option_names ||= dry_initializer.options.map(&:target)
@@ -20,6 +20,11 @@ module TheMovieDb
     end
 
     private
+
+    def cache_get(object_class: OpenStruct)
+      cache_key = [uri, query_params]
+      Rails.cache.fetch(cache_key, expires_in: DEFAULT_CACHE_TTL) { get(object_class: object_class) }
+    end
 
     def get(object_class: OpenStruct)
       response = Faraday.get(uri, query_params)
@@ -73,7 +78,7 @@ module TheMovieDb
     end
 
     def config
-      @config ||= Config::TheMovieDb.newest.first || Config::TheMovieDb.new
+      Thread.current[:the_moviedb_config_instance] ||= Config::TheMovieDb.newest.first || Config::TheMovieDb.new
     end
   end
 end

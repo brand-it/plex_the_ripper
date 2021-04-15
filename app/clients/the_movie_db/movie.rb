@@ -5,7 +5,7 @@ module TheMovieDb
     param :movie_id, Types::Integer
 
     def body
-      @body ||= get
+      @body ||= cache_get
     end
 
     private

@@ -2,7 +2,6 @@
 
 class VideoSearchQuery
   extend Dry::Initializer
-
   VIDEOS_MEDIA_TYPE = %w[movie tv].freeze
   CACHE_TTL = 1.day
 
@@ -11,15 +10,13 @@ class VideoSearchQuery
 
   def results
     return @results if defined?(@results)
-    return @results = Video.order(updated_at: :desc, synced_on: :desc).limit(20) if query.blank?
+    return @results = Video.order(updated_at: :desc, synced_on: :desc).page(page) if query.blank?
 
-    @results = the_movie_db_ids.map { |db| find_video(**db) || build_video(**db) }.reverse
+    @results = Results.new(the_movie_db_ids.map { |db| find_video(**db) || build_video(**db) }.reverse, search, page)
   end
 
   def next_query
-    return if search.total_pages && search.total_pages < page
-
-    { query: query, page: page + 1 }
+    { query: query, page: page + 1 } if results.next_page
   end
 
   private
@@ -48,12 +45,32 @@ class VideoSearchQuery
   end
 
   def videos
-    @videos ||= VideosQuery.new(types_and_ids: the_movie_db_ids).relation
+    @videos ||= VideosQuery.new(types_and_ids: the_movie_db_ids).relation.load
   end
 
   def build_video(id: nil, type: nil)
     Video.new(the_movie_db_id: id, type: type).tap do |video|
       "TheMovieDb::#{video.type}UpdateService".constantize.call(video)
+    end
+  end
+
+  class Results
+    extend Dry::Initializer
+    include Enumerable
+
+    delegate :each, :size, to: :results
+    param :results
+    param :search
+    param :current_page
+
+    def next_page
+      results.respond_to?(:next_page) ? results.next_page : search_next_page
+    end
+
+    def search_next_page
+      return if search.total_pages && search.total_pages <= current_page
+
+      current_page + 1
     end
   end
 end
