@@ -7,7 +7,7 @@ RSpec.describe MkvInstaller::Base do
     subject(:version) { described_class.new.send(:version) }
 
     it 'responds with a information object' do
-      expect(version).to eq '1.15.4'
+      expect(version).to eq '1.16.3'
     end
   end
 end

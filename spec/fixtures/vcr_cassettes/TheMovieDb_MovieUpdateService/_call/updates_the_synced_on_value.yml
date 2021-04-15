@@ -1,0 +1,67 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/399566?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 15 Apr 2021 17:40:55 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=21600
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 68ba58848043465786d4bcc41fbcf8fc7fe41da6
+      X-Memc-Age:
+      - '18254'
+      X-Memc-Expires:
+      - '3346'
+      Etag:
+      - W/"18513a56fd855af2f48f03e8bf0dc1aa"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 0f6633a131a6cc7dafeef183fd9ec107.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - I6wVGaG30CX_ZLi43ekqGI3E9x0LJig7fyLgpjTRxRDy_jLkCEI_Mw==
+      Age:
+      - '562'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJhZHVsdCI6ZmFsc2UsImJhY2tkcm9wX3BhdGgiOiIvaW5KakRoQ2pmaGgzUnRySldCbW1EcWV1U1lDLmpwZyIsImJlbG9uZ3NfdG9fY29sbGVjdGlvbiI6eyJpZCI6NTM1MzEzLCJuYW1lIjoiR29kemlsbGEgQ29sbGVjdGlvbiIsInBvc3Rlcl9wYXRoIjoiL2luTk40NjZTS0hOamJHbXBmaGZzYVBRTmxlUy5qcGciLCJiYWNrZHJvcF9wYXRoIjoiL29ib0JuNFZZQjc5dUR4bnlJcmkwTnQzVTNOMi5qcGcifSwiYnVkZ2V0IjoyMDAwMDAwMDAsImdlbnJlcyI6W3siaWQiOjI4LCJuYW1lIjoiQWN0aW9uIn0seyJpZCI6ODc4LCJuYW1lIjoiU2NpZW5jZSBGaWN0aW9uIn1dLCJob21lcGFnZSI6Imh0dHBzOi8vd3d3LmdvZHppbGxhdnNrb25nLm5ldCIsImlkIjozOTk1NjYsImltZGJfaWQiOiJ0dDUwMzQ4MzgiLCJvcmlnaW5hbF9sYW5ndWFnZSI6ImVuIiwib3JpZ2luYWxfdGl0bGUiOiJHb2R6aWxsYSB2cy4gS29uZyIsIm92ZXJ2aWV3IjoiSW4gYSB0aW1lIHdoZW4gbW9uc3RlcnMgd2FsayB0aGUgRWFydGgsIGh1bWFuaXR54oCZcyBmaWdodCBmb3IgaXRzIGZ1dHVyZSBzZXRzIEdvZHppbGxhIGFuZCBLb25nIG9uIGEgY29sbGlzaW9uIGNvdXJzZSB0aGF0IHdpbGwgc2VlIHRoZSB0d28gbW9zdCBwb3dlcmZ1bCBmb3JjZXMgb2YgbmF0dXJlIG9uIHRoZSBwbGFuZXQgY29sbGlkZSBpbiBhIHNwZWN0YWN1bGFyIGJhdHRsZSBmb3IgdGhlIGFnZXMuIiwicG9wdWxhcml0eSI6NTc4My44NzcsInBvc3Rlcl9wYXRoIjoiL3BncWdhVXgxY0piNW9aUVE1djB0TkFSQ2VCcC5qcGciLCJwcm9kdWN0aW9uX2NvbXBhbmllcyI6W3siaWQiOjE3NCwibG9nb19wYXRoIjoiL2t5MHhPYzVPcmh6a1oxTjZLeVV4YWNmUXNDay5wbmciLCJuYW1lIjoiV2FybmVyIEJyb3MuIFBpY3R1cmVzIiwib3JpZ2luX2NvdW50cnkiOiJVUyJ9LHsiaWQiOjkyMywibG9nb19wYXRoIjoiLzVVUXNacmZiZkcyZFlKYng4RHhmb1RyMkJ2dS5wbmciLCJuYW1lIjoiTGVnZW5kYXJ5IFBpY3R1cmVzIiwib3JpZ2luX2NvdW50cnkiOiJVUyJ9XSwicHJvZHVjdGlvbl9jb3VudHJpZXMiOlt7Imlzb18zMTY2XzEiOiJVUyIsIm5hbWUiOiJVbml0ZWQgU3RhdGVzIG9mIEFtZXJpY2EifV0sInJlbGVhc2VfZGF0ZSI6IjIwMjEtMDMtMjQiLCJyZXZlbnVlIjozNTg2MDAwMDAsInJ1bnRpbWUiOjExMywic3Bva2VuX2xhbmd1YWdlcyI6W3siZW5nbGlzaF9uYW1lIjoiRW5nbGlzaCIsImlzb182MzlfMSI6ImVuIiwibmFtZSI6IkVuZ2xpc2gifV0sInN0YXR1cyI6IlJlbGVhc2VkIiwidGFnbGluZSI6Ik9uZSBXaWxsIEZhbGwiLCJ0aXRsZSI6IkdvZHppbGxhIHZzLiBLb25nIiwidmlkZW8iOmZhbHNlLCJ2b3RlX2F2ZXJhZ2UiOjguMywidm90ZV9jb3VudCI6NDQyMn0=
+  recorded_at: Thu, 15 Apr 2021 17:50:17 GMT
+recorded_with: VCR 6.0.0

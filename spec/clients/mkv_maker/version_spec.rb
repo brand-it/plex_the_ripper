@@ -7,7 +7,7 @@ RSpec.describe MkvMaker::Version do
     subject(:results) { described_class.new.results }
 
     it 'returns the current version' do
-      expect(results).to eq '1.15.3'
+      expect(results).to eq '1.16.3'
     end
   end
 end
