@@ -8,6 +8,12 @@ class ListDrivesService
   option :config_make_mkv, Types.Instance(Config::MakeMkv), default: -> { Config::MakeMkv.current }
   option :noscan, Types::Bool, default: -> { false }
 
+  class << self
+    def results(*args)
+      new(*args).results
+    end
+  end
+
   def results
     drives
   end

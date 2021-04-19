@@ -30,8 +30,9 @@ class MkvProgress < ApplicationRecord
   delegate :render, to: ApplicationController
 
   belongs_to :video, polymorphic: true
-  belongs_to :disk_title
-  belongs_to :disk
+  belongs_to :episode, polymorphic: true
+  belongs_to :disk_title, dependent: :destroy
+  belongs_to :disk, dependent: :destroy
 
   after_commit :broadcast_video_progress
 

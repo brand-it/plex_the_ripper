@@ -30,18 +30,6 @@ class Disk < ApplicationRecord
 
   scope :completed, -> { where(workflow_state: :completed) }
 
-  def load_titles
-    DiskInfoService.new(disk_name: name).results.each do |title|
-      disk_titles.create!(
-        title_id: title.id,
-        name: title.file_name,
-        size: title.size,
-        video: self,
-        duration: title.duration_seconds
-      )
-    end
-  end
-
   def completed; end
 
   def restart

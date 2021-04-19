@@ -3,7 +3,7 @@
 class MoviesController < ApplicationController
   def show
     @movie = movie
-    @disk  = disk
+    @disks = CreateDisksService.call
   end
 
   def create
@@ -25,10 +25,8 @@ class MoviesController < ApplicationController
   #   @movie.save!
   # end
 
-  private
-
-  def disk
-    Disk.first
+  def drives
+    ListDrivesService.results
   end
 
   def movie

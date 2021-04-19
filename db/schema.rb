@@ -97,15 +97,15 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
   create_table "videos", force: :cascade do |t|
     t.string "title"
     t.string "original_title"
-    t.date "release_date"
     t.string "poster_path"
     t.string "backdrop_path"
-    t.integer "the_movie_db_id"
     t.string "overview"
-    t.date "episode_first_air_date"
-    t.string "episode_distribution_runtime"
-    t.integer "movie_runtime"
     t.string "type"
+    t.string "episode_distribution_runtime"
+    t.integer "the_movie_db_id"
+    t.integer "movie_runtime"
+    t.date "release_date"
+    t.date "episode_first_air_date"
     t.datetime "synced_on"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

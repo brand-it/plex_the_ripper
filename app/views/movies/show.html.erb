@@ -17,11 +17,22 @@
               <%= link_to_movie_db_movie @movie.the_movie_db_id %>
             </small>
           </p>
-          <%= render ProgressBarComponent.new(model: Disk) %>
+          <%#= render ProgressBarComponent.new(model: Disk) %>
           <div id='disk-selector'>
-            <%# @disk.disk_titles.each do |title| %>
-              <%#= title %>
-            <%# end %>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Duration</th>
+                </tr>
+              </thead>
+              <tbody class="disk_titles">
+                <% @disks.each do |disk| %>
+                  <%= render disk.disk_titles.sort_by { |d| @movie.runtime_range.include?(d.duration) ? 0 : 1  }, video: @movie %>
+                <% end %>
+              </tbody>
+            </table>
           </div>
         </div>
       </div>

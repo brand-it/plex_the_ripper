@@ -11,7 +11,15 @@ module Rescuer
     rescue_from TheMovieDb::InvalidConfig,
                 with: :movie_config_invalid
 
+    rescue_from ActiveRecord::RecordNotFound,
+                with: :not_found
+
     private
+
+    def not_found(exception)
+      flash[:error] = exception.message
+      redirect_to root_path
+    end
 
     def movie_config_invalid(exception)
       flash[:error] = exception.message

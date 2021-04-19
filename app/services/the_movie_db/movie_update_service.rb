@@ -35,7 +35,7 @@ module TheMovieDb
 
     def movie_params(db_movie)
       db_movie.to_h.slice(*PERMITTED_PARAMS).tap do |params|
-        params[:movie_runtime] = db_movie.runtime
+        params[:movie_runtime] = db_movie.runtime * 60
       end
     end
   end
