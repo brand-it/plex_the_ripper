@@ -40,7 +40,7 @@ module TheMovieDb
     end
 
     def convert_min_to_seconds(min)
-      min * 60
+      min.to_i * 60
     end
   end
 end
