@@ -1,6 +1,7 @@
 # frozen_string_literal: true
+
 class MkvProgressListener
   def movie_saving(movie)
-    movie.
+    movie
   end
 end

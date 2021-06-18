@@ -9,8 +9,7 @@ class CreateMkvProgresses < ActiveRecord::Migration[6.0]
 
       t.references :disk_title
       t.references :disk
-      t.references :video, polymorphic: true
-      t.references :episode
+      t.references :progressable, polymorphic: true
       t.timestamps
     end
   end
