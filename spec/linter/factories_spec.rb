@@ -7,10 +7,9 @@ RSpec.describe 'FactoryBot', type: :model do
 
   describe '#factory_bot' do
     it 'does not raise any linting errors' do
-      FactoryBot.lint(traits: true)
-      expect(true).to eq true # rubocop:disable RSpec/ExpectActual
-    rescue => e # rubocop:disable Style/RescueStandardError
-      raise e
+      expect(FactoryBot.lint(traits: true, verbose: true)).to eq nil
+    rescue FactoryBot::InvalidFactoryError => e
+      raise FactoryBot::InvalidFactoryError, e.message.split("\n").select { |x| x.include?(Rails.root.to_s) }.map(&:strip).join("\n")
     end
   end
 end

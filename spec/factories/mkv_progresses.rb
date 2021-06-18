@@ -25,8 +25,12 @@
 #
 FactoryBot.define do
   factory :mkv_progress do
-    video
     disk_title
     disk
+    for_video # default to the :for_photo trait if none is specified
+
+    trait :for_video do
+      association :progressable, factory: :video
+    end
   end
 end

@@ -28,6 +28,6 @@ require 'rails_helper'
 RSpec.describe MkvProgress, type: :model do
   describe 'associations' do
     it { is_expected.to belong_to(:disk_title) }
-    it { is_expected.to belong_to(:video) }
+    it { is_expected.to belong_to(:progressable) }
   end
 end

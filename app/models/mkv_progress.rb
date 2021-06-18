@@ -52,10 +52,11 @@ class MkvProgress < ApplicationRecord
   private
 
   def broadcast_video_progress
-    cable_ready[VideoProgressChannel.channel_name].morph(
-      selector: dom_id(video, :progress),
-      html: render(VideoProgressComponent.new(video: video))
-    )
-    cable_ready.broadcast
+    # raise 'broadcast_video_progress method is not implemented'
+    # cable_ready[VideoProgressChannel.channel_name].morph(
+    #   selector: dom_id(progressable, :progress),
+    #   html: render(VideoProgressComponent.new(video: progressable))
+    # )
+    # cable_ready.broadcast
   end
 end

@@ -3,6 +3,6 @@
 module HasProgress
   extend ActiveSupport::Concern
   included do
-    has_many :mkv_progresses, as: :video, dependent: :destroy
+    has_many :mkv_progresses, as: :progressable, dependent: :destroy
   end
 end
