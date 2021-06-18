@@ -6,7 +6,7 @@ module TheMovieDb
 
     HOST = 'api.themoviedb.org'
     VERSION = '3'
-    DEFAULT_CACHE_TTL = 5.minutes
+    DEFAULT_CACHE_TTL = 1.day
     class << self
       def option_names
         @option_names ||= dry_initializer.options.map(&:target)
