@@ -6,7 +6,8 @@ module TheMovieDb
 
     HOST = 'api.themoviedb.org'
     VERSION = '3'
-    DEFAULT_CACHE_TTL = 1.day
+    CACHE_TTL = 1.day
+    CACHE_NAMESPACE = 'the_movie_db'
     class << self
       def option_names
         @option_names ||= dry_initializer.options.map(&:target)
@@ -19,19 +20,35 @@ module TheMovieDb
       delegate :results, to: :new
     end
 
+    def results(use_cache: true, object_class: OpenStruct)
+      @results ||= use_cache ? cache_get(object_class: object_class) : get(object_class: object_class)
+    end
+
     private
 
     def cache_get(object_class: OpenStruct)
-      cache_key = [uri, query_params]
-      Rails.cache.fetch(cache_key, expires_in: DEFAULT_CACHE_TTL) { get(object_class: object_class) }
+      Rails.cache.fetch(
+        [uri, query_params, object_class],
+        namespace: CACHE_NAMESPACE,
+        expires_in: CACHE_TTL,
+        force: Rails.env.test?
+      ) do
+        get(object_class: object_class)
+      end
     end
 
     def get(object_class: OpenStruct)
-      response = Faraday.get(uri, query_params)
+      response = connection.get(uri, query_params)
 
       return JSON.parse(response.body, object_class: object_class) if response.success?
 
       raise Error, response
+    end
+
+    def connection
+      @connection ||= Faraday.new do |f|
+        f.response :logger
+      end
     end
 
     def error!(response)

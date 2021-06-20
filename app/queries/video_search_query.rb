@@ -3,7 +3,6 @@
 class VideoSearchQuery
   extend Dry::Initializer
   VIDEOS_MEDIA_TYPE = %w[movie tv].freeze
-  CACHE_TTL = 1.day
 
   option :query, Types::Coercible::String, optional: true
   option :page, Types::Coercible::Integer, default: -> { 1 }, optional: true, null: nil
@@ -12,7 +11,13 @@ class VideoSearchQuery
     return @results if defined?(@results)
     return @results = Video.order(updated_at: :desc, synced_on: :desc).page(page) if query.blank?
 
-    @results = Results.new(the_movie_db_ids.map { |db| find_video(**db) || build_video(**db) }.reverse, search, page)
+    downcase_query = query.downcase
+    @results = Results.new(
+      the_movie_db_ids.map { |db| find_video(**db) || build_video(**db) }
+                      .sort_by { |r| Text::Levenshtein.distance(r.title.downcase, downcase_query) },
+      search,
+      page
+    )
   end
 
   def next_query
@@ -22,22 +27,14 @@ class VideoSearchQuery
   private
 
   def search
-    @search ||= TheMovieDb::Search::Multi.new(query: query, page: page).body
-  end
-
-  def video_results
-    Rails.cache.fetch(
-      { query: query, page: page },
-      namespace: 'video_search_service',
-      expires_in: CACHE_TTL,
-      force: Rails.env.test?
-    ) do
-      search.results.select { |r| VIDEOS_MEDIA_TYPE.include?(r.media_type) }
-    end
+    @search ||= TheMovieDb::Search::Multi.new(query: query, page: page).results
   end
 
   def the_movie_db_ids
-    video_results.map { |r| { id: r.id, type: r.media_type.classify } }.reverse
+    return @the_movie_db_ids if @the_movie_db_ids
+
+    video_results = search.results.select { |r| VIDEOS_MEDIA_TYPE.include?(r.media_type) }
+    @the_movie_db_ids = video_results.map { |r| { id: r.id, type: r.media_type.classify } }
   end
 
   def find_video(id: nil, type: nil)

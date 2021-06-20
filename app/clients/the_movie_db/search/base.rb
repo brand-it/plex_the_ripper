@@ -7,10 +7,10 @@ module TheMovieDb
       option :query, type: Types::Coercible::String
       option :year, type: Types::Integer.optional, optional: true
 
-      def body
+      def results(use_cache: true)
         return OpenStruct.new(results: []) if query.blank?
 
-        @body ||= get
+        super
       end
 
       def next_page

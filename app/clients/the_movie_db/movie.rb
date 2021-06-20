@@ -5,10 +5,6 @@ module TheMovieDb
   class Movie < Base
     param :movie_id, Types::Integer
 
-    def body
-      @body ||= cache_get
-    end
-
     private
 
     def path

@@ -28,7 +28,7 @@ module TheMovieDb
     end
 
     def db_movie
-      @db_movie ||= TheMovieDb::Movie.new(movie.the_movie_db_id).body
+      @db_movie ||= TheMovieDb::Movie.new(movie.the_movie_db_id).results
     end
 
     private

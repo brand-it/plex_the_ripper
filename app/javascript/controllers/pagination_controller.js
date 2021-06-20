@@ -3,26 +3,30 @@ import { Controller } from 'stimulus'
 export default class extends Controller {
   static targets = ['showMore']
 
-  initalize() {
-    this.loading = false
-  }
   connect() {
-    document.addEventListener("turbo:before-stream-render", () => {
-      this.loading = false
-    })
+    if (!this.hasShowMoreTarget || this.showMoreTarget.dataset.disableWith === undefined) return
     window.addEventListener("scroll", () => {
-      if (this.showMoreVisable()) this.clickShowMore();
+      if (this.showMoreVisable()) this.showMoreTarget.click();
     });
   }
 
+
+
   showMoreVisable() {
-    if (this.loading == true || !this.hasShowMoreTarget) return false
+    if (!this.hasShowMoreTarget || this.disabled()) return false
     var showMoreBox = this.showMoreTarget.getBoundingClientRect();
-    return showMoreBox.top >= 0 && showMoreBox.left >= 0 && showMoreBox.right <= window.innerWidth && showMoreBox.bottom <= window.innerHeight
+    return showMoreBox.top + this.topOffset() <= window.innerHeight && showMoreBox.left + this.leftOffset() <= window.innerWidth
   }
 
-  clickShowMore() {
-    this.loading = true
-    this.showMoreTarget.click();
+  disabled() {
+    return this.showMoreTarget.dataset.disableWith == this.showMoreTarget.value
+  }
+
+  topOffset() {
+    return parseInt(this.showMoreTarget.dataset.topOffset) || 0
+  }
+
+  leftOffset() {
+    return parseInt(this.showMoreTarget.dataset.leftOffset) || 0
   }
 }

@@ -30,7 +30,7 @@ module TheMovieDb
     end
 
     def db_tv
-      @db_tv ||= TheMovieDb::Tv.new(tv.the_movie_db_id).body
+      @db_tv ||= TheMovieDb::Tv.new(tv.the_movie_db_id).results
     end
 
     private

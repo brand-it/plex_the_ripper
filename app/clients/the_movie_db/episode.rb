@@ -6,10 +6,6 @@ module TheMovieDb
     param :season_number, Types::Integer
     param :episode_number, type: Types::Integer
 
-    def body
-      @body ||= get
-    end
-
     private
 
     def path
