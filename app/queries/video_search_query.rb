@@ -3,21 +3,19 @@
 class VideoSearchQuery
   extend Dry::Initializer
   VIDEOS_MEDIA_TYPE = %w[movie tv].freeze
+  RESULTS_PER_PAGE = 20 # the movie db comes back with 20 results per page
 
   option :query, Types::Coercible::String, optional: true
   option :page, Types::Coercible::Integer, default: -> { 1 }, optional: true, null: nil
+  option :per_page, default: -> { 4 }
 
   def results
     return @results if defined?(@results)
     return @results = Video.order(updated_at: :desc, synced_on: :desc).page(page) if query.blank?
 
-    downcase_query = query.downcase
-    @results = Results.new(
-      the_movie_db_ids.map { |db| find_video(**db) || build_video(**db) }
-                      .sort_by { |r| Text::Levenshtein.distance(r.title.downcase, downcase_query) },
-      search,
-      page
-    )
+    @results = Results.new the_movie_db_ids[offset_range].map { |db|
+                             find_video(**db) || build_video(**db)
+                           }, search, page_query
   end
 
   def next_query
@@ -26,15 +24,35 @@ class VideoSearchQuery
 
   private
 
+  def offset_range
+    min = the_movie_db_ids.size >= per_page ? per_page * (page - 1) : the_movie_db_ids.size
+    min..(min + per_page - 1)
+  end
+
+  def page_query
+    (page % RESULTS_PER_PAGE / per_page) + 1
+  end
+
   def search
-    @search ||= TheMovieDb::Search::Multi.new(query: query, page: page).results
+    @search ||= TheMovieDb::Search::Multi.new(query: query, page: page_query).results
   end
 
   def the_movie_db_ids
     return @the_movie_db_ids if @the_movie_db_ids
 
-    video_results = search.results.select { |r| VIDEOS_MEDIA_TYPE.include?(r.media_type) }
     @the_movie_db_ids = video_results.map { |r| { id: r.id, type: r.media_type.classify } }
+  end
+
+  def video_results
+    video_results = search.results.select { |r| VIDEOS_MEDIA_TYPE.include?(r.media_type) }
+    video_results = video_results.sort_by do |r|
+      white.similarity(r.title || r.name, query) + (r.vote_average.to_f / 10)
+    end
+    video_results.reverse
+  end
+
+  def white
+    @white ||= Text::WhiteSimilarity
   end
 
   def find_video(id: nil, type: nil)

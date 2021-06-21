@@ -37,6 +37,10 @@ class Video < ApplicationRecord
     @credits ||= "TheMovieDb::#{type}::Credits".constantize.new(the_movie_db_id).results
   end
 
+  def the_movie_db_details
+    @the_movie_db_details ||= "TheMovieDb::#{type}".constantize.new(the_movie_db_id).results
+  end
+
   def release_or_air_date
     release_date || episode_first_air_date
   end

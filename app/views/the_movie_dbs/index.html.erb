@@ -1,6 +1,6 @@
 <%= render 'search' %>
 <div data-controller='pagination'>
-  <% if search_service.results.blank? %>
+  <% if search_service.results.none? %>
     <div class='col-md-12'>
       <div class="jumbotron jumbotron-fluid rounded">
         <div class='container'>

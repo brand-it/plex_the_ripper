@@ -12,6 +12,7 @@ Style/MixinUsage:
 AllCops:
   TargetRubyVersion: 2.7.0
   NewCops: enable
+  UseCache: true
   Exclude:
     - bin/*
     - config/application.rb
