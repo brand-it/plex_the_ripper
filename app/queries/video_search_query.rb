@@ -3,7 +3,7 @@
 class VideoSearchQuery
   extend Dry::Initializer
   VIDEOS_MEDIA_TYPE = %w[movie tv].freeze
-  RESULTS_PER_PAGE = 20 # the movie db comes back with 20 results per page
+  RESULTS_PER_PAGE = 21 # the movie db comes back with 20 results per page
 
   option :query, Types::Coercible::String, optional: true
   option :page, Types::Coercible::Integer, default: -> { 1 }, optional: true, null: nil
@@ -13,7 +13,8 @@ class VideoSearchQuery
     return @results if defined?(@results)
     return @results = Video.order(updated_at: :desc, synced_on: :desc).page(page) if query.blank?
 
-    @results = Results.new the_movie_db_ids[offset_range].map { |db|
+    log_debug_info
+    @results = Results.new the_movie_db_ids.map { |db|
                              find_video(**db) || build_video(**db)
                            }, search, page_query
   end
@@ -24,13 +25,31 @@ class VideoSearchQuery
 
   private
 
+  def log_debug_info # rubocop:disable Metrics/AbcSize
+    Rails.logger.debug("#{self.class}: #{query}")
+    Rails.logger.debug("    total raw count: #{search.results.count}")
+    Rails.logger.debug("    total count: #{the_movie_db_ids.count}")
+    Rails.logger.debug("    offset range: #{offset_range}")
+    Rails.logger.debug("    page: #{page}")
+    Rails.logger.debug("    per page: #{per_page}")
+    Rails.logger.debug("    page query: #{page_query}")
+    Rails.logger.debug("    remove results: #{per_page - the_movie_db_ids.count}")
+  end
+
   def offset_range
-    min = the_movie_db_ids.size >= per_page ? per_page * (page - 1) : the_movie_db_ids.size
-    min..(min + per_page - 1)
+    offset_min..offset_max
+  end
+
+  def offset_min
+    offset_max - (per_page - 1)
+  end
+
+  def offset_max
+    (per_page * page) % RESULTS_PER_PAGE
   end
 
   def page_query
-    (page % RESULTS_PER_PAGE / per_page) + 1
+    (page / (RESULTS_PER_PAGE.to_f / per_page)).floor + 1
   end
 
   def search
@@ -44,15 +63,13 @@ class VideoSearchQuery
   end
 
   def video_results
-    video_results = search.results.select { |r| VIDEOS_MEDIA_TYPE.include?(r.media_type) }
+    video_results = search.results[offset_range].select do |r|
+      VIDEOS_MEDIA_TYPE.include?(r.media_type)
+    end
     video_results = video_results.sort_by do |r|
-      white.similarity(r.title || r.name, query) + (r.vote_average.to_f / 10)
+      Text::Levenshtein.distance(r.title || r.name, query)
     end
     video_results.reverse
-  end
-
-  def white
-    @white ||= Text::WhiteSimilarity
   end
 
   def find_video(id: nil, type: nil)

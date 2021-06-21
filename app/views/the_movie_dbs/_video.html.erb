@@ -15,7 +15,7 @@
             <%= video.is_a?(Tv) ? icon('tv', type: 'fas') : icon('film', type: 'fas') %>
             <%= video.title %>
             <br/>
-            <small class="text-muted">Popularity: <%= number_to_percentage(video.the_movie_db_details.popularity, precision: 0) %></small>
+            <small class="text-muted">Popularity: <%#= number_to_percentage(video.the_movie_db_details.popularity, precision: 0) %></small>
           </h5>
 
           <small class='text-muted'><%= video.original_title %></small>
