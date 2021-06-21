@@ -42,7 +42,7 @@
         <% video.credits.cast.sort_by(&:popularity).reverse.take(6).each do |cast| %>
           <div class="col-2">
             <div class="card rounded-0">
-              <%= imdb_image_tag cast.profile_path, height: 170, klass: 'card-img-top' %>
+              <%= imdb_image_tag cast.profile_path, klass: 'card-img-top' %>
               <h6 class="card-title text-dark" style="height: 40px;">
                 <%= cast.name %>
               </h6>

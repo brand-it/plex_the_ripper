@@ -14,6 +14,7 @@ module Shell
     response = capture3(*cmd)
     raise Error, "#{cmd} - #{response.stderr_str}" unless response.status.success?
 
+    Rails.logger.debug("#{cmd}\n#{response}")
     response
   end
 end

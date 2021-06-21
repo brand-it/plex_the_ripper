@@ -35,4 +35,8 @@ class Disk < ApplicationRecord
   def restart
     disk_titles.destroy_all
   end
+
+  def disk_info
+    @disk_info ||= DiskInfoService.new(disk_name: disk_name).results
+  end
 end

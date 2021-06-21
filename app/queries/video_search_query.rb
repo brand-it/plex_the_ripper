@@ -7,7 +7,6 @@ class VideoSearchQuery
 
   option :query, Types::Coercible::String, optional: true
   option :page, Types::Coercible::Integer, default: -> { 1 }, optional: true, null: nil
-  option :per_page, default: -> { 4 }
 
   def results
     return @results if defined?(@results)
@@ -16,7 +15,7 @@ class VideoSearchQuery
     log_debug_info
     @results = Results.new the_movie_db_ids.map { |db|
                              find_video(**db) || build_video(**db)
-                           }, search, page_query
+                           }, search, page
   end
 
   def next_query
@@ -25,35 +24,18 @@ class VideoSearchQuery
 
   private
 
-  def log_debug_info # rubocop:disable Metrics/AbcSize
-    Rails.logger.debug("#{self.class}: #{query}")
-    Rails.logger.debug("    total raw count: #{search.results.count}")
-    Rails.logger.debug("    total count: #{the_movie_db_ids.count}")
-    Rails.logger.debug("    offset range: #{offset_range}")
-    Rails.logger.debug("    page: #{page}")
-    Rails.logger.debug("    per page: #{per_page}")
-    Rails.logger.debug("    page query: #{page_query}")
-    Rails.logger.debug("    remove results: #{per_page - the_movie_db_ids.count}")
-  end
-
-  def offset_range
-    offset_min..offset_max
-  end
-
-  def offset_min
-    offset_max - (per_page - 1)
-  end
-
-  def offset_max
-    (per_page * page) % RESULTS_PER_PAGE
-  end
-
-  def page_query
-    (page / (RESULTS_PER_PAGE.to_f / per_page)).floor + 1
+  def log_debug_info
+    Rails.logger.debug "#{self.class}: #{query}\n"\
+                       "    total results: #{search.total_results}\n"\
+                       "    total pages: #{search.total_pages}\n"\
+                       "    total raw count: #{search.results.count}\n"\
+                       "    total count: #{the_movie_db_ids.count}\n"\
+                       "    page: #{page}\n"\
+                       "    total removed: #{search.results.count - the_movie_db_ids.count}\n"
   end
 
   def search
-    @search ||= TheMovieDb::Search::Multi.new(query: query, page: page_query).results
+    @search ||= TheMovieDb::Search::Multi.new(query: query, page: page).results
   end
 
   def the_movie_db_ids
@@ -63,7 +45,7 @@ class VideoSearchQuery
   end
 
   def video_results
-    video_results = search.results[offset_range].select do |r|
+    video_results = search.results.select do |r|
       VIDEOS_MEDIA_TYPE.include?(r.media_type)
     end
     video_results = video_results.sort_by do |r|
