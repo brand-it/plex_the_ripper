@@ -27,7 +27,12 @@ class CreateMkvService
   def create
     Open3.popen2e({}, cmd) do |stdin, std_out_err, wait_thr|
       stdin.close
-      notify_progress.call(parse_mkv_string(std_out_err))
+      Thread.new do
+        while raw_line = std_out_err.gets # rubocop:disable Lint/AssignmentInCondition
+          Rails.logger.debug(raw_line)
+          notify_progress.call(parse_mkv_string(raw_line).first)
+        end
+      end.join
       wait_thr.value
     end
   end
@@ -36,7 +41,7 @@ class CreateMkvService
     [
       config_make_mkv.settings.makemkvcon_path,
       'mkv',
-      "dev:#{disk_title.disk.name}",
+      "dev:#{disk_title.disk.disk_name}",
       disk_title.title_id,
       tmp_dir,
       '--progress=-same',
@@ -46,7 +51,7 @@ class CreateMkvService
   end
 
   def tmp_dir
-    @tmp_dir ||= TMP_DIR.join(video.model_name.singular, video.id.to_s).tap do |tmp_dir|
+    @tmp_dir ||= TMP_DIR.join(disk_title.id.to_s).tap do |tmp_dir|
       recreate_dir(tmp_dir)
     end
   end

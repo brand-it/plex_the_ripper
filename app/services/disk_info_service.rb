@@ -9,6 +9,9 @@ class DiskInfoService
     extend Dry::Initializer
     attr_writer :duration, :size, :file_name
 
+    SIZE_REGEX = /(?<number>\d.*.\d) (?<unit>.*)$/.freeze
+    UNITS_ORDER = %w[GB MB KB B].freeze
+
     param :id, Types::Coercible::Integer
     option :duration, Types::Coercible::String, optional: true
     option :size, Types::Coercible::String, optional: true
@@ -17,6 +20,29 @@ class DiskInfoService
     def duration_seconds
       hours, minutes, seconds = duration.split(':')
       seconds.to_i + (minutes.to_i * 60) + (hours.to_i * 60 * 60)
+    end
+
+    def size_in_bytes
+      @size_in_bytes ||= convert_to_bytes(size_matcher['number'].to_f, size_matcher['unit'])
+    end
+
+    private
+
+    def convert_to_bytes(number, unit)
+      case unit
+      when 'GB'
+        number.gigabytes
+      when 'MB'
+        number.megabytes
+      when 'KB'
+        number.kilobytes
+      else
+        number
+      end
+    end
+
+    def size_matcher
+      @size_matcher ||= size.match(SIZE_REGEX)
     end
   end
 

@@ -23,7 +23,7 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.string "name", null: false
     t.integer "duration"
     t.integer "title_id", null: false
-    t.float "size"
+    t.integer "size", default: 0, null: false
     t.bigint "mkv_progress_id"
     t.bigint "disk_id"
     t.datetime "created_at", precision: 6, null: false

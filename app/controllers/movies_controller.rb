@@ -16,24 +16,7 @@ class MoviesController < ApplicationController
     end
   end
 
-  # def rip
-  #   @movie       = movie
-  #   @disk_titles = disk_titles
-  #   @movie.select_disk_titles!(@disk_titles)
-  #   @movie.save!
-  #   @movie.rip!
-  #   @movie.save!
-  # end
-
-  def drives
-    ListDrivesService.results
-  end
-
   def movie
     Movie.find(params[:id])
-  end
-
-  def disk_titles
-    DiskTitle.where(id: params[:disk_title_ids])
   end
 end

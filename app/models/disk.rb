@@ -13,28 +13,10 @@
 #
 class Disk < ApplicationRecord
   include Wisper::Publisher
-  include PersistedWorkflow
 
   after_commit { broadcast(:disk_updated, self) }
 
   has_many :disk_titles, dependent: :destroy
-
-  workflow do
-    state :new do
-      event :load_titles, transitions_to: :completed
-    end
-    state :completed do
-      state :restart, transitions_to: :new
-    end
-  end
-
-  scope :completed, -> { where(workflow_state: :completed) }
-
-  def completed; end
-
-  def restart
-    disk_titles.destroy_all
-  end
 
   def disk_info
     @disk_info ||= DiskInfoService.new(disk_name: disk_name).results

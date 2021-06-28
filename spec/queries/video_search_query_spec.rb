@@ -19,27 +19,23 @@ RSpec.describe VideoSearchQuery do
     end
 
     it 'total results is limited to 4' do
-      expect(results.count).to eq 4
+      expect(results.count).to eq 15
     end
 
     it 'responds with movies' do
-      expect(results.count { |r| r.type == 'Movie' }).to eq 2
+      expect(results.count { |r| r.type == 'Movie' }).to eq 9
     end
 
     it 'includes movie ids' do
-      expect(results.map(&:the_movie_db_id)).to eq [12_914, 5148, 2290, 2164]
+      expect(results.map(&:the_movie_db_id)).to match_array [
+        720_733, 784_993, 376_268, 13_001, 574_161,
+        12_914, 226_412, 5148, 2290,
+        2580, 72_925, 698_008, 46_852, 4629, 2164
+      ]
     end
 
     it 'responds with tv shows' do
-      expect(results.count { |r| r.type == 'Tv' }).to eq 2
-    end
-
-    context 'when next page' do
-      let(:page) { 2 }
-
-      it 'total results is limited to 4' do
-        expect(results.map(&:the_movie_db_id)).to eq [376_268, 13_001, 2580, 72_925]
-      end
+      expect(results.count { |r| r.type == 'Tv' }).to eq 6
     end
   end
 end

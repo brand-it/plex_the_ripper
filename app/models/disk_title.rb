@@ -7,7 +7,7 @@
 #  id              :integer          not null, primary key
 #  duration        :integer
 #  name            :string           not null
-#  size            :float
+#  size            :integer          default(0), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  disk_id         :bigint
@@ -20,7 +20,7 @@
 #  index_disk_titles_on_mkv_progress_id  (mkv_progress_id)
 #
 class DiskTitle < ApplicationRecord
-  broadcasts
+  # broadcasts
 
   belongs_to :disk
 

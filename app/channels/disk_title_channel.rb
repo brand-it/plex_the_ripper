@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class DiskChannel < ApplicationCable::Channel
+class DiskTitleChannel < ApplicationCable::Channel
   def subscribed
     stream_from channel_name
   end

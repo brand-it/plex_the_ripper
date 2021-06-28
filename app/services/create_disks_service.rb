@@ -5,17 +5,17 @@ class CreateDisksService
     delegate :call, to: :new
   end
 
-  def call
+  def call # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     return [] if drives.empty?
 
     drives.map do |drive|
       Disk.find_or_initialize_by(name: drive.drive_name, disk_name: drive.disc_name).tap do |disk|
-        disk.disk_titles = []
         disk.disk_info.each do |title|
-          disk.disk_titles.build(
-            title_id: title.id,
+          disk_title = disk.disk_titles.find { |t| t.title_id == title.id }
+          disk_title ||= disk.disk_titles.build(title_id: title.id)
+          disk_title.assign_attributes(
             name: title.file_name,
-            size: title.size,
+            size: title.size_in_bytes,
             duration: title.duration_seconds
           )
         end

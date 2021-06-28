@@ -9,16 +9,20 @@ module MkvParser
   DRV = Struct.new(:index, :visible, :unknown, :enabled, :flags, :drive_name, :disc_name)
   # Progress bar values for current and total progress
   # PRGV:current,total,max
-  # current - current progress value
-  # total - total progress value
+  # current - current progress value # maybe
+  # total - total progress value # who know I think the docs are wrong
   # max - maximum possible value for a progress bar, constant
   PRGV = Struct.new(:current, :total, :pmax) do
+    def pmax
+      self[:pmax].presence.to_f
+    end
+
     def current
-      super.presence&.to_f
+      self[:current].presence.to_f
     end
 
     def total
-      super.presence&.to_f
+      self[:total].presence.to_f
     end
   end
   # Current and total progress title

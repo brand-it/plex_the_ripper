@@ -1,5 +1,9 @@
 <tr class="<%= 'text-success' if video.runtime_range.include?(disk_title.duration) %>">
   <th scope="row"><%= disk_title.id %></th>
   <td><%= disk_title.name %></td>
-  <td><%= disk_title.duration %></td>
+  <td><%= distance_of_time_in_words(disk_title.duration.seconds) %></td>
+  <td>
+    <%= number_to_human_size(disk_title.size, precision: 3) %>
+  </td>
+  <td><%= link_to 'Rip', disk_title_path(disk_title), method: :patch %></td>
 </tr>

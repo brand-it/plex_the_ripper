@@ -3,7 +3,7 @@
 class LoadDiskWorker < ApplicationWorker
   option :disk_id, Types::Integer
   def call
-    disk.create_titles!
+    CreateDisksService.call
   end
 
   private

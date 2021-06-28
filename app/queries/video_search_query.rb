@@ -12,7 +12,6 @@ class VideoSearchQuery
     return @results if defined?(@results)
     return @results = Video.order(updated_at: :desc, synced_on: :desc).page(page) if query.blank?
 
-    log_debug_info
     @results = Results.new the_movie_db_ids.map { |db|
                              find_video(**db) || build_video(**db)
                            }, search, page
@@ -23,16 +22,6 @@ class VideoSearchQuery
   end
 
   private
-
-  def log_debug_info
-    Rails.logger.debug "#{self.class}: #{query}\n"\
-                       "    total results: #{search.total_results}\n"\
-                       "    total pages: #{search.total_pages}\n"\
-                       "    total raw count: #{search.results.count}\n"\
-                       "    total count: #{the_movie_db_ids.count}\n"\
-                       "    page: #{page}\n"\
-                       "    total removed: #{search.results.count - the_movie_db_ids.count}\n"
-  end
 
   def search
     @search ||= TheMovieDb::Search::Multi.new(query: query, page: page).results

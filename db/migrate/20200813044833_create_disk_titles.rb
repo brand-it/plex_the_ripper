@@ -4,9 +4,9 @@ class CreateDiskTitles < ActiveRecord::Migration[6.0]
       t.string :name, null: false
       t.integer :duration
       t.integer :title_id, null: false
-      t.float :size
+      t.integer :size, default: 0, null: false
 
-      t.references :mkv_progress 
+      t.references :mkv_progress
       t.references :disk
       t.timestamps
     end

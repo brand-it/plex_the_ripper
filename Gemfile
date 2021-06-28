@@ -9,6 +9,7 @@ ruby '2.7.3'
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'cable_ready', '>= 4.3'
 gem 'concurrent-ruby', require: 'concurrent'
+gem 'dotiw'
 gem 'dry-initializer'
 gem 'dry-struct'
 gem 'dry-types'

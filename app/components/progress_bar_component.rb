@@ -3,8 +3,8 @@
 class ProgressBarComponent < ViewComponent::Base
   extend Dry::Initializer
   option :model
-  option :completed, Types::Integer, default: -> { 0 }
-  option :status, default: -> { 'info' }
+  option :completed, Types::Coercible::Float, default: -> { 0.0 }, null: nil
+  option :status, default: -> { 'info' }, null: nil
   option :message, optional: true
 
   def dom_id

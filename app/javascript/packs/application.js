@@ -8,6 +8,7 @@ import 'regenerator-runtime/runtime'
 require("@rails/ujs").start()
 require("@rails/activestorage").start()
 require("channels")
+require("@popperjs/core")
 require("bootstrap")
 require("./minimal_form")
 import '@fortawesome/fontawesome-free/js/all.js';
