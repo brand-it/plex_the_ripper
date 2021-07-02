@@ -13,6 +13,7 @@ class CreateEpisodes < ActiveRecord::Migration[6.0]
       t.date :air_date
 
       t.references :season
+      t.references :disk_title
     end
   end
 end

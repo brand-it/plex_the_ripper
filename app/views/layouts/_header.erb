@@ -6,6 +6,9 @@
       <%= link_to 'Plex', modify_config_plex_path, class: 'nav-link' %>
       <%= link_to 'Make MKV', modify_config_make_mkv_path, class: 'nav-link' %>
       <%= link_to 'Jobs', jobs_path, class: 'nav-link' %>
+      <span class="nav-link">
+        <%= number_to_human_size(free_disk_space, precision: 3) %> / <%= number_to_human_size(total_disk_space, precision: 3) %>
+      </span>
     </nav>
   </div>
 </header>

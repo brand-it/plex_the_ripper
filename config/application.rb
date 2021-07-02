@@ -17,6 +17,7 @@ end
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 require 'view_component/engine'
+require 'sys/filesystem'
 
 module PlexRipper
   class Application < Rails::Application

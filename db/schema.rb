@@ -50,6 +50,8 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.integer "the_movie_db_id"
     t.date "air_date"
     t.bigint "season_id"
+    t.bigint "disk_title_id"
+    t.index ["disk_title_id"], name: "index_episodes_on_disk_title_id"
     t.index ["season_id"], name: "index_episodes_on_season_id"
   end
 
@@ -105,8 +107,10 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.date "release_date"
     t.date "episode_first_air_date"
     t.datetime "synced_on"
+    t.bigint "disk_title_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["disk_title_id"], name: "index_videos_on_disk_title_id"
     t.index ["type", "the_movie_db_id"], name: "index_videos_on_type_and_the_movie_db_id", unique: true
   end
 

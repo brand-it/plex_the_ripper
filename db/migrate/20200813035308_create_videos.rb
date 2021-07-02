@@ -13,6 +13,7 @@ class CreateVideos < ActiveRecord::Migration[6.0]
       t.date :release_date
       t.date :episode_first_air_date
       t.datetime :synced_on
+      t.references :disk_title
       t.timestamps
       t.index [:type, :the_movie_db_id], unique: true
     end

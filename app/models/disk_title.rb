@@ -20,8 +20,8 @@
 #  index_disk_titles_on_mkv_progress_id  (mkv_progress_id)
 #
 class DiskTitle < ApplicationRecord
-  # broadcasts
-
+  has_one :movie, dependent: :nullify
+  has_one :episode, dependent: :nullify
   belongs_to :disk
 
   validates :disk, presence: true

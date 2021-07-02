@@ -18,15 +18,19 @@
 #  type                         :string
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
+#  disk_title_id                :bigint
 #  the_movie_db_id              :integer
 #
 # Indexes
 #
+#  index_videos_on_disk_title_id             (disk_title_id)
 #  index_videos_on_type_and_the_movie_db_id  (type,the_movie_db_id) UNIQUE
 #
 class Video < ApplicationRecord
-  include HasProgress
   include Wisper::Publisher
+
+  belongs_to :disk_title, optional: true
+
   class << self
     def find_video(id)
       id.nil? ? find(id) : (find_by(the_movie_db_id: id) || find(id))
@@ -43,5 +47,9 @@ class Video < ApplicationRecord
 
   def release_or_air_date
     release_date || episode_first_air_date
+  end
+
+  def safe_name
+    name.delete('/:\\')
   end
 end

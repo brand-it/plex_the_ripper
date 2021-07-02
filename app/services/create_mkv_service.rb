@@ -5,32 +5,24 @@ class CreateMkvService
   extend Dry::Initializer
   include MkvParser
 
-  Status = Struct.new(:dir, :mkv_path, :success?)
+  Result = Struct.new(:dir, :mkv_path, :success?)
   TMP_DIR = Rails.root.join('tmp/videos')
 
-  option :config_make_mkv, Types.Instance(Config::MakeMkv), default: proc { Config::MakeMkv.newest.first }
   option :disk_title, Types.Instance(DiskTitle)
-  option :notify_progress, Types.Interface(:call)
+  option :progress_listener, Types.Interface(:call)
 
   def call
-    Status.new(tmp_dir, '', create.success?).tap do |status|
-      if status.success?
-        status.mkv_path = tmp_dir.join(disk_title.name)
-      else
-        recreate_dir(tmp_dir)
-      end
-    end
+    Result.new tmp_dir, tmp_dir.join(disk_title.name), create_mkv.success?
   end
 
   private
 
-  def create
-    Open3.popen2e({}, cmd) do |stdin, std_out_err, wait_thr|
+  def create_mkv
+    @create_mkv ||= Open3.popen2e({}, cmd) do |stdin, std_out_err, wait_thr|
       stdin.close
       Thread.new do
         while raw_line = std_out_err.gets # rubocop:disable Lint/AssignmentInCondition
-          Rails.logger.debug(raw_line)
-          notify_progress.call(parse_mkv_string(raw_line).first)
+          progress_listener.call(parse_mkv_string(raw_line).first)
         end
       end.join
       wait_thr.value
@@ -39,7 +31,7 @@ class CreateMkvService
 
   def cmd
     [
-      config_make_mkv.settings.makemkvcon_path,
+      config.settings.makemkvcon_path,
       'mkv',
       "dev:#{disk_title.disk.disk_name}",
       disk_title.title_id,
@@ -59,5 +51,9 @@ class CreateMkvService
   def recreate_dir(dir)
     FileUtils.remove_entry_secure(dir) if File.exist?(dir)
     FileUtils.mkdir_p(dir)
+  end
+
+  def config
+    @config ||= Config::MakeMkv.newest.first
   end
 end

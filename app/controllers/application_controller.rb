@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :plex_config
   before_action :movie_db_config
   before_action :mkv_config
+  helper_method :free_disk_space, :total_disk_space
 
   def current_user
     return @current_user if defined? @current_user
@@ -13,7 +14,19 @@ class ApplicationController < ActionController::Base
     @current_user = User.find_by(id: cookies[:user_id])
   end
 
+  def free_disk_space
+    @free_disk_space ||= stats.block_size * stats.blocks_available
+  end
+
+  def total_disk_space
+    @total_disk_space ||= stats.block_size * stats.blocks
+  end
+
   private
+
+  def stats
+    @stats ||= Sys::Filesystem.stat('/')
+  end
 
   def modify_config_the_movie_db_path
     movie_db_config ? edit_config_the_movie_db_path : new_config_the_movie_db_path
