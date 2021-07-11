@@ -13,7 +13,7 @@ class Config
     end
 
     def load(item, json)
-      load_attributes(item, Serializer.load(json))
+      load_attributes(item, Config::Serializer.load(json))
     end
 
     def dump(item, object)

@@ -35,5 +35,8 @@ Rails.application.routes.draw do
   resources :disk_titles, only: %i[update show]
   resource :start
   resources :jobs, only: %i[index show]
+
+  get 'images/:dimension/:filename', to: 'images#show', as: :image
+
   root to: 'start#new'
 end

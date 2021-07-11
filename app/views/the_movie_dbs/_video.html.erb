@@ -1,6 +1,6 @@
 <div class="col-lg-6 col-sm-12 mb-2">
   <div class="card text-white bg-dark h-100">
-    <div class="row">
+    <div class="row mb-4">
       <div class="col-4">
         <%= imdb_image_tag video.poster_path, klass: 'img-fluid card-img-top' %>
         <% if video.new_record? %>
@@ -14,8 +14,6 @@
           <h5 class="card-title">
             <%= video.is_a?(Tv) ? icon('tv', type: 'fas') : icon('film', type: 'fas') %>
             <%= video.title %>
-            <br/>
-            <small class="text-muted">Popularity: <%#= number_to_percentage(video.the_movie_db_details.popularity, precision: 0) %></small>
           </h5>
 
           <small class='text-muted'><%= video.original_title %></small>
@@ -30,26 +28,13 @@
               <% end %>
             </small>
           </p>
-          <p>
         </div>
       </div>
     </div>
-    <% if video.credits.cast.any? %>
-      <div class="row no-gutters mt-auto">
-        <div class="col-12 pt-4">
-          <h4 class="border-bottom">Cast</h4>
-        </div>
-        <% video.credits.cast.sort_by(&:popularity).reverse.take(6).each do |cast| %>
-          <div class="col-2">
-            <div class="card rounded-0">
-              <%= imdb_image_tag cast.profile_path, klass: 'card-img-top' %>
-              <h6 class="card-title text-dark" style="height: 40px;">
-                <%= cast.name %>
-              </h6>
-            </div>
-          </div>
-        <% end %>
+    <div class="row">
+      <div class="col-12">
+        <%= render 'cast', video: video %>
       </div>
-    <% end %>
+    </div>
   </div>
 </div>
