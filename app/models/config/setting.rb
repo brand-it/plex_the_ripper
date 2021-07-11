@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Config
   class Setting
     include SimplyEncrypt
@@ -10,12 +12,12 @@ class Config
       end
     end
 
-    def load(json)
-      load_attributes(Serializer.load(json))
+    def load(item, json)
+      load_attributes(item, Serializer.load(json))
     end
 
-    def dump(object)
-      JSON.dump dump_attributes(object).to_h
+    def dump(item, object)
+      JSON.dump dump_attributes(item, object).to_h
     end
 
     def attribute(name, default: -> {}, encrypted: false)
@@ -28,20 +30,24 @@ class Config
 
     private
 
-    def load_attributes(object)
+    def load_attributes(item, object)
       attributes.each do |name, option|
         object[name] = decrypt(object[name], object["#{name}_vi".to_sym]) if option.encrypted?
-        object[name] = option.default.call unless contains_key?(object, name)
+        object[name] = instance_exec_default(item, option) unless contains_key?(object, name)
       end
       object
     end
 
-    def dump_attributes(object)
+    def dump_attributes(item, object)
       attributes.each do |name, option|
-        object[name] = option.default.call unless contains_key?(object, name)
+        object[name] = instance_exec_default(item, option) unless contains_key?(object, name)
         object[name], object["#{name}_vi".to_sym] = encrypt(object[name]) if option.encrypted?
       end
       object
+    end
+
+    def instance_exec_default(item, option)
+      item.instance_exec(&option.default)
     end
 
     def contains_key?(object, key)

@@ -19,15 +19,16 @@ class Config < ApplicationRecord
       @setting = Setting.call(block)
       @setting.attributes.each do |name, _option|
         define_method("settings_#{name}") { settings[name] }
+        define_method("settings_#{name}=") { |val| self.settings = { "#{name}": val } }
       end
     end
   end
 
   def settings
-    self.class.setting.load(super)
+    self.class.setting.load(self, super)
   end
 
   def settings=(hash)
-    super(self.class.setting.dump(settings.to_h.merge(hash)))
+    super(self.class.setting.dump(self, settings.to_h.merge(hash)))
   end
 end
