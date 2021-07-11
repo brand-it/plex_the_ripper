@@ -12,7 +12,7 @@ RSpec.describe ImdbHelper, type: :helper do
 
     context 'when path is not present' do
       it 'responds with placeholder image' do
-        expect(helper.imdb_image_tag('tests')).to include('https://image.tmdb.org/t/p/w500/tests')
+        expect(helper.imdb_image_tag('tests')).to include('/images/w500/tests')
       end
     end
   end
