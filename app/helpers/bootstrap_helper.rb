@@ -8,8 +8,8 @@ module BootstrapHelper
   def bootstrap_alerts
     alerts = []
     flash.each do |type, message|
-      alerts << tag.div(class: "alert #{type_to_boostrap_class(type)} alert-dismissiable fade show") do
-        concat message
+      alerts << tag.div(class: "row alert #{type_to_boostrap_class(type)} rounded-0 alert-dismissiable fade show") do
+        concat tag.span(message, class: 'col-11')
         concat close_button
       end
     end
@@ -17,10 +17,10 @@ module BootstrapHelper
   end
 
   def close_button
-    tag.button(icon('times-circle'), type: 'button',
-                                     class: 'close',
-                                     data: { dismiss: 'alert' },
-                                     'aria-label' => 'Close')
+    tag.span(icon('times-circle'), type: 'button',
+                                   class: 'close col-1 text-end',
+                                   data: { dismiss: 'alert' },
+                                   'aria-label' => 'Close')
   end
 
   def type_to_boostrap_class(type)

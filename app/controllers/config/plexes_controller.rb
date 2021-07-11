@@ -54,7 +54,8 @@ class Config
 
     # Only allow a list of trusted parameters through.
     def config_plex_params
-      params.require(:config_plex).permit(settings: %i[movie_path video_path ftp_username ftp_host ftp_password])
+      params.require(:config_plex).permit(settings: %i[movie_path video_path ftp_username ftp_host
+                                                       encrypted_ftp_password])
     end
   end
 end

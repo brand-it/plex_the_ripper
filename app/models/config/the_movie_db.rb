@@ -12,7 +12,9 @@
 #
 class Config
   class TheMovieDb < Config
-    setting :api_key
+    setting do |s|
+      s.attribute :api_key
+    end
 
     validates :settings_api_key, presence: true
   end

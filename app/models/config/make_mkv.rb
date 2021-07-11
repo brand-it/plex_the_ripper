@@ -12,7 +12,9 @@
 #
 class Config
   class MakeMkv < Config
-    setting :makemkvcon_path, default: -> { default_makemkvcon_path }
+    setting do |s|
+      s.attribute :makemkvcon_path, default: -> { default_makemkvcon_path }
+    end
 
     validates :settings_makemkvcon_path, presence: true
     validate :makemkvcon_path_executable

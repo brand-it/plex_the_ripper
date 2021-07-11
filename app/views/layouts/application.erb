@@ -7,15 +7,14 @@
   </head>
   <body>
     <div class="d-flex w-100 h-90 mx-auto flex-column">
-      <%= bootstrap_alerts %>
+      <%= render ToastComponent.new do |c| %>
+        <%= c.body do %>
+          testing
+        <% end %>
+      <% end %>
+      <%= render 'layouts/header' %>
 
-      <main role="main" class="inner mb-auto"><%= yield %></main>
-
-      <footer>
-        <%= render 'layouts/header' %>
-        <div class="inner">
-        </div>
-      </footer>
+      <main role="main" class="inner p-3"><%= yield %></main>
     </div>
   </body>
 </html>

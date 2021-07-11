@@ -12,30 +12,22 @@
 #
 class Config < ApplicationRecord
   scope :newest, -> { order(updated_at: :desc) }
-  serialize :settings, Config::SettingSerializer
-
-  after_initialize :add_settings_defaults
-  before_validation :add_settings_defaults
-
   class << self
-    def settings_defaults
-      @settings_defaults ||= {}
-    end
+    def setting(&block)
+      return @setting unless block_given?
 
-    def setting(name, default: -> {})
-      settings_defaults[name] = default
-      define_method("settings_#{name}") { settings[name] }
-      define_method("settings_#{name}=") { |val| settings[name] = val }
+      @setting = Setting.call(block)
+      @setting.attributes.each do |name, _option|
+        define_method("settings_#{name}") { settings[name] }
+      end
     end
   end
 
-  private
+  def settings
+    self.class.setting.load(super)
+  end
 
-  def add_settings_defaults
-    self.class.settings_defaults.each do |name, default|
-      next if settings.marshal_dump.key?(name)
-
-      settings[name] = instance_exec(&default)
-    end
+  def settings=(hash)
+    super(self.class.setting.dump(settings.to_h.merge(hash)))
   end
 end
