@@ -14,7 +14,7 @@ class Config
   class Plex < Config
     setting do |s|
       s.attribute :movie_path
-      s.attribute :video_path
+      s.attribute :tv_path
       s.attribute :ftp_username
       s.attribute :ftp_host
       s.attribute :ftp_password, encrypted: true
@@ -22,6 +22,6 @@ class Config
     end
 
     validates :settings_movie_path, presence: true
-    validates :settings_video_path, presence: true
+    validates :settings_tv_path, presence: true
   end
 end

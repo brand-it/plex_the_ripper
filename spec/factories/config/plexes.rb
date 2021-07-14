@@ -13,6 +13,6 @@
 FactoryBot.define do
   factory :config_plex, class: 'Config::Plex' do
     settings_movie_path { '/it/is/not/real' }
-    settings_video_path { '/there/is/no/video/path' }
+    settings_tv_path { '/there/is/no/video/path' }
   end
 end

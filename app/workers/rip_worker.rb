@@ -2,19 +2,25 @@
 
 class RipWorker < ApplicationWorker
   option :disk_title_ids, Types::Array.of(Types::Integer)
+  attr_reader :progress_listener
 
   def call
-    disk_titles.map do |title|
-      create_mkv(title).tap do |result|
-        result.mkv_path = RenameMkvService.new(disk_title: title, result: result).call
-      end
+    disk_titles.each do |title|
+      create_mkv(title)
+      upload_video(title)
     end
   end
 
   private
 
   def create_mkv(title)
-    CreateMkvService.new(disk_title: title, progress_listener: MkvProgressListener.new).call
+    @progress_listener = MkvProgressListener.new
+    CreateMkvService.new(disk_title: title, progress_listener: progress_listener).call
+  end
+
+  def upload_video(title)
+    @progress_listener = UploadProgressListern.new
+    UploadMkvService.new(disk_title: title, progress_listener: progress_listener).call
   end
 
   def disk_titles

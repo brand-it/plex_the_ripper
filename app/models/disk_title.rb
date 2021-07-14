@@ -25,4 +25,8 @@ class DiskTitle < ApplicationRecord
   belongs_to :disk
 
   validates :disk, presence: true
+
+  def video
+    movie || episode
+  end
 end

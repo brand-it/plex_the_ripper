@@ -6,8 +6,11 @@ class DiskTitlesController < ApplicationController
   end
 
   def update
+    video = Video.find(params[:video_id])
+    video.update!(disk_title_id: params[:id])
     disk_title = DiskTitle.find(params[:id])
+
     RipWorker.perform(disk_title_ids: [disk_title.id])
-    redirect_to disk_title
+    redirect_to video_disk_title_path(video, disk_title)
   end
 end

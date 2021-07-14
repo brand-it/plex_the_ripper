@@ -48,8 +48,4 @@ class Video < ApplicationRecord
   def release_or_air_date
     release_date || episode_first_air_date
   end
-
-  def safe_name
-    name.delete('/:\\')
-  end
 end

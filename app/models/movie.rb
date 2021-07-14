@@ -41,8 +41,18 @@ class Movie < Video
     (movie_runtime - MOVIE_RUNNTIME_MARGIN)..(movie_runtime + MOVIE_RUNNTIME_MARGIN)
   end
 
-  def rip
-    # CreateMovieWorker.perform(movie: self, disk_title: disk_titles)
+  def plex_path
+    raise 'plex config is missing and is required' unless Config::Plex.any?
+
+    @plex_path ||= Pathname.new("#{Config::Plex.newest.first.settings_movie_path}/#{plex_name}/#{plex_name}.mkv")
+  end
+
+  def tmp_plex_path
+    @tmp_plex_path ||= Rails.root.join("tmp/movies/#{plex_name}/#{plex_name}.mkv")
+  end
+
+  def plex_name
+    @plex_name ||= (release_date ? "#{title} (#{release_date.year})" : title)
   end
 
   def update_maxlength(max)

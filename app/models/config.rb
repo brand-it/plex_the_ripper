@@ -29,6 +29,6 @@ class Config < ApplicationRecord
   end
 
   def settings=(hash)
-    super(self.class.setting.dump(self, settings.to_h.merge(hash)))
+    super(self.class.setting.dump(self, settings.to_h.with_indifferent_access.merge(hash)))
   end
 end

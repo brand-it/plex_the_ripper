@@ -4,7 +4,7 @@
 
   <%= f.simple_fields_for :settings, f.object.settings do |settings_form| %>
     <%= settings_form.input :movie_path, autofocus: true, required: true %>
-    <%= settings_form.input :video_path, required: true %>
+    <%= settings_form.input :tv_path, required: true %>
     <%= settings_form.input :ftp_username, required: false %>
     <%= settings_form.input :ftp_host, required: false %>
     <%= settings_form.input :ftp_password, required: false %>

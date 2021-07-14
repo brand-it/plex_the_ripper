@@ -5,14 +5,16 @@ class CreateMkvService
   extend Dry::Initializer
   include MkvParser
 
-  Result = Struct.new(:dir, :mkv_path, :success?)
+  Result = Struct.new(:mkv_path, :success?)
   TMP_DIR = Rails.root.join('tmp/videos')
 
   option :disk_title, Types.Instance(DiskTitle)
   option :progress_listener, Types.Interface(:call)
 
   def call
-    Result.new tmp_dir, tmp_dir.join(disk_title.name), create_mkv.success?
+    Result.new(tmp_path, create_mkv.success?).tap do |result|
+      rename_file if result.success?
+    end
   end
 
   private
@@ -29,13 +31,17 @@ class CreateMkvService
     end
   end
 
+  def rename_file
+    File.rename(tmp_dir.join(disk_title.name), tmp_path)
+  end
+
   def cmd
     [
-      config.settings.makemkvcon_path,
+      Shellwords.escape(config.settings.makemkvcon_path),
       'mkv',
-      "dev:#{disk_title.disk.disk_name}",
-      disk_title.title_id,
-      tmp_dir,
+      Shellwords.escape("dev:#{disk_title.disk.disk_name}"),
+      Shellwords.escape(disk_title.title_id),
+      Shellwords.escape(tmp_dir),
       '--progress=-same',
       '--robot',
       '--profile="FLAC"'
@@ -43,9 +49,11 @@ class CreateMkvService
   end
 
   def tmp_dir
-    @tmp_dir ||= TMP_DIR.join(disk_title.id.to_s).tap do |tmp_dir|
-      recreate_dir(tmp_dir)
-    end
+    @tmp_dir ||= tmp_path.dirname.tap(&method(:recreate_dir))
+  end
+
+  def tmp_path
+    @tmp_path ||= disk_title.video.tmp_plex_path
   end
 
   def recreate_dir(dir)

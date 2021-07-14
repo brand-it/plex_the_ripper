@@ -32,7 +32,7 @@ class Config
 
     def load_attributes(item, object)
       attributes.each do |name, option|
-        object[name] = decrypt(object[name], object["#{name}_vi".to_sym]) if option.encrypted?
+        object[name] = decrypt(object[name], object["#{name}_iv".to_sym]) if option.encrypted?
         object[name] = instance_exec_default(item, option) unless contains_key?(object, name)
       end
       object
@@ -41,7 +41,7 @@ class Config
     def dump_attributes(item, object)
       attributes.each do |name, option|
         object[name] = instance_exec_default(item, option) unless contains_key?(object, name)
-        object[name], object["#{name}_vi".to_sym] = encrypt(object[name]) if option.encrypted?
+        object[name], object["#{name}_iv".to_sym] = encrypt(object[name]) if option.encrypted?
       end
       object
     end

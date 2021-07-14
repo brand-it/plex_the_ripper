@@ -2,10 +2,10 @@
 <div class='row h-100'>
   <div class='col-12 h-100'>
     <div class="text-white bg-dark">
-      <%= render ProgressBarComponent.new(model: DiskTitle, completed: @rip_worker&.progress_notification&.completed, title: @rip_worker&.progress_notification&.title) %>
+      <%= render ProgressBarComponent.new(model: DiskTitle, completed: @rip_worker&.progress_listener&.completed, title: @rip_worker&.progress_listener&.title) %>
     </div>
-    <div class="text-white bg-dark overflow-scroll p-4" style="height: 85%;">
-      <%= render ProgressMessageComponent.new(model: DiskTitle, message: @rip_worker&.progress_notification&.message) %>
+    <div class="text-white bg-dark overflow-scroll p-4 h-90">
+      <%= render ProgressMessageComponent.new(model: DiskTitle, message: @rip_worker&.progress_listener&.message) %>
     </div>
   </div>
 </div>

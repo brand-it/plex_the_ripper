@@ -8,5 +8,5 @@
       WARNING: Not enough space available to rip need another <%= number_to_human_size(disk_title.size - free_disk_space, precision: 3) %>
     <% end %>
   </td>
-  <td><%= link_to 'Rip', disk_title_path(disk_title), method: :patch %></td>
+  <td><%= link_to 'Rip', video_disk_title_path(video, disk_title), method: :patch %></td>
 </tr>

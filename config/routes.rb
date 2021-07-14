@@ -32,7 +32,10 @@ Rails.application.routes.draw do
   resources :episodes
 
   resources :disks, only: [:index]
-  resources :disk_titles, only: %i[update show]
+  resources :videos do
+    resources :disk_titles, only: %i[update show]
+  end
+
   resource :start
   resources :jobs, only: %i[index show]
 
