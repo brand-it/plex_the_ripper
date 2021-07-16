@@ -1,0 +1,14 @@
+<% if video.credits.cast.any? %>
+  <div class="col-12"><h4>Cast</h4></div>
+  <ol class="overflow-scroll-x d-flex p-0">
+    <% video.credits.cast.each do |cast| %>
+      <li class="bg-dark col-3 card border-0">
+        <%= imdb_image_tag cast.profile_path, klass: 'card-img-top rounded-0' %>
+        <div class="body p-2">
+          <h6 class="card-title"><%= cast.name %></h6>
+          <p class="card-text"><small class="text-muted"><%= cast.character %></small></p>
+        </div>
+      </li>
+    <% end %>
+  </ol>
+<% end %>

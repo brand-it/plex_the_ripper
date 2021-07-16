@@ -1,0 +1,5 @@
+<% if search_service.next_query %>
+  <div class="col-12 text-center pt-4" id="next_page">
+    <%= button_to 'Show More', next_page_the_movie_dbs_path(search: search_service.next_query), class: 'btn btn-info', data: { 'pagination-target': 'showMore', disable_with: 'Loading more...', top_offset: -8000 } %>
+  </div>
+<% end %>

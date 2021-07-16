@@ -1,0 +1,1248 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/search/multi?api_key=<API_KEY>&page=1&query=stargate
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 15 Apr 2021 18:43:13 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=600
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 a91f9752f88d12f73d321bf3ae28a162.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - qVwGeTvWIalu2aPZcWGODJ9YUjdXl30AWqX4FnqLBF9BxUr3S07PKQ==
+      Age:
+      - '496'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"page":1,"results":[{"backdrop_path":"/li9SZBpVzJz81ouqifVuH5C7Nod.jpg","first_air_date":"1997-07-27","genre_ids":[10765,10759,9648],"id":4629,"media_type":"tv","name":"Stargate
+        SG-1","origin_country":["CA","US"],"original_language":"en","original_name":"Stargate
+        SG-1","overview":"The story of Stargate SG-1 begins about a year after the
+        events of the feature film, when the United States government learns that
+        an ancient alien device called the Stargate can access a network of such devices
+        on a multitude of planets. SG-1 is an elite Air Force special operations team,
+        one of more than two dozen teams from Earth who explore the galaxy and defend
+        against alien threats such as the Goa''uld, Replicators, and the Ori.","popularity":68.799,"poster_path":"/9Jegw0yle4x8jlmLNZon37Os27h.jpg","vote_average":8.2,"vote_count":900},{"backdrop_path":"/sOJjqxfGAcmG3pKS8mbQLweoPSQ.jpg","first_air_date":"2004-07-15","genre_ids":[10765,10759,18],"id":2290,"media_type":"tv","name":"Stargate
+        Atlantis","origin_country":["US","CA"],"original_language":"en","original_name":"Stargate
+        Atlantis","overview":"With the Ancients'' city of Atlantis discovered in the
+        Pegasus Galaxy by Stargate Command, Dr. Elizabeth Weir and Major Sheppard
+        lead a scientific expedition to the ancient abandoned city. Once there, the
+        team not only find themselves unable to contact Earth, but their explorations
+        unexpectedly reawaken the Ancients'' deadly enemies, The Wraith, who hunger
+        for this new prey. Now with the help of newfound local allies like Teyla Emmagan,
+        the Atlantis Team sets about to uncover their new home''s secrets even as
+        their war of survival against the Wraith begins.","popularity":42.303,"poster_path":"/6VQWhOyfEF1TWsBqzrIOdYiXMWW.jpg","vote_average":7.9,"vote_count":612},{"adult":false,"backdrop_path":"/34wSdldOfJ43JXXraD4GxkdX0j1.jpg","genre_ids":[28,12,878],"id":2164,"media_type":"movie","original_language":"en","original_title":"Stargate","overview":"An
+        interstellar teleportation device, found in Egypt, leads to a planet with
+        humans resembling ancient Egyptians who worship the god Ra.","popularity":13.878,"poster_path":"/fyTqTETiXncfESLyKfkgEs7qg7d.jpg","release_date":"1994-10-27","title":"Stargate","video":false,"vote_average":7,"vote_count":2331},{"backdrop_path":"/tK8eRUWVY8AVdDUPUxSzrmlLb0R.jpg","first_air_date":"2009-10-02","genre_ids":[10759,18,10765],"id":5148,"media_type":"tv","name":"Stargate
+        Universe","origin_country":["US"],"original_language":"en","original_name":"Stargate
+        Universe","overview":"The adventures of a present-day, multinational exploration
+        team traveling on the Ancient spaceship Destiny many billions of light years
+        distant from the Milky Way Galaxy. They evacuated there and are now trying
+        to figure out a way to return to Earth, while simultaneously trying to explore
+        and to survive in their unknown area of the universe.","popularity":19.669,"poster_path":"/s2DCgwmN27R1s3SUEKWvJ6bFVrr.jpg","vote_average":7.3,"vote_count":431},{"adult":false,"backdrop_path":"/jT7tdu9ksHkdS4R13ieXNs5efYW.jpg","genre_ids":[12,878,10770],"id":12914,"media_type":"movie","original_language":"en","original_title":"Stargate:
+        Continuum","overview":"Ba''al travels back in time and prevents the Stargate
+        program from being started. SG-1 must somehow restore history.","popularity":10.776,"poster_path":"/exCFVhFQWnVbGPbr2JeTQwK7Mgw.jpg","release_date":"2008-07-29","title":"Stargate:
+        Continuum","video":false,"vote_average":7,"vote_count":320},{"backdrop_path":"/4wN8ciEk2sE3YrET9osXR2AhSaZ.jpg","first_air_date":"2018-02-14","genre_ids":[10759,10765],"id":72925,"media_type":"tv","name":"Stargate
+        Origins","origin_country":["US"],"original_language":"en","original_name":"Stargate
+        Origins","overview":"Follow Catherine Langford, the young woman who witnessed
+        her father uncover the Stargate in Giza in 1928, as she embarks on an unexpected
+        adventure to unlock the mystery of what lies beyond the Stargate in order
+        to save Earth from unimaginable darkness.","popularity":14.147,"poster_path":"/esec4AKT1BVNeQbPMO9rCHHvSvd.jpg","vote_average":4.3,"vote_count":66},{"adult":false,"backdrop_path":"/c7zQHgs0AAuKRN3yqghIkLN8QiU.jpg","genre_ids":[12,878,10770],"id":13001,"media_type":"movie","original_language":"en","original_title":"Stargate:
+        The Ark of Truth","overview":"SG-1 searches for an ancient weapon which could
+        help them defeat the Ori, and discover it may be in the Ori''s own home galaxy.
+        As the Ori prepare to send ships through to the Milky Way to attack Earth,
+        SG-1 travels to the Ori galaxy aboard the Odyssey. The International Oversight
+        committee have their own plans and SG-1 finds themselves in a distant galaxy
+        fighting two powerful enemies.","popularity":10.302,"poster_path":"/wsKsWoRxhCuw2dczg1rx9fUAhIp.jpg","release_date":"2008-03-11","title":"Stargate:
+        The Ark of Truth","video":false,"vote_average":7.2,"vote_count":308},{"backdrop_path":null,"first_air_date":"2002-09-14","genre_ids":[16],"id":2580,"media_type":"tv","name":"Stargate
+        Infinity","origin_country":["US"],"original_language":"en","original_name":"Stargate
+        Infinity","overview":"Stargate Infinity is an American animated science fiction
+        television series and part of Metro-Goldwyn-Mayer''s Stargate franchise, but
+        is not considered official Stargate canon. The show was created by Eric Lewald
+        and Michael Maliani, as a spin-off series of Stargate SG-1 created by Brad
+        Wright and Jonathan Glassner after the release of Stargate. The cartoon had
+        a low viewership rating and poor reception; it was canceled after one season.
+        Co-produced by MGM Television and DIC Entertainment and directed by Will Meugniot.\n\nThe
+        story arc of Stargate Infinity follows Gus Bonner being framed for opening
+        the Stargate for alien enemies in a future version of Stargate Command. Bonner
+        escapes with a group of fresh recruits through the Stargate. The team can
+        not return to Earth before they have cleared their names. The show was cancelled
+        before any of its major plots could be resolved. The story unfolds when the
+        members of the team encounters different alien races from other planets.","popularity":6.037,"poster_path":"/giHRHloowaDmsm2xTQV1JXV3cNG.jpg","vote_average":3.8,"vote_count":6},{"adult":false,"backdrop_path":"/jCcvhae8MmkqYtR1EGtMYFdpQud.jpg","genre_ids":[878,99,10770],"id":376268,"media_type":"movie","original_language":"en","original_title":"Stargate
+        SG-1: True Science","overview":"In this documentary, Amanda Tapping, known
+        as Samantha Carter from SG-1, shows the scientific background of the successful
+        science fiction series \"Stargate SG-1\" and lets us take a look behind the
+        scenes.","popularity":5.322,"poster_path":"/3e2gPmE5KDPFpWjDkziOyeho5SD.jpg","release_date":"2006-01-03","title":"Stargate
+        SG-1: True Science","video":false,"vote_average":8.1,"vote_count":7},{"adult":false,"backdrop_path":"/n9UtMkSlev7TwDlaXvqLyVf1yiQ.jpg","genre_ids":[878,28,12,10770],"id":574161,"media_type":"movie","original_language":"fr","original_title":"Stargate:
+        Base Gamma","overview":"Following an exploration mission on P2S-569, and the
+        discovery of an underground facility intact, the SGC made the decision to
+        use the existing infrastructure to develop a new site: the Gamma Base. By
+        the time the latter is fully operational, General O''Neill has assigned the
+        majority of his manpower available for defense. In parallel, as part of the
+        alliance against the Goa''old''s, a fleet of Rebels Jaffas is expected in
+        the system for military exercises and scientific trials. Even more than the
+        ship arming tests, the goal of the allies is the understanding of the \"white
+        dwarf phenomenon\" that stretches around the planet, because it seems to affect
+        most advanced technologies. The SGC garrison is preparing to receive their
+        allies. However, the Jaffas do not seem to be the ones planned, and their
+        goals are more obscure.","popularity":2.697,"poster_path":"/vlIkssCSQycEocZBlI43OfnFWKM.jpg","release_date":"2017-09-13","title":"Stargate:
+        Base Gamma","video":false,"vote_average":10,"vote_count":1},{"adult":false,"backdrop_path":"/3iN6451vIjgBSYFFzzpVQYYVc0r.jpg","genre_ids":[28,12,18,878],"id":784993,"media_type":"movie","original_language":"en","original_title":"Stargate
+        SG-1: Children of the Gods","overview":"An alien similar to Ra appears out
+        of the Stargate, killing five soldiers and kidnapping another, a year after
+        the original Stargate mission. A new team is assembled, including some old
+        members, and they go in search of the missing soldier in order to find out
+        how Ra could still be alive. Meanwhile, the alien Goa''uld kidnap Sha''re
+        and Skaara, implanting them with symbiotes and making them Goa''uld hosts.","popularity":4.936,"poster_path":"/3HOystOCjvi3o1ufOtvj7chDQkd.jpg","release_date":"1997-07-27","title":"Stargate
+        SG-1: Children of the Gods","video":false,"vote_average":7,"vote_count":3},{"adult":false,"backdrop_path":null,"genre_ids":[99],"id":698008,"media_type":"movie","original_language":"fr","original_title":"La
+        saga Stargate","overview":"","popularity":2.005,"poster_path":"/nEvXPsgFQJl4KTcXPBfABo6XYwV.jpg","release_date":"","title":"La
+        saga Stargate","video":false,"vote_average":0,"vote_count":0},{"adult":false,"backdrop_path":null,"genre_ids":[99,878,10770],"id":226412,"media_type":"movie","original_language":"en","original_title":"Is
+        There a Stargate?","overview":"Documentary about possible ancient alien visitors
+        to Earth.","popularity":2.7,"poster_path":"/pV8gWYeIQruSZ7tInBI01dYTw5c.jpg","release_date":"2003-02-18","title":"Is
+        There a Stargate?","video":false,"vote_average":10,"vote_count":2},{"backdrop_path":null,"genre_ids":[99],"id":46852,"media_type":"tv","name":"Stargate
+        2012","origin_country":[],"original_language":"en","original_name":"Stargate
+        2012","overview":"","popularity":1.4,"poster_path":null,"vote_average":0,"vote_count":0},{"adult":false,"backdrop_path":null,"genre_ids":[99],"id":720733,"media_type":"movie","original_language":"en","original_title":"Aliens
+        and Atlantis: Stargates and Hidden Realms","overview":"Atlantis is known across
+        the world as a myth. But is this really the truth? No matter what cultural
+        history we explore, we discover a story very similar to the one we know about
+        Atlantis...why? For years, experts and researchers have been looking in the
+        wrong place, at the wrong people and for the wrong thing. For too long historians
+        have focused on a few words left to us by Plato whose meaning they misunderstood.
+        The fact is, even Plato didn''t understand what had been told to him. The
+        startling truth is that the remnants of Atlantis are all around us right now
+        and have been for a very long time - long before recorded history. New research
+        and insight exposes Atlantis to be a pivotal part of our ancient beginnings.
+        The legendary lost city that many think of as myth, was in fact a very real
+        and highly advanced civilization that was uniquely aware of the laws of the
+        universe and was able to access hidden dimensions and make contact with extraterrestrial
+        races.","popularity":1.4,"poster_path":"/hjJuPZeuuU2Ou4VK37t6litEewW.jpg","release_date":"","title":"Aliens
+        and Atlantis: Stargates and Hidden Realms","video":false,"vote_average":0,"vote_count":0}],"total_pages":1,"total_results":15}'
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/720733?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 15 Apr 2021 17:37:00 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=21600
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 6ccbb31c6a24180af6d6156fb8c92f00abc1748a
+      X-Memc-Age:
+      - '17984'
+      X-Memc-Expires:
+      - '3616'
+      Etag:
+      - W/"d3c9900358ad3c3bf2dff8aaf0e0b75d"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 7489ca2b63d10f9195cd257d7fdcba14.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - omjkeQi2ml1T5ieC1nnGraAYDHh9WXG_-xdoFaUid1u8d-iO0EstPA==
+      Age:
+      - '4469'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"adult":false,"backdrop_path":null,"belongs_to_collection":null,"budget":1000000,"genres":[{"id":99,"name":"Documentary"}],"homepage":"http://www.reality-entertainment.com/films/","id":720733,"imdb_id":"tt5299146","original_language":"en","original_title":"Aliens
+        and Atlantis: Stargates and Hidden Realms","overview":"Atlantis is known across
+        the world as a myth. But is this really the truth? No matter what cultural
+        history we explore, we discover a story very similar to the one we know about
+        Atlantis...why? For years, experts and researchers have been looking in the
+        wrong place, at the wrong people and for the wrong thing. For too long historians
+        have focused on a few words left to us by Plato whose meaning they misunderstood.
+        The fact is, even Plato didn''t understand what had been told to him. The
+        startling truth is that the remnants of Atlantis are all around us right now
+        and have been for a very long time - long before recorded history. New research
+        and insight exposes Atlantis to be a pivotal part of our ancient beginnings.
+        The legendary lost city that many think of as myth, was in fact a very real
+        and highly advanced civilization that was uniquely aware of the laws of the
+        universe and was able to access hidden dimensions and make contact with extraterrestrial
+        races.","popularity":1.4,"poster_path":"/hjJuPZeuuU2Ou4VK37t6litEewW.jpg","production_companies":[{"id":12885,"logo_path":null,"name":"Reality
+        Entertainment","origin_country":"US"}],"production_countries":[],"release_date":"","revenue":0,"runtime":60,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"","title":"Aliens
+        and Atlantis: Stargates and Hidden Realms","video":false,"vote_average":0.0,"vote_count":0}'
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/tv/46852?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 15 Apr 2021 18:43:13 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=3600
+      X-Memc:
+      - MISS, STORE
+      X-Memc-Key:
+      - d684f4b133eee910521707eb9c4f26032f39780c
+      X-Memc-Age:
+      - '0'
+      X-Memc-Expires:
+      - '3600'
+      Last-Modified:
+      - 2021-02-18 20:48:02 UTC
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 c806365ba43eabe769161a7b339ff969.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - VgK4OgpPwnBl8JNLh5Mq4usYRGnZmXdzkRzL6gaAzg1XIEndymmPUQ==
+      Age:
+      - '496'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"backdrop_path":null,"created_by":[],"episode_run_time":[],"first_air_date":null,"genres":[{"id":99,"name":"Documentary"}],"homepage":"","id":46852,"in_production":true,"languages":[],"last_air_date":null,"last_episode_to_air":null,"name":"Stargate
+        2012","next_episode_to_air":null,"networks":[],"number_of_episodes":2,"number_of_seasons":1,"origin_country":[],"original_language":"en","original_name":"Stargate
+        2012","overview":"","popularity":1.4,"poster_path":null,"production_companies":[],"production_countries":[],"seasons":[{"air_date":null,"episode_count":2,"id":55033,"name":"Season
+        1","overview":"","poster_path":null,"season_number":1}],"spoken_languages":[],"status":"Returning
+        Series","tagline":"","type":"Scripted","vote_average":0.0,"vote_count":0}'
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/226412?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 15 Apr 2021 17:37:01 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=21600
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - addffb53bc46d8ee34e32c19547bc36a00fb899b
+      X-Memc-Age:
+      - '20874'
+      X-Memc-Expires:
+      - '726'
+      Etag:
+      - W/"ffc7171d97ec20d9fd613c85ad2ee986"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 c806365ba43eabe769161a7b339ff969.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - uE8IPbrOsEWk2EvSw64y0xtPioeyrgndurVS8HFgtszTqM9sXg_hxQ==
+      Age:
+      - '4468'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"adult":false,"backdrop_path":null,"belongs_to_collection":null,"budget":0,"genres":[{"id":99,"name":"Documentary"},{"id":10770,"name":"TV
+        Movie"},{"id":878,"name":"Science Fiction"}],"homepage":"","id":226412,"imdb_id":"tt0888700","original_language":"en","original_title":"Is
+        There a Stargate?","overview":"Documentary about possible ancient alien visitors
+        to Earth.","popularity":2.7,"poster_path":"/pV8gWYeIQruSZ7tInBI01dYTw5c.jpg","production_companies":[],"production_countries":[],"release_date":"2003-02-18","revenue":0,"runtime":12,"spoken_languages":[],"status":"Released","tagline":"","title":"Is
+        There a Stargate?","video":false,"vote_average":10.0,"vote_count":2}'
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/698008?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 15 Apr 2021 17:37:01 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=21600
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - f98a25b2154cabc435beaa8b4870e5f4bddda58c
+      X-Memc-Age:
+      - '14859'
+      X-Memc-Expires:
+      - '6741'
+      Etag:
+      - W/"d13f7a047b24494d083ff8620c2e9e11"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 207df1932a3ef8ff529fa368bf612240.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - "-ENAvuFqwfPCEgkFpySKN5_ZE87VTC7SF8n4QFXIpT5zN_Z0_oANJg=="
+      Age:
+      - '4468'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"adult":false,"backdrop_path":null,"belongs_to_collection":null,"budget":0,"genres":[{"id":99,"name":"Documentary"}],"homepage":"","id":698008,"imdb_id":null,"original_language":"fr","original_title":"La
+        saga Stargate","overview":"","popularity":2.005,"poster_path":"/nEvXPsgFQJl4KTcXPBfABo6XYwV.jpg","production_companies":[],"production_countries":[],"release_date":"","revenue":0,"runtime":0,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"","title":"La
+        saga Stargate","video":false,"vote_average":0.0,"vote_count":0}'
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/784993?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 15 Apr 2021 17:37:01 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=21600
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 0ce7d7eac06c2b8e9cadee98bbfa223ad99409c2
+      X-Memc-Age:
+      - '5817'
+      X-Memc-Expires:
+      - '15783'
+      Etag:
+      - W/"6e7d3a72a37be7e739bcfdbe4c2e82c2"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 65734c1b2d30e126d5bc1c66cd7b6f0b.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - fhkEXb18bxYZ7h0IDEdk-Ez3KpPvgqaRG9fcctAGmgc9hZyAJWIuZQ==
+      Age:
+      - '4469'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"adult":false,"backdrop_path":"/3iN6451vIjgBSYFFzzpVQYYVc0r.jpg","belongs_to_collection":null,"budget":0,"genres":[{"id":28,"name":"Action"},{"id":12,"name":"Adventure"},{"id":18,"name":"Drama"},{"id":878,"name":"Science
+        Fiction"}],"homepage":"","id":784993,"imdb_id":"tt0234794","original_language":"en","original_title":"Stargate
+        SG-1: Children of the Gods","overview":"An alien similar to Ra appears out
+        of the Stargate, killing five soldiers and kidnapping another, a year after
+        the original Stargate mission. A new team is assembled, including some old
+        members, and they go in search of the missing soldier in order to find out
+        how Ra could still be alive. Meanwhile, the alien Goa''uld kidnap Sha''re
+        and Skaara, implanting them with symbiotes and making them Goa''uld hosts.","popularity":4.936,"poster_path":"/3HOystOCjvi3o1ufOtvj7chDQkd.jpg","production_companies":[],"production_countries":[],"release_date":"1997-07-27","revenue":0,"runtime":92,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"","title":"Stargate
+        SG-1: Children of the Gods","video":false,"vote_average":7.0,"vote_count":3}'
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/574161?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 15 Apr 2021 17:37:01 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=21600
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 363c915391eceaacd8c371296a3673bd98603635
+      X-Memc-Age:
+      - '6833'
+      X-Memc-Expires:
+      - '14767'
+      Etag:
+      - W/"92700fe37c01462c7f99717a30b6556a"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 0a183988a665a39a6d1ac5c64d3626da.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - OMaEA43UNgqMzOZiQKtzSdUaDMG87zmqZnIcHTMKA6jEbZIKg0Q7iA==
+      Age:
+      - '4469'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJhZHVsdCI6ZmFsc2UsImJhY2tkcm9wX3BhdGgiOiIvbjlVdE1rU2xldjdUd0RsYVh2cUx5VmYxeWlRLmpwZyIsImJlbG9uZ3NfdG9fY29sbGVjdGlvbiI6eyJpZCI6NDQyMTUsIm5hbWUiOiJTdGFyZ2F0ZSBTRy0xIENvbGxlY3Rpb24iLCJwb3N0ZXJfcGF0aCI6Ii8xaVQyblNoRlJTQnNkVDcxYTFNVXN5UHBvVEwuanBnIiwiYmFja2Ryb3BfcGF0aCI6Ii9md1ZWaDlvMFdac1pOc3RwWDNPNTVmZjdIczguanBnIn0sImJ1ZGdldCI6MCwiZ2VucmVzIjpbeyJpZCI6ODc4LCJuYW1lIjoiU2NpZW5jZSBGaWN0aW9uIn0seyJpZCI6MjgsIm5hbWUiOiJBY3Rpb24ifSx7ImlkIjoxMiwibmFtZSI6IkFkdmVudHVyZSJ9LHsiaWQiOjEwNzcwLCJuYW1lIjoiVFYgTW92aWUifV0sImhvbWVwYWdlIjoiaHR0cDovL3d3dy53YXJnYW1lcGljdHVyZXMuYy5sYS8iLCJpZCI6NTc0MTYxLCJpbWRiX2lkIjoidHQ5NTMxMDgwIiwib3JpZ2luYWxfbGFuZ3VhZ2UiOiJmciIsIm9yaWdpbmFsX3RpdGxlIjoiU3RhcmdhdGU6IEJhc2UgR2FtbWEiLCJvdmVydmlldyI6IkZvbGxvd2luZyBhbiBleHBsb3JhdGlvbiBtaXNzaW9uIG9uIFAyUy01NjksIGFuZCB0aGUgZGlzY292ZXJ5IG9mIGFuIHVuZGVyZ3JvdW5kIGZhY2lsaXR5IGludGFjdCwgdGhlIFNHQyBtYWRlIHRoZSBkZWNpc2lvbiB0byB1c2UgdGhlIGV4aXN0aW5nIGluZnJhc3RydWN0dXJlIHRvIGRldmVsb3AgYSBuZXcgc2l0ZTogdGhlIEdhbW1hIEJhc2UuIEJ5IHRoZSB0aW1lIHRoZSBsYXR0ZXIgaXMgZnVsbHkgb3BlcmF0aW9uYWwsIEdlbmVyYWwgTydOZWlsbCBoYXMgYXNzaWduZWQgdGhlIG1ham9yaXR5IG9mIGhpcyBtYW5wb3dlciBhdmFpbGFibGUgZm9yIGRlZmVuc2UuIEluIHBhcmFsbGVsLCBhcyBwYXJ0IG9mIHRoZSBhbGxpYW5jZSBhZ2FpbnN0IHRoZSBHb2Enb2xkJ3MsIGEgZmxlZXQgb2YgUmViZWxzIEphZmZhcyBpcyBleHBlY3RlZCBpbiB0aGUgc3lzdGVtIGZvciBtaWxpdGFyeSBleGVyY2lzZXMgYW5kIHNjaWVudGlmaWMgdHJpYWxzLiBFdmVuIG1vcmUgdGhhbiB0aGUgc2hpcCBhcm1pbmcgdGVzdHMsIHRoZSBnb2FsIG9mIHRoZSBhbGxpZXMgaXMgdGhlIHVuZGVyc3RhbmRpbmcgb2YgdGhlIFwid2hpdGUgZHdhcmYgcGhlbm9tZW5vblwiIHRoYXQgc3RyZXRjaGVzIGFyb3VuZCB0aGUgcGxhbmV0LCBiZWNhdXNlIGl0IHNlZW1zIHRvIGFmZmVjdCBtb3N0IGFkdmFuY2VkIHRlY2hub2xvZ2llcy4gVGhlIFNHQyBnYXJyaXNvbiBpcyBwcmVwYXJpbmcgdG8gcmVjZWl2ZSB0aGVpciBhbGxpZXMuIEhvd2V2ZXIsIHRoZSBKYWZmYXMgZG8gbm90IHNlZW0gdG8gYmUgdGhlIG9uZXMgcGxhbm5lZCwgYW5kIHRoZWlyIGdvYWxzIGFyZSBtb3JlIG9ic2N1cmUuIiwicG9wdWxhcml0eSI6Mi42OTcsInBvc3Rlcl9wYXRoIjoiL3ZsSWtzc0NTUXljRW9jWkJsSTQzT2ZuRldLTS5qcGciLCJwcm9kdWN0aW9uX2NvbXBhbmllcyI6W3siaWQiOjExMzMzMSwibG9nb19wYXRoIjpudWxsLCJuYW1lIjoid2FyZ2FtZSBwaWN0dXJlcyIsIm9yaWdpbl9jb3VudHJ5IjoiIn1dLCJwcm9kdWN0aW9uX2NvdW50cmllcyI6W3siaXNvXzMxNjZfMSI6IkZSIiwibmFtZSI6IkZyYW5jZSJ9XSwicmVsZWFzZV9kYXRlIjoiMjAxNy0wOS0xMyIsInJldmVudWUiOjAsInJ1bnRpbWUiOjEyNywic3Bva2VuX2xhbmd1YWdlcyI6W3siZW5nbGlzaF9uYW1lIjoiRnJlbmNoIiwiaXNvXzYzOV8xIjoiZnIiLCJuYW1lIjoiRnJhbsOnYWlzIn1dLCJzdGF0dXMiOiJSZWxlYXNlZCIsInRhZ2xpbmUiOiIiLCJ0aXRsZSI6IlN0YXJnYXRlOiBCYXNlIEdhbW1hIiwidmlkZW8iOmZhbHNlLCJ2b3RlX2F2ZXJhZ2UiOjEwLjAsInZvdGVfY291bnQiOjF9
+  recorded_at: Thu, 15 Apr 2021 18:51:29 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/376268?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 15 Apr 2021 17:37:01 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=21600
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - a01a23fbf9e0d289f03255371f6e97fa733f5c40
+      X-Memc-Age:
+      - '7228'
+      X-Memc-Expires:
+      - '14372'
+      Etag:
+      - W/"b044bb63d0a780fbb105ef2f1aabceb7"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 6f9c977a59db9a95a2e65aaab6409f3c.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - 4yuZ2N1ukzLGdsy68UTqUENcR32dUoGuysm5rdcGdoK8PAMmlGedQg==
+      Age:
+      - '4469'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"adult":false,"backdrop_path":"/jCcvhae8MmkqYtR1EGtMYFdpQud.jpg","belongs_to_collection":null,"budget":0,"genres":[{"id":878,"name":"Science
+        Fiction"},{"id":99,"name":"Documentary"},{"id":10770,"name":"TV Movie"}],"homepage":"","id":376268,"imdb_id":"tt1080033","original_language":"en","original_title":"Stargate
+        SG-1: True Science","overview":"In this documentary, Amanda Tapping, known
+        as Samantha Carter from SG-1, shows the scientific background of the successful
+        science fiction series \"Stargate SG-1\" and lets us take a look behind the
+        scenes.","popularity":5.322,"poster_path":"/3e2gPmE5KDPFpWjDkziOyeho5SD.jpg","production_companies":[{"id":32226,"logo_path":"/aovg7nl9Ydi0RvhMQi9c57RCCwK.png","name":"Oxford
+        Scientific Films","origin_country":"GB"}],"production_countries":[{"iso_3166_1":"CA","name":"Canada"},{"iso_3166_1":"US","name":"United
+        States of America"}],"release_date":"2006-01-03","revenue":0,"runtime":45,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"","title":"Stargate
+        SG-1: True Science","video":false,"vote_average":8.1,"vote_count":7}'
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/tv/2580?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - f9029350351439a5aaf0861d3f961425da69c897
+      X-Memc-Age:
+      - '2438'
+      X-Memc-Expires:
+      - '1162'
+      Date:
+      - Thu, 15 Apr 2021 18:43:14 GMT
+      Cache-Control:
+      - public, max-age=3600
+      Etag:
+      - W/"22469285a16a55ec19e8ab44d26f827c"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 42b10ce0efa243af420d08c395787243.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - 7-mcWQJGnBMAp_0hrBDt-9jKUH6hyqLJrdF0wwqunBbwnI4Xm4EVTQ==
+      Age:
+      - '496'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJiYWNrZHJvcF9wYXRoIjpudWxsLCJjcmVhdGVkX2J5IjpbXSwiZXBpc29kZV9ydW5fdGltZSI6WzMwXSwiZmlyc3RfYWlyX2RhdGUiOiIyMDAyLTA5LTE0IiwiZ2VucmVzIjpbeyJpZCI6MTYsIm5hbWUiOiJBbmltYXRpb24ifV0sImhvbWVwYWdlIjoiaHR0cDovL3d3dy5jamFyLmNvbS9jal9zaG93c19zdGFyZ2F0ZS5waHAiLCJpZCI6MjU4MCwiaW5fcHJvZHVjdGlvbiI6ZmFsc2UsImxhbmd1YWdlcyI6WyJlbiJdLCJsYXN0X2Fpcl9kYXRlIjoiMjAwMy0wMy0yNCIsImxhc3RfZXBpc29kZV90b19haXIiOnsiYWlyX2RhdGUiOiIyMDAzLTAzLTI0IiwiZXBpc29kZV9udW1iZXIiOjI2LCJpZCI6MTk4OTE1LCJuYW1lIjoiVGhlIExvbmcgSGF1bCIsIm92ZXJ2aWV3IjoiQWZ0ZXIgYmVpbmcgY2hhc2VkIGJ5IGNyZWF0dXJlcyBhbmQgdmlzaXRpbmcgYW4gaWNlIHBsYW5ldCwgdGhlIHRlYW0gYmVnaW5zIHRvIHdvbmRlciBpZiB0aGV5IGFyZSBvbiBhIHBvaW50bGVzcyBxdWVzdC4gRHJhZ2Egb3BlbnMgYSBnYXRlIHRvIFwiXCJ3aGVyZSB0aGV5IHdpc2ggdG8gZ29cIlwiIGFuZCB0aGV5IGVuZCB1cCBvbiBFYXJ0aCBpbiB0aGUgWXVjYXRhbiwgd2hlcmUgYSBsb2NhbCBwcm9mZXNzb3Igd29ya2luZyBmb3IgYSBIb3JhY2UgVmFuIEdlbGRlciByZXZlYWxzIHNoZSBkaXNjb3ZlcmVkIHRoZSBuZXcgZ2F0ZS4gVGhlIHNoYXBlc2hpZnRlciBOZXBoZXN0dXMsIGRpc2d1aXNlZCBhcyBHcmltZXMsIGlzIHdvcmtpbmcgd2l0aCBWYW4gR2VsZGVyIGFuZCBnZXRzIHdvcmQgdGhlIHRlYW0gaXMgcHJlc2VudCB3aGVuIHRoZXkgY29udGFjdCBTdGFyZ2F0ZSBDb21tYW5kLiBEaXNndWlzZWQgYXMgU3RvbmVtYW4sIE5lcGhlc3R1cyB3ZWxjb21lcyB0aGVtIGFuZCBjbGFpbXMgaGUnbGwgaGVscCB0aGVtIGNsZWFyIHRoZWlyIG5hbWVzLCB0aGVuIHN1bW1vbnMgRGEna3lsbCBhbmQgaGlzIFRsYWsna2hhbi4gRHJhZ2Egc3VzcGVjdHMgc29tZXRoaW5nIGFzIFN0b25lbWFuIHNlbmRzIHRoZSBjYWRldHMgaW50byBDYW5jdW4gw6LigqzigJwgaW4gZmFjdCBpdCdzIGFuIGFtYnVzaCBidXQgdGhleSB0dXJuIGFyb3VuZCBhbmQgcmV0dXJuLiBHdXMgYW5kIERyYWdhIGNhdGNoIG9uIGFuZCBtYWtlIHRoZWlyIGVzY2FwZSB3aGlsZSB0aGUgb3RoZXJzIHJldHVybiBpbiBqdXN0IGluIHRpbWUgdG8gcmVzY3VlIHRoZW0uIFRoZSB0ZWFtIGlzIGZvcmNlZCB0byBlc2NhcGUgdGhyb3VnaCB0aGUgR2F0ZSBhbmQgZ28gb24gdGhlIHJ1biBvbmNlIG1vcmUgYmVmb3JlIHRoZXkgY2FuIGNsZWFyIHRoZWlyIG5hbWVzLCBhbmQgdGhlIFRsYWsna2hhbiBhbmQgTmVwaGVzdHVzIGRlcGFydCB3aXRoIFZhbiBHZWxkZXIgYXMgTmVwaGVzdHVzIHRha2VzIGhpcyBwbGFjZSB0byIsInByb2R1Y3Rpb25fY29kZSI6IiIsInNlYXNvbl9udW1iZXIiOjEsInN0aWxsX3BhdGgiOiIvdlpXMjM4cDB1UGFobHJlb1JhMHlibnpDblo3LmpwZyIsInZvdGVfYXZlcmFnZSI6MC4wLCJ2b3RlX2NvdW50IjowfSwibmFtZSI6IlN0YXJnYXRlIEluZmluaXR5IiwibmV4dF9lcGlzb2RlX3RvX2FpciI6bnVsbCwibmV0d29ya3MiOlt7Im5hbWUiOiJGT1giLCJpZCI6MTksImxvZ29fcGF0aCI6Ii8xRFNwSHJXeU9PUmtMOU4yUUhYN0FkdDMxbVEucG5nIiwib3JpZ2luX2NvdW50cnkiOiJVUyJ9XSwibnVtYmVyX29mX2VwaXNvZGVzIjoyNiwibnVtYmVyX29mX3NlYXNvbnMiOjEsIm9yaWdpbl9jb3VudHJ5IjpbIlVTIl0sIm9yaWdpbmFsX2xhbmd1YWdlIjoiZW4iLCJvcmlnaW5hbF9uYW1lIjoiU3RhcmdhdGUgSW5maW5pdHkiLCJvdmVydmlldyI6IlN0YXJnYXRlIEluZmluaXR5IGlzIGFuIEFtZXJpY2FuIGFuaW1hdGVkIHNjaWVuY2UgZmljdGlvbiB0ZWxldmlzaW9uIHNlcmllcyBhbmQgcGFydCBvZiBNZXRyby1Hb2xkd3luLU1heWVyJ3MgU3RhcmdhdGUgZnJhbmNoaXNlLCBidXQgaXMgbm90IGNvbnNpZGVyZWQgb2ZmaWNpYWwgU3RhcmdhdGUgY2Fub24uIFRoZSBzaG93IHdhcyBjcmVhdGVkIGJ5IEVyaWMgTGV3YWxkIGFuZCBNaWNoYWVsIE1hbGlhbmksIGFzIGEgc3Bpbi1vZmYgc2VyaWVzIG9mIFN0YXJnYXRlIFNHLTEgY3JlYXRlZCBieSBCcmFkIFdyaWdodCBhbmQgSm9uYXRoYW4gR2xhc3NuZXIgYWZ0ZXIgdGhlIHJlbGVhc2Ugb2YgU3RhcmdhdGUuIFRoZSBjYXJ0b29uIGhhZCBhIGxvdyB2aWV3ZXJzaGlwIHJhdGluZyBhbmQgcG9vciByZWNlcHRpb247IGl0IHdhcyBjYW5jZWxlZCBhZnRlciBvbmUgc2Vhc29uLiBDby1wcm9kdWNlZCBieSBNR00gVGVsZXZpc2lvbiBhbmQgRElDIEVudGVydGFpbm1lbnQgYW5kIGRpcmVjdGVkIGJ5IFdpbGwgTWV1Z25pb3QuXG5cblRoZSBzdG9yeSBhcmMgb2YgU3RhcmdhdGUgSW5maW5pdHkgZm9sbG93cyBHdXMgQm9ubmVyIGJlaW5nIGZyYW1lZCBmb3Igb3BlbmluZyB0aGUgU3RhcmdhdGUgZm9yIGFsaWVuIGVuZW1pZXMgaW4gYSBmdXR1cmUgdmVyc2lvbiBvZiBTdGFyZ2F0ZSBDb21tYW5kLiBCb25uZXIgZXNjYXBlcyB3aXRoIGEgZ3JvdXAgb2YgZnJlc2ggcmVjcnVpdHMgdGhyb3VnaCB0aGUgU3RhcmdhdGUuIFRoZSB0ZWFtIGNhbiBub3QgcmV0dXJuIHRvIEVhcnRoIGJlZm9yZSB0aGV5IGhhdmUgY2xlYXJlZCB0aGVpciBuYW1lcy4gVGhlIHNob3cgd2FzIGNhbmNlbGxlZCBiZWZvcmUgYW55IG9mIGl0cyBtYWpvciBwbG90cyBjb3VsZCBiZSByZXNvbHZlZC4gVGhlIHN0b3J5IHVuZm9sZHMgd2hlbiB0aGUgbWVtYmVycyBvZiB0aGUgdGVhbSBlbmNvdW50ZXJzIGRpZmZlcmVudCBhbGllbiByYWNlcyBmcm9tIG90aGVyIHBsYW5ldHMuIiwicG9wdWxhcml0eSI6Ni4wMzcsInBvc3Rlcl9wYXRoIjoiL2dpSFJIbG9vd2FEbXNtMnhUUVYxSlhWM2NORy5qcGciLCJwcm9kdWN0aW9uX2NvbXBhbmllcyI6W10sInByb2R1Y3Rpb25fY291bnRyaWVzIjpbXSwic2Vhc29ucyI6W3siYWlyX2RhdGUiOiIyMDAyLTA5LTE0IiwiZXBpc29kZV9jb3VudCI6MjYsImlkIjo4MjQ3LCJuYW1lIjoiU3RhcmdhdGU6IGluZmluaXR5IHNlYXNvbiAxIiwib3ZlcnZpZXciOiIiLCJwb3N0ZXJfcGF0aCI6Ii9uaVM5OGZzNk9TZEo4T29VNVJxT21HMWZoWVMuanBnIiwic2Vhc29uX251bWJlciI6MX1dLCJzcG9rZW5fbGFuZ3VhZ2VzIjpbeyJlbmdsaXNoX25hbWUiOiJFbmdsaXNoIiwiaXNvXzYzOV8xIjoiZW4iLCJuYW1lIjoiRW5nbGlzaCJ9XSwic3RhdHVzIjoiRW5kZWQiLCJ0YWdsaW5lIjoiIiwidHlwZSI6IlNjcmlwdGVkIiwidm90ZV9hdmVyYWdlIjozLjgsInZvdGVfY291bnQiOjZ9
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/13001?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 15 Apr 2021 17:37:02 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=21600
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 1fefb9c8b9b1020af8d8e6bce47eb3747594abbd
+      X-Memc-Age:
+      - '20894'
+      X-Memc-Expires:
+      - '706'
+      Etag:
+      - W/"73ffca4b3e875a1d76f33e01c417585b"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 7006fa5c7e5a6cffa765fbfee7b6d7f2.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - dL3vkQEDvEkYqmZaqZo_RXFGIKguDHYB81W3gDJNB-28nUn1LUsF_Q==
+      Age:
+      - '4468'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"adult":false,"backdrop_path":"/c7zQHgs0AAuKRN3yqghIkLN8QiU.jpg","belongs_to_collection":{"id":44215,"name":"Stargate
+        SG-1 Collection","poster_path":"/1iT2nShFRSBsdT71a1MUsyPpoTL.jpg","backdrop_path":"/fwVVh9o0WZsZNstpX3O55ff7Hs8.jpg"},"budget":7000000,"genres":[{"id":12,"name":"Adventure"},{"id":878,"name":"Science
+        Fiction"},{"id":10770,"name":"TV Movie"}],"homepage":"","id":13001,"imdb_id":"tt0942903","original_language":"en","original_title":"Stargate:
+        The Ark of Truth","overview":"SG-1 searches for an ancient weapon which could
+        help them defeat the Ori, and discover it may be in the Ori''s own home galaxy.
+        As the Ori prepare to send ships through to the Milky Way to attack Earth,
+        SG-1 travels to the Ori galaxy aboard the Odyssey. The International Oversight
+        committee have their own plans and SG-1 finds themselves in a distant galaxy
+        fighting two powerful enemies.","popularity":10.302,"poster_path":"/wsKsWoRxhCuw2dczg1rx9fUAhIp.jpg","production_companies":[{"id":72565,"logo_path":null,"name":"Kawoosh!
+        Productions DTV I","origin_country":""},{"id":21,"logo_path":"/aOWKh4gkNrfFZ3Ep7n0ckPhoGb5.png","name":"Metro-Goldwyn-Mayer","origin_country":"US"}],"production_countries":[{"iso_3166_1":"CA","name":"Canada"},{"iso_3166_1":"US","name":"United
+        States of America"}],"release_date":"2008-03-11","revenue":8900000,"runtime":97,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"The
+        lines have been drawn. The battle has been waged. Only one thing can save
+        us...","title":"Stargate: The Ark of Truth","video":false,"vote_average":7.2,"vote_count":308}'
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/tv/72925?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 1de95360a63d1d227403fbd1e43d982fe7e029a7
+      X-Memc-Age:
+      - '3473'
+      X-Memc-Expires:
+      - '127'
+      Date:
+      - Thu, 15 Apr 2021 18:43:14 GMT
+      Cache-Control:
+      - public, max-age=3600
+      Etag:
+      - W/"d5a1223bf68a4cd0f7ee8878f5a1df16"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 5792646b96b78d9b3be62c41ca3393cd.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - EcILgMPU_tLpreR2pA9EKV5HJzkO_UoK4TQ-mY9ShCjd0QJ2DRlRiQ==
+      Age:
+      - '496'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"backdrop_path":"/4wN8ciEk2sE3YrET9osXR2AhSaZ.jpg","created_by":[],"episode_run_time":[10],"first_air_date":"2018-02-14","genres":[{"id":10759,"name":"Action
+        & Adventure"},{"id":10765,"name":"Sci-Fi & Fantasy"}],"homepage":"https://www.stargatecommand.co/watch/series/stargate-origins","id":72925,"in_production":false,"languages":["de","en"],"last_air_date":"2018-03-08","last_episode_to_air":{"air_date":"2018-03-08","episode_number":10,"id":1438009,"name":"","overview":"A
+        new presence brings danger to everyone on Abydos, including Aset. As chaos
+        ensues, Catherine and Beal make a last ditch effort to bring everyone to safety.
+        Season finale.","production_code":"","season_number":1,"still_path":"/xuSkeL84tH31QGrbphWwbhcQCwF.jpg","vote_average":4.0,"vote_count":3},"name":"Stargate
+        Origins","next_episode_to_air":null,"networks":[{"name":"Stargate Command","id":2016,"logo_path":"/fPXvpCLOBpAkhjjsyXQLFazuAqL.png","origin_country":"US"}],"number_of_episodes":10,"number_of_seasons":1,"origin_country":["US"],"original_language":"en","original_name":"Stargate
+        Origins","overview":"Follow Catherine Langford, the young woman who witnessed
+        her father uncover the Stargate in Giza in 1928, as she embarks on an unexpected
+        adventure to unlock the mystery of what lies beyond the Stargate in order
+        to save Earth from unimaginable darkness.","popularity":14.147,"poster_path":"/esec4AKT1BVNeQbPMO9rCHHvSvd.jpg","production_companies":[{"id":49959,"logo_path":null,"name":"New
+        Form Digital","origin_country":"US"},{"id":92719,"logo_path":null,"name":"MGM
+        Digital Group","origin_country":""}],"production_countries":[{"iso_3166_1":"US","name":"United
+        States of America"}],"seasons":[{"air_date":"2017-08-13","episode_count":1,"id":95455,"name":"Specials","overview":"","poster_path":null,"season_number":0},{"air_date":"2018-02-15","episode_count":10,"id":90647,"name":"Season
+        1","overview":"Young Catherine Langford embarks on an unexpected adventure
+        to unlock the mystery of what lies beyond the Stargate in order to save the
+        Earth from darkness.","poster_path":"/wu2J4oAzx2F6nAtGqxYD5ysq4np.jpg","season_number":1}],"spoken_languages":[{"english_name":"German","iso_639_1":"de","name":"Deutsch"},{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Ended","tagline":"","type":"Miniseries","vote_average":4.3,"vote_count":66}'
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/12914?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 15 Apr 2021 17:37:02 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=21600
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 35f3227e62cba58f5e73b7a98ace7ad508addd71
+      X-Memc-Age:
+      - '12143'
+      X-Memc-Expires:
+      - '9457'
+      Etag:
+      - W/"7e8da34b398434e69f9986b3a127b2de"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 7489ca2b63d10f9195cd257d7fdcba14.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - HYB5qAwwJrrDYQz_Mr6oJPViLltE6RJQD9BS8qVDMTxPqXmamNGiHg==
+      Age:
+      - '4468'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"adult":false,"backdrop_path":"/jT7tdu9ksHkdS4R13ieXNs5efYW.jpg","belongs_to_collection":{"id":44215,"name":"Stargate
+        SG-1 Collection","poster_path":"/1iT2nShFRSBsdT71a1MUsyPpoTL.jpg","backdrop_path":"/fwVVh9o0WZsZNstpX3O55ff7Hs8.jpg"},"budget":7000000,"genres":[{"id":12,"name":"Adventure"},{"id":878,"name":"Science
+        Fiction"},{"id":10770,"name":"TV Movie"}],"homepage":"","id":12914,"imdb_id":"tt0929629","original_language":"en","original_title":"Stargate:
+        Continuum","overview":"Ba''al travels back in time and prevents the Stargate
+        program from being started. SG-1 must somehow restore history.","popularity":10.776,"poster_path":"/exCFVhFQWnVbGPbr2JeTQwK7Mgw.jpg","production_companies":[{"id":19241,"logo_path":"/yFrrdf50AveEbbRlNsgGlaMwdDx.png","name":"Acme
+        Shark","origin_country":"US"},{"id":57748,"logo_path":null,"name":"Kawoosh!
+        Productions DTV II","origin_country":""},{"id":57749,"logo_path":null,"name":"MGM
+        Global Holdings","origin_country":""},{"id":21,"logo_path":"/aOWKh4gkNrfFZ3Ep7n0ckPhoGb5.png","name":"Metro-Goldwyn-Mayer","origin_country":"US"}],"production_countries":[{"iso_3166_1":"CA","name":"Canada"},{"iso_3166_1":"US","name":"United
+        States of America"}],"release_date":"2008-07-29","revenue":0,"runtime":98,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Released","tagline":"History
+        may never repeat itself again.","title":"Stargate: Continuum","video":false,"vote_average":7.0,"vote_count":320}'
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/tv/5148?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - db804796487b50f4bd466cb718758d34fe4972a8
+      X-Memc-Age:
+      - '1642'
+      X-Memc-Expires:
+      - '1958'
+      Date:
+      - Thu, 15 Apr 2021 18:43:14 GMT
+      Cache-Control:
+      - public, max-age=3600
+      Etag:
+      - W/"cf685b44c8d35b70fbf0e1e9664cd765"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 30a008d85df71a65d24879648931496c.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - HgjWDsmvl5E0xGRL_q1c62TvKqucRNZ44jGXO2_kz4jHPBxzukRxew==
+      Age:
+      - '496'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"backdrop_path":"/tK8eRUWVY8AVdDUPUxSzrmlLb0R.jpg","created_by":[{"id":72082,"credit_id":"52577e1c760ee36aaa5b4024","name":"Brad
+        Wright","gender":2,"profile_path":null},{"id":27745,"credit_id":"52577e1c760ee36aaa5b402a","name":"Robert
+        C. Cooper","gender":2,"profile_path":null}],"episode_run_time":[45],"first_air_date":"2009-10-02","genres":[{"id":10759,"name":"Action
+        & Adventure"},{"id":18,"name":"Drama"},{"id":10765,"name":"Sci-Fi & Fantasy"}],"homepage":"http://stargate.mgm.com/view/series/3/index.html","id":5148,"in_production":false,"languages":["en"],"last_air_date":"2011-05-09","last_episode_to_air":{"air_date":"2011-05-09","episode_number":20,"id":353577,"name":"Gauntlet","overview":"Eli
+        and Rush have found a way to identify the location of drone mother ships using
+        the Destiny''s long range sensors. The bad news is that the Drones seems to
+        be awaiting them at every possible stop along Destiny''s path. They find a
+        temporary solution to neutralize the mother ships but realize that they cannot
+        engage in a major battle every time they need to re-supply. Eli suggest that
+        they use the stasis pods for the crew and jump to the next galaxy, a trip
+        that will take three years. All goes well until they realize that one of the
+        pods has been damaged and one person will have to stay behind in the hopes
+        of fixing the unit in the short time available or die.","production_code":"","season_number":2,"still_path":"/zyw6Igfqim7HRXD8mG9OYBUGmTn.jpg","vote_average":8.0,"vote_count":4},"name":"Stargate
+        Universe","next_episode_to_air":null,"networks":[{"name":"Syfy","id":77,"logo_path":"/iYfrkobwDhTOFJ4AXYPSLIEeaAT.png","origin_country":"US"}],"number_of_episodes":40,"number_of_seasons":2,"origin_country":["US"],"original_language":"en","original_name":"Stargate
+        Universe","overview":"The adventures of a present-day, multinational exploration
+        team traveling on the Ancient spaceship Destiny many billions of light years
+        distant from the Milky Way Galaxy. They evacuated there and are now trying
+        to figure out a way to return to Earth, while simultaneously trying to explore
+        and to survive in their unknown area of the universe.","popularity":19.669,"poster_path":"/s2DCgwmN27R1s3SUEKWvJ6bFVrr.jpg","production_companies":[{"id":2230,"logo_path":"/8UHPNZnCf2gfHs9DrSvJMa8t7Ry.png","name":"MGM
+        Television","origin_country":"US"}],"production_countries":[{"iso_3166_1":"US","name":"United
+        States of America"}],"seasons":[{"air_date":"2009-10-06","episode_count":36,"id":15029,"name":"Specials","overview":"","poster_path":"/g5DfQNgniccn5HRy9Mqu6eUKe2a.jpg","season_number":0},{"air_date":"2009-10-02","episode_count":20,"id":15027,"name":"Season
+        1","overview":"When their hidden base comes under attack, a band of civilians
+        and military personnel escape through a Stargate on an ancient ship headed
+        into deep space. Now, these survivors must figure out a way to get back to
+        Earth, while also providing themselves with the most basic of needs - food,
+        water and air.","poster_path":"/goZWLm1I8o6Gri7dS26OMpXGRmM.jpg","season_number":1},{"air_date":"2010-09-28","episode_count":20,"id":15028,"name":"Season
+        2","overview":"The Destiny continues its journey through the Universe, while
+        its crew suffers from a lack of supplies and no knowledge of its final destination.
+        Struggling to control the ships systems, tempers and personalities of the
+        crew clash. Facing uncharted space and enemies who would take the ship by
+        force, the Destiny crew persevere in their struggle to stay alive and find
+        a way home.","poster_path":"/3vGy8NVfX0bis3YyTwJw3z5JAAQ.jpg","season_number":2}],"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Canceled","tagline":"","type":"Scripted","vote_average":7.3,"vote_count":431}'
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/movie/2164?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Date:
+      - Thu, 15 Apr 2021 17:37:03 GMT
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      Cache-Control:
+      - public, max-age=21600
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 511944065b3d1fbb66a23367d08f767c99c52a5d
+      X-Memc-Age:
+      - '5984'
+      X-Memc-Expires:
+      - '15616'
+      Etag:
+      - W/"b4c10f2361d86246e81c74c2a5aefd83"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 12435f922f48ee227c1e888952ed66ac.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - P1OK7NKt2pUQ_X6v1VGFCrFQN-baHcRrUgLVKMa_H96mFQtxkTvVSg==
+      Age:
+      - '4467'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"adult":false,"backdrop_path":"/34wSdldOfJ43JXXraD4GxkdX0j1.jpg","belongs_to_collection":{"id":44215,"name":"Stargate
+        SG-1 Collection","poster_path":"/1iT2nShFRSBsdT71a1MUsyPpoTL.jpg","backdrop_path":"/fwVVh9o0WZsZNstpX3O55ff7Hs8.jpg"},"budget":55000000,"genres":[{"id":28,"name":"Action"},{"id":12,"name":"Adventure"},{"id":878,"name":"Science
+        Fiction"}],"homepage":"","id":2164,"imdb_id":"tt0111282","original_language":"en","original_title":"Stargate","overview":"An
+        interstellar teleportation device, found in Egypt, leads to a planet with
+        humans resembling ancient Egyptians who worship the god Ra.","popularity":13.878,"poster_path":"/fyTqTETiXncfESLyKfkgEs7qg7d.jpg","production_companies":[{"id":275,"logo_path":"/2MxNWlN5b3UXt1OfmznsWEQzFwq.png","name":"Carolco
+        Pictures","origin_country":"US"},{"id":347,"logo_path":null,"name":"Centropolis
+        Entertainment","origin_country":""},{"id":104,"logo_path":"/9aotxauvc9685tq9pTcRJszuT06.png","name":"Canal+","origin_country":"FR"}],"production_countries":[{"iso_3166_1":"FR","name":"France"},{"iso_3166_1":"US","name":"United
+        States of America"}],"release_date":"1994-10-27","revenue":196567262,"runtime":121,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"},{"english_name":"Norwegian","iso_639_1":"no","name":"Norsk"},{"english_name":"Swedish","iso_639_1":"sv","name":"svenska"}],"status":"Released","tagline":"It
+        will take you a million light years from home. But will it bring you back?","title":"Stargate","video":false,"vote_average":7.0,"vote_count":2331}'
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/tv/2290?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 101ffce0e41d35e9971f28ab83a10976be85ff87
+      X-Memc-Age:
+      - '3203'
+      X-Memc-Expires:
+      - '397'
+      Date:
+      - Thu, 15 Apr 2021 18:43:14 GMT
+      Cache-Control:
+      - public, max-age=3600
+      Etag:
+      - W/"d6b02303661c792e5966f0b6028c1172"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 4a7d33ed6e1269d258afa1464fe1d544.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - f_jFaadD-KmLzvGmmZIswi4yF_o_HcSp2G7N2rt54ulatTajWig5Bg==
+      Age:
+      - '496'
+    body:
+      encoding: ASCII-8BIT
+      string: '{"backdrop_path":"/sOJjqxfGAcmG3pKS8mbQLweoPSQ.jpg","created_by":[{"id":72082,"credit_id":"52572f50760ee3776a324ff0","name":"Brad
+        Wright","gender":2,"profile_path":null},{"id":27745,"credit_id":"52572f50760ee3776a324fea","name":"Robert
+        C. Cooper","gender":2,"profile_path":null}],"episode_run_time":[45,60],"first_air_date":"2004-07-15","genres":[{"id":10765,"name":"Sci-Fi
+        & Fantasy"},{"id":10759,"name":"Action & Adventure"},{"id":18,"name":"Drama"}],"homepage":"http://stargate.mgm.com/view/series/2/index.html","id":2290,"in_production":false,"languages":["en"],"last_air_date":"2009-01-08","last_episode_to_air":{"air_date":"2009-01-08","episode_number":20,"id":168567,"name":"Enemy
+        at the Gate","overview":"\"Todd\" informs the Atlantis expedition that a rogue
+        group of Wraith has acquired several Zero Point Modules to power a Super-hive,
+        and wants it destroyed. However, after the Daedalus is disabled, they learn
+        that the ship is heading straight for Earth, and they must stop it before
+        it gets there.","production_code":"","season_number":5,"still_path":"/tAfBKzGz33CaPJsUCRABS9WHF4L.jpg","vote_average":9.0,"vote_count":11},"name":"Stargate
+        Atlantis","next_episode_to_air":null,"networks":[{"name":"Syfy","id":77,"logo_path":"/iYfrkobwDhTOFJ4AXYPSLIEeaAT.png","origin_country":"US"}],"number_of_episodes":100,"number_of_seasons":5,"origin_country":["US","CA"],"original_language":"en","original_name":"Stargate
+        Atlantis","overview":"With the Ancients'' city of Atlantis discovered in the
+        Pegasus Galaxy by Stargate Command, Dr. Elizabeth Weir and Major Sheppard
+        lead a scientific expedition to the ancient abandoned city. Once there, the
+        team not only find themselves unable to contact Earth, but their explorations
+        unexpectedly reawaken the Ancients'' deadly enemies, The Wraith, who hunger
+        for this new prey. Now with the help of newfound local allies like Teyla Emmagan,
+        the Atlantis Team sets about to uncover their new home''s secrets even as
+        their war of survival against the Wraith begins.","popularity":42.303,"poster_path":"/6VQWhOyfEF1TWsBqzrIOdYiXMWW.jpg","production_companies":[{"id":19241,"logo_path":"/yFrrdf50AveEbbRlNsgGlaMwdDx.png","name":"Acme
+        Shark","origin_country":"US"},{"id":2230,"logo_path":"/8UHPNZnCf2gfHs9DrSvJMa8t7Ry.png","name":"MGM
+        Television","origin_country":"US"},{"id":19242,"logo_path":null,"name":"Pegasus
+        Productions","origin_country":""},{"id":11073,"logo_path":"/wHs44fktdoj6c378ZbSWfzKsM2Z.png","name":"Sony
+        Pictures Television International","origin_country":"US"}],"production_countries":[],"seasons":[{"air_date":null,"episode_count":2,"id":7146,"name":"Specials","overview":"","poster_path":"/uIbeQs8BQ2vWycXrre8z3shgPsM.jpg","season_number":0},{"air_date":"2004-07-15","episode_count":20,"id":7141,"name":"Season
+        1","overview":"","poster_path":"/xeefYfz1O1JPbe2kxfz350EU7oo.jpg","season_number":1},{"air_date":"2005-07-15","episode_count":20,"id":7142,"name":"Season
+        2","overview":"","poster_path":"/tI5CfwO10MRiQPcHVmkVpLI6YQn.jpg","season_number":2},{"air_date":"2006-07-13","episode_count":20,"id":7143,"name":"Season
+        3","overview":"","poster_path":"/hRrePt2tgu6Lg5CL9iuPtJiRHvk.jpg","season_number":3},{"air_date":"2007-09-27","episode_count":20,"id":7144,"name":"Season
+        4","overview":"","poster_path":"/6YAykJHxa2OWf3eZxKq2uaz9wZe.jpg","season_number":4},{"air_date":"2008-07-10","episode_count":20,"id":7145,"name":"Season
+        5","overview":"","poster_path":"/ysIj54F4yzl7KnhfuZDTwcA6Fc1.jpg","season_number":5}],"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"}],"status":"Ended","tagline":"A
+        new gate will open. A lost city will rise again.","type":"Scripted","vote_average":7.9,"vote_count":612}'
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/tv/4629?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v1.3.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      Server:
+      - openresty
+      Access-Control-Allow-Origin:
+      - "*"
+      Access-Control-Allow-Methods:
+      - GET, HEAD, POST, PUT, DELETE, OPTIONS
+      Access-Control-Expose-Headers:
+      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
+        Content-Length, Content-Range
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 7e7da73bbbf90d334a4f01441fd688059fd942fc
+      X-Memc-Age:
+      - '1238'
+      X-Memc-Expires:
+      - '2362'
+      Date:
+      - Thu, 15 Apr 2021 18:43:15 GMT
+      Cache-Control:
+      - public, max-age=3600
+      Etag:
+      - W/"5a82acce912e8e167529fb53f992e7fd"
+      Vary:
+      - Accept-Encoding
+      X-Cache:
+      - Hit from cloudfront
+      Via:
+      - 1.1 fd450117df0639d714d4dd6d760d6213.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX50-C2
+      X-Amz-Cf-Id:
+      - QH3Tdp7wzls9zCWeUCmJsKKAB9CKJIbJmeGVQorU9Vk6C6hLngylng==
+      Age:
+      - '496'
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJiYWNrZHJvcF9wYXRoIjoiL2xpOVNaQnBWekp6ODFvdXFpZlZ1SDVDN05vZC5qcGciLCJjcmVhdGVkX2J5IjpbeyJpZCI6NzIwODIsImNyZWRpdF9pZCI6IjUyNTc3ODFkNzYwZWUzNmFhYTU0YzFhMSIsIm5hbWUiOiJCcmFkIFdyaWdodCIsImdlbmRlciI6MiwicHJvZmlsZV9wYXRoIjpudWxsfSx7ImlkIjoxMjI0OTA0LCJjcmVkaXRfaWQiOiI1MjU3NzgxZDc2MGVlMzZhYWE1NGMxOWIiLCJuYW1lIjoiSm9uYXRoYW4gR2xhc3NuZXIiLCJnZW5kZXIiOjIsInByb2ZpbGVfcGF0aCI6bnVsbH1dLCJlcGlzb2RlX3J1bl90aW1lIjpbNDIsNjAsNDMsNDVdLCJmaXJzdF9haXJfZGF0ZSI6IjE5OTctMDctMjciLCJnZW5yZXMiOlt7ImlkIjoxMDc2NSwibmFtZSI6IlNjaS1GaSAmIEZhbnRhc3kifSx7ImlkIjoxMDc1OSwibmFtZSI6IkFjdGlvbiAmIEFkdmVudHVyZSJ9LHsiaWQiOjk2NDgsIm5hbWUiOiJNeXN0ZXJ5In1dLCJob21lcGFnZSI6Imh0dHA6Ly9zdGFyZ2F0ZS5tZ20uY29tL3ZpZXcvc2VyaWVzLzEvaW5kZXguaHRtbCIsImlkIjo0NjI5LCJpbl9wcm9kdWN0aW9uIjpmYWxzZSwibGFuZ3VhZ2VzIjpbImVuIl0sImxhc3RfYWlyX2RhdGUiOiIyMDA3LTA2LTIyIiwibGFzdF9lcGlzb2RlX3RvX2FpciI6eyJhaXJfZGF0ZSI6IjIwMDctMDYtMjIiLCJlcGlzb2RlX251bWJlciI6MjAsImlkIjozMzYwMzUsIm5hbWUiOiJVbmVuZGluZyIsIm92ZXJ2aWV3IjoiVHJhcHBlZCBvbiBib2FyZCB0aGUgT2R5c3NleSwgdGhlIG1lbWJlcnMgb2YgU0ctMSBtdXN0IGxpdmUgb3V0IHRoZSByZXN0IG9mIHRoZWlyIGxpdmVzIHRvZ2V0aGVyIHdoZW4gQ2FydGVyIGFjdGl2YXRlcyBhIHRpbWUgZGlsYXRpb24gZmllbGQgdG8gc2F2ZSB0aGUgc2hpcCBmcm9tIGRlc3RydWN0aW9uLiIsInByb2R1Y3Rpb25fY29kZSI6IiIsInNlYXNvbl9udW1iZXIiOjEwLCJzdGlsbF9wYXRoIjoiL29ZMEpRdjNueDd4OGNVZ28ycWxBOGFxTnRZcy5qcGciLCJ2b3RlX2F2ZXJhZ2UiOjguNSwidm90ZV9jb3VudCI6MTF9LCJuYW1lIjoiU3RhcmdhdGUgU0ctMSIsIm5leHRfZXBpc29kZV90b19haXIiOm51bGwsIm5ldHdvcmtzIjpbeyJuYW1lIjoiU2hvd3RpbWUiLCJpZCI6NjcsImxvZ29fcGF0aCI6Ii9BbGxzZTlrYmppUDZFeGFRcm5TcEloa3VyRWkucG5nIiwib3JpZ2luX2NvdW50cnkiOiJVUyJ9LHsibmFtZSI6IlN5ZnkiLCJpZCI6NzcsImxvZ29fcGF0aCI6Ii9pWWZya29id0RoVE9GSjRBWFlQU0xJRWVhQVQucG5nIiwib3JpZ2luX2NvdW50cnkiOiJVUyJ9XSwibnVtYmVyX29mX2VwaXNvZGVzIjoyMTQsIm51bWJlcl9vZl9zZWFzb25zIjoxMCwib3JpZ2luX2NvdW50cnkiOlsiQ0EiLCJVUyJdLCJvcmlnaW5hbF9sYW5ndWFnZSI6ImVuIiwib3JpZ2luYWxfbmFtZSI6IlN0YXJnYXRlIFNHLTEiLCJvdmVydmlldyI6IlRoZSBzdG9yeSBvZiBTdGFyZ2F0ZSBTRy0xIGJlZ2lucyBhYm91dCBhIHllYXIgYWZ0ZXIgdGhlIGV2ZW50cyBvZiB0aGUgZmVhdHVyZSBmaWxtLCB3aGVuIHRoZSBVbml0ZWQgU3RhdGVzIGdvdmVybm1lbnQgbGVhcm5zIHRoYXQgYW4gYW5jaWVudCBhbGllbiBkZXZpY2UgY2FsbGVkIHRoZSBTdGFyZ2F0ZSBjYW4gYWNjZXNzIGEgbmV0d29yayBvZiBzdWNoIGRldmljZXMgb24gYSBtdWx0aXR1ZGUgb2YgcGxhbmV0cy4gU0ctMSBpcyBhbiBlbGl0ZSBBaXIgRm9yY2Ugc3BlY2lhbCBvcGVyYXRpb25zIHRlYW0sIG9uZSBvZiBtb3JlIHRoYW4gdHdvIGRvemVuIHRlYW1zIGZyb20gRWFydGggd2hvIGV4cGxvcmUgdGhlIGdhbGF4eSBhbmQgZGVmZW5kIGFnYWluc3QgYWxpZW4gdGhyZWF0cyBzdWNoIGFzIHRoZSBHb2EndWxkLCBSZXBsaWNhdG9ycywgYW5kIHRoZSBPcmkuIiwicG9wdWxhcml0eSI6NjguNzk5LCJwb3N0ZXJfcGF0aCI6Ii85SmVndzB5bGU0eDhqbG1MTlpvbjM3T3MyN2guanBnIiwicHJvZHVjdGlvbl9jb21wYW5pZXMiOlt7ImlkIjoyMjMwLCJsb2dvX3BhdGgiOiIvOFVIUE5abkNmMmdmSHM5RHJTdkpNYTh0N1J5LnBuZyIsIm5hbWUiOiJNR00gVGVsZXZpc2lvbiIsIm9yaWdpbl9jb3VudHJ5IjoiVVMifV0sInByb2R1Y3Rpb25fY291bnRyaWVzIjpbeyJpc29fMzE2Nl8xIjoiQ0EiLCJuYW1lIjoiQ2FuYWRhIn1dLCJzZWFzb25zIjpbeyJhaXJfZGF0ZSI6IjE5OTQtMTAtMjgiLCJlcGlzb2RlX2NvdW50Ijo5LCJpZCI6MTQxNTAsIm5hbWUiOiJTcGVjaWFscyIsIm92ZXJ2aWV3IjoiIiwicG9zdGVyX3BhdGgiOiIvbzkzNHA1a0tUSVJUbzgwekF6anl5S25FekhlLmpwZyIsInNlYXNvbl9udW1iZXIiOjB9LHsiYWlyX2RhdGUiOiIxOTk3LTA3LTI3IiwiZXBpc29kZV9jb3VudCI6MjIsImlkIjoxNDE1MSwibmFtZSI6IlNlYXNvbiAxIiwib3ZlcnZpZXciOiJUaGUgZmlyc3Qgc2Vhc29uIG9mIHRoZSBtaWxpdGFyeSBzY2llbmNlIGZpY3Rpb24gdGVsZXZpc2lvbiBzZXJpZXMgU3RhcmdhdGUgU0ctMSBjb21tZW5jZWQgYWlyaW5nIG9uIHRoZSBTaG93dGltZSBjaGFubmVsIGluIHRoZSBVbml0ZWQgU3RhdGVzIG9uIEp1bHkgMjcsIDE5OTcsIGNvbmNsdWRlZCBvbiB0aGUgc2FtZSBjaGFubmVsIG9uIE1hcmNoIDYsIDE5OTgsIGFuZCBjb250YWluZWQgMjIgZXBpc29kZXMuIFRoZSBzaG93IGl0c2VsZiBpcyBhIHNwaW4gb2ZmIGZyb20gdGhlIDE5OTQgaGl0IG1vdmllLCBTdGFyZ2F0ZSB3cml0dGVuIGJ5IERlYW4gRGV2bGluIGFuZCBSb2xhbmQgRW1tZXJpY2guIFN0YXJnYXRlIFNHLTEgcmUtaW50cm9kdWNlZCBzdXBwb3J0aW5nIGNoYXJhY3RlcnMgZnJvbSB0aGUgZmlsbSB1bml2ZXJzZSwgc3VjaCBhcyBKb25hdGhhbiBcIkphY2tcIiBPJ05laWxsIGFuZCBEYW5pZWwgSmFja3NvbiBhbmQgaW5jbHVkZWQgbmV3IGNoYXJhY3RlcnMgc3VjaCBhcyBUZWFsJ2MsIEdlb3JnZSBIYW1tb25kIGFuZCBTYW1hbnRoYSBcIlNhbVwiIENhcnRlci4gVGhlIGZpcnN0IHNlYXNvbiB3YXMgYWJvdXQgYSBtaWxpdGFyeS1zY2llbmNlIGV4cGVkaXRpb24gdGVhbSBkaXNjb3ZlcmluZyBob3cgdG8gdXNlIHRoZSBhbmNpZW50IGRldmljZSwgbmFtZWQgdGhlIFN0YXJnYXRlLCB0byBleHBsb3JlIHRoZSBnYWxheHkuIEhvd2V2ZXIsIHRoZXkgZW5jb3VudGVyZWQgYSBwb3dlcmZ1bCBlbmVteSBpbiB0aGUgZmlsbSBuYW1lZCB0aGUgR29hJ3VsZCwgd2hpY2ggaXMgYmVudCBvbiBkZXN0cm95aW5nIEVhcnRoIGFuZCBhbGwgdGhhdCBvcHBvc2VzIHRoZW0uIiwicG9zdGVyX3BhdGgiOiIvdGlpYjZBMGtaME5vVWV1VWJjVTBoSXUyamxNLmpwZyIsInNlYXNvbl9udW1iZXIiOjF9LHsiYWlyX2RhdGUiOiIxOTk4LTA2LTI2IiwiZXBpc29kZV9jb3VudCI6MjIsImlkIjoxNDE0MSwibmFtZSI6IlNlYXNvbiAyIiwib3ZlcnZpZXciOiJTZWFzb24gdHdvIG9mIFN0YXJnYXRlIFNHLTEsIGFuIEFtZXJpY2FuLUNhbmFkaWFuIHRlbGV2aXNpb24gc2VyaWVzLCBiZWdhbiBhaXJpbmcgb24gSnVuZSAyNiwgMTk5OCBvbiBTaG93dGltZS4gVGhlIHNlY29uZCBzZWFzb24gY29uY2x1ZGVkIGFmdGVyIDIyIGVwaXNvZGVzIG9uIEZlYnJ1YXJ5IDEwLCAxOTk5IG9uIEJyaXRpc2ggU2t5IE9uZSwgd2hpY2ggb3ZlcnRvb2sgU2hvd3RpbWUgaW4gbWlkLXNlYXNvbi4gVGhlIHNlcmllcyB3YXMgZGV2ZWxvcGVkIGJ5IEJyYWQgV3JpZ2h0IGFuZCBKb25hdGhhbiBHbGFzc25lciwgd2hvIGFsc28gc2VydmVkIGFzIGV4ZWN1dGl2ZSBwcm9kdWNlcnMuIFNlYXNvbiB0d28gcmVndWxhciBjYXN0IG1lbWJlcnMgaW5jbHVkZSBSaWNoYXJkIERlYW4gQW5kZXJzb24sIE1pY2hhZWwgU2hhbmtzLCBBbWFuZGEgVGFwcGluZywgQ2hyaXN0b3BoZXIgSnVkZ2UsIGFuZCBEb24gUy4gRGF2aXMuIiwicG9zdGVyX3BhdGgiOiIvaU51N2RpSUhPQ1ZxdVMxNDNWN2FvRkJ2NjNrLmpwZyIsInNlYXNvbl9udW1iZXIiOjJ9LHsiYWlyX2RhdGUiOiIxOTk5LTA2LTI1IiwiZXBpc29kZV9jb3VudCI6MjIsImlkIjoxNDE0MiwibmFtZSI6IlNlYXNvbiAzIiwib3ZlcnZpZXciOiJUaGUgdGhpcmQgc2Vhc29uIG9mIHRoZSBtaWxpdGFyeSBzY2llbmNlIGZpY3Rpb24gdGVsZXZpc2lvbiBzZXJpZXMgU3RhcmdhdGUgU0ctMSBjb21tZW5jZWQgYWlyaW5nIG9uIFNob3d0aW1lIGluIHRoZSBVbml0ZWQgU3RhdGVzIG9uIEp1bmUgMjUsIDE5OTksIGNvbmNsdWRlZCBvbiBTa3kxIGluIHRoZSBVbml0ZWQgS2luZ2RvbSBvbiBNYXJjaCA4LCAyMDAwLCBhbmQgY29udGFpbmVkIDIyIGVwaXNvZGVzLiBUaGUgdGhpcmQgY29udGludWVzIHRoZSBwbG90IHN0YXJ0ZWQgaW4gc2Vhc29uIG9uZSwgdGhlIHRoaXJkIHNlYXNvbiBmb2xsb3dzIFNHLTEgaW4gdGhlaXIgZmlnaHQgYWdhaW5zdCB0aGUgR29hJ3VsZCBFbXBpcmUncyBTeXN0ZW0gTG9yZHMsIHRoZSBtYWluIGJlaW5nIFNva2FyIHVudGlsIFwiVGhlIERldmlsIFlvdSBLbm93XCIgYW5kIHRoZW4gQXBvcGhpcyBhZnRlciByZWdhaW5pbmcgcG93ZXIgYWZ0ZXIgdGhlIGV2ZW50IGluIFwiVGhlIERldmlsIFlvdSBLbm93LlwiIFRoZSBzZWFzb24gaW50cm9kdWNlcyB0aGUgbG9uZyB1bnNlZW4gYW5kIHVubmFtZWQgZW5lbXkgb2YgdGhlIEFzZ2FyZHMsIHRoZSBSZXBsaWNhdG9ycyB3aG8gYXJlIHNlbGYtcmVwbGljYXRpbmcgbWFjaGluZXMgdGhhdCBzZWVrIHRvIGNvbnZlcnQgYWxsIGNpdmlsaXphdGlvbnMgaW50byBtb3JlIG9mIHRoZW1zZWx2ZXMsIHRodXMgcG9zaW5nIGEgZGlyZSB0aHJlYXQgdG8gYWxsIG90aGVyIGJlaW5ncy4gVGhlIFJlcGxpY2F0b3JzIGFyZSBmaXJzdCBtZW50aW9uZWQsIGJ1dCBub3QgbmFtZWQsIGluIHNlYXNvbiB0aHJlZSBlcGlzb2RlIFwiRmFpciBHYW1lXCIuXG5cblRoZSBvbmUtaG91ciBwcmVtaWVyZSBcIkludG8gdGhlIEZpcmVcIiwgd2hpY2ggZGVidXRlZCBvbiBKdW5lIDI1LCAxOTk5IG9uIFNob3d0aW1lIGRpZCBub3QgcmVjZWl2ZSBhbnkgc3luZGljYXRpb24gcmF0aW5nLCBidXQgb3ZlcmFsbCBnb3QgYSBoaWdoIHZpZXdlcnNoaXAgbGV2ZWwuIFRoZSBzZXJpZXMgd2FzIGRldmVsb3BlZCBieSBCcmFkIFdyaWdodCBhbmQgSm9uYXRoYW4gR2xhc3NuZXIsIHdobyBhbHNvIHNlcnZlZCBhcyBleGVjdXRpdmUgcHJvZHVjZXJzLiBTZWFzb24gMyByZWd1bGFyIGNhc3QgbWVtYmVycyBpbmNsdWRlIFJpY2hhcmQgRGVhbiBBbmRlcnNvbiwgTWljaGFlbCBTaGFua3MsIEFtYW5kYSBUYXBwaW5nLCBDaHJpc3RvcGhlciBKdWRnZSwgYW5kIERvbiBTLiBEYXZpcy4iLCJwb3N0ZXJfcGF0aCI6Ii9RS3o1YW0ybWNlUDZSQTloUFZ1cFduTzB4aC5qcGciLCJzZWFzb25fbnVtYmVyIjozfSx7ImFpcl9kYXRlIjoiMjAwMC0wNi0zMCIsImVwaXNvZGVfY291bnQiOjIyLCJpZCI6MTQxNDMsIm5hbWUiOiJTZWFzb24gNCIsIm92ZXJ2aWV3IjoiU2Vhc29uIGZvdXIgb2YgU3RhcmdhdGUgU0ctMSwgYW4gQW1lcmljYW4tQ2FuYWRpYW4gdGVsZXZpc2lvbiBzZXJpZXMsIGJlZ2FuIGFpcmluZyBvbiBKdW5lIDMwLCAyMDAwIG9uIFNob3d0aW1lLiBUaGUgZm91cnRoIHNlYXNvbiBjb25jbHVkZWQgYWZ0ZXIgMjIgZXBpc29kZXMgb24gRmVicnVhcnkgMTQsIDIwMDEgb24gQnJpdGlzaCBTa3kgT25lLCB3aGljaCBvdmVydG9vayBTaG93dGltZSBpbiBtaWQtc2Vhc29uLiBUaGUgc2VyaWVzIHdhcyBkZXZlbG9wZWQgYnkgQnJhZCBXcmlnaHQgYW5kIEpvbmF0aGFuIEdsYXNzbmVyLiBTZWFzb24gZm91ciByZWd1bGFyIGNhc3QgbWVtYmVycyBpbmNsdWRlIFJpY2hhcmQgRGVhbiBBbmRlcnNvbiwgTWljaGFlbCBTaGFua3MsIEFtYW5kYSBUYXBwaW5nLCBDaHJpc3RvcGhlciBKdWRnZSwgYW5kIERvbiBTLiBEYXZpcy4iLCJwb3N0ZXJfcGF0aCI6Ii92cFBFYTh2cU1yMVd0WGJFNmZBMEFCR2VGb2UuanBnIiwic2Vhc29uX251bWJlciI6NH0seyJhaXJfZGF0ZSI6IjIwMDEtMDYtMjkiLCJlcGlzb2RlX2NvdW50IjoyMiwiaWQiOjE0MTQ0LCJuYW1lIjoiU2Vhc29uIDUiLCJvdmVydmlldyI6IlRoZSBmaWZ0aCBzZWFzb24gb2YgdGhlIG1pbGl0YXJ5IHNjaWVuY2UgZmljdGlvbiB0ZWxldmlzaW9uIHNlcmllcyBTdGFyZ2F0ZSBTRy0xIGNvbW1lbmNlZCBhaXJpbmcgb24gU2hvd3RpbWUgaW4gdGhlIFVuaXRlZCBTdGF0ZXMgb24gSnVuZSAyOSwgMjAwMSwgY29uY2x1ZGVkIG9uIFNreTEgaW4gdGhlIFVuaXRlZCBLaW5nZG9tIG9uIEZlYnJ1YXJ5IDYsIDIwMDIsIGFuZCBjb250YWluZWQgMjIgZXBpc29kZXMuIFRoZSBmaWZ0aCBzZWFzb24gaW50cm9kdWNlcyBmdXR1cmUgbWFpbiBjaGFyYWN0ZXIgZnJvbSBKb25hcyBRdWlubiBwb3J0cmF5ZWQgYnkgQ29yaW4gTmVtZWMgZnJvbSAyMDAy4oCTMjAwNC4gVGhlIGZpZnRoIHNlYXNvbiBpcyBhYm91dCB0aGUgb25nb2luZyB3YXIgd2l0aCB0aGUgR29hJ3VsZCBFbXBpcmUgYWZ0ZXIgdGhlIGRlYXRoIG9mIEFwb3BoaXMgYXQgdGhlIHN0YXJ0IG9mIHRoZSBzZWFzb24gYW5kIHRoZSByaXNlIG9mIGEgbmV3IFN5c3RlbSBMb3JkIG5hbWVkIEFudWJpcy4gU0ctMSwgYSBtaWxpdGFyeS1zY2llbmNlIHRlYW0sIGFyZSBzZXQgdG8gZXhwbG9yZSB0aGUgTWlsa3kgV2F5IEdhbGF4eS5cblxuVGhlIG9uZS1ob3VyIHByZW1pZXJlIFwiRW5lbWllc1wiLCB3aGljaCBkZWJ1dGVkIG9uIEp1bmUgMjksIDIwMDEgb24gU2hvd3RpbWUgaGFkIHRoZSBsb3dlc3Qgc3luZGljYXRpb24gb2YgdGhlIHNlYXNvbnMgZXBpc29kZSwgYnV0IG92ZXJhbGwgZ290IGEgaGlnaCB2aWV3ZXJzaGlwIGxldmVsLiBUaGlzIHdvdWxkIGJlIHRoZSBsYXN0IHNlYXNvbiB0byBmZWF0dXJlIEFwb3BoaXMgYWxpdmUsIGJ1dCBoZSB3b3VsZCByZXR1cm4gaW4gZHJlYW1zIGFuZCBhbHRlcm5hdGUgcmVhbGl0aWVzIGFuZCB0aW1lbGluZXMuIFRoZSBzZXJpZXMgd2FzIGRldmVsb3BlZCBieSBCcmFkIFdyaWdodCBhbmQgSm9uYXRoYW4gR2xhc3NuZXIuIFNlYXNvbiBmaXZlIHJlZ3VsYXIgY2FzdCBtZW1iZXJzIGluY2x1ZGUgUmljaGFyZCBEZWFuIEFuZGVyc29uLCBNaWNoYWVsIFNoYW5rcywgQW1hbmRhIFRhcHBpbmcsIENocmlzdG9waGVyIEp1ZGdlLCBhbmQgRG9uIFMuIERhdmlzLiIsInBvc3Rlcl9wYXRoIjoiL3RuMFZyRWFEZGllZk9HbnBoSGtUSk5BZXF4TS5qcGciLCJzZWFzb25fbnVtYmVyIjo1fSx7ImFpcl9kYXRlIjoiMjAwMi0wNi0wNyIsImVwaXNvZGVfY291bnQiOjIyLCJpZCI6MTQxNDUsIm5hbWUiOiJTZWFzb24gNiIsIm92ZXJ2aWV3IjoiU2Vhc29uIHNpeCBvZiBTdGFyZ2F0ZSBTRy0xLCBhbiBBbWVyaWNhbi1DYW5hZGlhbiB0ZWxldmlzaW9uIHNlcmllcywgYmVnYW4gYWlyaW5nIG9uIEp1bmUgNywgMjAwMiBvbiBTY2kgRmkuIFRoZSBzaXh0aCBzZWFzb24gY29uY2x1ZGVkIGFmdGVyIDIyIGVwaXNvZGVzIG9uIEZlYnJ1YXJ5IDE5LCAyMDAzIG9uIEJyaXRpc2ggU2t5IE9uZSwgd2hpY2ggb3ZlcnRvb2sgdGhlIFNjaS1GaSBDaGFubmVsIGluIG1pZC1zZWFzb24uIFRoZSBzZXJpZXMgd2FzIGRldmVsb3BlZCBieSBCcmFkIFdyaWdodCBhbmQgSm9uYXRoYW4gR2xhc3NuZXIuIFNlYXNvbiBzaXggcmVndWxhciBjYXN0IG1lbWJlcnMgaW5jbHVkZSBSaWNoYXJkIERlYW4gQW5kZXJzb24sIEFtYW5kYSBUYXBwaW5nLCBDaHJpc3RvcGhlciBKdWRnZSwgQ29yaW4gTmVtZWMsIGFuZCBEb24gUy4gRGF2aXMuIiwicG9zdGVyX3BhdGgiOiIvaEZTTGp1NjFvT29ncnFpcTBWRDRlTGRqVjg0LmpwZyIsInNlYXNvbl9udW1iZXIiOjZ9LHsiYWlyX2RhdGUiOiIyMDAzLTA2LTEzIiwiZXBpc29kZV9jb3VudCI6MjIsImlkIjoxNDE0NiwibmFtZSI6IlNlYXNvbiA3Iiwib3ZlcnZpZXciOiJTZWFzb24gc2V2ZW4gb2YgU3RhcmdhdGUgU0ctMSwgYW4gQW1lcmljYW4tQ2FuYWRpYW4gdGVsZXZpc2lvbiBzZXJpZXMsIGJlZ2FuIGFpcmluZyBvbiBKdW5lIDEzLCAyMDAzIG9uIFNjaSBGaS4gVGhlIHNldmVudGggc2Vhc29uIGNvbmNsdWRlZCBhZnRlciAyMiBlcGlzb2RlcyBvbiBNYXJjaCA5LCAyMDA0IG9uIEJyaXRpc2ggU2t5IE9uZSwgd2hpY2ggb3ZlcnRvb2sgdGhlIFNjaS1GaSBDaGFubmVsIGluIG1pZC1zZWFzb24uIFRoZSBzZXJpZXMgd2FzIGRldmVsb3BlZCBieSBCcmFkIFdyaWdodCBhbmQgSm9uYXRoYW4gR2xhc3NuZXIuIFNlYXNvbiBzZXZlbiByZWd1bGFyIGNhc3QgbWVtYmVycyBpbmNsdWRlIFJpY2hhcmQgRGVhbiBBbmRlcnNvbiwgQW1hbmRhIFRhcHBpbmcsIENocmlzdG9waGVyIEp1ZGdlLCBNaWNoYWVsIFNoYW5rcywgYW5kIERvbiBTLiBEYXZpcy4iLCJwb3N0ZXJfcGF0aCI6Ii9yMTZOeUh2c09GYm05NWo3ZXpmRDJabU1pNWwuanBnIiwic2Vhc29uX251bWJlciI6N30seyJhaXJfZGF0ZSI6IjIwMDQtMDctMDkiLCJlcGlzb2RlX2NvdW50IjoyMCwiaWQiOjE0MTQ3LCJuYW1lIjoiU2Vhc29uIDgiLCJvdmVydmlldyI6IlNlYXNvbiBlaWdodCBvZiBTdGFyZ2F0ZSBTRy0xLCBhbiBBbWVyaWNhbi1DYW5hZGlhbiBtaWxpdGFyeSBzY2llbmNlIGZpY3Rpb24gdGVsZXZpc2lvbiBzZXJpZXMsIGJlZ2FuIGFpcmluZyBvbiBKdWx5IDksIDIwMDQgb24gdGhlIFNjaSBGaSBjaGFubmVsLiBUaGUgZWlnaHRoIHNlYXNvbiBjb25jbHVkZWQgb24gRmVicnVhcnkgMjIsIDIwMDUsIGFmdGVyIDIwIGVwaXNvZGVzIG9uIEJyaXRpc2ggU2t5IE9uZSwgd2hpY2ggb3ZlcnRvb2sgdGhlIFNjaSBGaSBDaGFubmVsIGluIG1pZC1zZWFzb24uIFRoaXMgd2FzIHRoZSBmaXJzdCBzZWFzb24gb2YgdGhlIHNob3cgdG8gaGF2ZSAyMCBlcGlzb2RlcyBpbnN0ZWFkIG9mIDIyLCBhcyB3ZWxsIGFzIHRoZSBmaXJzdCB0byBhaXIgY29uY3VycmVudGx5IHdpdGggU3RhcmdhdGUgU0ctMSBzcGlub2ZmIHNlcmllcyBTdGFyZ2F0ZSBBdGxhbnRpcy4gVGhlIHNlcmllcyB3YXMgb3JpZ2luYWxseSBkZXZlbG9wZWQgYnkgQnJhZCBXcmlnaHQgYW5kIEpvbmF0aGFuIEdsYXNzbmVyLCB3aGlsZSBCcmFkIFdyaWdodCBhbmQgUm9iZXJ0IEMuIENvb3BlciBzZXJ2ZWQgYXMgZXhlY3V0aXZlIHByb2R1Y2Vycy4gU2Vhc29uIGVpZ2h0IHJlZ3VsYXIgY2FzdCBtZW1iZXJzIGluY2x1ZGUgUmljaGFyZCBEZWFuIEFuZGVyc29uLCBBbWFuZGEgVGFwcGluZywgQ2hyaXN0b3BoZXIgSnVkZ2UsIGFuZCBNaWNoYWVsIFNoYW5rcy4gVGhlIGVpZ2h0aCBzZWFzb24gYmVnaW5zIHdpdGggdGhlIFNHLTEgdGVhbSB0cnlpbmcgdG8gcmV2aXZlIENvbG9uZWwgSmFjayBPJ05laWxsIGFmdGVyIHRoZSBldmVudHMgb2YgdGhlIHNldmVudGggc2Vhc29uLiBBdCB0aGUgZW5kIG9mIHRoZSB0d28tZXBpc29kZSBzZWFzb24gb3BlbmVyLCBDb2xvbmVsIE8nTmVpbGwgaXMgcHJvbW90ZWQgdG8gR2VuZXJhbCBhbmQgYXNzdW1lcyBjb21tYW5kIG9mIFN0YXJnYXRlIENvbW1hbmQsIHdoaWxlIE1ham9yIFNhbWFudGhhIENhcnRlciBpcyBwcm9tb3RlZCB0byBMaWV1dGVuYW50IENvbG9uZWwgYW5kIGFzc3VtZXMgY29tbWFuZCBvZiBTRy0xLiBUaGUgc2Vhc29uIGFyYyBjZW50ZXJzIGFyb3VuZCB0aGUgZ3Jvd2luZyB0aHJlYXQgYW5kIHNlZW1pbmdseSBmaW5hbCBkZWZlYXQgb2YgdGhlIEdvYSd1bGQgYW5kIHRoZSBSZXBsaWNhdG9ycywgcmFjZXMgd2hvIHdlcmUgaW50cm9kdWNlZCBpbiB0aGUgZmlyc3QgYW5kIHRoaXJkIHNlYXNvbiBvZiB0aGUgc2hvdywgcmVzcGVjdGl2ZWx5LiIsInBvc3Rlcl9wYXRoIjoiLzQ3dnViREExMUIweTZlZFhiZ1Z1blFoOVNCRi5qcGciLCJzZWFzb25fbnVtYmVyIjo4fSx7ImFpcl9kYXRlIjoiMjAwNS0wNy0xNSIsImVwaXNvZGVfY291bnQiOjIwLCJpZCI6MTQxNDgsIm5hbWUiOiJTZWFzb24gOSIsIm92ZXJ2aWV3IjoiQXMgb25lIHRlYW0gbWVtYmVyIHRyYW5zaXRpb25zIGludG8gYSBuZXcgcm9sZSwgYW5vdGhlciBpcyBtZXQgd2l0aCBoZXNpdGF0aW9uIGluIHNlYXNvbiBuaW5lLiBIYXZpbmcgbGVhcm5lZCBvZiB0aGUgT3JpJ3MgcGxhbiB0byBjb250cm9sIHRoZSBtb3J0YWwgcGxhbmUsIHRoZSB0ZWFtIG11c3QgZmluZCBNZXJsaW4ncyBzZWNyZXQgd2VhcG9uIHRoYXQgbWF5IGRlc3Ryb3kgdGhlIE9yaSBhbmQgZW5zdXJlIHRoZSBzYWZldHkgb2YgRWFydGguIiwicG9zdGVyX3BhdGgiOiIvcXRoenduM3d2cmE3VVhIZXVHT05hY1RPMGxULmpwZyIsInNlYXNvbl9udW1iZXIiOjl9LHsiYWlyX2RhdGUiOiIyMDA2LTA3LTE0IiwiZXBpc29kZV9jb3VudCI6MjAsImlkIjoxNDE0OSwibmFtZSI6IlNlYXNvbiAxMCIsIm92ZXJ2aWV3IjoiQXMgdGhlIHRlYW0gZW1iYXJrcyB1cG9uIGl0cyB0ZW50aCB5ZWFyLCBWYWxhLCBhIGZvcm1lciBHb2EndWxkIGhvc3QgdHVybmVkIGZyZWVkb20tZmlnaHRlciwgam9pbnMgU0ctMSBpbiB0aGVpciBiYXR0bGUgdG8gZGVmZW5kIHRoZSBnYWxheHkgZnJvbSB0aGUgaG9seSB3YXIgb2YgdGhlIE9yaS4gSGF2aW5nIGRpc2NvdmVyZWQgdGhlIGV4aXN0ZW5jZSBvZiBhIHdlYXBvbiBjYXBhYmxlIG9mIGRlZmVhdGluZyB0aGUgT3JpLCB0aGUgdGVhbSBpcyBub3cgaW4gYSByYWNlIGFnYWluc3QgdGltZSB0byBmaW5kIGl0IGJlZm9yZSBtb3JlIHN5c3RlbXMgZmFsbCB0byB0aGUgaW5mbHVlbmNlIG9mIHRoZSBQcmlvcnMgYW5kIHRoZSB0aHJlYXQgb2YgdGhlIG5ld2x5IGFycml2ZWQgT3JpZ2luIGZsZWV0LiAgXG5cblRoZSBzZWFzb24gaXMgY29udGludWVkIHdpdGggZGlyZWN0LXRvLURWRCBmaWxtIFN0YXJnYXRlOiBUaGUgQXJrIG9mIFRydXRoLiIsInBvc3Rlcl9wYXRoIjoiL3pXUVVXSjFOYkxMUWhNRGN5UTlPSW1HNm9HZy5qcGciLCJzZWFzb25fbnVtYmVyIjoxMH1dLCJzcG9rZW5fbGFuZ3VhZ2VzIjpbeyJlbmdsaXNoX25hbWUiOiJFbmdsaXNoIiwiaXNvXzYzOV8xIjoiZW4iLCJuYW1lIjoiRW5nbGlzaCJ9XSwic3RhdHVzIjoiRW5kZWQiLCJ0YWdsaW5lIjoiU2F2aW5nIHRoZSB3b3JsZC4uLiBvbmUgZXBpc29kZSBhdCBhIHRpbWUiLCJ0eXBlIjoiU2NyaXB0ZWQiLCJ2b3RlX2F2ZXJhZ2UiOjguMiwidm90ZV9jb3VudCI6OTAwfQ==
+  recorded_at: Thu, 15 Apr 2021 18:51:30 GMT
+recorded_with: VCR 6.0.0

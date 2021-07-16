@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Building out the simpler path info to avoid any issues from any user settings
+
+export RAILS_ENV=production
+export RAILS_SERVE_STATIC_FILES=true
+if [ ! -f "tmp/setup_complete" ]; then
+  bin/install_ruby
+  bin/setup --path tmp/gems --deployment
+fi
+bin/rails s -e production

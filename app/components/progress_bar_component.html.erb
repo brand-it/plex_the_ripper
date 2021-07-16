@@ -1,0 +1,13 @@
+<div id="<%= dom_id %>" class="p-3">
+  <div class="progress mb-2">
+    <div class="progress-bar progress-bar-striped progress-bar-animated bg-<%= status %>" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= completed %>%">
+    </div>
+  </div>
+  <div>
+    <% if message %>
+      <%= message %>
+    <% else %>
+      Loading <%= model.model_name.singular %> ... <%= number_to_percentage completed, precision: 0 %>
+    <% end %>
+  </div>
+</div>

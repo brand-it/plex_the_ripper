@@ -1,0 +1,218 @@
+#!/usr/bin/env ruby
+require 'optparse'
+require 'fileutils'
+APP_ROOT = File.expand_path '..', __dir__
+HOMEBREW_PACKAGES = %i[
+  libxml2
+  libxslt
+  makedepend
+  openssl
+  readline
+]
+@bundler_options = []
+@deployment = false
+install_packages = false
+OptionParser.new do |opts|
+  opts.on('--path [path]', String) do |path|
+    @bundler_options << ['path', path]
+    FileUtils.mkdir(path) unless Dir.exist? path
+  end
+
+  opts.on('--deployment') do
+    @bundler_options << ['deployment', true]
+    @bundler_options << ['without', 'development test']
+    @deployment = true
+  end
+end.parse!(ARGV)
+
+class Tool
+  TOOLS = File.read("#{APP_ROOT}/.tool-versions").lines.map(&:strip)
+  def self.version(name)
+    TOOLS.find { |x| x.match(name) }.scan(/\d*\.\d*\.\d*/).first
+  end
+end
+
+class ColorString < String
+  # https://no-color.org/
+  NO_COLOR = ENV.key?('NO_COLOR') || `tput colors`.chomp.to_i < 8
+  ANSI_COLORS = {
+    red: 31,
+    green: 32,
+    yellow: 33,
+    blue: 34,
+    magenta: 35
+  }.freeze
+
+  ANSI_COLORS.each do |name, code|
+    define_method(name) { NO_COLOR ? self : "\e[#{code}m#{self}\e[0m" }
+  end
+end
+
+def log(message)
+  puts ColorString.new(message).blue
+end
+
+def info(message)
+  puts "  #{message}"
+end
+
+def error(message, exit_code = 1)
+  puts ColorString.new(message).red
+  exit exit_code
+end
+
+def success(message)
+  puts ColorString.new(message).green
+end
+
+def warn(message)
+  puts ColorString.new(message).yellow
+end
+#---------------------#
+#      Setup Steps    #
+#---------------------#
+
+def check_ruby_version
+  log 'Checking Ruby version...'
+  system 'ruby --version'
+  unless RUBY_VERSION == Tool.version('ruby')
+    error <<~MSG.chomp
+      This application requires Ruby #{Tool.version('ruby')}!
+      Since there are multiple ways to install Ruby, this script won't do it for you.
+      Please install Ruby #{Tool.version('ruby')} from your preferred source.
+    MSG
+  end
+  success "Ruby #{Tool.version('ruby')} installed!"
+end
+
+def setup_mac
+  log 'Mac OS detected. Installing system packages...'
+
+  # Install Xcode developer tools. This includes essential packages like
+  # git, make, gcc, etc. There will be a system prompt if the tools aren't
+  # installed already, so be sure to watch for that and click "Install".
+  system 'xcode-select --install' unless @deployment
+
+  # Either install or update Homebrew. Homebrew installation depends on a
+  # script from Github, so we default to not installing for safety reasons.
+  # Never run code from the internet that you haven't looked at yourself!
+  if !system('which brew')
+    warn 'Homebrew is not installed.'
+
+    log 'Installing Homebrew...'
+    system("sudo #{HOMEBREW_INSTALL_CMD}") || error('Error installing Homebrew!')
+    system 'brew analytics off'
+  else
+    success 'Homebrew is installed!'
+    log 'Updating taps...'
+    system 'brew update'
+  end
+  # Once Homebrew is installed and up to date, install required packages.
+  log 'Installing packages...'
+  HOMEBREW_PACKAGES.each do |dep|
+    versions = `brew ls --versions #{dep}`.chomp
+    next info(versions) unless versions == ''
+    info("installing #{dep}")
+    system("brew install #{dep}") || error("Error installing #{dep}!")
+  end
+  success 'Homebrew packages installed!'
+end
+
+def ruby_setup
+  log 'Updating Rubygems...'
+  system 'gem update --system'
+  bundler_version = `grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1`.strip
+  error "Couldn't determine the version of bundler to use!" if bundler_version == ''
+  log "Installing bundler #{bundler_version}..."
+  system("gem install bundler -v #{bundler_version}") || error('Error installing bundler!')
+  log 'Installing gems...'
+  @bundler_options.each do |option, value|
+    system("bundle config set #{option} '#{value}' --local")
+    info "Added bundle config #{option} '#{value}'"
+  end
+  system('bundle check') || system('bundle install') || error('Error installing gems!')
+  success 'Gems installed!'
+end
+
+def node_setup
+  log 'Checking node version...'
+  if !system('which node')
+    error <<~MSG.chomp
+      Node.js is not installed!
+      Since there are multiple ways to install node, this script won't do it for you.
+      Please install node #{Tool.current('nodejs')} from your preferred source.
+    MSG
+  end
+  node_version = `node --version`.chomp
+  if node_version != "v#{Tool.version('nodejs')}"
+    error <<~MSG.chomp
+      Node.js #{Tool.version('nodejs')} required, #{node_version} in use.
+      Please install the correct version of node from your preferred source.
+    MSG
+  end
+  success "Node.js #{node_version} installed!"
+  log 'Installing yarn...'
+  system 'npm install -g npm'
+  system 'npm install -g yarn'
+  log 'Installing npm packages...'
+  system 'bin/yarn install'
+  success 'Javascript dependencies installed!'
+end
+
+def application_setup
+  log 'Initializing Rails application...'
+
+  # Remove stale PID
+  if File.exist? 'tmp/pids/server.pid'
+    system 'kill -9 $(cat tmp/pids/server.pid)'
+    File.delete 'tmp/pids/server.pid'
+    warn 'Removed stale PID file.'
+  end
+
+  unless File.exist? 'tmp/caching-dev.txt'
+    info 'Enabling dev cache'
+    system 'touch tmp/caching-dev.txt'
+  end
+
+  # We have to run several rake tasks as part of app setup. It's faster to load
+  # the application once and run tasks using Rake::Task.invoke rather than making
+  # system calls, since each system call will independently load the application.
+  info 'Loading Rails...'
+  require "#{APP_ROOT}/config/environment"
+  Rails.application.load_tasks
+
+  success 'Application initialized!'
+end
+
+def database_setup
+  log 'Setting up databases...'
+  Rake::Task['db:setup'].invoke
+  success 'Database setup complete!'
+end
+
+def compile_assets
+  log 'Compiling assets...'
+  Rake::Task['assets:precompile'].invoke
+  success 'Assets compiled!'
+end
+
+def install_mkv
+  Rake::Task['mkv:install'].invoke
+end
+
+Dir.chdir APP_ROOT do
+  case RUBY_PLATFORM
+  when /darwin/
+    setup_mac
+  else
+    warn 'Not running on a Mac. Skipping package installation.'
+  end
+  check_ruby_version
+  ruby_setup
+  node_setup
+  application_setup
+  database_setup
+  compile_assets
+  install_mkv
+  FileUtils.touch('tmp/setup_complete')
+end

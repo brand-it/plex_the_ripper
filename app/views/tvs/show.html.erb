@@ -1,0 +1,27 @@
+<div class='row'>
+  <% @tv.seasons.each do |season| %>
+    <div class="card mb-3 col-md-6 text-white bg-dark col-md-6">
+      <div class="row no-gutters">
+        <div class="col-md-4"><%= imdb_image_tag season.poster_path %></div>
+
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title">
+              <%= link_to 'Select', season_path(season, season: { selected: true }), method: :patch, class: 'btn btn-outline-light' %>
+              <%= season.name %>
+            </h5>
+
+            <p class="card-text"><%= season.overview %></p>
+            <p class="card-text">
+              <small class="text-muted">
+                <%= season.air_date  %>
+                <%= link_to_movie_db_seasons(@tv.the_movie_db_id, season.season_number) %>
+              </small>
+            </p>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>

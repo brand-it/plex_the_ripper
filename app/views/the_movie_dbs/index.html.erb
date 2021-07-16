@@ -1,0 +1,18 @@
+<%= render 'search' %>
+<div data-controller='pagination'>
+  <% if search_service.results.none? %>
+    <div class='col-md-12'>
+      <div class="text-white">
+        <div class='container'>
+          <h1 class="display-4">Getting Started</h1>
+          <p class="lead">Get started by typing in the name of the TV show or movie.</p>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div id="videos" class="row">
+      <%= render partial: 'video', collection: search_service.results %>
+      <%= render 'next_page' %>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,10 @@
+<% if @video %>
+  <div data-controller="video-progress" class="card border-info mb-3" id="<%= dom_id(@video, :progress) %>" data-type="<%= @video.class.name %>">
+    <div>VideoProgress</div>
+    <% @mkv_progresses.each do |mkv_progress| %>
+      <p><%= mkv_progress.name %></p>
+      <p>Percentage Completed: <%= mkv_progress.percentage %></p>
+    <% end %>
+    <button data-video-progress-target="create" data-action="click->video-progress#create" data-url="<%#= build_disk_path %>" class='btn btn-primary'>Create Movie</button>
+  </div>
+<% end %>
