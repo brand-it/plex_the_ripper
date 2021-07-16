@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class ScanPlexWorker < ApplicationWorker
+  # rubocop:disable Layout/LineLength
   MOVIE_MATCHER_WITH_YEAR = /(?<title>.*)\s\((?<year>.*)\).*mkv/.freeze
   MOVIE_MATCHER = /(?<title>.*).*mkv/.freeze
   TV_SHOW_MATCHER_FULL = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<number>.*)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*mkv/.freeze
@@ -8,8 +9,9 @@ class ScanPlexWorker < ApplicationWorker
   TV_SHOW_WITHOUT_DATE = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<number>.*)\s-\s(?<episode_name>.*).*mkv/.freeze
   TV_SHOW_WITHOUT_NUMBER = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*mkv/.freeze
   TV_SHOW_WITHOUT_YEAR = /(?<title>.*)\s-\s(?<number>.*)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*mkv/.freeze
+  # rubocop:enable Layout/LineLength
 
-  def call
+  def call # rubocop:disable Metrics/MethodLength
     result = Ftp::VideoScannerService.call
     result.movies.each do |movie|
       matcher = movie_matcher(movie)
