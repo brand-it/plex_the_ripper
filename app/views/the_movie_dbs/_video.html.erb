@@ -14,6 +14,9 @@
           <h5 class="card-title">
             <%= video.is_a?(Tv) ? icon('tv', type: 'fas') : icon('film', type: 'fas') %>
             <%= video.title %>
+            <% if video.release_or_air_date %>
+              (<%= video.release_or_air_date&.year %>)
+            <% end %>
           </h5>
 
           <small class='text-muted'><%= video.original_title %></small>

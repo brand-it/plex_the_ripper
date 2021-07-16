@@ -15,6 +15,6 @@ require 'rails_helper'
 RSpec.describe Config::Plex, type: :model do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:settings_movie_path) }
-    it { is_expected.to validate_presence_of(:settings_video_path) }
+    it { is_expected.to validate_presence_of(:settings_tv_path) }
   end
 end

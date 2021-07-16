@@ -47,7 +47,7 @@ module TheMovieDb
 
     def connection
       @connection ||= Faraday.new do |f|
-        f.response :logger if Rails.env.development?
+        f.response :logger if Rails.application.config.faraday_logging
       end
     end
 

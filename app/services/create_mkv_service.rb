@@ -20,13 +20,11 @@ class CreateMkvService
   private
 
   def create_mkv
-    @create_mkv ||= Open3.popen2e({}, cmd) do |stdin, std_out_err, wait_thr|
+    @create_mkv ||= Open3.popen2e(cmd) do |stdin, std_out_err, wait_thr|
       stdin.close
-      Thread.new do
-        while raw_line = std_out_err.gets # rubocop:disable Lint/AssignmentInCondition
-          progress_listener.call(parse_mkv_string(raw_line).first)
-        end
-      end.join
+      while raw_line = std_out_err.gets # rubocop:disable Lint/AssignmentInCondition
+        progress_listener.call(parse_mkv_string(raw_line).first)
+      end
       wait_thr.value
     end
   end

@@ -20,7 +20,7 @@ class ApplicationWorker
   end
 
   class << self
-    def perform(*args)
+    def perform_async(*args)
       return if job.pending?
 
       new(*args).tap do |worker|

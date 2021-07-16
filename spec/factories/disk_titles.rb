@@ -24,5 +24,7 @@ FactoryBot.define do
     name { Faker::App.name }
     title_id { Faker::Types.rb_integer }
     disk
+
+    trait(:with_movie) { association :movie, factory: :movie }
   end
 end

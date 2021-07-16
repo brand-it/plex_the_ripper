@@ -37,9 +37,6 @@ class VideoSearchQuery
     video_results = search.results.select do |r|
       VIDEOS_MEDIA_TYPE.include?(r.media_type)
     end
-    video_results = video_results.sort_by do |r|
-      Text::Levenshtein.distance(r.title || r.name, query)
-    end
     video_results.reverse
   end
 

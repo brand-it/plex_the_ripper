@@ -31,5 +31,6 @@ module PlexRipper
     config.generators do |g|
       g.stylesheets false
     end
+    config.faraday_logging = ENV['FARADAY_LOGGING'] == 'true'
   end
 end

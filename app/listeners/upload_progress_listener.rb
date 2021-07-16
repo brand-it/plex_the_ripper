@@ -13,7 +13,7 @@ class UploadProgressListener
   def call(percentage)
     component = ProgressBarComponent.new(
       model: DiskTitle,
-      completed: self.completed = percentage, status: :info, message: title
+      completed: @completed = percentage, status: :info, message: title
     )
     cable_ready[DiskTitleChannel.channel_name].morph(
       selector: "##{component.dom_id}",
