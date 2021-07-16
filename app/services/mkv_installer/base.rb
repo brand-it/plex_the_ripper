@@ -21,7 +21,7 @@ module MkvInstaller
       temp_file(path).tap do |file|
         conn.get(path) do |req|
           req.options.on_data = proc do |chunk, overall_received_bytes|
-            Rails.logger.debug "#{path} Received #{overall_received_bytes} characters"
+            Rails.logger.debug { "#{path} Received #{overall_received_bytes} characters" }
             file.write chunk
           end
         end
