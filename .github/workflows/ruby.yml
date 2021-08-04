@@ -23,7 +23,7 @@ jobs:
       with:
         bundler-cache: true
         ruby-version: 2.7.3
-    - uses: actions/setup-node@v2.2.0
+    - uses: actions/setup-node@v2.3.2
       with:
         node-version: 14.6.0
     - name: Find yarn cache location
