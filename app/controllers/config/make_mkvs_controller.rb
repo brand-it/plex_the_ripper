@@ -38,7 +38,7 @@ class Config
     private
 
     def set_make_mkv
-      @config_make_mkv = Config::MakeMkv.newest.first
+      @config_make_mkv = Config::MakeMkv.newest
     end
 
     def make_mkv_params
