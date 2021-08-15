@@ -10,6 +10,7 @@
 #  filename     :string           not null
 #  key          :string           not null
 #  metadata     :text
+#  optimized    :boolean          default(FALSE), not null
 #  service_name :string           not null
 #  video_type   :string
 #  created_at   :datetime         not null

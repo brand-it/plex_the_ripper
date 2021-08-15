@@ -22,15 +22,23 @@ module Ftp
       end.compact.sort_by(&:filename)
     end
 
-    def build_video(path, entry)
-      return unless entry.pathname.end_with?('.mkv')
+    def build_video(path, entry) # rubocop:disable Metrics/AbcSize
+      return unless entry.pathname.end_with?('.mkv') || entry.pathname.end_with?('.mp4')
 
       key = [path, entry.pathname].join('/')
       VideoBlob.find_or_initialize_by(key: safe_encode(key), service_name: :ftp).tap do |video_blob|
         video_blob.update! filename: safe_encode(entry.pathname),
-                           content_type: 'video/x-matroska',
+                           content_type: content_type(entry),
+                           optimized: entity.pathname.includes?('Optimized for'),
                            byte_size: entry.size
       end
+    end
+
+    def content_type(entry)
+      return 'video/x-matroska' if entry.pathname.end_with?('.mkv')
+      return 'video/mp4' if entry.pathname.end_with?('.mp4')
+
+      raise 'Unsupported file type'
     end
 
     def safe_encode(string)
