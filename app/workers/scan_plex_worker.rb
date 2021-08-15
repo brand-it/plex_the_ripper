@@ -1,42 +1,32 @@
 # frozen_string_literal: true
 
 class ScanPlexWorker < ApplicationWorker
-  # rubocop:disable Layout/LineLength
-  MOVIE_MATCHER_WITH_YEAR = /(?<title>.*)\s\((?<year>.*)\).*mkv/.freeze
-  MOVIE_MATCHER = /(?<title>.*).*mkv/.freeze
-  TV_SHOW_MATCHER_FULL = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<number>.*)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*mkv/.freeze
-  TV_SHOW_WITHOUT_EP_NAME = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<number>.*)\s-\s(?<date>.*).*mkv/.freeze
-  TV_SHOW_WITHOUT_DATE = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<number>.*)\s-\s(?<episode_name>.*).*mkv/.freeze
-  TV_SHOW_WITHOUT_NUMBER = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*mkv/.freeze
-  TV_SHOW_WITHOUT_YEAR = /(?<title>.*)\s-\s(?<number>.*)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*mkv/.freeze
-  # rubocop:enable Layout/LineLength
-
-  def call # rubocop:disable Metrics/MethodLength
-    result = Ftp::VideoScannerService.call
-    result.movies.each do |movie|
-      matcher = movie_matcher(movie)
-      next unless matcher
-
-      video = search_for_video(matcher)
-      next unless video
-
-      Rails.logger.info(
-        "#{video.new_record? ? 'Creating' : 'Updating'}"\
-        " #{video.title} (#{video.release_or_air_date&.year})"
-      )
-      video.save!
+  def call
+    plex_movies.map do |blob|
+      blob.update!(video: create_movie!(blob))
     end
   end
 
   private
 
-  def search_for_video(matcher)
-    VideoSearchQuery.new(query: matcher['title']).results.find do |v|
-      matcher.names.include?('year').blank? || v.release_or_air_date&.year == matcher['year']
+  def search_for_movie(movie)
+    return if movie.parsed_filename.title.nil?
+
+    options = { query: movie.parsed_filename.title, year: movie.parsed_filename.year }.compact
+    TheMovieDb::Search::Movie.new(options).results.results.first&.id
+  end
+
+  def create_movie!(blob)
+    the_movie_db_id = search_for_movie(blob)
+    return if the_movie_db_id.nil?
+
+    Movie.find_or_initialize_by(the_movie_db_id: the_movie_db_id).tap do |m|
+      m.subscribe(TheMovieDb::MovieListener.new)
+      m.save!
     end
   end
 
-  def movie_matcher(movie)
-    movie[:file_name].match(MOVIE_MATCHER_WITH_YEAR) || movie[:file_name].match(MOVIE_MATCHER)
+  def plex_movies
+    Ftp::VideoScannerService.call.movies
   end
 end

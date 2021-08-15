@@ -20,7 +20,7 @@ class CreateDisksService
 
   def update_disk_title(disk, title)
     disk_title = find_or_build_disk_title(disk, title)
-    disk_title.assign_attributes name: title.file_name,
+    disk_title.assign_attributes name: title.filename,
                                  size: title.size_in_bytes,
                                  duration: title.duration_seconds
   end
