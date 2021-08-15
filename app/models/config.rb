@@ -23,7 +23,9 @@ class Config < ApplicationRecord
     end
 
     def newest
-      order(updated_at: :desc).first || new
+      Rails.cache.fetch(:"#{model_name.param_key}_newest", expires_in: 2.seconds, skip_nil: true) do
+        order(updated_at: :desc).first
+      end || new
     end
   end
 

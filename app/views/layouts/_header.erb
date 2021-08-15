@@ -9,6 +9,10 @@
       <span class="nav-link">
         <%= number_to_human_size(free_disk_space, precision: 3) %> / <%= number_to_human_size(total_disk_space, precision: 3) %>
       </span>
+
+      <span class="nav-link">
+        <%#= Movie.includes(:video_blobs).where.not(video_blobs: { id: nil }).count %>
+      </span>
     </nav>
   </div>
 </header>
