@@ -95,7 +95,7 @@ module TheMovieDb
     end
 
     def config
-      Thread.current[:the_moviedb_config_instance] ||= Config::TheMovieDb.newest.first || Config::TheMovieDb.new
+      Config::TheMovieDb.newest
     end
   end
 end

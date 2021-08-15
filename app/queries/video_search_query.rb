@@ -10,7 +10,7 @@ class VideoSearchQuery
 
   def results
     return @results if defined?(@results)
-    return @results = Video.order(updated_at: :desc, synced_on: :desc).page(page) if query.blank?
+    return @results = Video.order(updated_at: :desc, synced_on: :desc).includes(:video_blobs).page(page) if query.blank?
 
     @results = Results.new the_movie_db_ids.map { |db|
                              find_video(**db) || build_video(**db)
@@ -34,10 +34,9 @@ class VideoSearchQuery
   end
 
   def video_results
-    video_results = search.results.select do |r|
+    search.results.select do |r|
       VIDEOS_MEDIA_TYPE.include?(r.media_type)
     end
-    video_results.reverse
   end
 
   def find_video(id: nil, type: nil)
@@ -45,7 +44,8 @@ class VideoSearchQuery
   end
 
   def videos
-    @videos ||= VideosQuery.new(types_and_ids: the_movie_db_ids).relation.load
+    @videos ||= VideosQuery.new(types_and_ids: the_movie_db_ids)
+                           .relation.includes(:video_blobs).load
   end
 
   def build_video(id: nil, type: nil)
