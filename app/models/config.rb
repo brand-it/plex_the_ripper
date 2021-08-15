@@ -11,7 +11,6 @@
 #  updated_at :datetime         not null
 #
 class Config < ApplicationRecord
-  scope :newest, -> { order(updated_at: :desc) }
   class << self
     def setting(&block)
       return @setting unless block_given?
@@ -21,6 +20,12 @@ class Config < ApplicationRecord
         define_method("settings_#{name}") { settings[name] }
         define_method("settings_#{name}=") { |val| self.settings = { "#{name}": val } }
       end
+    end
+
+    def newest
+      Rails.cache.fetch(:"#{model_name.param_key}_newest", expires_in: 2.seconds, skip_nil: true) do
+        order(updated_at: :desc).first
+      end || new
     end
   end
 
