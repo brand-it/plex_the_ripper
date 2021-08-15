@@ -15,8 +15,14 @@ RSpec.describe TheMovieDb::MovieUpdateService, type: :service do
       expect { call }.to change(movie, :synced_on).from(nil)
     end
 
-    it 'updates the the title' do
+    it 'updates the title' do
       expect { call }.to change(movie, :title).from(movie.title).to(new_description_class.db_movie[:title])
+    end
+
+    it 'update popularity' do
+      expect { call }.to(
+        change(movie, :popularity).from(movie.popularity).to(new_description_class.db_movie[:popularity])
+      )
     end
 
     it 'transforms runtime to movie_runtime' do

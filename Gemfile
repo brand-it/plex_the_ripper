@@ -40,6 +40,7 @@ group :development, :test do
   gem 'rspec-github', require: false
   gem 'rspec-rails'
   gem 'rubocop'
+  gem 'rubocop-discourse'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
   gem 'shoulda-matchers'

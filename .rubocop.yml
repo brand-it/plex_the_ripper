@@ -10,7 +10,7 @@ Style/MixinUsage:
     - 'Rakefile'
 
 AllCops:
-  TargetRubyVersion: 2.7.0
+  TargetRubyVersion: 2.7
   NewCops: enable
   UseCache: true
   Exclude:

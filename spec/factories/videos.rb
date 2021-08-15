@@ -11,6 +11,7 @@
 #  movie_runtime                :integer
 #  original_title               :string
 #  overview                     :string
+#  popularity                   :float
 #  poster_path                  :string
 #  release_date                 :date
 #  synced_on                    :datetime

@@ -3,7 +3,9 @@
 class TheMovieDbsController < ApplicationController
   helper_method :search_service
 
-  def index; end
+  def index
+    ScanPlexWorker.perform_async if search_service.results.empty?
+  end
 
   def next_page
     respond_to do |format|

@@ -101,6 +101,7 @@ ActiveRecord::Schema.define(version: 2021_08_15_003939) do
     t.text "metadata"
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
+    t.boolean "optimized", default: false, null: false
     t.string "video_type"
     t.integer "video_id"
     t.datetime "created_at", precision: 6, null: false
@@ -119,6 +120,7 @@ ActiveRecord::Schema.define(version: 2021_08_15_003939) do
     t.string "episode_distribution_runtime"
     t.integer "the_movie_db_id"
     t.integer "movie_runtime"
+    t.float "popularity"
     t.date "release_date"
     t.date "episode_first_air_date"
     t.datetime "synced_on"
