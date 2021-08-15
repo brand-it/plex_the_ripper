@@ -37,7 +37,7 @@ class VideoBlob < ApplicationRecord
   def parsed_filename
     @parsed_filename ||= begin
       match = filename.match(MOVIE_MATCHER_WITH_YEAR) || filename.match(MOVIE_MATCHER)
-      OpenStruct.new(match.names.to_h { |name| [name, match[name]] })
+      OpenStruct.new(match.names.index_with { |name| match[name] })
     end
   end
 end

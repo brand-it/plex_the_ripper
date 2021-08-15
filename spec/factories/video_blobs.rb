@@ -25,5 +25,8 @@ FactoryBot.define do
   factory :video_blob do
     filename { 'Back to the Future Part III.mkv' }
     key { 'error-incidunt/omnis_eos/perferendis-iure/Back to the Future Part III.mkv' }
+    service_name { :ftp }
+    content_type { 'video/x-matroska' }
+    byte_size { 123_456_789 }
   end
 end
