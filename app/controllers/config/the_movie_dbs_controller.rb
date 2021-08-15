@@ -27,7 +27,7 @@ class Config
     private
 
     def set_the_movie_db
-      @config_the_movie_db = Config::TheMovieDb.newest.first
+      @config_the_movie_db = Config::TheMovieDb.newest
     end
 
     def the_movie_db_params

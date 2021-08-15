@@ -15,24 +15,26 @@ module Ftp
     end
 
     def collect_mkv_files(path)
-      videos = ftp.mlsd(path).flat_map do |entry|
+      ftp.mlsd(path).flat_map do |entry|
         next collect_mkv_files([path, entry.pathname].join('/')) if entry.type == 'dir'
 
         build_video(path, entry)
-      end
-      videos.compact.sort_by { |c| c[:file_name] }
+      end.compact.sort_by(&:filename)
     end
 
     def build_video(path, entry)
       return unless entry.pathname.end_with?('.mkv')
 
-      Rails.logger.info("Found #{safe_encode([path, entry.pathname].join('/'))}")
-      { path: safe_encode(path), file_name: safe_encode(entry.pathname) }
+      key = [path, entry.pathname].join('/')
+      VideoBlob.find_or_initialize_by(key: safe_encode(key), service_name: :ftp).tap do |video_blob|
+        video_blob.update! filename: safe_encode(entry.pathname),
+                           content_type: 'video/x-matroska',
+                           byte_size: entry.size
+      end
     end
 
     def safe_encode(string)
-      string.force_encoding('ASCII-8BIT')
-            .encode('UTF-8', invalid: :replace, undef: :replace, replace: '')
+      string.force_encoding(Encoding::UTF_8)
     end
   end
 end
