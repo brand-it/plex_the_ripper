@@ -20,13 +20,13 @@ module Ftp
     def ftp_destroy_if_file_exists
       ftp.delete(disk_title.video.plex_path)
     rescue Net::FTPPermError => e
-      Rails.logger.debug("Net::FTPPermError #{__method__} #{e.message}")
+      Rails.logger.debug { "Net::FTPPermError #{__method__} #{e.message}" }
     end
 
     def ftp_create_directory
       ftp.mkdir(disk_title.video.plex_path.dirname)
     rescue Net::FTPPermError => e
-      Rails.logger.debug("Net::FTPPermError #{__method__} #{e.message}")
+      Rails.logger.debug { "Net::FTPPermError #{__method__} #{e.message}" }
     end
 
     def ftp_upload_file

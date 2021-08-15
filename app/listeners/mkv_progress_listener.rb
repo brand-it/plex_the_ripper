@@ -46,7 +46,7 @@ class MkvProgressListener
       model: DiskTitle,
       completed: completed, status: :info, message: title
     )
-    Rails.logger.debug("ProgressNotification completed #{component.dom_id} #{title} #{completed}")
+    Rails.logger.debug { "ProgressNotification completed #{component.dom_id} #{title} #{completed}" }
     cable_ready[DiskTitleChannel.channel_name].morph(
       selector: "##{component.dom_id}",
       html: render(component, layout: false)

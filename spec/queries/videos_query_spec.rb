@@ -18,8 +18,8 @@ RSpec.describe VideosQuery do
       end
       let(:expected_sql) do
         "((videos.type = 'Movie' AND videos.the_movie_db_id = 1234) OR "\
-        "(videos.type = 'Movie' AND videos.the_movie_db_id = 5343) OR "\
-        "(videos.type = 'Tv' AND videos.the_movie_db_id = 4423)"
+          "(videos.type = 'Movie' AND videos.the_movie_db_id = 5343) OR "\
+          "(videos.type = 'Tv' AND videos.the_movie_db_id = 4423)"
       end
 
       it 'joins them together with or statement' do
