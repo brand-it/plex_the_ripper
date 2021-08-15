@@ -52,7 +52,7 @@ class DiskInfoService
     27 => :file_name
   }.freeze
 
-  option :config_make_mkv, Types.Instance(Config::MakeMkv), default: proc { Config::MakeMkv.newest.first }
+  option :config_make_mkv, Types.Instance(Config::MakeMkv), default: proc { Config::MakeMkv.newest }
   option :disk_name, Types::String
 
   def results

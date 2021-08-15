@@ -26,7 +26,7 @@ module Ftp
     def build_video(path, entry)
       return unless entry.pathname.end_with?('.mkv')
 
-      Rails.logger.info("Found #{safe_encode([path, entry.pathname].join('/'))}")
+      Rails.logger.debug("Found #{safe_encode([path, entry.pathname].join('/'))}")
       { path: safe_encode(path), file_name: safe_encode(entry.pathname) }
     end
 

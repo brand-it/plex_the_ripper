@@ -34,10 +34,9 @@ class VideoSearchQuery
   end
 
   def video_results
-    video_results = search.results.select do |r|
+    search.results.select do |r|
       VIDEOS_MEDIA_TYPE.include?(r.media_type)
     end
-    video_results.reverse
   end
 
   def find_video(id: nil, type: nil)

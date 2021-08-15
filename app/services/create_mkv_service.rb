@@ -60,6 +60,6 @@ class CreateMkvService
   end
 
   def config
-    @config ||= Config::MakeMkv.newest.first
+    @config ||= Config::MakeMkv.newest
   end
 end
