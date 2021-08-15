@@ -120,6 +120,7 @@ ActiveRecord::Schema.define(version: 2021_08_15_003939) do
     t.string "episode_distribution_runtime"
     t.integer "the_movie_db_id"
     t.integer "movie_runtime"
+    t.float "popularity"
     t.date "release_date"
     t.date "episode_first_air_date"
     t.datetime "synced_on"

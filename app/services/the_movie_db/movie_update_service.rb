@@ -5,12 +5,13 @@ module TheMovieDb
     extend Dry::Initializer
 
     PERMITTED_PARAMS = %i[
-      title
-      original_title
-      release_date
-      poster_path
       backdrop_path
+      original_title
       overview
+      popularity
+      poster_path
+      release_date
+      title
     ].freeze
 
     param :movie, Types.Instance(::Movie)

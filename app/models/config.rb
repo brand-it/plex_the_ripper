@@ -11,6 +11,7 @@
 #  updated_at :datetime         not null
 #
 class Config < ApplicationRecord
+  after_commit :clear_rails_cache
   class << self
     def setting(&block)
       return @setting unless block_given?
@@ -23,7 +24,7 @@ class Config < ApplicationRecord
     end
 
     def newest
-      Rails.cache.fetch(:"#{model_name.param_key}_newest", expires_in: 2.seconds, skip_nil: true) do
+      Rails.cache.fetch(:"#{model_name.param_key}_newest", skip_nil: true) do
         order(updated_at: :desc).first
       end || new
     end
@@ -35,5 +36,9 @@ class Config < ApplicationRecord
 
   def settings=(hash)
     super(self.class.setting.dump(self, settings.to_h.with_indifferent_access.merge(hash)))
+  end
+
+  def clear_rails_cache
+    Rails.cache.delete(:"#{self.class.model_name.param_key}_newest")
   end
 end
