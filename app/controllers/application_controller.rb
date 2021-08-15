@@ -46,18 +46,18 @@ class ApplicationController < ActionController::Base
   def plex_config
     return @plex_config if defined? @plex_config
 
-    @plex_config = Config::Plex.newest.first
+    @plex_config = Config::Plex.newest
   end
 
   def movie_db_config
     return @movie_db_config if defined? @movie_db_config
 
-    @movie_db_config = Config::TheMovieDb.newest.first
+    @movie_db_config = Config::TheMovieDb.newest
   end
 
   def mkv_config
     return @mkv_config if defined? @mkv_config
 
-    @mkv_config = Config::MakeMkv.newest.first
+    @mkv_config = Config::MakeMkv.newest
   end
 end

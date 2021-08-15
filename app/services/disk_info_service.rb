@@ -7,7 +7,7 @@ class DiskInfoService
 
   class TitleInfo
     extend Dry::Initializer
-    attr_writer :duration, :size, :file_name
+    attr_writer :duration, :size, :filename
 
     SIZE_REGEX = /(?<number>\d.*.\d) (?<unit>.*)$/.freeze
     UNITS_ORDER = %w[GB MB KB B].freeze
@@ -15,7 +15,7 @@ class DiskInfoService
     param :id, Types::Coercible::Integer
     option :duration, Types::Coercible::String, optional: true
     option :size, Types::Coercible::String, optional: true
-    option :file_name, Types::Coercible::String, optional: true
+    option :filename, Types::Coercible::String, optional: true
 
     def duration_seconds
       hours, minutes, seconds = duration.split(':')
@@ -49,10 +49,10 @@ class DiskInfoService
   CODE_LEGEND = {
     9 => :duration,
     10 => :size,
-    27 => :file_name
+    27 => :filename
   }.freeze
 
-  option :config_make_mkv, Types.Instance(Config::MakeMkv), default: proc { Config::MakeMkv.newest.first }
+  option :config_make_mkv, Types.Instance(Config::MakeMkv), default: proc { Config::MakeMkv.newest }
   option :disk_name, Types::String
 
   def results
