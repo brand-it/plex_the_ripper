@@ -44,7 +44,7 @@ class Movie < Video
   def plex_path
     raise 'plex config is missing and is required' unless Config::Plex.any?
 
-    @plex_path ||= Pathname.new("#{Config::Plex.newest.first.settings_movie_path}/#{plex_name}/#{plex_name}.mkv")
+    @plex_path ||= Pathname.new("#{Config::Plex.newest.settings_movie_path}/#{plex_name}/#{plex_name}.mkv")
   end
 
   def tmp_plex_path

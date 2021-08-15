@@ -19,10 +19,6 @@ class Config
     validates :settings_makemkvcon_path, presence: true
     validate :makemkvcon_path_executable
 
-    def self.current
-      newest.first || raise(ActiveRecord::RecordNotFound, 'Could not find current Config::MakeMkv')
-    end
-
     private
 
     def makemkvcon_path_executable
