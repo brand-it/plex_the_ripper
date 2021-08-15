@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_07_015106) do
+ActiveRecord::Schema.define(version: 2021_08_15_003939) do
 
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
@@ -92,6 +92,21 @@ ActiveRecord::Schema.define(version: 2020_09_07_015106) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["config_type", "config_id"], name: "index_users_on_config_type_and_config_id"
+  end
+
+  create_table "video_blobs", force: :cascade do |t|
+    t.string "key", null: false
+    t.string "filename", null: false
+    t.string "content_type", null: false
+    t.text "metadata"
+    t.string "service_name", null: false
+    t.bigint "byte_size", null: false
+    t.string "video_type"
+    t.integer "video_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["key", "service_name"], name: "index_video_blobs_on_key_and_service_name", unique: true
+    t.index ["video_type", "video_id"], name: "index_video_blobs_on_video"
   end
 
   create_table "videos", force: :cascade do |t|

@@ -30,7 +30,7 @@ class Video < ApplicationRecord
   include Wisper::Publisher
 
   belongs_to :disk_title, optional: true
-
+  has_many :video_blobs, dependent: :destroy
   class << self
     def find_video(id)
       id.nil? ? find(id) : (find_by(the_movie_db_id: id) || find(id))
