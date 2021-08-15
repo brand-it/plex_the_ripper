@@ -69,7 +69,7 @@ GEM
     attr_extras (6.2.4)
     awesome_print (1.9.2)
     bindex (0.8.1)
-    bootsnap (1.7.5)
+    bootsnap (1.7.7)
       msgpack (~> 1.0)
     builder (3.2.4)
     cable_ready (4.5.0)
@@ -320,7 +320,7 @@ GEM
       attr_extras (>= 6.2.4)
       diff-lcs
       patience_diff
-    sys-filesystem (1.4.1)
+    sys-filesystem (1.4.2)
       ffi (~> 1.1)
     text (1.3.1)
     thor (1.1.0)
