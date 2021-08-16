@@ -26,6 +26,7 @@ module Ftp
       return unless entry.pathname.end_with?('.mkv') || entry.pathname.end_with?('.mp4')
 
       key = [path, entry.pathname].join('/')
+      Rails.logger.debug { "Building #{key}" }
       VideoBlob.find_or_initialize_by(key: safe_encode(key), service_name: :ftp).tap do |video_blob|
         video_blob.update! filename: safe_encode(entry.pathname),
                            content_type: content_type(entry),

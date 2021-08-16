@@ -10,7 +10,7 @@ class VideoSearchQuery
 
   def results
     return @results if defined?(@results)
-    return @results = Video.order(updated_at: :desc, synced_on: :desc).includes(:video_blobs).page(page) if query.blank?
+    return @results = Video.order(popularity: :desc).includes(:video_blobs).page(page) if query.blank?
 
     @results = Results.new the_movie_db_ids.map { |db|
                              find_video(**db) || build_video(**db)
