@@ -4,7 +4,7 @@ class TheMovieDbsController < ApplicationController
   helper_method :search_service
 
   def index
-    ScanPlexWorker.perform_async if Video.maximum(:synced_on) < 20.minutes.ago
+    ScanPlexWorker.perform_async if Video.none? || Video.maximum(:synced_on) < 20.minutes.ago
   end
 
   def next_page

@@ -8,6 +8,7 @@ class CreateVideoBlobs < ActiveRecord::Migration[6.1]
       t.string     :service_name, null: false
       t.bigint     :byte_size,    null: false
       t.boolean    :optimized,    null: false, default: false
+      t.text       :checksum
       t.references :video,        polymorphic: true, index: true
 
       t.timestamps
