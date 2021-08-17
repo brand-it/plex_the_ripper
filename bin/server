@@ -8,4 +8,4 @@ if [ ! -f "tmp/setup_complete" ]; then
   bin/install_ruby
   bin/setup --path tmp/gems --deployment
 fi
-bin/rails s -e production
+bin/rails s -e production -b 0.0.0.0

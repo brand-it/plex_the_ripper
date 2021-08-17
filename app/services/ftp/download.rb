@@ -12,11 +12,9 @@ module Ftp
       return if File.exist?("#{directory}/#{video_blob.filename}")
 
       ftp.getbinaryfile(video_blob.key, "#{directory}/#{video_blob.filename}") do |chunk|
-        begin
-          progress_listener.call(video_blob, chunk.size)
-        rescue StandardError => e
-          Rails.logger.error e.message
-        end
+        progress_listener.call(video_blob, chunk.size)
+      rescue StandardError => e
+        Rails.logger.error e.message
       end
     end
   end
