@@ -198,6 +198,7 @@ GEM
       ast (~> 2.4.1)
     patience_diff (1.2.0)
       optimist (~> 3.0)
+    progressbar (1.11.0)
     pry (0.14.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -389,6 +390,7 @@ DEPENDENCIES
   kaminari (>= 1.2.1)
   listen
   os (>= 1.1)
+  progressbar (~> 1.11)
   pry
   puma (>= 4.1)
   rails (~> 6.1.4)

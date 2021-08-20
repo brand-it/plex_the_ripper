@@ -1,14 +1,13 @@
-class CreateMkvProgresses < ActiveRecord::Migration[6.0]
+class CreateProgresses < ActiveRecord::Migration[6.0]
   def change
-    create_table :mkv_progresses do |t|
-      t.string :name
+    create_table :progresses do |t|
+      t.string :key
       t.float :percentage
+      t.string :descriptive, null: false
       t.datetime :completed_at
       t.datetime :failed_at
       t.text :message
 
-      t.references :disk_title
-      t.references :disk
       t.references :progressable, polymorphic: true
       t.timestamps
     end
