@@ -34,3 +34,4 @@ module PlexRipper
     config.faraday_logging = ENV['FARADAY_LOGGING'] == 'true'
   end
 end
+

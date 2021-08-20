@@ -23,5 +23,13 @@ class Config
 
     validates :settings_movie_path, presence: true
     validates :settings_tv_path, presence: true
+
+    def movie_path
+      settings_movie_path.delete_suffix('/')
+    end
+
+    def tv_path
+      settings_tv_path.delete_suffix('/')
+    end
   end
 end

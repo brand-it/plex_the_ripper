@@ -23,11 +23,15 @@ module Ftp
     private
 
     def host
-      plex_config.settings_ftp_host || raise("#{plex_config.class} is missing host")
+      plex_config.settings_ftp_host || raise(
+        TheMovieDb::InvalidConfig, "#{plex_config.class} is missing host"
+      )
     end
 
     def username
-      plex_config.settings_ftp_username || raise("#{plex_config.class} is missing a username")
+      plex_config.settings_ftp_username || raise(
+        TheMovieDb::InvalidConfig, "#{plex_config.class} is missing a username"
+      )
     end
   end
 end
