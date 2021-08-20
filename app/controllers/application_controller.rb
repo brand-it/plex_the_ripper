@@ -29,17 +29,17 @@ class ApplicationController < ActionController::Base
   end
 
   def modify_config_the_movie_db_path
-    movie_db_config ? edit_config_the_movie_db_path : new_config_the_movie_db_path
+    movie_db_config.persisted? ? edit_config_the_movie_db_path : new_config_the_movie_db_path
   end
   helper_method :modify_config_the_movie_db_path
 
   def modify_config_plex_path
-    plex_config ? edit_config_plex_path : new_config_plex_path
+    plex_config.persisted? ? edit_config_plex_path : new_config_plex_path
   end
   helper_method :modify_config_plex_path
 
   def modify_config_make_mkv_path
-    mkv_config ? edit_config_make_mkv_path : new_config_make_mkv_path
+    mkv_config.persisted? ? edit_config_make_mkv_path : new_config_make_mkv_path
   end
   helper_method :modify_config_make_mkv_path
 

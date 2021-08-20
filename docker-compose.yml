@@ -1,0 +1,15 @@
+version: "3.5"
+services:
+  app:
+    build: .
+    mem_limit: 512M
+    ports:
+      - 3000:3000
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/plex_the_ripper
+      - node_modules:/plex_the_ripper/node_modules
+
+volumes:
+  node_modules:
