@@ -38,7 +38,15 @@ class VideoBlob < ApplicationRecord
   def parsed_filename
     @parsed_filename ||= begin
       match = filename.match(MOVIE_MATCHER_WITH_YEAR) || filename.match(MOVIE_MATCHER)
-      OpenStruct.new(match.names.index_with { |name| match[name] })
+      OpenStruct.new(match.names.index_with { |n| match[n] })
+    end
+  end
+
+  def parsed_dirname
+    @parsed_dirname ||= begin
+      name = key.gsub("#{Config::Plex.newest.movie_path}/", '').split('/').first.to_s
+      match = name.match(MOVIE_MATCHER_WITH_YEAR) || name.match(MOVIE_MATCHER)
+      OpenStruct.new(match&.names&.index_with { |n| match[n] })
     end
   end
 end
