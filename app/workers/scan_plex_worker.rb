@@ -9,7 +9,7 @@ class ScanPlexWorker < ApplicationWorker
 
   private
 
-  def search_for_movie(blob) # rubocop:disable Metrics/AbcSize Metrics/CyclomaticComplexity Metrics/PerceivedComplexity
+  def search_for_movie(blob) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     options = { query: blob.parsed_dirname.title, year: blob.parsed_dirname.year }.compact
     dirname = TheMovieDb::Search::Movie.new(options) if options[:query].present?
 
