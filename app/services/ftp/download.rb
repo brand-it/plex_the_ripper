@@ -6,17 +6,29 @@ module Ftp
     option :video_blob, Types.Instance(VideoBlob)
     option :directory, Types::String
     option :progress_listener, Types.Interface(:call), optional: true
+    option :max_retries, Types::Integer, default: -> { 5 }
 
     def call
       raise "could not find #{directory}" unless Dir.exist? directory
       return Result.new(progress, download_valid?, destination_path) if progress.completed?
 
-      download
+      try { download }
 
       Result.new(progress, download_valid?, destination_path)
     end
 
     private
+
+    def try
+      @attempts ||= 0
+      yield
+    rescue Net::ReadTimeout => e
+      raise e if @attempts >= max_retries
+
+      Rails.logger.error e.message
+      sleep(1 * @attempts)
+      retry
+    end
 
     def progress
       @progress ||= Progress.find_or_create_by(

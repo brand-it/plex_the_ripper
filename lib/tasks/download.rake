@@ -18,7 +18,8 @@ namespace :download do
       result = Ftp::Download.new(
         video_blob: video_blob,
         directory: args[:directory],
-        progress_listener: listener
+        progress_listener: listener,
+        max_retries: 50
       ).call
       track_progress.finish
 
