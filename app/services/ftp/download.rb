@@ -5,18 +5,30 @@ module Ftp
     extend Dry::Initializer
     option :video_blob, Types.Instance(VideoBlob)
     option :directory, Types::String
-    option :progress_listener, Types.Interface(:call)
+    option :progress_listener, Types.Interface(:call), optional: true
+    option :max_retries, Types::Integer, default: -> { 5 }
 
     def call
       raise "could not find #{directory}" unless Dir.exist? directory
-      return Result.new(progress, download_valid?) if progress.completed?
+      return Result.new(progress, download_valid?, destination_path) if progress.completed?
 
-      download
+      try { download }
 
-      Result.new(progress, download_valid?)
+      Result.new(progress, download_valid?, destination_path)
     end
 
     private
+
+    def try
+      @attempts ||= 0
+      yield
+    rescue Net::ReadTimeout => e
+      raise e if @attempts >= max_retries
+
+      Rails.logger.error e.message
+      sleep(1 * @attempts)
+      retry
+    end
 
     def progress
       @progress ||= Progress.find_or_create_by(
@@ -40,9 +52,15 @@ module Ftp
     end
 
     def download_valid?
-      File.size?(destination_path) == video_blob.byte_size
+      File.size?(destination_path) == video_blob.byte_size && validate_checksum?
     end
 
-    Result = Struct.new(:progress, :success?)
+    def validate_checksum?
+      return true if video_blob.checksum.blank?
+
+      video_blob.checksum == ChecksumService.call(io: File.new(destination_path))
+    end
+
+    Result = Struct.new(:progress, :success?, :destination_path)
   end
 end

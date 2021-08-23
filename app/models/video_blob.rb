@@ -6,6 +6,7 @@
 #
 #  id           :integer          not null, primary key
 #  byte_size    :bigint           not null
+#  checksum     :text
 #  content_type :string           not null
 #  filename     :string           not null
 #  key          :string           not null

@@ -99,6 +99,7 @@ ActiveRecord::Schema.define(version: 2021_08_15_003939) do
     t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.boolean "optimized", default: false, null: false
+    t.text "checksum"
     t.string "video_type"
     t.integer "video_id"
     t.datetime "created_at", precision: 6, null: false
