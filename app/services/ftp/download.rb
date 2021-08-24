@@ -22,7 +22,7 @@ module Ftp
     def try
       @attempts ||= 0
       yield
-    rescue Net::ReadTimeout => e
+    rescue Net::ReadTimeout, Errno::ECONNRESET => e
       raise e if @attempts >= max_retries
 
       Rails.logger.error e.message
