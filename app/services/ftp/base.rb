@@ -20,6 +20,10 @@ module Ftp
       }
     end
 
+    def reset_connection!
+      @ftp = nil
+    end
+
     private
 
     def host
