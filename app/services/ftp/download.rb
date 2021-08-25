@@ -25,6 +25,7 @@ module Ftp
     rescue Net::ReadTimeout, Errno::ECONNRESET => e
       raise e if @attempts >= max_retries
 
+      reset_connection!
       Rails.logger.error e.message
       sleep(1 * @attempts)
       retry
