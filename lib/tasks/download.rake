@@ -62,6 +62,8 @@ namespace :download do
       ).call
 
       puts "Generated checksum #{video_blob.checksum}"
+      puts "Total Finished: #{VideoBlob.where.not(checksum: nil).count}"
+      puts "Total Remaining: #{VideoBlob.where(checksum: nil).count}"
     end
   end
 end
