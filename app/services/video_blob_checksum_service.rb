@@ -6,18 +6,41 @@ class VideoBlobChecksumService
 
   option :video_blob, Types.Instance(VideoBlob)
   option :progress_listener, Types.Interface(:call), optional: true
+  option :download_finished_listener, Types.Interface(:call), optional: true
+  option :max_download_retries, default: -> { 5 }
+
+  def self.call(*args)
+    new(*args).call
+  end
 
   def call
-    FileUtils.mkdir_p(TEMP_DIRECTORY) unless Dir.exist? TEMP_DIRECTORY
-    result = Ftp::Download.new(
-      video_blob: video_blob,
-      directory: TEMP_DIRECTORY,
-      progress_listener: progress_listener
-    ).call
-    raise 'failed to download file' unless result.success?
+    create_tmp_directory
+    download_finished_listener&.call(result: download)
+    return unless download.success?
 
-    video_blob.update!(checksum: ChecksumService.call(io: File.new(result.destination_path)))
+    video_blob.update!(
+      checksum: ChecksumService.call(io: File.new(download.destination_path))
+    )
   ensure
     FileUtils.rm_rf(TEMP_DIRECTORY)
+  end
+
+  private
+
+  def download
+    return @download if defined?(@download)
+
+    @download = Ftp::Download.call(
+      video_blob: video_blob,
+      destination_directory: TEMP_DIRECTORY,
+      progress_listener: progress_listener,
+      max_retries: max_download_retries
+    )
+  end
+
+  def create_tmp_directory
+    return if Dir.exist? TEMP_DIRECTORY
+
+    FileUtils.mkdir_p(TEMP_DIRECTORY)
   end
 end
