@@ -4,31 +4,26 @@ module Ftp
   class Download < Base
     extend Dry::Initializer
     option :video_blob, Types.Instance(VideoBlob)
-    option :directory, Types::String
+    option :destination_directory, Types::String
     option :progress_listener, Types.Interface(:call), optional: true
     option :max_retries, Types::Integer, default: -> { 5 }
 
     def call
-      raise "could not find #{directory}" unless Dir.exist? directory
+      validate_destination_directory!
       return Result.new(progress, download_valid?, destination_path) if progress.completed?
 
-      try { download }
+      progress_listener&.call(chunk_size: destination_file_size)
+      try_to { download }
 
       Result.new(progress, download_valid?, destination_path)
     end
 
     private
 
-    def try
-      @attempts ||= 0
-      yield
-    rescue Net::ReadTimeout, Errno::ECONNRESET => e
-      raise e if @attempts >= max_retries
+    def validate_destination_directory!
+      return if Dir.exist? destination_directory
 
-      reset_connection!
-      Rails.logger.error e.message
-      sleep(1 * @attempts)
-      retry
+      raise "could not find #{destination_directory}"
     end
 
     def progress
@@ -42,24 +37,25 @@ module Ftp
     def download
       ftp.resume = true
       ftp.getbinaryfile(video_blob.key, destination_path) do |chunk|
-        progress_listener.call(video_blob, chunk.size)
-      rescue StandardError => e
-        Rails.logger.error e.message
+        progress_listener&.call(chunk_size: chunk.size)
       end
     end
 
     def destination_path
-      @destination_path ||= "#{directory}/#{video_blob.filename}"
+      @destination_path ||= "#{destination_directory}/#{video_blob.filename}"
     end
 
     def download_valid?
-      File.size?(destination_path) == video_blob.byte_size && validate_checksum?
+      destination_file_size == video_blob.byte_size && validate_checksum?
+    end
+
+    def destination_file_size
+      File.size?(destination_path) || 0
     end
 
     def validate_checksum?
-      return true if video_blob.checksum.blank?
-
-      video_blob.checksum == ChecksumService.call(io: File.new(destination_path))
+      video_blob.checksum.blank? ||
+        video_blob.checksum == ChecksumService.call(io: File.new(destination_path))
     end
 
     Result = Struct.new(:progress, :success?, :destination_path)

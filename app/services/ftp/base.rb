@@ -4,6 +4,19 @@ require 'net/ftp'
 
 module Ftp
   class Base
+    extend Dry::Initializer
+    option :plex_config, default: -> { Config::Plex.newest }
+
+    def self.call(*args)
+      new(*args).call
+    end
+
+    def call
+      raise "sub class #{class_name} needs to define method #call"
+    end
+
+    private
+
     def ftp
       @ftp ||= Net::FTP.new(host, ftp_options)
     end
@@ -24,7 +37,18 @@ module Ftp
       @ftp = nil
     end
 
-    private
+    # TODO: the rescue needs to be configurlable
+    def try_to(rescue_from = [Net::ReadTimeout, Errno::ECONNRESET, Errno::ENETUNREACH])
+      @attempts ||= 0
+      yield
+    rescue *rescue_from => e
+      raise e if @attempts >= max_retries
+
+      reset_connection!
+      Rails.logger.error e.message
+      sleep(1 * @attempts)
+      retry
+    end
 
     def host
       plex_config.settings_ftp_host || raise(
