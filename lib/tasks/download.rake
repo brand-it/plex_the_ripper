@@ -45,13 +45,22 @@ namespace :download do
         total: video_blob.byte_size,
         format: '%t %a %e %P% Processed: %c from %C'
       )
-      listener = ->(_video_blob, chunk_size) { track_progress.progress += chunk_size }
+      progress_listener = ->(chunk_size: 0) { track_progress.progress += chunk_size }
+      download_finished_listener = lambda do |result: nil|
+        track_progress.finish
+        if result.success?
+          puts "Finished downloading '#{video_blob.filename}'"
+        else
+          puts "Failed to download '#{video_blob.filename}"
+        end
+      end
 
       VideoBlobChecksumService.new(
         video_blob: video_blob,
-        progress_listener: listener
+        progress_listener: progress_listener,
+        download_finished_listener: download_finished_listener
       ).call
-      track_progress.finish
+
       puts "Generated checksum #{video_blob.checksum}"
     end
   end
