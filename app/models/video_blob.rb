@@ -36,6 +36,12 @@ class VideoBlob < ApplicationRecord
 
   belongs_to :video, polymorphic: true, optional: true
 
+  has_many :progresses, dependent: :destroy, as: :progressable
+
+  scope :optimized, -> { where(optimized: true) }
+  scope :checksum, -> { where.not(checksum: nil) }
+  scope :missing_checksum, -> { where(checksum: nil) }
+
   def parsed_filename
     @parsed_filename ||= begin
       match = filename.match(MOVIE_MATCHER_WITH_YEAR) || filename.match(MOVIE_MATCHER)

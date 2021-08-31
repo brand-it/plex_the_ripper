@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_15_003939) do
+ActiveRecord::Schema.define(version: 2021_08_31_163348) do
 
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
@@ -58,14 +58,15 @@ ActiveRecord::Schema.define(version: 2021_08_15_003939) do
   create_table "progresses", force: :cascade do |t|
     t.string "key"
     t.float "percentage"
-    t.string "descriptive", null: false
     t.datetime "completed_at"
     t.datetime "failed_at"
     t.text "message"
     t.string "progressable_type"
-    t.bigint "progressable_id"
+    t.integer "progressable_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "attempts", default: 0, null: false
+    t.integer "descriptive", default: 0, null: false
     t.index ["progressable_type", "progressable_id"], name: "index_progresses_on_progressable_type_and_progressable_id"
   end
 
