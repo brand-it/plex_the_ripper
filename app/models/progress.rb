@@ -5,8 +5,9 @@
 # Table name: progresses
 #
 #  id                :integer          not null, primary key
+#  attempts          :integer          default(0), not null
 #  completed_at      :datetime
-#  descriptive       :string           not null
+#  descriptive       :integer          default("download_ftp"), not null
 #  failed_at         :datetime
 #  key               :string
 #  message           :text
@@ -14,7 +15,7 @@
 #  progressable_type :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  progressable_id   :bigint
+#  progressable_id   :integer
 #
 # Indexes
 #
@@ -44,10 +45,10 @@ class Progress < ApplicationRecord
   end
 
   def complete
-    assign_attributes(completed_at: Time.current, failed_at: nil, percentage: 100)
+    assign_attributes(completed_at: Time.current, failed_at: nil, percentage: 100, attempts: attempts + 1)
   end
 
-  def fail
-    assign_attributes(completed_at: nil, failed_at: Time.current, percentage: 0)
+  def fail(message = nil)
+    assign_attributes(completed_at: nil, failed_at: Time.current, message: message, attempts: attempts + 1)
   end
 end
