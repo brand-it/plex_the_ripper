@@ -32,9 +32,11 @@ class Video < ApplicationRecord
 
   belongs_to :disk_title, optional: true
   has_many :video_blobs, dependent: :destroy
+  has_many :optimized_video_blobs, -> { VideoBlob.optimized }, class_name: 'VideoBlob', inverse_of: :video
 
   scope :with_video_blobs, -> { includes(:video_blobs).where.not(video_blobs: { id: nil }) }
-  scope :with_video_blobs_optimized, -> { includes(:video_blobs).where(video_blobs: { optimized: true }) }
+  scope :optimized, -> { includes(:optimized_video_blobs).where.not(video_blobs: { id: nil }) }
+  scope :optimized_with_checksum, -> { optimized.merge(VideoBlob.checksum) }
   class << self
     def find_video(id)
       id.nil? ? find(id) : (find_by(the_movie_db_id: id) || find(id))

@@ -5,8 +5,9 @@
 # Table name: progresses
 #
 #  id                :integer          not null, primary key
+#  attempts          :integer          default(0), not null
 #  completed_at      :datetime
-#  descriptive       :string           not null
+#  descriptive       :integer          default("download_ftp"), not null
 #  failed_at         :datetime
 #  key               :string
 #  message           :text
@@ -14,7 +15,7 @@
 #  progressable_type :string
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
-#  progressable_id   :bigint
+#  progressable_id   :integer
 #
 # Indexes
 #

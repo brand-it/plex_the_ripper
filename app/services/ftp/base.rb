@@ -7,12 +7,15 @@ module Ftp
     extend Dry::Initializer
     option :plex_config, default: -> { Config::Plex.newest }
 
+    DEFAULT_RESCUES = [
+      Errno::ECONNRESET,
+      Errno::EINVAL,
+      Errno::ENETUNREACH,
+      Net::ReadTimeout
+    ].freeze
+
     def self.call(*args)
       new(*args).call
-    end
-
-    def call
-      raise "sub class #{class_name} needs to define method #call"
     end
 
     private
@@ -33,18 +36,13 @@ module Ftp
       }
     end
 
-    def reset_connection!
-      @ftp = nil
-    end
-
     # TODO: the rescue needs to be configurlable
-    def try_to(rescue_from = [Net::ReadTimeout, Errno::ECONNRESET, Errno::ENETUNREACH])
+    def try_to(rescue_from = DEFAULT_RESCUES)
       @attempts ||= 0
       yield
     rescue *rescue_from => e
       raise e if @attempts >= max_retries
 
-      reset_connection!
       Rails.logger.error e.message
       sleep(1 * @attempts)
       retry
