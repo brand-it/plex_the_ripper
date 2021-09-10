@@ -277,7 +277,7 @@ GEM
     rubocop-discourse (2.4.2)
       rubocop (>= 1.1.0)
       rubocop-rspec (>= 2.0.0)
-    rubocop-rails (2.11.3)
+    rubocop-rails (2.12.1)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
