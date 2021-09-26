@@ -24,6 +24,10 @@ class Config
     validates :settings_movie_path, presence: true
     validates :settings_tv_path, presence: true
 
+    def settings=(hash)
+      super(hash.reject{ _2.blank? })
+    end
+
     def movie_path
       settings_movie_path.delete_suffix('/')
     end

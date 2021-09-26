@@ -13,6 +13,7 @@
 #  overview                     :string
 #  popularity                   :float
 #  poster_path                  :string
+#  rating                       :integer          default("N/A"), not null
 #  release_date                 :date
 #  synced_on                    :datetime
 #  title                        :string
@@ -29,6 +30,8 @@
 #
 class Video < ApplicationRecord
   include Wisper::Publisher
+
+  enum rating: { 'N/A': 0, NR: 1, 'NC-17': 2, R: 3, 'PG-13': 4, PG: 5, G: 6 }
 
   belongs_to :disk_title, optional: true
   has_many :video_blobs, dependent: :destroy
@@ -49,6 +52,14 @@ class Video < ApplicationRecord
 
   def the_movie_db_details
     @the_movie_db_details ||= "TheMovieDb::#{type}".constantize.new(the_movie_db_id).results
+  end
+
+  def release_dates
+    @release_dates ||= "TheMovieDb::#{type}::ReleaseDates".constantize.new(the_movie_db_id).results
+  end
+
+  def ratings
+    @ratings ||= self.class.ratings.keys & release_dates.results.flat_map(&:release_dates).map(&:certification)
   end
 
   def release_or_air_date

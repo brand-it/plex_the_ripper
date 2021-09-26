@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_08_31_163348) do
+ActiveRecord::Schema.define(version: 2021_09_26_205648) do
 
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(version: 2021_08_31_163348) do
     t.bigint "disk_title_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "rating", default: 0, null: false
     t.index ["disk_title_id"], name: "index_videos_on_disk_title_id"
     t.index ["type", "the_movie_db_id"], name: "index_videos_on_type_and_the_movie_db_id", unique: true
   end
