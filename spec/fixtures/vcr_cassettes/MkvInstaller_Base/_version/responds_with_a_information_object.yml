@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v1.3.0
+      - Faraday v1.7.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -19,40 +19,36 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Thu, 15 Apr 2021 17:50:18 GMT
+      - Wed, 13 Oct 2021 17:00:34 GMT
       Content-Type:
       - text/html
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
-      Set-Cookie:
-      - __cfduid=d7ea1e56260d48e4310c5f02351fcbac91618509018; expires=Sat, 15-May-21
-        17:50:18 GMT; path=/; domain=.makemkv.com; HttpOnly; SameSite=Lax
       Last-Modified:
-      - Thu, 18 Mar 2021 15:45:31 GMT
+      - Wed, 07 Jul 2021 22:55:04 GMT
       Cache-Control:
       - max-age=18000
       Expires:
-      - Tue, 13 Apr 2021 20:48:15 GMT
+      - Tue, 12 Oct 2021 19:17:59 GMT
       Cf-Cache-Status:
       - HIT
       Age:
-      - '162182'
-      Cf-Request-Id:
-      - '097840cc4500005f8f00963000000001'
+      - '78214'
       Report-To:
-      - '{"group":"cf-nel","endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report?s=BeglIkf0zBmUevlmCWVG0fjaLwVgnqDn7pMn957fqzgKqN%2FJXdeQMVDPpfekj0ITKOfE63q7%2Fd%2FAfG%2BeSkFnspnmlJrFWNewjsHZ1l2xZogBR5PnsU7Ipgybras%3D"}],"max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=SF%2Fq%2FPOPpEDMapmUvbT26weClQet6afEgmIUlju9TGAVVzWoiEA5PAa55i5npo9pi94dqzrh5%2FldCvJy58pa7PKRGyezkIbR9RtNhKJl%2FdokGQKv7q7EEdcSAG%2BJIiA%2BvqWpCneLzK8xOKTvTg0%3D"}],"group":"cf-nel","max_age":604800}'
       Nel:
-      - '{"max_age":604800,"report_to":"cf-nel"}'
+      - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
       Vary:
       - Accept-Encoding
       Server:
       - cloudflare
       Cf-Ray:
-      - 640703f3aee25f8f-SMF
+      - 69da1ffccabe5f94-SMF
       Alt-Svc:
-      - h3-27=":443"; ma=86400, h3-28=":443"; ma=86400, h3-29=":443"; ma=86400
+      - h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443";
+        ma=86400
     body:
       encoding: ASCII-8BIT
       string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html
@@ -66,19 +62,26 @@ http_interactions:
         id=\"content\">\n<h2>Download MakeMKV beta</h2>\nMakeMKV for Windows and Mac
         OS X is available for download below. MakeMKV for Linux\nis available on the
         <a href='http://www.makemkv.com/forum/viewtopic.php?f=3&t=224'>\nforum page</a>.\n<ul
-        class=\"bullets\">\n<li><a href='/download/Setup_MakeMKV_v1.16.3.exe'>MakeMKV
-        1.16.3 for Windows</a></li>\n<ul class=\"bullets2\">\n<li>Requires Windows
+        class=\"bullets\">\n<li><a href='/download/Setup_MakeMKV_v1.16.4.exe'>MakeMKV
+        1.16.4 for Windows</a></li>\n<ul class=\"bullets2\">\n<li>Requires Windows
         XP or later, x86 or x64.</li>\n</ul>\n</ul>\n<ul class=\"bullets\">\n<li><a
-        href='/download/makemkv_v1.16.3_osx.dmg'>MakeMKV 1.16.3 for Mac OS X</a></li>\n<ul
+        href='/download/makemkv_v1.16.4_osx.dmg'>MakeMKV 1.16.4 for Mac OS X</a></li>\n<ul
         class=\"bullets2\">\n<li>Requires x64 Mac OS X 10.7 or later.<br/><sub>NOTE:
         MakeMKV is not signed by Apple, you might need to <a href=\"https://support.apple.com/kb/ht5290\">adjust
         gatekeeper options</a> in order to install the program.</sub></li>\n</ul>\n<br/>\t\n<li>Files
-        integrity may be checked using <a href='/download/makemkv-sha-1.16.3.txt'>hash
-        file</a></li>\n</ul>\n<h4>Revision history</h4>\n<li>MakeMKV v1.16.3 (18.3.2021
-        )</li>\n<ul class=\"bullets2\">\n<li>Bug fixes:</li>\n<ul class=\"bullets3\">\n<li>Some
-        non-English messages were displayed incorrectly</li>\n<li>Opening DVD in manual
-        mode from GUI was broken in 1.16.0</li>\n<li>Some E-AC3 streams with surround
-        channels were ignored when opening M2TS files</li>\n</ul>\n</ul>\n<li>MakeMKV
+        integrity may be checked using <a href='/download/makemkv-sha-1.16.4.txt'>hash
+        file</a></li>\n</ul>\n<h4>Revision history</h4>\n<li>MakeMKV v1.16.4 (8.7.2021
+        )</li>\n<ul class=\"bullets2\">\n<li>Much better support for discs with Java
+        playlist obfuscation</li>\n<li>Any Java runtime version is now supported,
+        including Java 16</li>\n<li>Mac OS: Support for Mac OS 12.0 Monterey</li>\n<li>Some
+        small improvements</li>\n<li>Bug fixes:</li>\n<ul class=\"bullets3\">\n<li>Program
+        failed to recognize some AAC streams with exotic channel encoding</li>\n<li>Picture
+        dimensions were displayed incorrectly for some exotic HEVC streams</li>\n<li>Conversion
+        of some DVDs could fail at the very end of title</li>\n</ul>\n</ul>\n<li>MakeMKV
+        v1.16.3 (18.3.2021 )</li>\n<ul class=\"bullets2\">\n<li>Bug fixes:</li>\n<ul
+        class=\"bullets3\">\n<li>Some non-English messages were displayed incorrectly</li>\n<li>Opening
+        DVD in manual mode from GUI was broken in 1.16.0</li>\n<li>Some E-AC3 streams
+        with surround channels were ignored when opening M2TS files</li>\n</ul>\n</ul>\n<li>MakeMKV
         v1.16.2 (17.3.2021 )</li>\n<ul class=\"bullets2\">\n<li>Bug fixes:</li>\n<ul
         class=\"bullets3\">\n<li>Mac OS: Program produced random errors when running
         on OS X 10.11 El Captain or earlier versions</li>\n<li>Linux: ccextractor
@@ -147,11 +150,11 @@ http_interactions:
         id=\"sidebar\">\n<ul>\n<li><a href=\"/\">Home</a></li>\n<li><a href=\"/download/\">Download</a></li>\n<li><a
         href=\"/aboutmkv/\">About MKV</a></li>\n<li><a href=\"/onlinehelp/\">Online
         Help</a></li>\n<li><a href=\"/faq/\">F.A.Q.</a></li>\n<li><a href=\"/forum/\">Forum</a></li>\n</ul>\n<div
-        id=\"side_space\"></div>\n<div id=\"d_button\"> <a href='/download/Setup_MakeMKV_v1.16.3.exe'>\n<div
+        id=\"side_space\"></div>\n<div id=\"d_button\"> <a href='/download/Setup_MakeMKV_v1.16.4.exe'>\n<div
         id=\"d_buttonimg\" align=\"center\">Download MakeMKV for Windows</div>\n</a>
         </div>\n<div id=\"d_buttonimg_preload\"></div>\n<div id=\"side_space2\"></div>\n<div
         id=\"logo_softpedia\"><a href='http://www.softpedia.com/progClean/MakeMKV-Clean-117330.html'>\n<div
         id=\"logo_softpediaimg\" align=\"center\"></div>\n</a> </div>\n</div>\n<div
         id=\"footer\">Copyright &#169 2008-2020 GuinpinSoft inc</div>\n</div>\n</body>\n</html>\n"
-  recorded_at: Thu, 15 Apr 2021 17:50:18 GMT
+  recorded_at: Wed, 13 Oct 2021 17:00:34 GMT
 recorded_with: VCR 6.0.0
