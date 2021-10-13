@@ -17,6 +17,7 @@ RSpec.describe TheMovieDb::TvListener do
         'original_title' => 'Stargate SG-1',
         'episode_first_air_date' => Date.parse('1997-07-27'),
         'poster_path' => '/9Jegw0yle4x8jlmLNZon37Os27h.jpg',
+        "rating" => "N/A",
         'backdrop_path' => '/li9SZBpVzJz81ouqifVuH5C7Nod.jpg',
         'episode_distribution_runtime' => [42, 43, 45, 60],
         'movie_runtime' => nil,
