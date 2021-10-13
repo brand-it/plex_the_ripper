@@ -20,7 +20,7 @@ gem 'kaminari', '>= 1.2.1'
 gem 'os', '>= 1.1'
 gem 'progressbar', '~> 1.11'
 gem 'puma', '>= 4.1'
-gem 'rails', '~> 6.1.4'
+gem 'rails', '~> 6.1'
 gem 'rainbow'
 gem 'sass-rails', '>= 6'
 gem 'simple_form'
@@ -68,7 +68,7 @@ group :test do
   gem 'selenium-webdriver'
 
   # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers'
+  gem 'webdrivers', '>= 4.6.1'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
