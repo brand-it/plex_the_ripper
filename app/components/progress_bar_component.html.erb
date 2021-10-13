@@ -4,10 +4,6 @@
     </div>
   </div>
   <div>
-    <% if message %>
-      <%= message %>
-    <% else %>
-      Loading <%= model.model_name.singular %> ... <%= number_to_percentage completed, precision: 0 %>
-    <% end %>
+    Loading <%= message.presence || model.model_name.singular %> ... <%= number_to_percentage completed, precision: 2 %>
   </div>
 </div>

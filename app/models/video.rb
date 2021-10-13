@@ -32,7 +32,9 @@ class Video < ApplicationRecord
 
   belongs_to :disk_title, optional: true
   has_many :video_blobs, dependent: :destroy
-  has_many :optimized_video_blobs, -> { VideoBlob.optimized }, class_name: 'VideoBlob', inverse_of: :video
+  has_many :optimized_video_blobs, lambda {
+                                     VideoBlob.optimized
+                                   }, class_name: 'VideoBlob', inverse_of: :video, dependent: :destroy
 
   scope :with_video_blobs, -> { includes(:video_blobs).where.not(video_blobs: { id: nil }) }
   scope :optimized, -> { includes(:optimized_video_blobs).where.not(video_blobs: { id: nil }) }
