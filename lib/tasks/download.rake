@@ -2,8 +2,10 @@
 
 namespace :download do
   desc 'Download Optimized Movies from Plex Using FTP'
-  task :optimized, %i[directory force_verify] => :environment do |_task, args|
-    Movie.optimized_with_checksum.order(popularity: :desc).each do |movie|
+  task :optimized, %i[directory order_by force_verify] => :environment do |_task, args|
+    order_by = args[:order_by]&.split(':')&.to_h { _1.split('-') }&.symbolize_keys
+    order_by ||= { popularity: :desc }
+    Movie.optimized_with_checksum.order(order_by).each do |movie|
       video_blob = movie.optimized_video_blobs.first
 
       progress = video_blob.progresses.find_or_create_by key: args[:directory],

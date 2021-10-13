@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v1.3.0
+      - Faraday v1.7.1
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -25,7 +25,7 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Thu, 15 Apr 2021 17:45:15 GMT
+      - Wed, 13 Oct 2021 16:53:49 GMT
       Server:
       - openresty
       Access-Control-Allow-Origin:
@@ -36,167 +36,175 @@ http_interactions:
       - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
         Content-Length, Content-Range
       Cache-Control:
-      - public, max-age=21600
+      - public, max-age=28800
       X-Memc:
       - HIT
       X-Memc-Key:
       - 9e5e34bcb065d554a2b9219fbce4a483a47ee3f4
       X-Memc-Age:
-      - '3416'
+      - '5035'
       X-Memc-Expires:
-      - '18184'
+      - '9573'
       Etag:
-      - W/"c9fafe4875df0617adb95a075b7e421b"
+      - W/"afe773ef5953b2aa0d953fa9f02db8b5"
       Vary:
       - Accept-Encoding
       X-Cache:
-      - Hit from cloudfront
+      - Miss from cloudfront
       Via:
-      - 1.1 02b9f097e6bccd6a8d89ebf056435cb5.cloudfront.net (CloudFront)
+      - 1.1 207df1932a3ef8ff529fa368bf612240.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
       - LAX50-C2
       X-Amz-Cf-Id:
-      - 2YIzLJtC9qmj1FjRKBklu_X-RndpvzL7NGnr-lCPCHOPxcy-MI3T3A==
-      Age:
-      - '302'
+      - 4LPgjyrSBXVahqHNkvgw_5X22MtnITi4fovPgVanVB7JnELt2Ghjug==
     body:
       encoding: ASCII-8BIT
       string: '{"_id":"57599ae2c3a3684ea900242d","air_date":"2016-07-15","episodes":[{"air_date":"2016-07-15","episode_number":1,"crew":[{"job":"Director","department":"Directing","credit_id":"57b20164c3a36869e5000ba5","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"}],"guest_stars":[{"character":"Troy","credit_id":"5bc10b8e92514179ba020982","order":41,"adult":false,"gender":2,"id":1668667,"known_for_department":"Acting","name":"Peyton
-        Wich","original_name":"Peyton Wich","popularity":1.403,"profile_path":"/52101r7ph1aiJtlZ2pIXD5L7BKV.jpg"},{"character":"Benny
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director
+        of Photography","department":"Camera","credit_id":"60a81c446ee3d70029419e54","adult":false,"gender":2,"id":1485876,"known_for_department":"Camera","name":"Tim
+        Ives","original_name":"Tim Ives","popularity":0.6,"profile_path":"/cgQkPbS2akrEZlawCi5DN0AkPqs.jpg"}],"guest_stars":[{"character":"Troy","credit_id":"5bc10b8e92514179ba020982","order":41,"adult":false,"gender":2,"id":1668667,"known_for_department":"Acting","name":"Peyton
+        Wich","original_name":"Peyton Wich","popularity":1.228,"profile_path":"/52101r7ph1aiJtlZ2pIXD5L7BKV.jpg"},{"character":"Benny
         Hammond","credit_id":"5d257da9a698cf0fa7a83b45","order":67,"adult":false,"gender":2,"id":1293892,"known_for_department":"Acting","name":"Chris
-        Sullivan","original_name":"Chris Sullivan","popularity":2.163,"profile_path":"/5I4pxgfl5agN38qrZqtFf8TlkUh.jpg"},{"character":"James","credit_id":"5d257df6e24e3a00102bf53b","order":73,"adult":false,"gender":0,"id":2358366,"known_for_department":"Acting","name":"Cade
+        Sullivan","original_name":"Chris Sullivan","popularity":1.712,"profile_path":"/5I4pxgfl5agN38qrZqtFf8TlkUh.jpg"},{"character":"James","credit_id":"5d257df6e24e3a00102bf53b","order":73,"adult":false,"gender":0,"id":2358366,"known_for_department":"Acting","name":"Cade
         Jones","original_name":"Cade Jones","popularity":0.6,"profile_path":null},{"character":"Principal
         Coleman","credit_id":"59fca957c3a3681a6402d7da","order":76,"adult":false,"gender":2,"id":114850,"known_for_department":"Acting","name":"Tony
-        Vaughn","original_name":"Tony Vaughn","popularity":0.6,"profile_path":null},{"character":"Barbara
+        Vaughn","original_name":"Tony Vaughn","popularity":1.135,"profile_path":"/m99yAF6psRJSOslZkxPY8i7u7NR.jpg"},{"character":"Barbara
         Holland","credit_id":"59f6602c925141428202220d","order":86,"adult":false,"gender":1,"id":1753911,"known_for_department":"Acting","name":"Shannon
-        Purser","original_name":"Shannon Purser","popularity":1.276,"profile_path":"/zI5C3e0Rk5GjIdP7S4Dfde8R12N.jpg"},{"character":"Earl","credit_id":"5d258723a698cf59f5a78feb","order":89,"adult":false,"gender":2,"id":21084,"known_for_department":"Acting","name":"David
-        Dwyer","original_name":"David Dwyer","popularity":1.271,"profile_path":"/kMTtoYRHltlJI9YzWPKe56gK99h.jpg"},{"character":"High
+        Purser","original_name":"Shannon Purser","popularity":2.239,"profile_path":"/zI5C3e0Rk5GjIdP7S4Dfde8R12N.jpg"},{"character":"Earl","credit_id":"5d258723a698cf59f5a78feb","order":89,"adult":false,"gender":2,"id":21084,"known_for_department":"Acting","name":"David
+        Dwyer","original_name":"David Dwyer","popularity":1.538,"profile_path":"/kMTtoYRHltlJI9YzWPKe56gK99h.jpg"},{"character":"High
         School Principal","credit_id":"5d25874169d28054b700c6e7","order":90,"adult":false,"gender":1,"id":1895872,"known_for_department":"Acting","name":"Salem
         Murphy","original_name":"Salem Murphy","popularity":0.6,"profile_path":"/43zUWawBYErN7PuG7EBytxo8Xdq.jpg"},{"character":"The
         Monster","credit_id":"5b36ede80e0a26400a03468e","order":91,"adult":false,"gender":2,"id":1052211,"known_for_department":"Acting","name":"Mark
-        Steger","original_name":"Mark Steger","popularity":1.4,"profile_path":"/3EeztYq3OfdeHsqjYSwRuNHrvnk.jpg"},{"character":"Calvin
+        Steger","original_name":"Mark Steger","popularity":1.594,"profile_path":"/3EeztYq3OfdeHsqjYSwRuNHrvnk.jpg"},{"character":"Calvin
         Powell","credit_id":"5d26171ea698cf52eba6bfae","order":107,"adult":false,"gender":2,"id":1281250,"known_for_department":"Acting","name":"Rob
-        Morgan","original_name":"Rob Morgan","popularity":1.848,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
+        Morgan","original_name":"Rob Morgan","popularity":4.117,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
         Callahan","credit_id":"5d26185f37b3a96a3452a8a9","order":108,"adult":false,"gender":2,"id":1674830,"known_for_department":"Acting","name":"John
-        Reynolds","original_name":"John Reynolds","popularity":1.483,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
+        Reynolds","original_name":"John Reynolds","popularity":2.23,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
         Wheeler","credit_id":"5d267e6774645700126c239a","order":108,"adult":false,"gender":2,"id":141762,"known_for_department":"Acting","name":"Joe
-        Chrest","original_name":"Joe Chrest","popularity":4.819,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
+        Chrest","original_name":"Joe Chrest","popularity":4.739,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
         Byers","credit_id":"5759b99a9251416b530002a5","order":109,"adult":false,"gender":2,"id":1393177,"known_for_department":"Acting","name":"Noah
-        Schnapp","original_name":"Noah Schnapp","popularity":2.563,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
+        Schnapp","original_name":"Noah Schnapp","popularity":3.522,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
         Harrington","credit_id":"5759b9d89251410a9900213e","order":110,"adult":false,"gender":2,"id":1467219,"known_for_department":"Acting","name":"Joe
-        Keery","original_name":"Joe Keery","popularity":1.499,"profile_path":"/g4SMf5i8aSOUBBSxa3LLZQhJKSd.jpg"},{"character":"Florence","credit_id":"59fca93b92514113bb02ef2b","order":134,"adult":false,"gender":0,"id":1916844,"known_for_department":"Acting","name":"Susan
-        Shalhoub Larkin","original_name":"Susan Shalhoub Larkin","popularity":0.652,"profile_path":null},{"character":"Scott
+        Keery","original_name":"Joe Keery","popularity":6.462,"profile_path":"/kXoE2UWf01V89yVDD08MCXrEiRe.jpg"},{"character":"Florence","credit_id":"59fca93b92514113bb02ef2b","order":134,"adult":false,"gender":0,"id":1916844,"known_for_department":"Acting","name":"Susan
+        Shalhoub Larkin","original_name":"Susan Shalhoub Larkin","popularity":0.6,"profile_path":null},{"character":"Scott
         Clarke","credit_id":"5d2578ada698cf0010ab31cb","order":134,"adult":false,"gender":2,"id":1381393,"known_for_department":"Acting","name":"Randy
-        Havens","original_name":"Randy Havens","popularity":1.22,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"id":1198665,"name":"Chapter
+        Havens","original_name":"Randy Havens","popularity":3.72,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"id":1198665,"name":"Chapter
         One: The Vanishing of Will Byers","overview":"On his way home from a friend''s
         house, young Will sees something terrifying. Nearby, a sinister secret lurks
-        in the depths of a government lab.","production_code":"tt6020684","season_number":1,"still_path":"/AdwF2jXvhdODr6gUZ61bHKRkz09.jpg","vote_average":7.7,"vote_count":177},{"air_date":"2016-07-15","episode_number":2,"crew":[{"job":"Director","department":"Directing","credit_id":"57b20164c3a36869e5000ba5","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"}],"guest_stars":[{"character":"Donald
+        in the depths of a government lab.","production_code":"tt6020684","season_number":1,"still_path":"/AdwF2jXvhdODr6gUZ61bHKRkz09.jpg","vote_average":7.683,"vote_count":202},{"air_date":"2016-07-15","episode_number":2,"crew":[{"job":"Director","department":"Directing","credit_id":"57b20164c3a36869e5000ba5","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director
+        of Photography","department":"Camera","credit_id":"60a81c446ee3d70029419e54","adult":false,"gender":2,"id":1485876,"known_for_department":"Camera","name":"Tim
+        Ives","original_name":"Tim Ives","popularity":0.6,"profile_path":"/cgQkPbS2akrEZlawCi5DN0AkPqs.jpg"}],"guest_stars":[{"character":"Donald
         Melvald","credit_id":"577a9f2492514174bb000db9","order":53,"adult":false,"gender":2,"id":1643635,"known_for_department":"Acting","name":"Charles
-        Lawlor","original_name":"Charles Lawlor","popularity":0.747,"profile_path":"/yui3L3ugmNd8sYn9fJxGmzkTCxp.jpg"},{"character":"Sandra","credit_id":"5d257ebae24e3a00122bf46d","order":71,"adult":false,"gender":1,"id":1254367,"known_for_department":"Acting","name":"Bethany
-        Anne Lind","original_name":"Bethany Anne Lind","popularity":1.01,"profile_path":"/d0FjeKbWYhbTzFSimCnC9K1Maza.jpg"},{"character":"Carol","credit_id":"5d257e96e24e3a00132bf3bd","order":82,"adult":false,"gender":1,"id":1572103,"known_for_department":"Acting","name":"Chelsea
-        Talmadge","original_name":"Chelsea Talmadge","popularity":0.6,"profile_path":"/cxH53B64fEjbI6u7uLTMjJFpAe2.jpg"},{"character":"Barbara
+        Lawlor","original_name":"Charles Lawlor","popularity":0.98,"profile_path":"/yui3L3ugmNd8sYn9fJxGmzkTCxp.jpg"},{"character":"Sandra","credit_id":"5d257ebae24e3a00122bf46d","order":71,"adult":false,"gender":1,"id":1254367,"known_for_department":"Acting","name":"Bethany
+        Anne Lind","original_name":"Bethany Anne Lind","popularity":2.128,"profile_path":"/d0FjeKbWYhbTzFSimCnC9K1Maza.jpg"},{"character":"Carol","credit_id":"5d257e96e24e3a00132bf3bd","order":82,"adult":false,"gender":1,"id":1572103,"known_for_department":"Acting","name":"Chelsea
+        Talmadge","original_name":"Chelsea Talmadge","popularity":1.336,"profile_path":"/cxH53B64fEjbI6u7uLTMjJFpAe2.jpg"},{"character":"Barbara
         Holland","credit_id":"59f6602c925141428202220d","order":86,"adult":false,"gender":1,"id":1753911,"known_for_department":"Acting","name":"Shannon
-        Purser","original_name":"Shannon Purser","popularity":1.276,"profile_path":"/zI5C3e0Rk5GjIdP7S4Dfde8R12N.jpg"},{"character":"Tommy
+        Purser","original_name":"Shannon Purser","popularity":2.239,"profile_path":"/zI5C3e0Rk5GjIdP7S4Dfde8R12N.jpg"},{"character":"Tommy
         H.","credit_id":"5d257ea9e24e3a00132bf3ff","order":102,"adult":false,"gender":2,"id":1694082,"known_for_department":"Acting","name":"Chester
-        Rushing","original_name":"Chester Rushing","popularity":1.368,"profile_path":"/34YpCnyxCgxlq5PYJqiro7losWy.jpg"},{"character":"Calvin
+        Rushing","original_name":"Chester Rushing","popularity":2.803,"profile_path":"/34YpCnyxCgxlq5PYJqiro7losWy.jpg"},{"character":"Calvin
         Powell","credit_id":"5d26171ea698cf52eba6bfae","order":107,"adult":false,"gender":2,"id":1281250,"known_for_department":"Acting","name":"Rob
-        Morgan","original_name":"Rob Morgan","popularity":1.848,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
+        Morgan","original_name":"Rob Morgan","popularity":4.117,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
         Callahan","credit_id":"5d26185f37b3a96a3452a8a9","order":108,"adult":false,"gender":2,"id":1674830,"known_for_department":"Acting","name":"John
-        Reynolds","original_name":"John Reynolds","popularity":1.483,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
+        Reynolds","original_name":"John Reynolds","popularity":2.23,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
         Wheeler","credit_id":"5d267e6774645700126c239a","order":108,"adult":false,"gender":2,"id":141762,"known_for_department":"Acting","name":"Joe
-        Chrest","original_name":"Joe Chrest","popularity":4.819,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
+        Chrest","original_name":"Joe Chrest","popularity":4.739,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
         Byers","credit_id":"5759b99a9251416b530002a5","order":109,"adult":false,"gender":2,"id":1393177,"known_for_department":"Acting","name":"Noah
-        Schnapp","original_name":"Noah Schnapp","popularity":2.563,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
+        Schnapp","original_name":"Noah Schnapp","popularity":3.522,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
         Harrington","credit_id":"5759b9d89251410a9900213e","order":110,"adult":false,"gender":2,"id":1467219,"known_for_department":"Acting","name":"Joe
-        Keery","original_name":"Joe Keery","popularity":1.499,"profile_path":"/g4SMf5i8aSOUBBSxa3LLZQhJKSd.jpg"},{"character":"Florence","credit_id":"59fca93b92514113bb02ef2b","order":134,"adult":false,"gender":0,"id":1916844,"known_for_department":"Acting","name":"Susan
-        Shalhoub Larkin","original_name":"Susan Shalhoub Larkin","popularity":0.652,"profile_path":null},{"character":"Scott
+        Keery","original_name":"Joe Keery","popularity":6.462,"profile_path":"/kXoE2UWf01V89yVDD08MCXrEiRe.jpg"},{"character":"Florence","credit_id":"59fca93b92514113bb02ef2b","order":134,"adult":false,"gender":0,"id":1916844,"known_for_department":"Acting","name":"Susan
+        Shalhoub Larkin","original_name":"Susan Shalhoub Larkin","popularity":0.6,"profile_path":null},{"character":"Scott
         Clarke","credit_id":"5d2578ada698cf0010ab31cb","order":134,"adult":false,"gender":2,"id":1381393,"known_for_department":"Acting","name":"Randy
-        Havens","original_name":"Randy Havens","popularity":1.22,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"id":1203677,"name":"Chapter
+        Havens","original_name":"Randy Havens","popularity":3.72,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"id":1203677,"name":"Chapter
         Two: The Weirdo on Maple Street","overview":"Lucas, Mike and Dustin try to
         talk to the girl they found in the woods. Hopper questions an anxious Joyce
-        about an unsettling phone call.","production_code":"","season_number":1,"still_path":"/8iA56ugQyHZmX81wSsNqwXjCE6F.jpg","vote_average":8.2,"vote_count":120},{"air_date":"2016-07-15","episode_number":3,"crew":[{"job":"Director","department":"Directing","credit_id":"57b201e6c3a368019a003110","adult":false,"gender":2,"id":17825,"known_for_department":"Directing","name":"Shawn
-        Levy","original_name":"Shawn Levy","popularity":2.628,"profile_path":"/b1ulkCHz8biG87LjLQQiMCebEZo.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Writer","department":"Writing","credit_id":"57b2022ac3a36869e5000bf3","adult":false,"gender":1,"id":1562492,"known_for_department":"Writing","name":"Jessica
-        Mecklenburg","original_name":"Jessica Mecklenburg","popularity":0.6,"profile_path":null},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"}],"guest_stars":[{"character":"Marissa","credit_id":"58c03ecac3a3683a91000df5","order":2,"adult":false,"gender":0,"id":1772398,"known_for_department":"Acting","name":"Christi
+        about an unsettling phone call.","production_code":"","season_number":1,"still_path":"/8iA56ugQyHZmX81wSsNqwXjCE6F.jpg","vote_average":8.192,"vote_count":130},{"air_date":"2016-07-15","episode_number":3,"crew":[{"job":"Director","department":"Directing","credit_id":"57b201e6c3a368019a003110","adult":false,"gender":2,"id":17825,"known_for_department":"Directing","name":"Shawn
+        Levy","original_name":"Shawn Levy","popularity":8.069,"profile_path":"/b1ulkCHz8biG87LjLQQiMCebEZo.jpg"},{"job":"Writer","department":"Writing","credit_id":"57b2022ac3a36869e5000bf3","adult":false,"gender":1,"id":1562492,"known_for_department":"Writing","name":"Jessica
+        Mecklenburg","original_name":"Jessica Mecklenburg","popularity":1.214,"profile_path":null},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director
+        of Photography","department":"Camera","credit_id":"60a81c4dbbd0b0002b40b3f3","adult":false,"gender":2,"id":1580138,"known_for_department":"Camera","name":"Tod
+        Campbell","original_name":"Tod Campbell","popularity":2.503,"profile_path":"/897Bl0aU94N0otv4Ab1gCr29yDV.jpg"}],"guest_stars":[{"character":"Marissa","credit_id":"58c03ecac3a3683a91000df5","order":2,"adult":false,"gender":0,"id":1772398,"known_for_department":"Acting","name":"Christi
         Waldon","original_name":"Christi Waldon","popularity":0.6,"profile_path":"/8KZh1ombwUA4z5s6c1hHasEiYTu.jpg"},{"character":"Troy","credit_id":"5bc10b8e92514179ba020982","order":41,"adult":false,"gender":2,"id":1668667,"known_for_department":"Acting","name":"Peyton
-        Wich","original_name":"Peyton Wich","popularity":1.403,"profile_path":"/52101r7ph1aiJtlZ2pIXD5L7BKV.jpg"},{"character":"Nicole","credit_id":"59fca70ec3a3681a6402d505","order":72,"adult":false,"gender":0,"id":1330503,"known_for_department":"Acting","name":"Glennellen
+        Wich","original_name":"Peyton Wich","popularity":1.228,"profile_path":"/52101r7ph1aiJtlZ2pIXD5L7BKV.jpg"},{"character":"Nicole","credit_id":"59fca70ec3a3681a6402d505","order":72,"adult":false,"gender":0,"id":1330503,"known_for_department":"Acting","name":"Glennellen
         Anderson","original_name":"Glennellen Anderson","popularity":0.6,"profile_path":null},{"character":"Marsha
         Holland","credit_id":"59fca73bc3a3681acd02f597","order":72,"adult":false,"gender":0,"id":995451,"known_for_department":"Acting","name":"Cynthia
-        Barrett","original_name":"Cynthia Barrett","popularity":0.6,"profile_path":null},{"character":"Ally","credit_id":"5d257f9569d2801be00381f5","order":72,"adult":false,"gender":0,"id":2358375,"known_for_department":"Acting","name":"Sierra
+        Barrett","original_name":"Cynthia Barrett","popularity":0.631,"profile_path":null},{"character":"Ally","credit_id":"5d257f9569d2801be00381f5","order":72,"adult":false,"gender":0,"id":2358375,"known_for_department":"Acting","name":"Sierra
         Rae","original_name":"Sierra Rae","popularity":0.6,"profile_path":null},{"character":"James","credit_id":"5d257df6e24e3a00102bf53b","order":73,"adult":false,"gender":0,"id":2358366,"known_for_department":"Acting","name":"Cade
         Jones","original_name":"Cade Jones","popularity":0.6,"profile_path":null},{"character":"Terry
         Ives","credit_id":"5d2578c937b3a94927529915","order":76,"adult":false,"gender":1,"id":1033252,"known_for_department":"Acting","name":"Aimee
-        Mullins","original_name":"Aimee Mullins","popularity":1.73,"profile_path":"/A4H8dBREovAels6YFAw8wrprE8R.jpg"},{"character":"Carol","credit_id":"5d257e96e24e3a00132bf3bd","order":82,"adult":false,"gender":1,"id":1572103,"known_for_department":"Acting","name":"Chelsea
-        Talmadge","original_name":"Chelsea Talmadge","popularity":0.6,"profile_path":"/cxH53B64fEjbI6u7uLTMjJFpAe2.jpg"},{"character":"Barbara
+        Mullins","original_name":"Aimee Mullins","popularity":2.426,"profile_path":"/A4H8dBREovAels6YFAw8wrprE8R.jpg"},{"character":"Carol","credit_id":"5d257e96e24e3a00132bf3bd","order":82,"adult":false,"gender":1,"id":1572103,"known_for_department":"Acting","name":"Chelsea
+        Talmadge","original_name":"Chelsea Talmadge","popularity":1.336,"profile_path":"/cxH53B64fEjbI6u7uLTMjJFpAe2.jpg"},{"character":"Barbara
         Holland","credit_id":"59f6602c925141428202220d","order":86,"adult":false,"gender":1,"id":1753911,"known_for_department":"Acting","name":"Shannon
-        Purser","original_name":"Shannon Purser","popularity":1.276,"profile_path":"/zI5C3e0Rk5GjIdP7S4Dfde8R12N.jpg"},{"character":"Tommy
+        Purser","original_name":"Shannon Purser","popularity":2.239,"profile_path":"/zI5C3e0Rk5GjIdP7S4Dfde8R12N.jpg"},{"character":"Tommy
         H.","credit_id":"5d257ea9e24e3a00132bf3ff","order":102,"adult":false,"gender":2,"id":1694082,"known_for_department":"Acting","name":"Chester
-        Rushing","original_name":"Chester Rushing","popularity":1.368,"profile_path":"/34YpCnyxCgxlq5PYJqiro7losWy.jpg"},{"character":"Calvin
+        Rushing","original_name":"Chester Rushing","popularity":2.803,"profile_path":"/34YpCnyxCgxlq5PYJqiro7losWy.jpg"},{"character":"Calvin
         Powell","credit_id":"5d26171ea698cf52eba6bfae","order":107,"adult":false,"gender":2,"id":1281250,"known_for_department":"Acting","name":"Rob
-        Morgan","original_name":"Rob Morgan","popularity":1.848,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
+        Morgan","original_name":"Rob Morgan","popularity":4.117,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
         Callahan","credit_id":"5d26185f37b3a96a3452a8a9","order":108,"adult":false,"gender":2,"id":1674830,"known_for_department":"Acting","name":"John
-        Reynolds","original_name":"John Reynolds","popularity":1.483,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Will
+        Reynolds","original_name":"John Reynolds","popularity":2.23,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Will
         Byers","credit_id":"5759b99a9251416b530002a5","order":109,"adult":false,"gender":2,"id":1393177,"known_for_department":"Acting","name":"Noah
-        Schnapp","original_name":"Noah Schnapp","popularity":2.563,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
+        Schnapp","original_name":"Noah Schnapp","popularity":3.522,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
         Harrington","credit_id":"5759b9d89251410a9900213e","order":110,"adult":false,"gender":2,"id":1467219,"known_for_department":"Acting","name":"Joe
-        Keery","original_name":"Joe Keery","popularity":1.499,"profile_path":"/g4SMf5i8aSOUBBSxa3LLZQhJKSd.jpg"}],"id":1203679,"name":"Chapter
+        Keery","original_name":"Joe Keery","popularity":6.462,"profile_path":"/kXoE2UWf01V89yVDD08MCXrEiRe.jpg"}],"id":1203679,"name":"Chapter
         Three: Holly, Jolly","overview":"An increasingly concerned Nancy looks for
         Barb and finds out what Jonathan''s been up to. Joyce is convinced Will is
-        trying to talk to her.","production_code":"","season_number":1,"still_path":"/5snULpWQWp7aqFto7UbRcEkEyyS.jpg","vote_average":8.5,"vote_count":98},{"air_date":"2016-07-15","episode_number":4,"crew":[{"job":"Director","department":"Directing","credit_id":"57b201e6c3a368019a003110","adult":false,"gender":2,"id":17825,"known_for_department":"Directing","name":"Shawn
-        Levy","original_name":"Shawn Levy","popularity":2.628,"profile_path":"/b1ulkCHz8biG87LjLQQiMCebEZo.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"}],"guest_stars":[{"character":"Troy","credit_id":"5bc10b8e92514179ba020982","order":41,"adult":false,"gender":2,"id":1668667,"known_for_department":"Acting","name":"Peyton
-        Wich","original_name":"Peyton Wich","popularity":1.403,"profile_path":"/52101r7ph1aiJtlZ2pIXD5L7BKV.jpg"},{"character":"Donald
+        trying to talk to her.","production_code":"","season_number":1,"still_path":"/5snULpWQWp7aqFto7UbRcEkEyyS.jpg","vote_average":8.537,"vote_count":108},{"air_date":"2016-07-15","episode_number":4,"crew":[{"job":"Director","department":"Directing","credit_id":"57b201e6c3a368019a003110","adult":false,"gender":2,"id":17825,"known_for_department":"Directing","name":"Shawn
+        Levy","original_name":"Shawn Levy","popularity":8.069,"profile_path":"/b1ulkCHz8biG87LjLQQiMCebEZo.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director
+        of Photography","department":"Camera","credit_id":"60a81c4dbbd0b0002b40b3f3","adult":false,"gender":2,"id":1580138,"known_for_department":"Camera","name":"Tod
+        Campbell","original_name":"Tod Campbell","popularity":2.503,"profile_path":"/897Bl0aU94N0otv4Ab1gCr29yDV.jpg"}],"guest_stars":[{"character":"Troy","credit_id":"5bc10b8e92514179ba020982","order":41,"adult":false,"gender":2,"id":1668667,"known_for_department":"Acting","name":"Peyton
+        Wich","original_name":"Peyton Wich","popularity":1.228,"profile_path":"/52101r7ph1aiJtlZ2pIXD5L7BKV.jpg"},{"character":"Donald
         Melvald","credit_id":"577a9f2492514174bb000db9","order":53,"adult":false,"gender":2,"id":1643635,"known_for_department":"Acting","name":"Charles
-        Lawlor","original_name":"Charles Lawlor","popularity":0.747,"profile_path":"/yui3L3ugmNd8sYn9fJxGmzkTCxp.jpg"},{"character":"Gary","credit_id":"5d257fefa698cf0fa7a8428d","order":73,"adult":false,"gender":2,"id":160351,"known_for_department":"Acting","name":"Mark
-        Withers","original_name":"Mark Withers","popularity":0.6,"profile_path":null},{"character":"James","credit_id":"5d257df6e24e3a00102bf53b","order":73,"adult":false,"gender":0,"id":2358366,"known_for_department":"Acting","name":"Cade
-        Jones","original_name":"Cade Jones","popularity":0.6,"profile_path":null},{"character":"Patty","credit_id":"5d258006a698cf59f5a77f87","order":74,"adult":false,"gender":0,"id":1747720,"known_for_department":"Acting","name":"Marianne
-        Fraulo","original_name":"Marianne Fraulo","popularity":0.98,"profile_path":"/9gqy2qmlSUmRaIyVejoYCnmHZd5.jpg"},{"character":"Principal
+        Lawlor","original_name":"Charles Lawlor","popularity":0.98,"profile_path":"/yui3L3ugmNd8sYn9fJxGmzkTCxp.jpg"},{"character":"James","credit_id":"5d257df6e24e3a00102bf53b","order":73,"adult":false,"gender":0,"id":2358366,"known_for_department":"Acting","name":"Cade
+        Jones","original_name":"Cade Jones","popularity":0.6,"profile_path":null},{"character":"Gary","credit_id":"5d257fefa698cf0fa7a8428d","order":73,"adult":false,"gender":2,"id":160351,"known_for_department":"Acting","name":"Mark
+        Withers","original_name":"Mark Withers","popularity":0.6,"profile_path":null},{"character":"Patty","credit_id":"5d258006a698cf59f5a77f87","order":74,"adult":false,"gender":0,"id":1747720,"known_for_department":"Acting","name":"Marianne
+        Fraulo","original_name":"Marianne Fraulo","popularity":0.6,"profile_path":"/9gqy2qmlSUmRaIyVejoYCnmHZd5.jpg"},{"character":"Principal
         Coleman","credit_id":"59fca957c3a3681a6402d7da","order":76,"adult":false,"gender":2,"id":114850,"known_for_department":"Acting","name":"Tony
-        Vaughn","original_name":"Tony Vaughn","popularity":0.6,"profile_path":null},{"character":"Lonnie
+        Vaughn","original_name":"Tony Vaughn","popularity":1.135,"profile_path":"/m99yAF6psRJSOslZkxPY8i7u7NR.jpg"},{"character":"Lonnie
         Byers","credit_id":"5d25801937b3a9747d52a53f","order":76,"adult":false,"gender":2,"id":45396,"known_for_department":"Acting","name":"Ross
-        Partridge","original_name":"Ross Partridge","popularity":1.312,"profile_path":"/4GCbT5B0WeoDkl5gor8NuAvy4mV.jpg"},{"character":"Calvin
+        Partridge","original_name":"Ross Partridge","popularity":1.96,"profile_path":"/4GCbT5B0WeoDkl5gor8NuAvy4mV.jpg"},{"character":"Calvin
         Powell","credit_id":"5d26171ea698cf52eba6bfae","order":107,"adult":false,"gender":2,"id":1281250,"known_for_department":"Acting","name":"Rob
-        Morgan","original_name":"Rob Morgan","popularity":1.848,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
+        Morgan","original_name":"Rob Morgan","popularity":4.117,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
         Callahan","credit_id":"5d26185f37b3a96a3452a8a9","order":108,"adult":false,"gender":2,"id":1674830,"known_for_department":"Acting","name":"John
-        Reynolds","original_name":"John Reynolds","popularity":1.483,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
+        Reynolds","original_name":"John Reynolds","popularity":2.23,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
         Wheeler","credit_id":"5d267e6774645700126c239a","order":108,"adult":false,"gender":2,"id":141762,"known_for_department":"Acting","name":"Joe
-        Chrest","original_name":"Joe Chrest","popularity":4.819,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
+        Chrest","original_name":"Joe Chrest","popularity":4.739,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
         Byers","credit_id":"5759b99a9251416b530002a5","order":109,"adult":false,"gender":2,"id":1393177,"known_for_department":"Acting","name":"Noah
-        Schnapp","original_name":"Noah Schnapp","popularity":2.563,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
+        Schnapp","original_name":"Noah Schnapp","popularity":3.522,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
         Harrington","credit_id":"5759b9d89251410a9900213e","order":110,"adult":false,"gender":2,"id":1467219,"known_for_department":"Acting","name":"Joe
-        Keery","original_name":"Joe Keery","popularity":1.499,"profile_path":"/g4SMf5i8aSOUBBSxa3LLZQhJKSd.jpg"},{"character":"Scott
+        Keery","original_name":"Joe Keery","popularity":6.462,"profile_path":"/kXoE2UWf01V89yVDD08MCXrEiRe.jpg"},{"character":"Scott
         Clarke","credit_id":"5d2578ada698cf0010ab31cb","order":134,"adult":false,"gender":2,"id":1381393,"known_for_department":"Acting","name":"Randy
-        Havens","original_name":"Randy Havens","popularity":1.22,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"id":1203680,"name":"Chapter
+        Havens","original_name":"Randy Havens","popularity":3.72,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"id":1203680,"name":"Chapter
         Four: The Body","overview":"Refusing to believe Will is dead, Joyce tries
         to connect with her son. The boys give Eleven a makeover. Nancy and Jonathan
-        form an unlikely alliance.","production_code":"","season_number":1,"still_path":"/60wmC1e20HV8gu688GAhsWxqxPx.jpg","vote_average":8.3,"vote_count":103},{"air_date":"2016-07-15","episode_number":5,"crew":[{"job":"Director","department":"Directing","credit_id":"57b20164c3a36869e5000ba5","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5dd479182634620012b65360","adult":false,"gender":0,"id":1825196,"known_for_department":"Writing","name":"Alison
-        Tatlock","original_name":"Alison Tatlock","popularity":0.6,"profile_path":null}],"guest_stars":[{"character":"Elevator
+        form an unlikely alliance.","production_code":"","season_number":1,"still_path":"/60wmC1e20HV8gu688GAhsWxqxPx.jpg","vote_average":8.27,"vote_count":111},{"air_date":"2016-07-15","episode_number":5,"crew":[{"job":"Director","department":"Directing","credit_id":"57b20164c3a36869e5000ba5","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Writer","department":"Writing","credit_id":"5dd479182634620012b65360","adult":false,"gender":0,"id":1825196,"known_for_department":"Writing","name":"Alison
+        Tatlock","original_name":"Alison Tatlock","popularity":0.6,"profile_path":null},{"job":"Director
+        of Photography","department":"Camera","credit_id":"60a81c446ee3d70029419e54","adult":false,"gender":2,"id":1485876,"known_for_department":"Camera","name":"Tim
+        Ives","original_name":"Tim Ives","popularity":0.6,"profile_path":"/cgQkPbS2akrEZlawCi5DN0AkPqs.jpg"}],"guest_stars":[{"character":"Elevator
         Scientist","credit_id":"5b36ee080e0a264016035465","order":37,"adult":false,"gender":2,"id":1217651,"known_for_department":"Acting","name":"Andrew
-        Benator","original_name":"Andrew Benator","popularity":1.068,"profile_path":"/nlBSUWmZPEtEiwCxG4lx1u9U4Z6.jpg"},{"character":"Principal
+        Benator","original_name":"Andrew Benator","popularity":2.188,"profile_path":"/nlBSUWmZPEtEiwCxG4lx1u9U4Z6.jpg"},{"character":"Principal
         Coleman","credit_id":"59fca957c3a3681a6402d7da","order":76,"adult":false,"gender":2,"id":114850,"known_for_department":"Acting","name":"Tony
-        Vaughn","original_name":"Tony Vaughn","popularity":0.6,"profile_path":null},{"character":"Lonnie
+        Vaughn","original_name":"Tony Vaughn","popularity":1.135,"profile_path":"/m99yAF6psRJSOslZkxPY8i7u7NR.jpg"},{"character":"Lonnie
         Byers","credit_id":"5d25801937b3a9747d52a53f","order":76,"adult":false,"gender":2,"id":45396,"known_for_department":"Acting","name":"Ross
-        Partridge","original_name":"Ross Partridge","popularity":1.312,"profile_path":"/4GCbT5B0WeoDkl5gor8NuAvy4mV.jpg"},{"character":"Hawkins
+        Partridge","original_name":"Ross Partridge","popularity":1.96,"profile_path":"/4GCbT5B0WeoDkl5gor8NuAvy4mV.jpg"},{"character":"Hawkins
         Head of Security","credit_id":"5b36ee249251413c9b030fb9","order":84,"adult":false,"gender":2,"id":1371000,"known_for_department":"Acting","name":"Pete
-        Burris","original_name":"Pete Burris","popularity":0.6,"profile_path":"/9FfIl5oggZOkQNzXakbBqAHXSam.jpg"},{"character":"Lead
+        Burris","original_name":"Pete Burris","popularity":1.08,"profile_path":"/9FfIl5oggZOkQNzXakbBqAHXSam.jpg"},{"character":"Lead
         Agent","credit_id":"5b36ee3cc3a368530e03754f","order":85,"adult":false,"gender":2,"id":951643,"known_for_department":"Acting","name":"Tobias
-        Jelinek","original_name":"Tobias Jelinek","popularity":3.102,"profile_path":"/rGHghEJ13ez2uvTQ3SNPB7LoW75.jpg"},{"character":"The
+        Jelinek","original_name":"Tobias Jelinek","popularity":4.671,"profile_path":"/rGHghEJ13ez2uvTQ3SNPB7LoW75.jpg"},{"character":"The
         Monster","credit_id":"5b36ede80e0a26400a03468e","order":91,"adult":false,"gender":2,"id":1052211,"known_for_department":"Acting","name":"Mark
-        Steger","original_name":"Mark Steger","popularity":1.4,"profile_path":"/3EeztYq3OfdeHsqjYSwRuNHrvnk.jpg"},{"character":"Middle
+        Steger","original_name":"Mark Steger","popularity":1.594,"profile_path":"/3EeztYq3OfdeHsqjYSwRuNHrvnk.jpg"},{"character":"Middle
         School Girl","credit_id":"5d258a2c37b3a9492752c254","order":103,"adult":false,"gender":0,"id":2358417,"known_for_department":"Acting","name":"Camden
         Ella Brown","original_name":"Camden Ella Brown","popularity":0.6,"profile_path":null},{"character":"Cafeteria
         Worker","credit_id":"5d258a3d37b3a9492752c283","order":104,"adult":false,"gender":0,"id":2126967,"known_for_department":"Acting","name":"Judy
@@ -204,131 +212,136 @@ http_interactions:
         Sinclair","credit_id":"5d258a4ea698cf0fa7a85af7","order":105,"adult":false,"gender":2,"id":2011382,"known_for_department":"Acting","name":"Bradford
         Haynes","original_name":"Bradford Haynes","popularity":0.6,"profile_path":null},{"character":"Diane
         Hopper","credit_id":"5d2582d1a698cf0fa7a849ce","order":106,"adult":false,"gender":1,"id":1502198,"known_for_department":"Acting","name":"Jerri
-        Tubbs","original_name":"Jerri Tubbs","popularity":1.201,"profile_path":"/3oT4Og3EnTb9KsrCrV2MsG53Ung.jpg"},{"character":"Pastor
+        Tubbs","original_name":"Jerri Tubbs","popularity":1.686,"profile_path":"/3oT4Og3EnTb9KsrCrV2MsG53Ung.jpg"},{"character":"Pastor
         Charles","credit_id":"5d258a8c69d2802c6e0033f7","order":106,"adult":false,"gender":0,"id":1808566,"known_for_department":"Acting","name":"Bill
         Eudaly","original_name":"Bill Eudaly","popularity":0.6,"profile_path":null},{"character":"Jennifer
         Hayes","credit_id":"5d258ac137b3a9492752c361","order":107,"adult":false,"gender":0,"id":2358419,"known_for_department":"Acting","name":"Kaylee
         Glover","original_name":"Kaylee Glover","popularity":0.6,"profile_path":null},{"character":"Calvin
         Powell","credit_id":"5d26171ea698cf52eba6bfae","order":107,"adult":false,"gender":2,"id":1281250,"known_for_department":"Acting","name":"Rob
-        Morgan","original_name":"Rob Morgan","popularity":1.848,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
+        Morgan","original_name":"Rob Morgan","popularity":4.117,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
         Callahan","credit_id":"5d26185f37b3a96a3452a8a9","order":108,"adult":false,"gender":2,"id":1674830,"known_for_department":"Acting","name":"John
-        Reynolds","original_name":"John Reynolds","popularity":1.483,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
+        Reynolds","original_name":"John Reynolds","popularity":2.23,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
         Wheeler","credit_id":"5d267e6774645700126c239a","order":108,"adult":false,"gender":2,"id":141762,"known_for_department":"Acting","name":"Joe
-        Chrest","original_name":"Joe Chrest","popularity":4.819,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
+        Chrest","original_name":"Joe Chrest","popularity":4.739,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
         Byers","credit_id":"5759b99a9251416b530002a5","order":109,"adult":false,"gender":2,"id":1393177,"known_for_department":"Acting","name":"Noah
-        Schnapp","original_name":"Noah Schnapp","popularity":2.563,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
+        Schnapp","original_name":"Noah Schnapp","popularity":3.522,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
         Harrington","credit_id":"5759b9d89251410a9900213e","order":110,"adult":false,"gender":2,"id":1467219,"known_for_department":"Acting","name":"Joe
-        Keery","original_name":"Joe Keery","popularity":1.499,"profile_path":"/g4SMf5i8aSOUBBSxa3LLZQhJKSd.jpg"},{"character":"Florence","credit_id":"59fca93b92514113bb02ef2b","order":134,"adult":false,"gender":0,"id":1916844,"known_for_department":"Acting","name":"Susan
-        Shalhoub Larkin","original_name":"Susan Shalhoub Larkin","popularity":0.652,"profile_path":null},{"character":"Scott
+        Keery","original_name":"Joe Keery","popularity":6.462,"profile_path":"/kXoE2UWf01V89yVDD08MCXrEiRe.jpg"},{"character":"Florence","credit_id":"59fca93b92514113bb02ef2b","order":134,"adult":false,"gender":0,"id":1916844,"known_for_department":"Acting","name":"Susan
+        Shalhoub Larkin","original_name":"Susan Shalhoub Larkin","popularity":0.6,"profile_path":null},{"character":"Scott
         Clarke","credit_id":"5d2578ada698cf0010ab31cb","order":134,"adult":false,"gender":2,"id":1381393,"known_for_department":"Acting","name":"Randy
-        Havens","original_name":"Randy Havens","popularity":1.22,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"id":1205904,"name":"Chapter
+        Havens","original_name":"Randy Havens","popularity":3.72,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"id":1205904,"name":"Chapter
         Five: The Flea and the Acrobat","overview":"Hopper breaks into the lab while
         Nancy and Jonathan confront the force that took Will. The boys ask Mr. Clarke
-        how to travel to another dimension.","production_code":"","season_number":1,"still_path":"/exT4NW9EdXG1qLZHKJnRpq3gh1H.jpg","vote_average":8.0,"vote_count":88},{"air_date":"2016-07-15","episode_number":6,"crew":[{"job":"Director","department":"Directing","credit_id":"57b20164c3a36869e5000ba5","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Writer","department":"Writing","credit_id":"57b202d092514147840030b7","adult":false,"gender":0,"id":1666688,"known_for_department":"Writing","name":"Jessie
-        Nickson-Lopez","original_name":"Jessie Nickson-Lopez","popularity":0.6,"profile_path":null},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"}],"guest_stars":[{"character":"Hunting
+        how to travel to another dimension.","production_code":"","season_number":1,"still_path":"/exT4NW9EdXG1qLZHKJnRpq3gh1H.jpg","vote_average":8.01,"vote_count":97},{"air_date":"2016-07-15","episode_number":6,"crew":[{"job":"Writer","department":"Writing","credit_id":"57b202d092514147840030b7","adult":false,"gender":0,"id":1666688,"known_for_department":"Writing","name":"Jessie
+        Nickson-Lopez","original_name":"Jessie Nickson-Lopez","popularity":0.6,"profile_path":null},{"job":"Director","department":"Directing","credit_id":"57b20164c3a36869e5000ba5","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director
+        of Photography","department":"Camera","credit_id":"60a81c446ee3d70029419e54","adult":false,"gender":2,"id":1485876,"known_for_department":"Camera","name":"Tim
+        Ives","original_name":"Tim Ives","popularity":0.6,"profile_path":"/cgQkPbS2akrEZlawCi5DN0AkPqs.jpg"}],"guest_stars":[{"character":"Hunting
         Store Owner","credit_id":"5afdfff792514178c2000da9","order":26,"adult":false,"gender":2,"id":111693,"known_for_department":"Acting","name":"Adam
-        Boyer","original_name":"Adam Boyer","popularity":1.425,"profile_path":"/lxqVHfVnMxExCSzJLal5gFHeVW8.jpg"},{"character":"Troy","credit_id":"5bc10b8e92514179ba020982","order":41,"adult":false,"gender":2,"id":1668667,"known_for_department":"Acting","name":"Peyton
-        Wich","original_name":"Peyton Wich","popularity":1.403,"profile_path":"/52101r7ph1aiJtlZ2pIXD5L7BKV.jpg"},{"character":"Female
-        Clerk","credit_id":"5d258132e24e3a00112bfe3b","order":76,"adult":false,"gender":0,"id":2358385,"known_for_department":"Acting","name":"Linda
-        Kang","original_name":"Linda Kang","popularity":0.6,"profile_path":null},{"character":"Becky
-        Ives","credit_id":"5d2579b8a698cf0010ab33dd","order":76,"adult":false,"gender":1,"id":139150,"known_for_department":"Acting","name":"Amy
-        Seimetz","original_name":"Amy Seimetz","popularity":2.638,"profile_path":"/9vnQvzBtkYza3hfkSOenUTNAXpH.jpg"},{"character":"Terry
+        Boyer","original_name":"Adam Boyer","popularity":2.572,"profile_path":"/lxqVHfVnMxExCSzJLal5gFHeVW8.jpg"},{"character":"Troy","credit_id":"5bc10b8e92514179ba020982","order":41,"adult":false,"gender":2,"id":1668667,"known_for_department":"Acting","name":"Peyton
+        Wich","original_name":"Peyton Wich","popularity":1.228,"profile_path":"/52101r7ph1aiJtlZ2pIXD5L7BKV.jpg"},{"character":"Terry
         Ives","credit_id":"5d2578c937b3a94927529915","order":76,"adult":false,"gender":1,"id":1033252,"known_for_department":"Acting","name":"Aimee
-        Mullins","original_name":"Aimee Mullins","popularity":1.73,"profile_path":"/A4H8dBREovAels6YFAw8wrprE8R.jpg"},{"character":"Grocery
+        Mullins","original_name":"Aimee Mullins","popularity":2.426,"profile_path":"/A4H8dBREovAels6YFAw8wrprE8R.jpg"},{"character":"Becky
+        Ives","credit_id":"5d2579b8a698cf0010ab33dd","order":76,"adult":false,"gender":1,"id":139150,"known_for_department":"Acting","name":"Amy
+        Seimetz","original_name":"Amy Seimetz","popularity":4.922,"profile_path":"/9vnQvzBtkYza3hfkSOenUTNAXpH.jpg"},{"character":"Female
+        Clerk","credit_id":"5d258132e24e3a00112bfe3b","order":76,"adult":false,"gender":0,"id":2358385,"known_for_department":"Acting","name":"Linda
+        Kang","original_name":"Linda Kang","popularity":0.6,"profile_path":null},{"character":"Grocery
         Store Manager","credit_id":"5d258146a698cf0010ab480a","order":77,"adult":false,"gender":2,"id":1874945,"known_for_department":"Acting","name":"Kevin
-        Patrick Murphy","original_name":"Kevin Patrick Murphy","popularity":0.61,"profile_path":null},{"character":"Agent
+        Patrick Murphy","original_name":"Kevin Patrick Murphy","popularity":0.6,"profile_path":null},{"character":"Agent
         Repairman","credit_id":"5d258188e24e3a00112bff21","order":78,"adult":false,"gender":2,"id":1579625,"known_for_department":"Acting","name":"Robert
-        Walker Branchaud","original_name":"Robert Walker Branchaud","popularity":0.764,"profile_path":"/gD7Te0niYEmfC0BDf4Xb2dHISDG.jpg"},{"character":"Carol","credit_id":"5d257e96e24e3a00132bf3bd","order":82,"adult":false,"gender":1,"id":1572103,"known_for_department":"Acting","name":"Chelsea
-        Talmadge","original_name":"Chelsea Talmadge","popularity":0.6,"profile_path":"/cxH53B64fEjbI6u7uLTMjJFpAe2.jpg"},{"character":"The
+        Walker Branchaud","original_name":"Robert Walker Branchaud","popularity":1.22,"profile_path":"/gD7Te0niYEmfC0BDf4Xb2dHISDG.jpg"},{"character":"Carol","credit_id":"5d257e96e24e3a00132bf3bd","order":82,"adult":false,"gender":1,"id":1572103,"known_for_department":"Acting","name":"Chelsea
+        Talmadge","original_name":"Chelsea Talmadge","popularity":1.336,"profile_path":"/cxH53B64fEjbI6u7uLTMjJFpAe2.jpg"},{"character":"The
         Monster","credit_id":"5b36ede80e0a26400a03468e","order":91,"adult":false,"gender":2,"id":1052211,"known_for_department":"Acting","name":"Mark
-        Steger","original_name":"Mark Steger","popularity":1.4,"profile_path":"/3EeztYq3OfdeHsqjYSwRuNHrvnk.jpg"},{"character":"Tommy
+        Steger","original_name":"Mark Steger","popularity":1.594,"profile_path":"/3EeztYq3OfdeHsqjYSwRuNHrvnk.jpg"},{"character":"Tommy
         H.","credit_id":"5d257ea9e24e3a00132bf3ff","order":102,"adult":false,"gender":2,"id":1694082,"known_for_department":"Acting","name":"Chester
-        Rushing","original_name":"Chester Rushing","popularity":1.368,"profile_path":"/34YpCnyxCgxlq5PYJqiro7losWy.jpg"},{"character":"Calvin
+        Rushing","original_name":"Chester Rushing","popularity":2.803,"profile_path":"/34YpCnyxCgxlq5PYJqiro7losWy.jpg"},{"character":"Calvin
         Powell","credit_id":"5d26171ea698cf52eba6bfae","order":107,"adult":false,"gender":2,"id":1281250,"known_for_department":"Acting","name":"Rob
-        Morgan","original_name":"Rob Morgan","popularity":1.848,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
+        Morgan","original_name":"Rob Morgan","popularity":4.117,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
         Callahan","credit_id":"5d26185f37b3a96a3452a8a9","order":108,"adult":false,"gender":2,"id":1674830,"known_for_department":"Acting","name":"John
-        Reynolds","original_name":"John Reynolds","popularity":1.483,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
+        Reynolds","original_name":"John Reynolds","popularity":2.23,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
         Wheeler","credit_id":"5d267e6774645700126c239a","order":108,"adult":false,"gender":2,"id":141762,"known_for_department":"Acting","name":"Joe
-        Chrest","original_name":"Joe Chrest","popularity":4.819,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Steve
+        Chrest","original_name":"Joe Chrest","popularity":4.739,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Steve
         Harrington","credit_id":"5759b9d89251410a9900213e","order":110,"adult":false,"gender":2,"id":1467219,"known_for_department":"Acting","name":"Joe
-        Keery","original_name":"Joe Keery","popularity":1.499,"profile_path":"/g4SMf5i8aSOUBBSxa3LLZQhJKSd.jpg"},{"character":"Florence","credit_id":"59fca93b92514113bb02ef2b","order":134,"adult":false,"gender":0,"id":1916844,"known_for_department":"Acting","name":"Susan
-        Shalhoub Larkin","original_name":"Susan Shalhoub Larkin","popularity":0.652,"profile_path":null},{"character":"Scott
+        Keery","original_name":"Joe Keery","popularity":6.462,"profile_path":"/kXoE2UWf01V89yVDD08MCXrEiRe.jpg"},{"character":"Florence","credit_id":"59fca93b92514113bb02ef2b","order":134,"adult":false,"gender":0,"id":1916844,"known_for_department":"Acting","name":"Susan
+        Shalhoub Larkin","original_name":"Susan Shalhoub Larkin","popularity":0.6,"profile_path":null},{"character":"Scott
         Clarke","credit_id":"5d2578ada698cf0010ab31cb","order":134,"adult":false,"gender":2,"id":1381393,"known_for_department":"Acting","name":"Randy
-        Havens","original_name":"Randy Havens","popularity":1.22,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"id":1205905,"name":"Chapter
+        Havens","original_name":"Randy Havens","popularity":3.72,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"id":1205905,"name":"Chapter
         Six: The Monster","overview":"A frantic Jonathan looks for Nancy in the darkness,
         but Steve''s looking for her, too. Hopper and Joyce uncover the truth about
-        the lab''s experiments.","production_code":"","season_number":1,"still_path":"/lNS6qycyucewz3duTr1tf1LU688.jpg","vote_average":8.3,"vote_count":81},{"air_date":"2016-07-15","episode_number":7,"crew":[{"job":"Director","department":"Directing","credit_id":"57b20164c3a36869e5000ba5","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Writer","department":"Writing","credit_id":"57b203009251411a45000bb8","adult":false,"gender":2,"id":1301304,"known_for_department":"Writing","name":"Justin
-        Doble","original_name":"Justin Doble","popularity":0.6,"profile_path":null}],"guest_stars":[{"character":"Troy","credit_id":"5bc10b8e92514179ba020982","order":41,"adult":false,"gender":2,"id":1668667,"known_for_department":"Acting","name":"Peyton
-        Wich","original_name":"Peyton Wich","popularity":1.403,"profile_path":"/52101r7ph1aiJtlZ2pIXD5L7BKV.jpg"},{"character":"Mary
+        the lab''s experiments.","production_code":"","season_number":1,"still_path":"/lNS6qycyucewz3duTr1tf1LU688.jpg","vote_average":8.278,"vote_count":90},{"air_date":"2016-07-15","episode_number":7,"crew":[{"job":"Writer","department":"Writing","credit_id":"57b203009251411a45000bb8","adult":false,"gender":2,"id":1301304,"known_for_department":"Writing","name":"Justin
+        Doble","original_name":"Justin Doble","popularity":0.6,"profile_path":null},{"job":"Director","department":"Directing","credit_id":"57b20164c3a36869e5000ba5","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director
+        of Photography","department":"Camera","credit_id":"60a81c446ee3d70029419e54","adult":false,"gender":2,"id":1485876,"known_for_department":"Camera","name":"Tim
+        Ives","original_name":"Tim Ives","popularity":0.6,"profile_path":"/cgQkPbS2akrEZlawCi5DN0AkPqs.jpg"}],"guest_stars":[{"character":"Troy","credit_id":"5bc10b8e92514179ba020982","order":41,"adult":false,"gender":2,"id":1668667,"known_for_department":"Acting","name":"Peyton
+        Wich","original_name":"Peyton Wich","popularity":1.228,"profile_path":"/52101r7ph1aiJtlZ2pIXD5L7BKV.jpg"},{"character":"Mary
         Mack Girl #2","credit_id":"5d2581d969d28024d0043e2a","order":79,"adult":false,"gender":0,"id":2358394,"known_for_department":"Acting","name":"Shae
         Britt","original_name":"Shae Britt","popularity":0.6,"profile_path":null},{"character":"Jen","credit_id":"5d2581e9e24e3a00132bfca9","order":80,"adult":false,"gender":1,"id":1510263,"known_for_department":"Acting","name":"Jackie
-        Dallas","original_name":"Jackie Dallas","popularity":0.6,"profile_path":null},{"character":"Mary
+        Dallas","original_name":"Jackie Dallas","popularity":1.4,"profile_path":null},{"character":"Mary
         Mack Girl #1","credit_id":"5d258223e24e3a00122bfd6a","order":81,"adult":false,"gender":0,"id":2358396,"known_for_department":"Acting","name":"Abigail
         Whitlock","original_name":"Abigail Whitlock","popularity":0.6,"profile_path":null},{"character":"Holly
         Wheeler","credit_id":"59fca91cc3a3681adf02ccbd","order":82,"adult":false,"gender":1,"id":1916843,"known_for_department":"Acting","name":"Tinsley
-        Price","original_name":"Tinsley Price","popularity":1.678,"profile_path":"/y76Z7ewNyvPOvPudCNrHSFIuTth.jpg"},{"character":"Carol","credit_id":"5d257e96e24e3a00132bf3bd","order":82,"adult":false,"gender":1,"id":1572103,"known_for_department":"Acting","name":"Chelsea
-        Talmadge","original_name":"Chelsea Talmadge","popularity":0.6,"profile_path":"/cxH53B64fEjbI6u7uLTMjJFpAe2.jpg"},{"character":"Holly
+        Price","original_name":"Tinsley Price","popularity":0.936,"profile_path":"/y76Z7ewNyvPOvPudCNrHSFIuTth.jpg"},{"character":"Carol","credit_id":"5d257e96e24e3a00132bf3bd","order":82,"adult":false,"gender":1,"id":1572103,"known_for_department":"Acting","name":"Chelsea
+        Talmadge","original_name":"Chelsea Talmadge","popularity":1.336,"profile_path":"/cxH53B64fEjbI6u7uLTMjJFpAe2.jpg"},{"character":"Holly
         Wheeler","credit_id":"5d25825a37b3a9747d52ab65","order":82,"adult":false,"gender":1,"id":2264087,"known_for_department":"Acting","name":"Anniston
-        Price","original_name":"Anniston Price","popularity":1.646,"profile_path":"/35hG4HtWsxT7HLrtAeMQfusfPB9.jpg"},{"character":"Troy''s
+        Price","original_name":"Anniston Price","popularity":0.6,"profile_path":"/35hG4HtWsxT7HLrtAeMQfusfPB9.jpg"},{"character":"Troy''s
         Mom","credit_id":"5d25827169d28024d0043fa9","order":83,"adult":false,"gender":1,"id":155965,"known_for_department":"Acting","name":"Amy
-        Parrish","original_name":"Amy Parrish","popularity":0.6,"profile_path":"/ueQFClINI5RNrnKQkM3sv8MQkzg.jpg"},{"character":"Tommy
+        Parrish","original_name":"Amy Parrish","popularity":0.694,"profile_path":"/ueQFClINI5RNrnKQkM3sv8MQkzg.jpg"},{"character":"Tommy
         H.","credit_id":"5d257ea9e24e3a00132bf3ff","order":102,"adult":false,"gender":2,"id":1694082,"known_for_department":"Acting","name":"Chester
-        Rushing","original_name":"Chester Rushing","popularity":1.368,"profile_path":"/34YpCnyxCgxlq5PYJqiro7losWy.jpg"},{"character":"Calvin
+        Rushing","original_name":"Chester Rushing","popularity":2.803,"profile_path":"/34YpCnyxCgxlq5PYJqiro7losWy.jpg"},{"character":"Calvin
         Powell","credit_id":"5d26171ea698cf52eba6bfae","order":107,"adult":false,"gender":2,"id":1281250,"known_for_department":"Acting","name":"Rob
-        Morgan","original_name":"Rob Morgan","popularity":1.848,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
+        Morgan","original_name":"Rob Morgan","popularity":4.117,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
         Callahan","credit_id":"5d26185f37b3a96a3452a8a9","order":108,"adult":false,"gender":2,"id":1674830,"known_for_department":"Acting","name":"John
-        Reynolds","original_name":"John Reynolds","popularity":1.483,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
+        Reynolds","original_name":"John Reynolds","popularity":2.23,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
         Wheeler","credit_id":"5d267e6774645700126c239a","order":108,"adult":false,"gender":2,"id":141762,"known_for_department":"Acting","name":"Joe
-        Chrest","original_name":"Joe Chrest","popularity":4.819,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
+        Chrest","original_name":"Joe Chrest","popularity":4.739,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
         Byers","credit_id":"5759b99a9251416b530002a5","order":109,"adult":false,"gender":2,"id":1393177,"known_for_department":"Acting","name":"Noah
-        Schnapp","original_name":"Noah Schnapp","popularity":2.563,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
+        Schnapp","original_name":"Noah Schnapp","popularity":3.522,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
         Harrington","credit_id":"5759b9d89251410a9900213e","order":110,"adult":false,"gender":2,"id":1467219,"known_for_department":"Acting","name":"Joe
-        Keery","original_name":"Joe Keery","popularity":1.499,"profile_path":"/g4SMf5i8aSOUBBSxa3LLZQhJKSd.jpg"},{"character":"Scott
+        Keery","original_name":"Joe Keery","popularity":6.462,"profile_path":"/kXoE2UWf01V89yVDD08MCXrEiRe.jpg"},{"character":"Scott
         Clarke","credit_id":"5d2578ada698cf0010ab31cb","order":134,"adult":false,"gender":2,"id":1381393,"known_for_department":"Acting","name":"Randy
-        Havens","original_name":"Randy Havens","popularity":1.22,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"id":1205906,"name":"Chapter
+        Havens","original_name":"Randy Havens","popularity":3.72,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"id":1205906,"name":"Chapter
         Seven: The Bathtub","overview":"Eleven struggles to reach Will, while Lucas
         warns that \"the bad men are coming.\" Nancy and Jonathan show the police
-        what Jonathan caught on camera.","production_code":"","season_number":1,"still_path":"/mkZzUTNWYfGwRH2f1TzlRgouypa.jpg","vote_average":8.2,"vote_count":85},{"air_date":"2016-07-15","episode_number":8,"crew":[{"job":"Teleplay","department":"Writing","credit_id":"586e9e43c3a3683b6900947e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Teleplay","department":"Writing","credit_id":"586e9e54c3a3683b6900948c","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20164c3a36869e5000ba5","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.27,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":0.694,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Story","department":"Writing","credit_id":"586e9e63925141294e00a1b5","adult":false,"gender":2,"id":1666689,"known_for_department":"Writing","name":"Paul
-        Dichter","original_name":"Paul Dichter","popularity":0.6,"profile_path":null}],"guest_stars":[{"character":"Hawkins
+        what Jonathan caught on camera.","production_code":"","season_number":1,"still_path":"/mkZzUTNWYfGwRH2f1TzlRgouypa.jpg","vote_average":8.266,"vote_count":94},{"air_date":"2016-07-15","episode_number":8,"crew":[{"job":"Teleplay","department":"Writing","credit_id":"586e9e43c3a3683b6900947e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Teleplay","department":"Writing","credit_id":"586e9e54c3a3683b6900948c","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20164c3a36869e5000ba5","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
+        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
+        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Story","department":"Writing","credit_id":"586e9e63925141294e00a1b5","adult":false,"gender":2,"id":1666689,"known_for_department":"Writing","name":"Paul
+        Dichter","original_name":"Paul Dichter","popularity":0.6,"profile_path":null},{"job":"Director
+        of Photography","department":"Camera","credit_id":"60a81c446ee3d70029419e54","adult":false,"gender":2,"id":1485876,"known_for_department":"Camera","name":"Tim
+        Ives","original_name":"Tim Ives","popularity":0.6,"profile_path":"/cgQkPbS2akrEZlawCi5DN0AkPqs.jpg"}],"guest_stars":[{"character":"Hawkins
         Head of Security","credit_id":"5b36ee249251413c9b030fb9","order":84,"adult":false,"gender":2,"id":1371000,"known_for_department":"Acting","name":"Pete
-        Burris","original_name":"Pete Burris","popularity":0.6,"profile_path":"/9FfIl5oggZOkQNzXakbBqAHXSam.jpg"},{"character":"Lead
+        Burris","original_name":"Pete Burris","popularity":1.08,"profile_path":"/9FfIl5oggZOkQNzXakbBqAHXSam.jpg"},{"character":"Lead
         Agent","credit_id":"5b36ee3cc3a368530e03754f","order":85,"adult":false,"gender":2,"id":951643,"known_for_department":"Acting","name":"Tobias
-        Jelinek","original_name":"Tobias Jelinek","popularity":3.102,"profile_path":"/rGHghEJ13ez2uvTQ3SNPB7LoW75.jpg"},{"character":"Sara
+        Jelinek","original_name":"Tobias Jelinek","popularity":4.671,"profile_path":"/rGHghEJ13ez2uvTQ3SNPB7LoW75.jpg"},{"character":"Sara
         Hopper","credit_id":"5d25830469d2802c6e002254","order":85,"adult":false,"gender":1,"id":1511922,"known_for_department":"Acting","name":"Elle
-        Graham","original_name":"Elle Graham","popularity":2.269,"profile_path":"/7bU5UHxfsx3Kgo2D9kLOBFxlmOA.jpg"},{"character":"Barbara
+        Graham","original_name":"Elle Graham","popularity":1.883,"profile_path":"/7bU5UHxfsx3Kgo2D9kLOBFxlmOA.jpg"},{"character":"Barbara
         Holland","credit_id":"59f6602c925141428202220d","order":86,"adult":false,"gender":1,"id":1753911,"known_for_department":"Acting","name":"Shannon
-        Purser","original_name":"Shannon Purser","popularity":1.276,"profile_path":"/zI5C3e0Rk5GjIdP7S4Dfde8R12N.jpg"},{"character":"Technician","credit_id":"5d25833569d2801be0038b41","order":86,"adult":false,"gender":2,"id":930994,"known_for_department":"Acting","name":"Lucius
-        Baston","original_name":"Lucius Baston","popularity":0.982,"profile_path":null},{"character":"The
+        Purser","original_name":"Shannon Purser","popularity":2.239,"profile_path":"/zI5C3e0Rk5GjIdP7S4Dfde8R12N.jpg"},{"character":"Technician","credit_id":"5d25833569d2801be0038b41","order":86,"adult":false,"gender":2,"id":930994,"known_for_department":"Acting","name":"Lucius
+        Baston","original_name":"Lucius Baston","popularity":1.38,"profile_path":null},{"character":"The
         Monster","credit_id":"5b36ede80e0a26400a03468e","order":91,"adult":false,"gender":2,"id":1052211,"known_for_department":"Acting","name":"Mark
-        Steger","original_name":"Mark Steger","popularity":1.4,"profile_path":"/3EeztYq3OfdeHsqjYSwRuNHrvnk.jpg"},{"character":"Diane
+        Steger","original_name":"Mark Steger","popularity":1.594,"profile_path":"/3EeztYq3OfdeHsqjYSwRuNHrvnk.jpg"},{"character":"Diane
         Hopper","credit_id":"5d2582d1a698cf0fa7a849ce","order":106,"adult":false,"gender":1,"id":1502198,"known_for_department":"Acting","name":"Jerri
-        Tubbs","original_name":"Jerri Tubbs","popularity":1.201,"profile_path":"/3oT4Og3EnTb9KsrCrV2MsG53Ung.jpg"},{"character":"Calvin
+        Tubbs","original_name":"Jerri Tubbs","popularity":1.686,"profile_path":"/3oT4Og3EnTb9KsrCrV2MsG53Ung.jpg"},{"character":"Calvin
         Powell","credit_id":"5d26171ea698cf52eba6bfae","order":107,"adult":false,"gender":2,"id":1281250,"known_for_department":"Acting","name":"Rob
-        Morgan","original_name":"Rob Morgan","popularity":1.848,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
+        Morgan","original_name":"Rob Morgan","popularity":4.117,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
         Callahan","credit_id":"5d26185f37b3a96a3452a8a9","order":108,"adult":false,"gender":2,"id":1674830,"known_for_department":"Acting","name":"John
-        Reynolds","original_name":"John Reynolds","popularity":1.483,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
+        Reynolds","original_name":"John Reynolds","popularity":2.23,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
         Wheeler","credit_id":"5d267e6774645700126c239a","order":108,"adult":false,"gender":2,"id":141762,"known_for_department":"Acting","name":"Joe
-        Chrest","original_name":"Joe Chrest","popularity":4.819,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
+        Chrest","original_name":"Joe Chrest","popularity":4.739,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
         Byers","credit_id":"5759b99a9251416b530002a5","order":109,"adult":false,"gender":2,"id":1393177,"known_for_department":"Acting","name":"Noah
-        Schnapp","original_name":"Noah Schnapp","popularity":2.563,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
+        Schnapp","original_name":"Noah Schnapp","popularity":3.522,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
         Harrington","credit_id":"5759b9d89251410a9900213e","order":110,"adult":false,"gender":2,"id":1467219,"known_for_department":"Acting","name":"Joe
-        Keery","original_name":"Joe Keery","popularity":1.499,"profile_path":"/g4SMf5i8aSOUBBSxa3LLZQhJKSd.jpg"},{"character":"Florence","credit_id":"59fca93b92514113bb02ef2b","order":134,"adult":false,"gender":0,"id":1916844,"known_for_department":"Acting","name":"Susan
-        Shalhoub Larkin","original_name":"Susan Shalhoub Larkin","popularity":0.652,"profile_path":null}],"id":1205907,"name":"Chapter
+        Keery","original_name":"Joe Keery","popularity":6.462,"profile_path":"/kXoE2UWf01V89yVDD08MCXrEiRe.jpg"},{"character":"Florence","credit_id":"59fca93b92514113bb02ef2b","order":134,"adult":false,"gender":0,"id":1916844,"known_for_department":"Acting","name":"Susan
+        Shalhoub Larkin","original_name":"Susan Shalhoub Larkin","popularity":0.6,"profile_path":null}],"id":1205907,"name":"Chapter
         Eight: The Upside Down","overview":"Dr. Brenner holds Hopper and Joyce for
         questioning while the boys wait with Eleven in the gym. Back at Will''s, Nancy
-        and Jonathan prepare for battle.","production_code":"","season_number":1,"still_path":"/1teJ5dbuepfqOOs9uYhYTUjr2qs.jpg","vote_average":8.4,"vote_count":82}],"name":"Stranger
-        Things","overview":"Strange things are afoot in Hawkins, Indiana, where a
-        young boy''s sudden disappearance unearths a young girl with otherworldly
-        powers.","id":77680,"poster_path":"/zka9GTG4QQhLmN4NR18KEjxICtt.jpg","season_number":1}'
-  recorded_at: Thu, 15 Apr 2021 17:50:17 GMT
+        and Jonathan prepare for battle.","production_code":"","season_number":1,"still_path":"/1teJ5dbuepfqOOs9uYhYTUjr2qs.jpg","vote_average":8.418,"vote_count":91}],"name":"Season
+        1","overview":"Strange things are afoot in Hawkins, Indiana, where a young
+        boy''s sudden disappearance unearths a young girl with otherworldly powers.","id":77680,"poster_path":"/zka9GTG4QQhLmN4NR18KEjxICtt.jpg","season_number":1}'
+  recorded_at: Wed, 13 Oct 2021 16:53:49 GMT
 recorded_with: VCR 6.0.0
