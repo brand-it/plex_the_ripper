@@ -5,7 +5,7 @@ require 'rails_helper'
 RSpec.describe CreateMkvService do
   let(:service) { described_class.new(disk_title: disk_title, progress_listener: progress_listener) }
   let(:disk_title) { build_stubbed(:disk_title) }
-  let(:progress_listener) { instance_double('UploadProgressListener', call: nil) }
+  let(:progress_listener) { instance_double('progress_listener', call: nil) }
 
   before { create :config_make_mkv }
 
@@ -14,7 +14,6 @@ RSpec.describe CreateMkvService do
 
     context 'when the disk title is valid' do
       let(:disk_title) { build_stubbed(:disk_title, :with_movie) }
-      let(:progress_listener) { instance_double('UploadProgressListener', call: nil) }
 
       before { allow(service).to receive(:cmd).and_return('ls /not-a-real-folder') }
 
