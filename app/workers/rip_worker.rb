@@ -6,14 +6,25 @@ class RipWorker < ApplicationWorker
   def call
     disk_titles.each do |disk_title|
       create_mkv(disk_title) unless disk_title.video.tmp_plex_path_exists?
-      UploadWorker.perform_async(disk_title: disk_title)
+      upload_mkv(disk_title)
     end
+  end
+
+  def progress_listener
+    @progress_listener ||= MkvProgressListener.new
   end
 
   private
 
   def create_mkv(disk_title)
-    CreateMkvService.new(disk_title: disk_title, progress_listener: MkvProgressListener.new).call
+    CreateMkvService.call disk_title: disk_title,
+                          progress_listener: progress_listener
+  end
+
+  def upload_mkv(disk_title)
+    @progress_listener = UploadProgressListener.new(file_size: disk_title.size)
+    Ftp::UploadMkvService.call disk_title: disk_title,
+                               progress_listener: progress_listener
   end
 
   def disk_titles

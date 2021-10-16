@@ -4,7 +4,10 @@ namespace :upload do
   desc 'Upload all files that have been ripped correctly but never made it to the FTP server'
   task all: :environment do
     Video.all.find_each do |video|
-      next unless video.tmp_plex_path_exists?
+      print "Checking Uploading #{video.title} ... "
+      next puts 'skip' unless video.tmp_plex_path_exists?
+
+      puts 'uploading'
 
       progress_bar = ProgressBar.create(
         title: "Uploading #{video.title} to #{video.plex_path}",
