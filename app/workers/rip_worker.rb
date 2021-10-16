@@ -2,29 +2,18 @@
 
 class RipWorker < ApplicationWorker
   option :disk_title_ids, Types::Array.of(Types::Integer)
-  attr_reader :progress_listener
 
   def call
-    disk_titles.each do |title|
-      create_mkv(title) unless tmp_mkv_file_exists?(title)
-      upload_video(title)
+    disk_titles.each do |disk_title|
+      create_mkv(disk_title) unless disk_title.video.tmp_plex_path_exists?
+      UploadWorker.perform_async(disk_title: disk_title)
     end
   end
 
   private
 
-  def tmp_mkv_file_exists?(title)
-    File.exist?(title.video.tmp_plex_path)
-  end
-
-  def create_mkv(title)
-    @progress_listener = MkvProgressListener.new
-    CreateMkvService.new(disk_title: title, progress_listener: progress_listener).call
-  end
-
-  def upload_video(title)
-    @progress_listener = UploadProgressListener.new
-    Ftp::UploadMkvService.new(disk_title: title, progress_listener: progress_listener).call
+  def create_mkv(disk_title)
+    CreateMkvService.new(disk_title: disk_title, progress_listener: MkvProgressListener.new).call
   end
 
   def disk_titles
