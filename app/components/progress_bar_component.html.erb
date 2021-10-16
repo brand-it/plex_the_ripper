@@ -4,6 +4,6 @@
     </div>
   </div>
   <div>
-    Loading <%= message.presence || model.model_name.singular %> ... <%= number_to_percentage completed, precision: 2 %>
+    <%= message.presence || model.model_name.singular %> ... <%= number_to_percentage completed, precision: 2 %>
   </div>
 </div>

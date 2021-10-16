@@ -10,6 +10,9 @@ class CreateMkvService
 
   option :disk_title, Types.Instance(DiskTitle)
   option :progress_listener, Types.Interface(:call)
+  def self.call(*args)
+    new(*args).call
+  end
 
   def call
     Result.new(tmp_path, create_mkv.success?).tap do |result|
