@@ -10,9 +10,11 @@ namespace :upload do
       puts 'uploading'
 
       progress_bar = ProgressBar.create(
-        title: "Uploading #{video.title} to #{video.plex_path}",
-        total: video.disk_title.size,
-        format: '%t %a %e %P% Processed: %c from %C'
+        progress_mark: ' ',
+        remainder_mark: "\u{FF65}",
+        format: "%e %b\u{15E7}%i %P%% %t",
+        title: "Uploading #{video.title}",
+        total: video.disk_title.size
       )
 
       progress_listener = ->(chunk_size: 0) { progress_bar.progress += chunk_size }

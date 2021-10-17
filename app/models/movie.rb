@@ -46,11 +46,15 @@ class Movie < Video
   def plex_path
     raise 'plex config is missing and is required' unless Config::Plex.any?
 
-    @plex_path ||= Pathname.new("#{Config::Plex.newest.settings_movie_path}/#{plex_name}/#{plex_name}.mkv")
+    @plex_path ||= Pathname.new("#{Config::Plex.newest.settings_movie_path}/#{plex_named_path}")
   end
 
   def tmp_plex_path
-    @tmp_plex_path ||= Rails.root.join("tmp/movies/#{plex_name}/#{plex_name}.mkv")
+    @tmp_plex_path ||= Rails.root.join("tmp/movies/#{plex_named_path}")
+  end
+
+  def plex_named_path
+    "#{plex_name}/#{plex_name}.mkv"
   end
 
   def plex_name
