@@ -7,7 +7,6 @@ module Ftp
     option :destination_directory, Types::String
     option :download_progress_listener, Types.Interface(:call), optional: true
     option :checksum_progress_listener, Types.Interface(:call), optional: true
-    option :max_retries, Types::Integer, default: -> { 5 }
 
     def call
       validate_destination_directory!

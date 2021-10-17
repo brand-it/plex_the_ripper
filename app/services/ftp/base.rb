@@ -6,6 +6,7 @@ module Ftp
   class Base
     extend Dry::Initializer
     option :plex_config, default: -> { Config::Plex.newest }
+    option :max_retries, Types::Integer, default: -> { 20 }
 
     DEFAULT_RESCUES = [
       Errno::ECONNRESET,
