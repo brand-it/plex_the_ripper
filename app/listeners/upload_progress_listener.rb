@@ -11,8 +11,8 @@ class UploadProgressListener
   option :message, Types::String.optional, default: -> { '' }
   option :file_size, Types::Integer
 
-  def call(chuck_size: nil)
-    self.completed += chuck_size
+  def call(chunk_size: nil)
+    @completed += chunk_size
 
     component = ProgressBarComponent.new model: DiskTitle,
                                          completed: percentage,
