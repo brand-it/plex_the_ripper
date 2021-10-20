@@ -12,6 +12,7 @@ module Ftp
       Errno::ECONNRESET,
       Errno::EINVAL,
       Errno::ENETUNREACH,
+      Net::FTPTempError,
       Net::ReadTimeout
     ].freeze
 

@@ -3,7 +3,10 @@
   <small class="text-muted"><%= @job.process.state %></small>
 </h3>
 <% if @job.process.reason %>
-  <div class='bg-dark text-danger p-2 border-bottom p-2 rounded-top'><%= @job.process.reason.message %></div>
+  <div class='bg-dark text-danger p-2 border-bottom p-2 rounded-top'>
+    <%= @job.process.reason.class %>
+    <%= @job.process.reason.message %>
+  </div>
   <div class='p-2 rounded-bottom overflow-auto lh-sm text-nowrap bg-dark text-light'>
     <% @job.process.reason.backtrace.each do |trace| %>
       <% next unless trace.include?(Rails.root.to_s) %>
