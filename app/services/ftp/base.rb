@@ -47,6 +47,7 @@ module Ftp
 
       Rails.logger.error "try_to #{@attempts} >= #{max_retries} #{e.class} #{e.message}"
       sleep(1 * @attempts += 1)
+      @ftp = nil # reset the ftp client
       retry
     end
 
