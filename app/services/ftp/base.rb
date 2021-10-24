@@ -45,8 +45,8 @@ module Ftp
     rescue *rescue_from => e
       raise e if @attempts >= max_retries
 
-      Rails.logger.error e.message
-      sleep(1 * @attempts)
+      Rails.logger.error "try_to #{@attempts} >= #{max_retries} #{e.class} #{e.message}"
+      sleep(1 * @attempts += 1)
       retry
     end
 
