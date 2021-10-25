@@ -13,7 +13,7 @@ class UploadProgressListener
 
   def call(chunk_size: nil)
     @completed += chunk_size
-    return if next_update.future?
+    return if next_update.future? && percentage < 100
 
     update_component
     @next_update = nil # clear next_update timer
