@@ -9,8 +9,8 @@ class VideoBlobChecksumService
   option :checksum_progress_listener, Types.Interface(:call), optional: true
   option :max_download_retries, default: -> { 5 }
 
-  def self.call(*args)
-    new(*args).call
+  def self.call(...)
+    new(...).call
   end
 
   def call

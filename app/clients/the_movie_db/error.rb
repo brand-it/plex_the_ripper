@@ -6,7 +6,7 @@ module TheMovieDb
 
     def initialize(object)
       @object = object
-      @body = JSON.parse(object.body, object_class: OpenStruct)
+      @body = JSON.parse(object.body)
       super("#{object.env.url} #{object.status} #{object.body}")
     end
   end

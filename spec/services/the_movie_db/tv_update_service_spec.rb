@@ -16,14 +16,14 @@ RSpec.describe TheMovieDb::TvUpdateService, type: :service do
     end
 
     it 'updates the the title' do
-      expect { call }.to change(tv, :title).from(tv.title).to(new_description_class.db_tv.name)
+      expect { call }.to change(tv, :title).from(tv.title).to(new_description_class.db_tv['name'])
     end
 
     it 'transforms episode_distribution_runtime' do
       expect do
         call
       end.to change(tv, :episode_distribution_runtime).from(tv.episode_distribution_runtime)
-                                                      .to(new_description_class.db_tv.episode_run_time.sort)
+                                                      .to(new_description_class.db_tv['episode_run_time'].sort)
     end
   end
 end

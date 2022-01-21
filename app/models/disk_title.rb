@@ -24,8 +24,6 @@ class DiskTitle < ApplicationRecord
   has_one :episode, dependent: :nullify
   belongs_to :disk
 
-  validates :disk, presence: true
-
   def video
     movie || episode
   end

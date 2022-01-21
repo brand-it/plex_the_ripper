@@ -19,7 +19,7 @@ RSpec.describe CreateMkvService do
 
       it 'calls progress listener' do
         call
-        expect(progress_listener).to have_received(:call).with(OpenStruct.new(type: 'ls', line: [0]))
+        expect(progress_listener).to have_received(:call).with(MkvParser::Error.new(type: 'ls', line: [0]))
       end
 
       it 'responds with a result object' do

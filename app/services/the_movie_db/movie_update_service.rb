@@ -31,8 +31,8 @@ module TheMovieDb
     private
 
     def movie_params
-      movie.the_movie_db_details.to_h.slice(*PERMITTED_PARAMS).tap do |params|
-        params[:movie_runtime] = convert_min_to_seconds(movie.the_movie_db_details.runtime)
+      movie.the_movie_db_details.symbolize_keys.slice(*PERMITTED_PARAMS).tap do |params|
+        params[:movie_runtime] = convert_min_to_seconds(movie.the_movie_db_details['runtime'])
         params[:rating] = movie.ratings.first || Video.ratings['N/A']
       end
     end

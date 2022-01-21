@@ -17,7 +17,7 @@ class TheMovieDbsController < ApplicationController
   private
 
   def search_service
-    @search_service ||= VideoSearchQuery.new(search_params)
+    @search_service ||= VideoSearchQuery.new(**search_params)
   end
 
   def search_params

@@ -35,6 +35,7 @@ module MkvParser
   PRGC = Struct.new(:code, :id, :name)
 
   MSG = Struct.new(:code, :flags, :mcount, :message, :format, :params)
+  Error = Struct.new(:type, :line, keyword_init: true)
 
   def parse_mkv_string(stdout_str)
     return [] if stdout_str.blank?
@@ -55,6 +56,6 @@ module MkvParser
     end
   rescue NameError => e
     Rails.logger.debug { "NameError message: #{e.message} type: #{type} line: #{line}" }
-    OpenStruct.new(type: type, line: line)
+    Error.new(type: type, line: line)
   end
 end

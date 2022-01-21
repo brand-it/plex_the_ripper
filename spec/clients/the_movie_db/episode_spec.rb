@@ -9,7 +9,7 @@ RSpec.describe TheMovieDb::Episode do
     subject(:results) { described_class.new(66_732, 1, 1).results }
 
     it 'responds with success' do
-      expect(results.id).to eq 1_198_665
+      expect(results['id']).to eq 1_198_665
     end
   end
 end

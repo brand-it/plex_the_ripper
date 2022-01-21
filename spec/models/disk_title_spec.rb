@@ -23,10 +23,6 @@ require 'rails_helper'
 
 RSpec.describe DiskTitle, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to(:disk) }
-  end
-
-  describe 'validations' do
-    it { is_expected.to validate_presence_of(:disk) }
+    it { is_expected.to belong_to(:disk).optional(false) }
   end
 end

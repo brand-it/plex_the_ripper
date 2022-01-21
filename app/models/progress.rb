@@ -27,7 +27,6 @@ class Progress < ApplicationRecord
   enum descriptive: { download_ftp: 0, create_mkv: 1 }
 
   validates :descriptive, presence: true
-  validates :progressable, presence: true
 
   def self.generate_key(value)
     value = value.sort.join if value.is_a?(Array)

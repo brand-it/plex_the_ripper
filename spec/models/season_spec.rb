@@ -28,6 +28,6 @@ RSpec.describe Season, type: :model do
 
   describe 'associations' do
     it { is_expected.to have_many(:episodes) }
-    it { is_expected.to belong_to(:tv) }
+    it { is_expected.to belong_to(:tv).optional(false) }
   end
 end

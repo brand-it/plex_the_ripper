@@ -25,12 +25,11 @@ require 'rails_helper'
 
 RSpec.describe Progress, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to(:progressable) }
+    it { is_expected.to belong_to(:progressable).optional(false) }
   end
 
   # V
   describe 'validations' do
-    it { is_expected.to validate_presence_of(:progressable) }
     it { is_expected.to validate_presence_of(:descriptive) }
   end
 end

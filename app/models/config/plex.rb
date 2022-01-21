@@ -25,7 +25,7 @@ class Config
     validates :settings_tv_path, presence: true
 
     def settings=(hash)
-      super(hash.reject { |_k, v| v.blank? })
+      super(hash.compact_blank)
     end
 
     def movie_path

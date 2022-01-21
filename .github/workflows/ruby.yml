@@ -22,7 +22,7 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
-        ruby-version: 2.7.3
+        ruby-version: 3.1.0
     - uses: actions/setup-node@v2.4.1
       with:
         node-version: 14.6.0
@@ -50,6 +50,6 @@ jobs:
       uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
-        ruby-version: 2.7.3
+        ruby-version: 3.1.0
     - name: Run tests
       run: bundle exec rubocop
