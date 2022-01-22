@@ -9,7 +9,7 @@ RSpec.describe TheMovieDb::Movie do
     subject(:results) { described_class.new(577_922).results }
 
     it 'responds with success' do
-      expect(results.title).to eq 'Tenet'
+      expect(results['title']).to eq 'Tenet'
     end
   end
 end

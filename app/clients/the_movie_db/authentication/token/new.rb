@@ -3,7 +3,7 @@
 module TheMovieDb
   module Authentication
     module Token
-      class Response < OpenStruct
+      class Response < Hash
         HOST = 'www.themoviedb.org'
 
         def request_url(params = nil)

@@ -25,6 +25,6 @@ require 'rails_helper'
 
 RSpec.describe Episode, type: :model do
   describe 'associations' do
-    it { is_expected.to belong_to(:season) }
+    it { is_expected.to belong_to(:season).optional(false) }
   end
 end

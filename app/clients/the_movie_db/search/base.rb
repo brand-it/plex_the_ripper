@@ -7,7 +7,7 @@ module TheMovieDb
       option :query, type: Types::Coercible::String
 
       def results(use_cache: true)
-        return OpenStruct.new(results: []) if query.blank?
+        return { 'results' => [] } if query.blank?
 
         super
       end

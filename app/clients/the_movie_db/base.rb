@@ -20,13 +20,13 @@ module TheMovieDb
       delegate :results, to: :new
     end
 
-    def results(use_cache: true, object_class: OpenStruct)
+    def results(use_cache: true, object_class: Hash)
       @results ||= use_cache ? cache_get(object_class: object_class) : get(object_class: object_class)
     end
 
     private
 
-    def cache_get(object_class: OpenStruct)
+    def cache_get(object_class: Hash)
       Rails.cache.fetch(
         [uri, query_params, object_class],
         namespace: CACHE_NAMESPACE,
@@ -37,7 +37,7 @@ module TheMovieDb
       end
     end
 
-    def get(object_class: OpenStruct)
+    def get(object_class: Hash)
       response = connection.get(uri, query_params)
 
       return JSON.parse(response.body, object_class: object_class) if response.success?

@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.3'
+ruby '3.1.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'bootsnap', '>= 1.4.2', require: false
@@ -18,22 +18,22 @@ gem 'hotwire-rails'
 gem 'jbuilder', '>= 2.7'
 gem 'kaminari', '>= 1.2.1'
 gem 'os', '>= 1.1'
-gem 'progressbar', '~> 1.11'
+gem 'progressbar', '>= 1.11'
 gem 'puma', '>= 4.1'
-gem 'rails', '~> 6.1'
+gem 'rails', '~> 7.0'
 gem 'rainbow'
 gem 'sass-rails', '>= 6'
 gem 'simple_form'
 gem 'sqlite3', '>= 1.4'
-gem 'sys-filesystem', '~> 1.4'
-gem 'text', '~> 1.3', '>= 1.3.1'
+gem 'sys-filesystem', '>= 1.4'
+gem 'text', '>= 1.3.1'
 gem 'view_component', '>= 2.18'
 gem 'webpacker', '>= 5.0'
 gem 'wisper'
 gem 'workflow'
 
 group :development, :test do
-  gem 'annotate'
+  # gem 'annotate' # https://github.com/ctran/annotate_models/pull/912 not rails 7.0 comparable.
   gem 'awesome_print'
   gem 'factory_bot_rails'
   gem 'faker'
@@ -56,8 +56,7 @@ group :development do
   gem 'listen'
   gem 'web-console', '>= 3.3.0'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'spring-watcher-listen'
+  gem 'spring', '>= 4.0'
 end
 
 group :test do

@@ -20,10 +20,10 @@ class ApplicationWorker
   end
 
   class << self
-    def perform_async(*args)
+    def perform_async(...)
       return if job.pending?
 
-      new(*args).tap do |worker|
+      new(...).tap do |worker|
         ApplicationWorker.jobs[self] = Job.new(worker, worker.async.call)
       end
     end

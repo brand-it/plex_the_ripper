@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class Config
-  class Serializer < OpenStruct
+  class Serializer < OpenStruct # rubocop:disable Style/OpenStructUse
     include SimplyEncrypt
 
     class << self
