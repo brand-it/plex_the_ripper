@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 class ApplicationWorker
-  include Concurrent::Async
   include CableReady::Broadcaster
 
   extend Dry::Initializer
@@ -10,12 +9,23 @@ class ApplicationWorker
   class Job
     extend Dry::Initializer
 
-    param :worker, optional: true
-    param :process, Types.Instance(Concurrent::IVar), default: -> { Concurrent::IVar.new }
-    delegate :fulfilled?, to: :process
+    option :thread, Types.Instance(Thread), optional: true
+    option :worker, optional: true
+
+    attr_accessor :exception
+
+    delegate :status, :backtrace, to: :thread
 
     def pending?
-      worker && process.pending?
+      worker.present? && thread&.alive?
+    end
+
+    def logs
+      @logs ||= []
+    end
+
+    def log(message)
+      logs << message
     end
   end
 
@@ -23,9 +33,7 @@ class ApplicationWorker
     def perform_async(...)
       return if job.pending?
 
-      new(...).tap do |worker|
-        ApplicationWorker.jobs[self] = Job.new(worker, worker.async.call)
-      end
+      ApplicationWorker.jobs[self] = new(...).perform_async
     end
 
     def job
@@ -39,6 +47,26 @@ class ApplicationWorker
     def find(key)
       jobs[key.constantize]
     end
+  end
+
+  def perform_async
+    Job.new(worker: self, thread: async)
+  end
+
+  private
+
+  def async
+    raise NotImplementedError, 'You must implement the `perform` method' unless respond_to?(:perform)
+
+    thread = Thread.new do
+      perform
+    rescue StandardError => e
+      job.exception = e
+    end
+    thread.report_on_exception = true
+    thread.abort_on_exception = true
+    thread.run
+    thread
   end
 
   def job
