@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'net/ftp'
-
 module Ftp
   class Base
     extend Dry::Initializer
@@ -16,8 +14,8 @@ module Ftp
       Net::ReadTimeout
     ].freeze
 
-    def self.call(*args)
-      new(*args).call
+    def self.call(...)
+      new(...).call
     end
 
     private
@@ -45,8 +43,9 @@ module Ftp
     rescue *rescue_from => e
       raise e if @attempts >= max_retries
 
-      Rails.logger.error e.message
-      sleep(1 * @attempts)
+      Rails.logger.error "try_to #{@attempts} >= #{max_retries} #{e.class} #{e.message}"
+      sleep(1 * @attempts += 1)
+      @ftp = nil # reset the ftp client
       retry
     end
 

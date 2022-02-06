@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe VideosQuery do
-  subject(:query) { described_class.new(filters) }
+  subject(:query) { described_class.new(**filters) }
 
   describe '#types_and_ids' do
     context 'when providing more then two types and ids' do

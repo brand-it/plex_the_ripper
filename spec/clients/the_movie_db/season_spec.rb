@@ -9,7 +9,7 @@ RSpec.describe TheMovieDb::Season do
     subject(:results) { described_class.new(66_732, 1).results }
 
     it 'responds with success' do
-      expect(results._id).to eq '57599ae2c3a3684ea900242d'
+      expect(results['_id']).to eq '57599ae2c3a3684ea900242d'
     end
   end
 end

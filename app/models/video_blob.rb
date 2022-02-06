@@ -24,9 +24,11 @@
 #  index_video_blobs_on_video                 (video_type,video_id)
 #
 class VideoBlob < ApplicationRecord
+  Movie = Struct.new(:title, :year)
   # rubocop:disable Layout/LineLength
   MOVIE_MATCHER_WITH_YEAR = /(?<title>.*)[(](?<year>\d{4})[)]/.freeze
-  MOVIE_MATCHER = /(?<title>.*)[.]mkv/.freeze
+  MOVIE_MATCHER = /(?<title>.*)/.freeze
+  # TODO: Currently not activly used but these are the patterns we are looking for
   TV_SHOW_MATCHER_FULL = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<number>.*)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*mkv/.freeze
   TV_SHOW_WITHOUT_EP_NAME = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<number>.*)\s-\s(?<date>.*).*mkv/.freeze
   TV_SHOW_WITHOUT_DATE = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<number>.*)\s-\s(?<episode_name>.*).*mkv/.freeze
@@ -43,17 +45,21 @@ class VideoBlob < ApplicationRecord
   scope :missing_checksum, -> { where(checksum: nil) }
 
   def parsed_filename
-    @parsed_filename ||= begin
-      match = filename.match(MOVIE_MATCHER_WITH_YEAR) || filename.match(MOVIE_MATCHER)
-      OpenStruct.new(match.names.index_with { |n| match[n] })
-    end
+    return @parsed_filename if @parsed_filename
+
+    match = filename.match(MOVIE_MATCHER_WITH_YEAR) || filename.match(MOVIE_MATCHER)
+    return @parsed_filename = Movie.new(nil, nil) if match.nil?
+
+    @parsed_filename = Movie.new(match.named_captures['title'], match.named_captures['year'])
   end
 
   def parsed_dirname
-    @parsed_dirname ||= begin
-      name = key.gsub("#{Config::Plex.newest.movie_path}/", '').split('/').first.to_s
-      match = name.match(MOVIE_MATCHER_WITH_YEAR) || name.match(MOVIE_MATCHER)
-      OpenStruct.new(match&.names&.index_with { |n| match[n] })
-    end
+    return @parsed_dirname if @parsed_dirname
+
+    name = key.gsub("#{Config::Plex.newest.movie_path}/", '').split('/').first.to_s
+    match = name.match(MOVIE_MATCHER_WITH_YEAR) || name.match(MOVIE_MATCHER)
+    return @parsed_dirname = Movie.new(nil, nil) if match.nil?
+
+    @parsed_dirname = Movie.new(match.named_captures['title'], match.named_captures['year'])
   end
 end

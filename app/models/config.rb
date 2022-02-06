@@ -24,9 +24,9 @@ class Config < ApplicationRecord
     end
 
     def newest
-      Rails.cache.fetch(:"#{model_name.param_key}_newest", skip_nil: true) do
-        order(updated_at: :desc).first
-      end || new
+      key = :"#{model_name.param_key}_newest"
+      newest = Thread.current.thread_variable_get(key)
+      newest || Thread.current.thread_variable_set(key, order(updated_at: :desc).first) || new
     end
   end
 

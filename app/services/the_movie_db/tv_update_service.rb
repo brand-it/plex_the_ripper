@@ -4,7 +4,7 @@ module TheMovieDb
   class TvUpdateService
     extend Dry::Initializer
 
-    PERMITTED_PARAMS = %i[
+    PERMITTED_PARAMS = %w[
       name
       original_name
       year
@@ -12,7 +12,7 @@ module TheMovieDb
       backdrop_path
       overview
     ].freeze
-    SEASON_PERMITTED_PARAMS = %i[name overview poster_path season_number air_date].freeze
+    SEASON_PERMITTED_PARAMS = %w[name overview poster_path season_number air_date].freeze
 
     param :tv, Types.Instance(::Tv)
 
@@ -36,17 +36,17 @@ module TheMovieDb
     private
 
     def tv_params
-      db_tv.to_h.slice(*PERMITTED_PARAMS).tap do |params|
-        params[:episode_distribution_runtime] = db_tv.episode_run_time.sort
-        params[:episode_first_air_date] = db_tv.first_air_date
+      db_tv.slice(*PERMITTED_PARAMS).tap do |params|
+        params[:episode_distribution_runtime] = db_tv['episode_run_time'].sort
+        params[:episode_first_air_date] = db_tv['first_air_date']
         params[:synced_on] = Time.current
       end
     end
 
     def build_seasons
-      db_tv.seasons.each do |season|
-        tv.seasons.build(season.to_h.slice(*SEASON_PERMITTED_PARAMS)).tap do |tv_season|
-          tv_season.the_movie_db_id = season.id
+      db_tv['seasons'].each do |season|
+        tv.seasons.build(season.slice(*SEASON_PERMITTED_PARAMS)).tap do |tv_season|
+          tv_season.the_movie_db_id = season['id']
         end
       end
     end

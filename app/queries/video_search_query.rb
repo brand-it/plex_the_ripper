@@ -12,9 +12,8 @@ class VideoSearchQuery
     return @results if defined?(@results)
     return @results = Video.order(popularity: :desc).includes(:video_blobs).page(page) if query.blank?
 
-    @results = Results.new the_movie_db_ids.map { |db|
-                             find_video(**db) || build_video(**db)
-                           }, search, page
+    db_results = the_movie_db_ids.map { |db| find_video(**db) || build_video(**db) }
+    @results = Results.new db_results, search, page
   end
 
   def next_query
@@ -30,13 +29,11 @@ class VideoSearchQuery
   def the_movie_db_ids
     return @the_movie_db_ids if @the_movie_db_ids
 
-    @the_movie_db_ids = video_results.map { |r| { id: r.id, type: r.media_type.classify } }
+    @the_movie_db_ids = video_results.map { { id: _1['id'], type: _1['media_type'].classify } }
   end
 
   def video_results
-    search.results.select do |r|
-      VIDEOS_MEDIA_TYPE.include?(r.media_type)
-    end
+    search['results'].select { VIDEOS_MEDIA_TYPE.include?(_1['media_type']) }
   end
 
   def find_video(id: nil, type: nil)
@@ -68,7 +65,7 @@ class VideoSearchQuery
     end
 
     def search_next_page
-      return if search.total_pages && search.total_pages <= current_page
+      return if search['total_pages'] && search['total_pages'] <= current_page
 
       current_page + 1
     end

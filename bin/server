@@ -6,6 +6,6 @@ export RAILS_ENV=production
 export RAILS_SERVE_STATIC_FILES=true
 if [ ! -f "tmp/setup_complete" ]; then
   bin/install_ruby
-  bin/setup --path tmp/gems --deployment
+  bin/setup --deployment
 fi
 bin/rails s -e production -b 0.0.0.0

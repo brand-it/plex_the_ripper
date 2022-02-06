@@ -61,7 +61,9 @@ class Video < ApplicationRecord
   end
 
   def ratings
-    @ratings ||= self.class.ratings.keys & release_dates.results.flat_map(&:release_dates).map(&:certification)
+    @ratings ||= self.class.ratings.keys & release_dates['results']
+                 .flat_map { _1['release_dates'] }
+                 .map { _1['certification'] }
   end
 
   def release_or_air_date

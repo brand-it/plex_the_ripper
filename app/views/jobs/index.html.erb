@@ -11,8 +11,8 @@
     <% @jobs.each do |id, job| %>
       <tr>
         <th scope="row"><%= id %></th>
-        <td><%= job.process.state %></td>
-        <td><%= job.process.reason&.message %></td>
+        <td><%= job.status %></td>
+        <td><%= job.exception&.message %></td>
         <td><%= link_to 'details', job_path(id), class: 'btn btn-secondary' %></td>
       </tr>
     <% end %>
