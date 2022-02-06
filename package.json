@@ -5,27 +5,31 @@
     "@fortawesome/fontawesome-free": "^5.15.2",
     "@hotwired/turbo-rails": "^7.0.0-beta.5",
     "@popperjs/core": "^2.9.2",
-    "@rails/actioncable": "^6.1.1",
-    "@rails/activestorage": "^6.1.1",
-    "@rails/ujs": "^6.1.1",
+    "@rails/actioncable": "^7.0.1",
+    "@rails/activestorage": "^7.0.1",
+    "@rails/ujs": "^7.0.1",
     "@rails/webpacker": "^5.4.0",
-    "autoprefixer": "^9.8.6",
+    "autoprefixer": "^10.4.2",
+    "babel-loader": "^8.2.3",
     "boostrap": "^2.0.0",
     "bootstrap": "^5.0.2",
-    "cable_ready": "^4.5.0",
-    "glob-parent": "^5.1.2",
+    "cable_ready": "https://github.com/stimulusreflex/cable_ready#1bded053b64e8f497fcf368a258b0326ea4c886f",
+    "css-loader": "^6.6.0",
+    "file-loader": "^6.2.0",
+    "glob-parent": "^6.0.2",
     "is-svg": "^4.2.2",
     "jquery": "^3.5.1",
-    "postcss": "^7.0.36",
+    "postcss": "^8.4.6",
     "postcss-flexbugs-fixes": "^4.2.1",
     "postcss-loader": "^3.0.0",
-    "postcss-preset-env": "^6.7.0",
-    "stimulus": "^2.0.0",
-    "webpack": "^4.46.0"
+    "sass-loader": "^12.4.0",
+    "stimulus": "^3.0.1",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.68.0"
   },
   "version": "0.1.0",
   "devDependencies": {
-    "webpack-cli": "^3.3.12",
-    "webpack-dev-server": "^3.11.2"
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
   }
 }
