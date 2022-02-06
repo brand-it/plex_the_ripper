@@ -13,5 +13,6 @@
 FactoryBot.define do
   factory :config_make_mkv, class: 'Config::MakeMkv' do
     settings_makemkvcon_path { Rails.root.join('spec/bin/makemkvcon_test') }
+    settings_registration_key { 'key-to-something-special' }
   end
 end

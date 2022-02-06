@@ -2,7 +2,8 @@
 
 class LoadDiskWorker < ApplicationWorker
   option :disk_id, Types::Integer
-  def call
+
+  def perform
     CreateDisksService.call
   end
 

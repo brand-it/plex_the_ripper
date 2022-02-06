@@ -14,9 +14,11 @@ class Config
   class MakeMkv < Config
     setting do |s|
       s.attribute :makemkvcon_path, default: -> { default_makemkvcon_path }
+      s.attribute :registration_key
     end
 
     validates :settings_makemkvcon_path, presence: true
+    validates :settings_registration_key, presence: true
     validate :makemkvcon_path_executable
 
     private

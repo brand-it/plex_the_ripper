@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require 'net/ftp'
-
 module Ftp
   class Base
     extend Dry::Initializer

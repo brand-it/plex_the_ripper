@@ -17,6 +17,7 @@ RSpec.describe Config::MakeMkv, type: :model do
     let(:config_make_mkv) { build_stubbed(:config_make_mkv) }
 
     it { is_expected.to validate_presence_of(:settings_makemkvcon_path) }
+    it { is_expected.to validate_presence_of(:settings_registration_key) }
 
     describe '#makemkvcon_path_executable' do
       it 'does not raise validation error if makemkvcon_path blank' do
