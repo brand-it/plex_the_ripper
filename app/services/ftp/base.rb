@@ -11,7 +11,8 @@ module Ftp
       Errno::EINVAL,
       Errno::ENETUNREACH,
       Net::FTPTempError,
-      Net::ReadTimeout
+      Net::ReadTimeout,
+      Net::WriteTimeout
     ].freeze
 
     def self.call(...)
