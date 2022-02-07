@@ -13,7 +13,7 @@
     "babel-loader": "^8.2.3",
     "boostrap": "^2.0.0",
     "bootstrap": "^5.0.2",
-    "cable_ready": "^5.0.0-pre8",
+    "cable_ready": "^4.5.0",
     "is-svg": "^4.2.2",
     "jquery": "^3.5.1",
     "postcss": "^8.4.6",
