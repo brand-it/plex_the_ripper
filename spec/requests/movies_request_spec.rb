@@ -10,6 +10,6 @@ RSpec.describe 'Movies', type: :request do
 
     before { get movie_url(movie) }
 
-    it { expect(response.status).to eq 200 }
+    it { expect(response).to have_http_status :ok }
   end
 end

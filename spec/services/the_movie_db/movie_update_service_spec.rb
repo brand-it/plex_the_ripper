@@ -26,7 +26,7 @@ RSpec.describe TheMovieDb::MovieUpdateService, type: :service do
     end
 
     it 'transforms runtime to movie_runtime' do
-      expect { call }.to\
+      expect { call }.to \
         change(movie, :movie_runtime).from(movie.movie_runtime)
                                      .to(movie.the_movie_db_details['runtime'] * 60)
     end

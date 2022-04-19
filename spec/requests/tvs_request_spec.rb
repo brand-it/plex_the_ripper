@@ -41,7 +41,7 @@ RSpec.describe 'Tvs', type: :request do
       subject(:post_tv) { post tvs_url, params: { tv: invalid_attributes } }
 
       it 'does not create a new TV' do
-        expect { post_tv }.to change(Tv, :count).by(0)
+        expect { post_tv }.not_to change(Tv, :count)
       end
 
       it "renders a successful response (i.e. to display the 'new' template)" do
