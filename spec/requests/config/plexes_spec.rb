@@ -62,7 +62,7 @@ RSpec.describe '/config/plexes', type: :request do
       it 'does not create a new Config::Plex' do
         expect do
           post config_plex_url, params: { config_plex: invalid_attributes }
-        end.to change(Config::Plex, :count).by(0)
+        end.not_to change(Config::Plex, :count)
       end
 
       it "renders a successful response (i.e. to display the 'new' template)" do

@@ -58,7 +58,7 @@ class CreateMkvService
   end
 
   def recreate_dir(dir)
-    FileUtils.remove_entry_secure(dir) if File.exist?(dir)
+    FileUtils.rm_rf(dir)
     FileUtils.mkdir_p(dir)
   end
 

@@ -24,7 +24,7 @@ RSpec.shared_examples 'IsVideo' do |_parameter|
 
     context 'when both release_date & episode_first_air_date is present' do
       let(:video) do
-        build_stubbed\
+        build_stubbed \
           model_class,
           release_date: expected_date,
           episode_first_air_date: unexpected_date

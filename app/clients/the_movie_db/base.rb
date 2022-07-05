@@ -53,7 +53,7 @@ module TheMovieDb
 
     def error!(response)
       Rails.logger.error(
-        "#{response.error_type} #{response.message}"\
+        "#{response.error_type} #{response.message}" \
         " #{response.code} #{response.uri} #{response.body.strip}"
       )
       response.error!

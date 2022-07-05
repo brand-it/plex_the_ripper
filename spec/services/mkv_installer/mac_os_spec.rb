@@ -10,7 +10,7 @@ RSpec.describe MkvInstaller::MacOs do
 
     before do
       allow(mac_os).to receive(:system!).and_return(true)
-      allow(mac_os).to receive(:dmg_file).and_return(instance_double('File', path: 'dignissimos-voluptate/id.tiff'))
+      allow(mac_os).to receive(:dmg_file).and_return(instance_double(File, path: 'dignissimos-voluptate/id.tiff'))
       allow(FileUtils).to receive(:cp_r)
       allow(FileUtils).to receive(:rm_rf)
     end

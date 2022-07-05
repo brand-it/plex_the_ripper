@@ -6,29 +6,29 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '3.1.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'bootsnap', '>= 1.4.2', require: false
-gem 'cable_ready', '>= 4.3'
+gem 'bootsnap', require: false
+gem 'cable_ready'
 gem 'dotiw'
 gem 'dry-initializer'
 gem 'dry-struct'
 gem 'dry-types'
 gem 'faraday'
 gem 'hotwire-rails'
-gem 'jbuilder', '>= 2.7'
-gem 'kaminari', '>= 1.2.1'
+gem 'jbuilder'
+gem 'kaminari'
 gem 'net-ftp'
-gem 'os', '>= 1.1'
-gem 'progressbar', '>= 1.11'
-gem 'puma', '>= 4.1'
-gem 'rails', '~> 7.0'
+gem 'os'
+gem 'progressbar'
+gem 'puma'
+gem 'rails'
 gem 'rainbow'
-gem 'sass-rails', '>= 6'
+gem 'sass-rails'
 gem 'simple_form'
-gem 'sqlite3', '>= 1.4'
-gem 'sys-filesystem', '>= 1.4'
-gem 'text', '>= 1.3.1'
-gem 'view_component', '>= 2.18'
-gem 'webpacker', '>= 5.0'
+gem 'sqlite3'
+gem 'sys-filesystem'
+gem 'text'
+gem 'view_component'
+gem 'webpacker'
 gem 'wisper'
 gem 'workflow'
 
@@ -54,20 +54,18 @@ end
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem 'listen'
-  gem 'web-console', '>= 3.3.0'
+  gem 'web-console'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring', '>= 4.0'
+  gem 'spring'
 end
 
 group :test do
-  gem 'database_cleaner-active_record'
-
   # Adds support for Capybara system testing and selenium driver
-  gem 'capybara', '>= 2.15'
+  gem 'capybara'
   gem 'selenium-webdriver'
 
   # Easy installation and use of web drivers to run system tests with browsers
-  gem 'webdrivers', '>= 4.6.1'
+  gem 'webdrivers'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
