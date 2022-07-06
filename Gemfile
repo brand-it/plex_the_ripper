@@ -33,7 +33,7 @@ gem 'wisper'
 gem 'workflow'
 
 group :development, :test do
-  # gem 'annotate' # https://github.com/ctran/annotate_models/pull/912 not rails 7.0 comparable.
+  gem 'annotate'
   gem 'awesome_print'
   gem 'factory_bot_rails'
   gem 'faker'
