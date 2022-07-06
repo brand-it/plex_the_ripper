@@ -3,9 +3,9 @@
   <div class='row'>
     <%= f.error_notification %>
     <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
-    <div class='col-9'>
-      <%= f.input :settings_makemkvcon_path, autofocus: true %>
-    </div>
+
+    <%= f.input :settings_makemkvcon_path, autofocus: true %>
+    <%= f.input :settings_registration_key, required: true %>
     <div class='col-3 text-center w-100 mt-3'>
       <%= image_pack_tag 'media/images/mkv_icon.png' %>
       <%= link_to install_config_make_mkv_path, class: 'btn btn-success' do %>

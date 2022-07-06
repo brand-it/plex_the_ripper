@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 require 'optparse'
 require 'fileutils'
+
 APP_ROOT = File.expand_path '..', __dir__
 HOMEBREW_PACKAGES = %i[
   libxml2
@@ -31,6 +32,7 @@ class Tool
     TOOLS.find { |x| x.match(name) }.scan(/\d*\.\d*\.\d*/).first
   end
 end
+
 
 class ColorString < String
   # https://no-color.org/
