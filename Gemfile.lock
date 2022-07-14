@@ -145,7 +145,7 @@ GEM
       rails (>= 6.0.0)
       stimulus-rails
       turbo-rails
-    i18n (1.10.0)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     jbuilder (2.11.5)
@@ -351,7 +351,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.2.0)
     vcr (6.1.0)
-    view_component (2.57.1)
+    view_component (2.59.0)
       activesupport (>= 5.0.0, < 8.0)
       method_source (~> 1.0)
     web-console (4.2.0)
