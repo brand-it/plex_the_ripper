@@ -1,0 +1,21 @@
+name: Stale
+on:
+  # Allow to run it manually on GitHub (a button will be visible)
+  # See https://github.blog/changelog/2020-07-06-github-actions-manual-triggers-with-workflow_dispatch/
+  workflow_dispatch:
+  # Schedule a cron job to be run each day at noon
+  schedule:
+    - cron: '0 12 * * *'
+jobs:
+  Stale:
+    runs-on: ubuntu-latest
+    name: Run stale
+    steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v2
+      - name: Stale
+        id: stale
+        # We suggest replacing "latest" with the latest major tag like "sonia-corporation/stale@1"
+        # This will avoid in the future a risk to break your workflow when a new major (breaking change) occur or worst, by altering your items in a way that doesn't suit you
+        uses: sonia-corporation/stale@latest
