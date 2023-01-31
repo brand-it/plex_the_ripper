@@ -18,4 +18,4 @@ jobs:
         id: stale
         # We suggest replacing "latest" with the latest major tag like "sonia-corporation/stale@1"
         # This will avoid in the future a risk to break your workflow when a new major (breaking change) occur or worst, by altering your items in a way that doesn't suit you
-        uses: sonia-corporation/stale@latest
+        uses: Sonia-corporation/stale@2.4.0
