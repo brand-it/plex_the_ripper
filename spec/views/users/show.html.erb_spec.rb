@@ -2,12 +2,12 @@
 
 require 'rails_helper'
 
-RSpec.describe 'users/show', type: :view do
-  let(:user) { build_stubbed :user }
+RSpec.describe 'users/show' do
+  let(:user) { build_stubbed(:user) }
 
   before { assign(:user, user) }
 
   it 'renders attributes in <p>' do
-    render
+    expect { render }.not_to raise_error
   end
 end

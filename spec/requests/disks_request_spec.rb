@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Disks', type: :request do
+RSpec.describe 'Disks' do
   pending "add some examples to (or delete) #{__FILE__}"
 end

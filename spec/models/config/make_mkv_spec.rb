@@ -12,7 +12,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Config::MakeMkv, type: :model do
+RSpec.describe Config::MakeMkv do
   describe 'validations' do
     let(:config_make_mkv) { build_stubbed(:config_make_mkv) }
 

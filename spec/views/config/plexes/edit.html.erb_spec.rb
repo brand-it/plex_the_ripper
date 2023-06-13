@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'config/plexes/edit', type: :view do
-  let(:config_plex) { create :config_plex }
+RSpec.describe 'config/plexes/edit' do
+  let(:config_plex) { create(:config_plex) }
 
   before { assign(:config_plex, config_plex) }
 

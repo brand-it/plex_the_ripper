@@ -6,7 +6,7 @@ RSpec.describe ListDrivesService do
   include_context 'with mkv_stubbs'
   before { allow(new_service).to receive(:info).and_return(drive_info_object) }
 
-  let(:config_make_mkv) { create :config_make_mkv }
+  let(:config_make_mkv) { create(:config_make_mkv) }
   let(:new_service) { described_class.new(config_make_mkv: config_make_mkv) }
 
   describe '#results' do

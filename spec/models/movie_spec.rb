@@ -30,7 +30,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Movie, type: :model do
+RSpec.describe Movie do
   include_examples 'IsVideo'
 
   # V

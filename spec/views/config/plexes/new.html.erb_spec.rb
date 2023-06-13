@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'config/plexes/new', type: :view do
+RSpec.describe 'config/plexes/new' do
   before do
     assign(:config_plex, Config::Plex.new)
   end

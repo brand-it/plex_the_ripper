@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe TheMovieDb::Movie do
-  before { create :config_the_movie_db }
+  before { create(:config_the_movie_db) }
 
   describe '#results', :vcr do
     subject(:results) { described_class.new(577_922).results }

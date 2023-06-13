@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe '/config/plexes', type: :request do
-  before { create :config_make_mkv }
+RSpec.describe '/config/plexes' do
+  before { create(:config_make_mkv) }
 
   let(:valid_attributes) do
     skip('Add a hash of attributes valid for your model')

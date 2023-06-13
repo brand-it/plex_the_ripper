@@ -13,7 +13,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Disk, type: :model do
+RSpec.describe Disk do
   describe 'associations' do
     it { is_expected.to have_many(:disk_titles) }
   end

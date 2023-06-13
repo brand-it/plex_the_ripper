@@ -21,7 +21,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe DiskTitle, type: :model do
+RSpec.describe DiskTitle do
   describe 'associations' do
     it { is_expected.to belong_to(:disk).optional(false) }
   end

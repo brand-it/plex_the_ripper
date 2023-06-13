@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ImdbHelper, type: :helper do
+RSpec.describe ImdbHelper do
   describe '#imdb_image_tag' do
     context 'when path is present' do
       it 'responds with an imdb image' do
