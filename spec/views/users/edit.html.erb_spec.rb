@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'users/edit', type: :view do
-  let(:user) { create :user }
+RSpec.describe 'users/edit' do
+  let(:user) { create(:user) }
 
   before { assign(:user, user) }
 

@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Tvs', type: :request do
-  before { create :config_make_mkv }
+RSpec.describe 'Tvs' do
+  before { create(:config_make_mkv) }
 
   let(:valid_attributes) do
     {
@@ -25,7 +25,7 @@ RSpec.describe 'Tvs', type: :request do
         post tvs_url, params: { tv: valid_attributes }
       end
 
-      before { create :config_the_movie_db }
+      before { create(:config_the_movie_db) }
 
       it 'creates a new TV' do
         expect { post_tv }.to change(Tv, :count).by(1)

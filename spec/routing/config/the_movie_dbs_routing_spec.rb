@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Config::TheMovieDbsController, type: :routing do
+RSpec.describe Config::TheMovieDbsController do
   pending "add some examples to (or delete) #{__FILE__}"
   # describe 'routing' do
   #   it 'routes to #index' do

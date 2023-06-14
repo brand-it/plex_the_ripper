@@ -12,8 +12,8 @@
 #
 require 'rails_helper'
 
-RSpec.describe Config::TheMovieDb, type: :model do
-  let(:config) { build_stubbed :config_the_movie_db, settings: { api_key: 12_345 } }
+RSpec.describe Config::TheMovieDb do
+  let(:config) { build_stubbed(:config_the_movie_db, settings: { api_key: 12_345 }) }
 
   describe '#default_settings' do
     let(:expected_settings) { Config::Serializer.new(api_key: 12_345) }

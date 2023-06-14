@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Episodes', type: :request do
+RSpec.describe 'Episodes' do
   pending "add some examples to (or delete) #{__FILE__}"
 end

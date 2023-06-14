@@ -3,9 +3,9 @@
 require 'rails_helper'
 
 RSpec.describe TheMovieDb::TvListener do
-  let(:tv) { build :tv, the_movie_db_id: 4629 }
+  let(:tv) { build(:tv, the_movie_db_id: 4629) }
 
-  before { create :config_the_movie_db }
+  before { create(:config_the_movie_db) }
 
   describe '#tv_saving', :vcr, freeze: Time.zone.local(1990) do
     subject(:tv_saving) { described_class.new.tv_saving(tv) }

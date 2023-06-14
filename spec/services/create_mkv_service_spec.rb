@@ -7,7 +7,7 @@ RSpec.describe CreateMkvService do
   let(:disk_title) { build_stubbed(:disk_title) }
   let(:progress_listener) { double('progress_listener', call: false) }
 
-  before { create :config_make_mkv }
+  before { create(:config_make_mkv) }
 
   describe '#call' do
     subject(:call) { service.call }

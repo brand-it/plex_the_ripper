@@ -3,7 +3,7 @@
 require 'rails_helper'
 
 RSpec.describe TheMovieDb::TvUpdateService, type: :service do
-  before { create :config_the_movie_db }
+  before { create(:config_the_movie_db) }
 
   let(:tv) { build_stubbed(:tv, the_movie_db_id: 4629) }
   let(:new_description_class) { described_class.new(tv) }

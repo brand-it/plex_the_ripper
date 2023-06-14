@@ -8,6 +8,8 @@ class Config
       @config_make_mkv = Config::MakeMkv.new
     end
 
+    def edit; end
+
     def create
       @config_make_mkv = Config::MakeMkv.new(make_mkv_params)
 
@@ -17,8 +19,6 @@ class Config
         render :new
       end
     end
-
-    def edit; end
 
     def update
       flash[:success] = 'Updated Make MKV' if @config_make_mkv.update(make_mkv_params)

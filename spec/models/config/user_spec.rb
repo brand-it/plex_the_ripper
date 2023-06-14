@@ -12,8 +12,8 @@
 #
 require 'rails_helper'
 
-RSpec.describe Config::User, type: :model do
-  let(:config) { build_stubbed :config_user }
+RSpec.describe Config::User do
+  let(:config) { build_stubbed(:config_user) }
 
   describe '#default_settings' do
     let(:expected_settings) do

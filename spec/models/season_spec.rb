@@ -21,7 +21,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Season, type: :model do
+RSpec.describe Season do
   describe 'validations' do
     it { is_expected.to validate_presence_of(:season_number) }
   end
