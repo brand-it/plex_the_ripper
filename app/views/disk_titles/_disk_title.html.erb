@@ -1,12 +1,16 @@
-<tr class="<%= 'text-success' if video.runtime_range.include?(disk_title.duration) %>">
-  <th scope="row"><%= disk_title.id %></th>
-  <td><%= disk_title.name %></td>
-  <td><%= distance_of_time_in_words(disk_title.duration.seconds) %></td>
-  <td class="<%= 'text-danger' if disk_title.size >= free_disk_space %>">
+<% text_class = 'text-primary-emphasis' if video.runtime_range.include?(disk_title.duration) %>
+
+<tr>
+  <th scope="row" class="<%= text_class %>"><%= disk_title.id %></th>
+  <td class="<%= text_class %>"><%= disk_title.name %></td>
+  <td class="<%= text_class %>"><%= distance_of_time_in_words(disk_title.duration.seconds) %></td>
+  <td class="<%=  disk_title.size >= free_disk_space ? 'text-danger' : text_class %>">
     <%= number_to_human_size(disk_title.size, precision: 3) %>
     <% if disk_title.size >= free_disk_space %>
       WARNING: Not enough space available to rip need another <%= number_to_human_size(disk_title.size - free_disk_space, precision: 3) %>
     <% end %>
   </td>
-  <td><%= link_to 'Rip', video_disk_title_path(video, disk_title), method: :patch %></td>
+  <td class="<%= text_class %>">
+    <%= link_to 'Rip', video_disk_title_path(video, disk_title), method: :patch %>
+  </td>
 </tr>

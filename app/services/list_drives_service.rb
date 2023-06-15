@@ -5,7 +5,7 @@ class ListDrivesService
   include Shell
   include MkvParser
 
-  option :config_make_mkv, Types.Instance(Config::MakeMkv), default: -> { Config::MakeMkv.newest }
+  option :config_make_mkv, Types.Instance(::Config::MakeMkv), default: -> { ::Config::MakeMkv.newest }
   option :noscan, Types::Bool, default: -> { false }
 
   class << self
