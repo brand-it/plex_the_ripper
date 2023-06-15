@@ -9,5 +9,5 @@ git clone https://github.com/newdark/plex_the_ripper.git
 
 ### 2. Run Setup
 ```shell
-bin/server
+bin/dev
 ```
