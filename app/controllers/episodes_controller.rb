@@ -6,7 +6,7 @@ class EpisodesController < ApplicationController
   end
 
   def select
-    drive = ListDrivesService.new.results
+    drive = ListDrivesService.results
     Disk.create!(name: drive.name)
     return if drive.nil?
 

@@ -10,8 +10,6 @@ export default class extends Controller {
     });
   }
 
-
-
   showMoreVisable() {
     if (!this.hasShowMoreTarget || this.disabled()) return false
     var showMoreBox = this.showMoreTarget.getBoundingClientRect();
