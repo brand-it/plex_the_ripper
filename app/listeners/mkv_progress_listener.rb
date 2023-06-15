@@ -6,7 +6,7 @@ class MkvProgressListener
 
   delegate :render, to: :ApplicationController
 
-  option :completed, Types::Float.optional, default: -> { 0 }
+  option :completed, Types::Coercible::Float.optional, default: -> { 0.0 }
   option :title, Types::String.optional, default: -> { 'Loading...' }
   option :message, Types::String.optional, default: -> { '' }
 
