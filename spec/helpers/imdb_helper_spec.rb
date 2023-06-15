@@ -6,7 +6,7 @@ RSpec.describe ImdbHelper do
   describe '#imdb_image_tag' do
     context 'when path is present' do
       it 'responds with an imdb image' do
-        expect(helper.imdb_image_tag('')).to include('/packs-test/media/images/placeholder_poster-')
+        expect(helper.imdb_image_tag('')).to include('/assets/placeholder_poster-')
       end
     end
 
