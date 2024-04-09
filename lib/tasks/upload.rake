@@ -3,7 +3,7 @@
 namespace :upload do
   desc 'Upload all files that have been ripped correctly but never made it to the FTP server'
   task all: :environment do
-    Video.all.find_each do |video|
+    Video.find_each do |video|
       print "Checking Uploading #{video.title} ... "
       next puts 'skip' unless video.tmp_plex_path_exists?
 
