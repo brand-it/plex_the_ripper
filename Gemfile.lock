@@ -467,6 +467,7 @@ DEPENDENCIES
   spring
   sprockets-rails
   sqlite3
+  stimulus-rails
   super_diff
   sys-filesystem
   text
@@ -480,7 +481,7 @@ DEPENDENCIES
   workflow
 
 RUBY VERSION
-   ruby 3.2.2p53
+   ruby 3.3.0p0
 
 BUNDLED WITH
-   2.4.13
+   2.5.7

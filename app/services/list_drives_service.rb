@@ -9,8 +9,8 @@ class ListDrivesService
   option :noscan, Types::Bool, default: -> { false }
 
   class << self
-    def results(*args)
-      new(*args).results
+    def results(*)
+      new(*).results
     end
   end
 

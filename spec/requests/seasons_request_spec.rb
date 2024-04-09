@@ -6,7 +6,7 @@ RSpec.describe 'Seasons' do
   before { create(:config_make_mkv) }
 
   let(:tv) { create(:tv, the_movie_db_id: 4629) }
-  let(:season) { create(:season, season_number: 1, tv: tv) }
+  let(:season) { create(:season, season_number: 1, tv:) }
 
   describe 'POST /update', :vcr do
     context 'with valid parameters' do

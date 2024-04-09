@@ -20,7 +20,7 @@ namespace :upload do
       progress_listener = ->(chunk_size: 0) { progress_bar.progress += chunk_size }
       Ftp::UploadMkvService.call(
         disk_title: video.disk_title,
-        progress_listener: progress_listener
+        progress_listener:
       )
     end
   end

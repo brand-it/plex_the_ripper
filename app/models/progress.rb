@@ -48,6 +48,6 @@ class Progress < ApplicationRecord
   end
 
   def fail(message = nil)
-    assign_attributes(completed_at: nil, failed_at: Time.current, message: message, attempts: attempts + 1)
+    assign_attributes(completed_at: nil, failed_at: Time.current, message:, attempts: attempts + 1)
   end
 end

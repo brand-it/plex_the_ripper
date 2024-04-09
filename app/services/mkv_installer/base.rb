@@ -4,7 +4,7 @@ module MkvInstaller
   class Base
     include Shell
     DOWNLOAD_URI = URI('http://www.makemkv.com/download/')
-    VERSION_PATTERN = /.*_v(\d*\.\d*\.\d*)/.freeze
+    VERSION_PATTERN = /.*_v(\d*\.\d*\.\d*)/
 
     private
 

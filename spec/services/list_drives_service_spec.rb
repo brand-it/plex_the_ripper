@@ -7,7 +7,7 @@ RSpec.describe ListDrivesService do
   before { allow(new_service).to receive(:info).and_return(drive_info_object) }
 
   let(:config_make_mkv) { create(:config_make_mkv) }
-  let(:new_service) { described_class.new(config_make_mkv: config_make_mkv) }
+  let(:new_service) { described_class.new(config_make_mkv:) }
 
   describe '#results' do
     subject(:call) { new_service.results }

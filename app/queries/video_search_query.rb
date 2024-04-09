@@ -17,13 +17,13 @@ class VideoSearchQuery
   end
 
   def next_query
-    { query: query, page: page + 1 } if results.next_page
+    { query:, page: page + 1 } if results.next_page
   end
 
   private
 
   def search
-    @search ||= TheMovieDb::Search::Multi.new(query: query, page: page).results
+    @search ||= TheMovieDb::Search::Multi.new(query:, page:).results
   end
 
   def the_movie_db_ids
@@ -46,7 +46,7 @@ class VideoSearchQuery
   end
 
   def build_video(id: nil, type: nil)
-    Video.new(the_movie_db_id: id, type: type).tap do |video|
+    Video.new(the_movie_db_id: id, type:).tap do |video|
       "TheMovieDb::#{video.type}UpdateService".constantize.call(video)
     end
   end

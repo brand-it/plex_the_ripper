@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.2'
+ruby '3.3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'bootsnap', require: false
@@ -27,6 +27,7 @@ gem 'sass-rails'
 gem 'simple_form'
 gem 'sprockets-rails'
 gem 'sqlite3'
+gem 'stimulus-rails'
 gem 'sys-filesystem'
 gem 'text'
 gem 'view_component'

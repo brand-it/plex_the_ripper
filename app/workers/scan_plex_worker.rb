@@ -24,7 +24,7 @@ class ScanPlexWorker < ApplicationWorker
     the_movie_db_id = search_for_movie(blob)
     return if the_movie_db_id.nil?
 
-    Movie.find_or_initialize_by(the_movie_db_id: the_movie_db_id).tap do |m|
+    Movie.find_or_initialize_by(the_movie_db_id:).tap do |m|
       m.subscribe(TheMovieDb::MovieListener.new)
       m.save!
     end

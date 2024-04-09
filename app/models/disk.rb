@@ -19,6 +19,6 @@ class Disk < ApplicationRecord
   has_many :disk_titles, dependent: :destroy
 
   def disk_info
-    @disk_info ||= DiskInfoService.new(disk_name: disk_name).results
+    @disk_info ||= DiskInfoService.new(disk_name:).results
   end
 end
