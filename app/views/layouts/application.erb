@@ -29,7 +29,13 @@
 
       <%= render ProcessComponent.new worker: LoadDiskWorker do |c| %>
         <%= c.with_body do %>
-          <span>Loading the disk info</span>
+          <% if LoadDiskWorker.job.pending? %>
+            <span>Loading the disk info</span>
+          <% elsif (disks = FindExistingDisksService.call).any? %>
+            <span><%= disks.map(&:name).join(', ') %> is ready to be ripped.</span>
+          <% else %>
+            <span>No disks found</span>
+          <% end %>
         <% end %>
       <% end %>
     </div>
