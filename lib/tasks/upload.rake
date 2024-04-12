@@ -3,7 +3,7 @@
 namespace :upload do
   desc 'Upload all files that have been ripped correctly but never made it to the FTP server'
   task all: :environment do
-    Video.all.find_each do |video|
+    Video.find_each do |video|
       print "Checking Uploading #{video.title} ... "
       next puts 'skip' unless video.tmp_plex_path_exists?
 
@@ -20,7 +20,7 @@ namespace :upload do
       progress_listener = ->(chunk_size: 0) { progress_bar.progress += chunk_size }
       Ftp::UploadMkvService.call(
         disk_title: video.disk_title,
-        progress_listener: progress_listener
+        progress_listener:
       )
     end
   end

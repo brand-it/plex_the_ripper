@@ -1,11 +1,22 @@
 <!DOCTYPE html>
 
-<html lang='en'  data-bs-theme="<%= light_dark_mode %>">
+<html lang='en' data-bs-theme="<%= light_dark_mode %>">
   <head>
     <title>Plex The Ripper</title>
     <%= render 'layouts/head' %>
   </head>
   <body>
+    <%= render ProcessComponent.new worker: ScanPlexWorker do |c| %>
+      <%= c.with_body do %>
+        <% if ScanPlexWorker.job.pending? %>
+          <div class="spinner-border text-primary" role="status"></div>
+          <span>Scanning...</span>
+        <% else %>
+          <span>Done! you have a total of <%= pluralize(Video.count, 'video') %> on plex.</span>
+        <% end %>
+      <% end %>
+    <% end %>
+
     <div class="d-flex w-100 h-90 mx-auto flex-column">
       <%= render ToastComponent.new do |c| %>
         <%= c.body do %>

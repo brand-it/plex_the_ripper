@@ -6,7 +6,7 @@ RSpec.describe VideoSearchQuery do
   before { create(:config_the_movie_db) }
 
   describe '#results', vcr: { record: :once, cassette_name: "#{described_class}/results" } do
-    subject(:results) { described_class.new(query: 'stargate', page: page).results }
+    subject(:results) { described_class.new(query: 'stargate', page:).results }
 
     let(:page) { 1 }
 

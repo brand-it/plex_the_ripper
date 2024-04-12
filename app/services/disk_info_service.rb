@@ -9,7 +9,7 @@ class DiskInfoService
     extend Dry::Initializer
     attr_writer :duration, :size, :filename
 
-    SIZE_REGEX = /(?<number>\d.*.\d) (?<unit>.*)$/.freeze
+    SIZE_REGEX = /(?<number>\d.*.\d) (?<unit>.*)$/
     UNITS_ORDER = %w[GB MB KB B].freeze
 
     param :id, Types::Coercible::Integer

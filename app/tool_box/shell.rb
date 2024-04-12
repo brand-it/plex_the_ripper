@@ -9,7 +9,7 @@ module Shell
     Rails.logger.debug { "command: #{cmd.join(', ')}" }
     stdout_str, stderr_str, status = Open3.capture3(*cmd)
     Rails.logger.debug { "\n#{stdout_str}\n#{stderr_str}\n#{status}" }
-    Standard.new(stdout_str: stdout_str, stderr_str: stderr_str, status: status)
+    Standard.new(stdout_str:, stderr_str:, status:)
   end
 
   def system!(*cmd)

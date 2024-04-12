@@ -33,7 +33,7 @@ class MkvProgressListener
   end
 
   def update_message_component
-    component = ProgressMessageComponent.new model: DiskTitle, message: message
+    component = ProgressMessageComponent.new(model: DiskTitle, message:)
     cable_ready[DiskTitleChannel.channel_name].morph(
       selector: "##{component.dom_id}",
       html: render(component, layout: false)
@@ -44,7 +44,7 @@ class MkvProgressListener
   def update_progress_bar
     component = ProgressBarComponent.new \
       model: DiskTitle,
-      completed: completed,
+      completed:,
       status: :info,
       message: title
     Rails.logger.debug { "ProgressNotification completed #{component.dom_id} #{title} #{completed}" }

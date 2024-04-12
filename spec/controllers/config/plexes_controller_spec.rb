@@ -8,7 +8,7 @@ RSpec.describe Config::PlexesController do
   let(:config) { create(:config_plex) }
 
   describe 'GET directories' do
-    subject(:get_folders) { get :directories, params: params, format: :json }
+    subject(:get_folders) { get :directories, params:, format: :json }
 
     let(:params) { { id: config.id } }
 

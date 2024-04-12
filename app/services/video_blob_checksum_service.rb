@@ -19,7 +19,7 @@ class VideoBlobChecksumService
 
     checksum = ChecksumService.call io: File.new(download.destination_path),
                                     progress_listener: checksum_progress_listener
-    video_blob.update! checksum: checksum
+    video_blob.update! checksum:
   ensure
     FileUtils.rm_rf(TEMP_DIRECTORY)
   end
@@ -30,9 +30,9 @@ class VideoBlobChecksumService
     return @download if defined?(@download)
 
     @download = Ftp::Download.call(
-      video_blob: video_blob,
+      video_blob:,
       destination_directory: TEMP_DIRECTORY,
-      download_progress_listener: download_progress_listener,
+      download_progress_listener:,
       max_retries: max_download_retries
     )
   end

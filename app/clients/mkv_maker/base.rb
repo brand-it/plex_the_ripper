@@ -22,7 +22,7 @@ module MkvMaker
     end
 
     def default_uri
-      URI::HTTPS.build(host: HOST, path: path)
+      URI::HTTPS.build(host: HOST, path:)
     end
 
     def path

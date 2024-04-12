@@ -4,7 +4,7 @@ require 'rails_helper'
 
 RSpec.describe TheMovieDbSeasonListener do
   let(:tv) { build_stubbed(:tv, the_movie_db_id: 4629) }
-  let(:season) { build(:season, season_number: 1, tv: tv) }
+  let(:season) { build(:season, season_number: 1, tv:) }
 
   before { create(:config_the_movie_db) }
 

@@ -6,9 +6,8 @@ module BootstrapHelper
   end
 
   def bootstrap_alerts
-    alerts = []
-    flash.each do |type, message|
-      alerts << tag.div(class: "row alert #{type_to_boostrap_class(type)} rounded-0 alert-dismissiable fade show") do
+    alerts = flash.map do |type, message|
+      tag.div(class: "row alert #{type_to_boostrap_class(type)} rounded-0 alert-dismissiable fade show") do
         concat tag.span(message, class: 'col-11')
         concat close_button
       end
