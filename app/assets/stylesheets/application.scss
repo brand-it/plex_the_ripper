@@ -14,62 +14,64 @@
  */
 
 
- @import "colors";
- @import "bootstrap/scss/bootstrap";
- @import "minimal";
- @import "checkbox_toggle";
+@import "colors";
+@import "bootstrap/scss/bootstrap";
+@import "minimal";
+@import "checkbox_toggle";
+// @import "bg_process";
 
- // @import "./custom";
- // app/javascript/packs/stylesheets/_custom.scss
- // h1 {
- //   color: red;
- // } */
- html, body {
-   height: 100%;
- }
- body {
-   font-family: "Lucida Console", Monaco, monospace;
-   display: flex;
- }
+// @import "./custom";
+// app/javascript/packs/stylesheets/_custom.scss
+// h1 {
+//   color: red;
+// } */
+html,
+body {
+  height: 100%;
+}
 
- .debug_dump {
-   border-radius: 0.5rem;
-   padding: 0.5rem;
- }
+body {
+  font-family: "Lucida Console", Monaco, monospace;
+  display: flex;
+}
 
- .h-90 {
-   height: 90%;
- }
+.debug_dump {
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+}
 
- .h-10 {
-   height: 10%;
- }
+.h-90 {
+  height: 90%;
+}
 
- .h-85 {
-   height: 85%;
- }
- .h-15 {
-   height: 15%;
- }
+.h-10 {
+  height: 10%;
+}
 
+.h-85 {
+  height: 85%;
+}
 
- .d-inline-grid {
-   display: inline-grid;
- }
+.h-15 {
+  height: 15%;
+}
 
+.d-inline-grid {
+  display: inline-grid;
+}
 
- .overflow-scroll-y {
-   overflow-y: scroll;
- }
+.overflow-scroll-y {
+  overflow-y: scroll;
+}
 
- .overflow-hidden-y {
-   overflow-y: hidden;
- }
+.overflow-hidden-y {
+  overflow-y: hidden;
+}
 
- .overflow-hidden-x {
-   overflow-x: hidden;
- }
+.overflow-hidden-x {
+  overflow-x: hidden;
+}
 
- .overflow-scroll-x {
-   overflow-x: scroll;
- }
+.overflow-scroll-x {
+  overflow-x: scroll;
+}

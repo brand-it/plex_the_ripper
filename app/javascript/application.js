@@ -19,4 +19,7 @@ import '@fortawesome/fontawesome-free/js/all.js';
 // const images = require.context('./images', true)
 // const imagePath = (name) => images(name, true)
 
+// Turbo
+import '@hotwired/turbo-rails';
+
 import "./controllers"
