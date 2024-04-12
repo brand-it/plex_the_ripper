@@ -9,8 +9,17 @@
     <%= render ProcessComponent.new worker: ScanPlexWorker do |c| %>
       <%= c.with_body do %>
         <% if ScanPlexWorker.job.pending? %>
-          <div class="spinner-border text-primary" role="status"></div>
-          <span>Scanning...</span>
+          <%=
+            render(
+              ProgressBarComponent.new(
+                model: Movie,
+                completed: (ScanPlexWorker.job.worker.completed.zero? ? 20 : ScanPlexWorker.job.worker.completed),
+                status: :success,
+                message: 'scanning plex for movies',
+                show_percentage: false
+              )
+            )
+          %>
         <% else %>
           <span>Done! you have a total of <%= pluralize(Video.count, 'video') %> on plex.</span>
         <% end %>

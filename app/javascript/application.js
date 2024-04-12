@@ -7,7 +7,6 @@ import 'regenerator-runtime/runtime'
 
 require("@rails/ujs").start();
 require("@rails/activestorage").start();
-require("./channels");
 require("@popperjs/core");
 require("bootstrap");
 import '@fortawesome/fontawesome-free/js/all.js';
@@ -23,3 +22,4 @@ import '@fortawesome/fontawesome-free/js/all.js';
 import '@hotwired/turbo-rails';
 
 import "./controllers"
+import './channels'

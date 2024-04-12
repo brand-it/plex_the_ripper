@@ -19,7 +19,10 @@ class TheMovieDbsController < ApplicationController
   private
 
   def synced_recently?
-    Video.maximum(:synced_on) < 5.minutes.ago
+    last_sync = Video.maximum(:synced_on)
+    return false if last_sync.nil?
+
+    last_sync + 5.minutes > Time.zone.now
   end
 
   def search_service

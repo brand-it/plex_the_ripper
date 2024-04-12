@@ -2,13 +2,21 @@
 
 class ScanPlexWorker < ApplicationWorker
   def perform
+    broadcast_progress(in_progress_component('Scan Plex...', 50, show_percentage: false))
     plex_movies.map do |blob|
       blob.update!(video: create_movie!(blob))
       job.log("Updated #{blob.filename}")
       self.completed += 1
-      broadcast_progress(in_progress_component(blob&.video&.plex_name))
+      percent_completed = (completed / plex_movies.size.to_f * 100)
+      broadcast_progress(
+        in_progress_component('Updating Database...', percent_completed)
+      )
     end
     broadcast_progress(completed_component)
+  end
+
+  def completed
+    @completed ||= 0
   end
 
   private
@@ -21,27 +29,32 @@ class ScanPlexWorker < ApplicationWorker
   end
 
   def completed_component
-    ProcessComponent.new worker: ScanPlexWorker do |c|
-      c.with_body do
-        ProgressBarComponent.new \
-          model: Movie,
-          completed: 100,
-          status: :success,
-          message: 'Plex scan complete!'
-      end
-    end
+    progress_bar = render(
+      ProgressBarComponent.new(
+        model: Movie,
+        completed: 100,
+        status: :success,
+        message: 'Plex scan complete!'
+      ), layout: false
+    )
+    component = ProcessComponent.new(worker: ScanPlexWorker)
+    component.with_body { progress_bar }
+    component
   end
 
-  def in_progress_component(message)
-    ProcessComponent.new worker: ScanPlexWorker do |c|
-      c.with_body do
-        ProgressBarComponent.new \
-          model: Movie,
-          completed: (completed / plex_movies.size.to_f * 100),
-          status: :info,
-          message: message || 'Scanning Plex...'
-      end
-    end
+  def in_progress_component(message, completed, show_percentage: true)
+    progress_bar = render(
+      ProgressBarComponent.new(
+        model: Movie,
+        completed:,
+        status: :info,
+        message: message || 'Scanning Plex...',
+        show_percentage:
+      ), layout: false
+    )
+    component = ProcessComponent.new(worker: ScanPlexWorker)
+    component.with_body { progress_bar }
+    component
   end
 
   def search_for_movie(blob) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity
@@ -66,10 +79,6 @@ class ScanPlexWorker < ApplicationWorker
 
   def plex_movies
     @plex_movies ||= Ftp::VideoScannerService.call.movies
-  end
-
-  def completed
-    @completed ||= 0
   end
 
   attr_writer :completed
