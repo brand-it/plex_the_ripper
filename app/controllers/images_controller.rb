@@ -8,6 +8,7 @@ class ImagesController < ApplicationController
 
   private
 
+  # Store the image in a cache directory on localhost to avoid multiple requests
   def image
     Rails.cache.fetch(image_url, namespace: :images) do
       Net::HTTP.get(image_url)
