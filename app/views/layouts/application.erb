@@ -6,25 +6,33 @@
     <%= render 'layouts/head' %>
   </head>
   <body>
-    <%= render ProcessComponent.new worker: ScanPlexWorker do |c| %>
-      <%= c.with_body do %>
-        <% if ScanPlexWorker.job.pending? %>
-          <%=
-            render(
-              ProgressBarComponent.new(
-                model: Movie,
-                completed: (ScanPlexWorker.job.worker.completed.zero? ? 20 : ScanPlexWorker.job.worker.completed),
-                status: :success,
-                message: 'scanning plex for movies',
-                show_percentage: false
+    <div class="bg-processes">
+      <%= render ProcessComponent.new worker: ScanPlexWorker do |c| %>
+        <%= c.with_body do %>
+          <% if ScanPlexWorker.job.pending? %>
+            <%=
+              render(
+                ProgressBarComponent.new(
+                  model: Movie,
+                  completed: (ScanPlexWorker.job.worker.completed.zero? ? 20 : ScanPlexWorker.job.worker.completed),
+                  status: :success,
+                  message: 'scanning plex for movies',
+                  show_percentage: false
+                )
               )
-            )
-          %>
-        <% else %>
-          <span>Done! you have a total of <%= pluralize(Video.count, 'video') %> on plex.</span>
+            %>
+          <% else %>
+            <span>Done! you have a total of <%= pluralize(Video.count, 'video') %> on plex.</span>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
+
+      <%= render ProcessComponent.new worker: LoadDiskWorker do |c| %>
+        <%= c.with_body do %>
+          <span>Loading the disk info</span>
+        <% end %>
+      <% end %>
+    </div>
 
     <div class="d-flex w-100 h-90 mx-auto flex-column">
       <%= render ToastComponent.new do |c| %>
