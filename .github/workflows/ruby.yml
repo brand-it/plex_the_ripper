@@ -7,11 +7,8 @@
 
 name: Status
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+# run this job on every push
+on: [push]
 
 jobs:
   rspec:
