@@ -3,7 +3,7 @@
 class MoviesController < ApplicationController
   def show
     @movie = movie
-    @disks = FindExistingDisksService.call.presence || CreateDisksService.call
+    @disks = FindExistingDisksService.call
   end
 
   def create

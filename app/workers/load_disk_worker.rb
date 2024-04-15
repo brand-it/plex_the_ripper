@@ -5,6 +5,7 @@ class LoadDiskWorker < ApplicationWorker
     cable_ready[DiskTitleChannel.channel_name].morph \
       selector: "##{component.dom_id}",
       html: render(component, layout: false)
+    cable_ready[DiskTitleChannel.channel_name].reload if existing_disks.nil?
     cable_ready.broadcast
   end
 
@@ -15,6 +16,12 @@ class LoadDiskWorker < ApplicationWorker
   end
 
   def disks
-    @disks ||= FindExistingDisksService.call.presence || CreateDisksService.call
+    @disks ||= existing_disks || CreateDisksService.call
+  end
+
+  def existing_disks
+    return @existing_disks if defined?(@existing_disks)
+
+    @existing_disks = FindExistingDisksService.call.presence
   end
 end

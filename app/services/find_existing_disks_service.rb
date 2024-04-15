@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class FindExistingDisksService
-  MOUNT_LINE = %r{\A(?<disk_name>[a-zA-Z/0-9]+)\son\s(?:/Volumes/|)(?<name>[a-zA-Z/0-9]+)}
+  MOUNT_LINE = %r{\A(?<disk_name>\S+)\son\s(?:/Volumes/|)(?<name>\S+)}
   class << self
     delegate :call, to: :new
   end
