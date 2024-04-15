@@ -5,10 +5,10 @@
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
 
-require("@rails/ujs").start();
 require("@rails/activestorage").start();
 require("@popperjs/core");
 require("bootstrap");
+
 import '@fortawesome/fontawesome-free/js/all.js';
 
 // Uncomment to copy all static images under ../images to the output folder and reference
@@ -22,4 +22,5 @@ import '@fortawesome/fontawesome-free/js/all.js';
 import '@hotwired/turbo-rails';
 
 import "./controllers"
-import './channels'
+import "./channels"
+import "./minimal_form"

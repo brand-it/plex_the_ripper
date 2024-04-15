@@ -11,6 +11,6 @@
     <% end %>
   </td>
   <td class="<%= text_class %>">
-    <%= link_to 'Rip', video_disk_title_path(video, disk_title), method: :patch %>
+    <%= link_to 'Rip', video_disk_title_path(video, disk_title), data: { turbo_method: :patch } %>
   </td>
 </tr>

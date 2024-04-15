@@ -52,7 +52,6 @@ class DiskInfoService
     27 => :filename
   }.freeze
 
-  option :config_make_mkv, Types.Instance(Config::MakeMkv), default: proc { Config::MakeMkv.newest }
   option :disk_name, Types::String
 
   def results
@@ -63,9 +62,7 @@ class DiskInfoService
   end
 
   def info
-    @info ||= system!(
-      "#{config_make_mkv.settings.makemkvcon_path} info dev:#{disk_name} -r"
-    )
+    @info ||= makemkvcon("info dev:#{disk_name} -r")
   end
 
   def tinfos
