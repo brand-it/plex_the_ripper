@@ -15,6 +15,6 @@ class LoadDiskWorker < ApplicationWorker
   end
 
   def disks
-    @disks ||= FindExistingDisksService.call || CreateDisksService.call
+    @disks ||= FindExistingDisksService.call.presence || CreateDisksService.call
   end
 end

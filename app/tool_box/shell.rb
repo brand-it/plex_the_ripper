@@ -12,6 +12,23 @@ module Shell
     Standard.new(stdout_str:, stderr_str:, status:)
   end
 
+  def makemkvcon(*cmd)
+    makemkvcon_path = Config::MakeMkv.newest.settings.makemkvcon_path
+    sleep 1 while process_running?('makemkvcon')
+    system!([makemkvcon_path, *cmd].join(' '))
+  end
+
+  def process_running?(process_name)
+    output = if OS.mac? || OS.linux?
+               `ps aux | grep #{process_name} | grep -v grep`
+             elsif OS.windows?
+               `tasklist | findstr #{process_name}`
+             else
+               raise Error, 'Unsupported OS'
+             end
+    !output.empty?
+  end
+
   def system!(*cmd)
     response = capture3(*cmd)
     raise Error, "#{cmd} - #{response.stderr_str}" unless response.status.success?
