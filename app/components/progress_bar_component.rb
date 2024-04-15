@@ -6,6 +6,7 @@ class ProgressBarComponent < ViewComponent::Base
   option :completed, Types::Coercible::Float, default: -> { 0.0 }, null: nil
   option :status, default: -> { 'info' }, null: nil
   option :message, optional: true
+  option :show_percentage, default: -> { true }
 
   def dom_id
     "#{model.model_name.name}-progress-bar"

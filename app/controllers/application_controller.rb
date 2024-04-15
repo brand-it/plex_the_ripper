@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :plex_config
   before_action :movie_db_config
   before_action :mkv_config
+  before_action :load_disk_worker
   helper_method :free_disk_space, :total_disk_space
 
   def current_user
@@ -20,6 +21,10 @@ class ApplicationController < ActionController::Base
 
   def total_disk_space
     @total_disk_space ||= stats.block_size * stats.blocks
+  end
+
+  def load_disk_worker
+    LoadDiskWorker.perform_async
   end
 
   private

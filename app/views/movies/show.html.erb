@@ -18,22 +18,7 @@
             </small>
           </p>
           <div id='disk-selector'>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>#</th>
-                  <th>Name</th>
-                  <th>Duration</th>
-                  <th>Size</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody class="disk_titles">
-                <% @disks.each do |disk| %>
-                  <%= render disk.disk_titles.sort_by { |d| @movie.runtime_range.include?(d.duration) ? 0 : 1  }, video: @movie %>
-                <% end %>
-              </tbody>
-            </table>
+            <%= render MovieTitleTableComponent.new(disks: @disks, movie: @movie) %>
           </div>
         </div>
       </div>

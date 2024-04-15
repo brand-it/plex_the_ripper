@@ -1,4 +1,5 @@
 document.addEventListener("turbo:load", function () {
+  console.log('minimal_form.js loaded')
   document.querySelectorAll('.minimal-input input').forEach(function (input) {
     addHasValue = function (input) {
       if (input.value.trim() != '') {

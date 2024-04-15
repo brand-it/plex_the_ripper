@@ -457,9 +457,12 @@ DEPENDENCIES
   rspec-github
   rspec-rails
   rubocop
+  rubocop-capybara
   rubocop-discourse
+  rubocop-factory_bot
   rubocop-rails
   rubocop-rspec
+  rubocop-rspec_rails
   sass-rails
   selenium-webdriver
   shoulda-matchers

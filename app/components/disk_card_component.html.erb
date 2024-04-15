@@ -20,7 +20,7 @@
     <% unless @in_progress %>
       <button data-disks-target="reload" data-action="click->disks#reload" data-url="<%= reload_disk_path %>" class='btn btn-primary'>Reload Disks</button>
       <% if @movie && @movie.selected? %>
-        <%= link_to 'Rip', rip_movie_path(@movie), method: :post, class: 'btn btn-primary' %>
+        <%= link_to 'Rip', rip_movie_path(@movie), data: { turbo_method: :post }, class: 'btn btn-primary' %>
       <% end %>
     <% end %>
   <% else %>

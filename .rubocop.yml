@@ -1,8 +1,11 @@
 inherit_from: .rubocop_todo.yml
 
 require:
-  - rubocop-rspec
+  - rubocop-capybara
+  - rubocop-factory_bot
   - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
 
 Style/Documentation:
   Enabled: false
