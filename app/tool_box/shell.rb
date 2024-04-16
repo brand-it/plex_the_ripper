@@ -3,7 +3,15 @@
 module Shell
   class Error < StandardError; end
 
-  Standard = Struct.new(:stdout_str, :stderr_str, :status, keyword_init: true)
+  Standard = Struct.new(:stdout_str, :stderr_str, :status, keyword_init: true) do
+    include MkvParser
+
+    delegate :success?, to: :status
+
+    def parsed_mkv
+      @parsed_mkv ||= parse_mkv_string(stdout_str)
+    end
+  end
 
   def capture3(*cmd)
     Rails.logger.debug { "command: #{cmd.join(', ')}" }

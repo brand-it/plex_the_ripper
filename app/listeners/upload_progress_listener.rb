@@ -26,12 +26,18 @@ class UploadProgressListener
     cable_ready.broadcast
   end
 
-  def component
-    ProgressBarComponent.new \
-      model: DiskTitle,
-      completed: percentage,
-      status: :info,
-      message: title
+  def component # rubocop:disable Metrics/MethodLength
+    progress_bar = render(
+      ProgressBarComponent.new(
+        model: Video,
+        completed: percentage,
+        status: :info,
+        message: title
+      ), layout: false
+    )
+    component = ProcessComponent.new(worker: UploadWorker)
+    component.with_body { progress_bar }
+    component
   end
 
   def percentage
