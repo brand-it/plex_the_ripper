@@ -69,8 +69,4 @@ class Video < ApplicationRecord
   def release_or_air_date
     release_date || episode_first_air_date
   end
-
-  def tmp_plex_path_exists?
-    File.exist?(tmp_plex_path)
-  end
 end

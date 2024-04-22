@@ -4,5 +4,9 @@
 
 import { application } from "./application"
 
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)
+import PaginationController from "./pagination_controller"
+application.register("pagination", PaginationController)
+
+import PlexController from "./plex_controller"
+application.register("plex", PlexController)
+  

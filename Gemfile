@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.2.2'
+ruby '3.3.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'bootsnap', require: false
@@ -26,7 +26,8 @@ gem 'rainbow'
 gem 'sass-rails'
 gem 'simple_form'
 gem 'sprockets-rails'
-gem 'sqlite3'
+gem 'sqlite3', '~> 1.6' # https://github.com/sparklemotion/sqlite3-ruby/issues/529
+gem 'stimulus-rails'
 gem 'sys-filesystem'
 gem 'text'
 gem 'view_component'
@@ -42,9 +43,12 @@ group :development, :test do
   gem 'rspec-github', require: false
   gem 'rspec-rails'
   gem 'rubocop'
+  gem 'rubocop-capybara'
   gem 'rubocop-discourse'
+  gem 'rubocop-factory_bot'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'rubocop-rspec_rails'
   gem 'shoulda-matchers'
   gem 'super_diff'
   gem 'timecop'

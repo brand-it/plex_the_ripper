@@ -17,14 +17,13 @@ class RipWorker < ApplicationWorker
   private
 
   def create_mkv(disk_title)
-    CreateMkvService.call disk_title: disk_title,
-                          progress_listener: progress_listener
+    CreateMkvService.call disk_title:,
+                          progress_listener:
   end
 
   def upload_mkv(disk_title)
-    @progress_listener = UploadProgressListener.new(file_size: disk_title.size)
-    Ftp::UploadMkvService.call disk_title: disk_title,
-                               progress_listener: progress_listener
+    sleep 1 while UploadWorker.job.pending?
+    UploadWorker.perform_async(disk_title:)
   end
 
   def disk_titles

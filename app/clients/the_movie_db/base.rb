@@ -21,7 +21,7 @@ module TheMovieDb
     end
 
     def results(use_cache: true, object_class: Hash)
-      @results ||= use_cache ? cache_get(object_class: object_class) : get(object_class: object_class)
+      @results ||= use_cache ? cache_get(object_class:) : get(object_class:)
     end
 
     private
@@ -33,14 +33,14 @@ module TheMovieDb
         expires_in: CACHE_TTL,
         force: Rails.env.test?
       ) do
-        get(object_class: object_class)
+        get(object_class:)
       end
     end
 
     def get(object_class: Hash)
       response = connection.get(uri, query_params)
 
-      return JSON.parse(response.body, object_class: object_class) if response.success?
+      return JSON.parse(response.body, object_class:) if response.success?
 
       raise Error, response
     end
@@ -72,7 +72,7 @@ module TheMovieDb
     end
 
     def query_params
-      { api_key: api_key, langauge: language }.tap do |hash|
+      { api_key:, langauge: language }.tap do |hash|
         self.class.option_names.each do |name|
           hash[name] = send(name)
         end

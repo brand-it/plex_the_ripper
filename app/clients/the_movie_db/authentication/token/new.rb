@@ -8,7 +8,7 @@ module TheMovieDb
 
         def request_url(params = nil)
           query = URI.encode_www_form(params) if params
-          URI::HTTPS.build(host: HOST, path: "/authenticate/#{request_token}", query: query)
+          URI::HTTPS.build(host: HOST, path: "/authenticate/#{request_token}", query:)
         end
       end
 

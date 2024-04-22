@@ -1,20 +1,26 @@
 <!DOCTYPE html>
 
-<html lang='en'  data-bs-theme="<%= light_dark_mode %>">
+<html lang='en' data-bs-theme="<%= light_dark_mode %>">
   <head>
     <title>Plex The Ripper</title>
     <%= render 'layouts/head' %>
   </head>
   <body>
+
+
     <div class="d-flex w-100 h-90 mx-auto flex-column">
-      <%= render ToastComponent.new do |c| %>
-        <%= c.body do %>
-          testing
-        <% end %>
-      <% end %>
       <%= render 'layouts/header' %>
 
-      <main role="main" class="inner p-3 h-100"><%= yield %></main>
+      <main role="main" class="inner p-3 h-100">
+        <div class="col-12 row">
+          <div class="col-4">
+            <%= render 'layouts/bg_progress' %>
+          </div>
+          <div class="col-8">
+            <%= yield %>
+          </div>
+        </div>
+      </main>
     </div>
   </body>
 </html>

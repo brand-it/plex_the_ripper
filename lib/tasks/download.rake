@@ -28,7 +28,7 @@ namespace :download do
       checksum_listener = ->(chunk_size: 0) { checksum_track_progress.progress += chunk_size }
 
       result = Ftp::Download.call(
-        video_blob: video_blob,
+        video_blob:,
         destination_directory: args[:directory],
         download_progress_listener: listener,
         checksum_progress_listener: checksum_listener,
@@ -76,7 +76,7 @@ namespace :download do
       checksum_listener = ->(chunk_size: 0) { checksum_track_progress.progress += chunk_size }
 
       VideoBlobChecksumService.new(
-        video_blob: video_blob,
+        video_blob:,
         download_progress_listener: listener,
         checksum_progress_listener: checksum_listener
       ).call

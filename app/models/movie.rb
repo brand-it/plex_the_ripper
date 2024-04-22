@@ -49,12 +49,12 @@ class Movie < Video
     @plex_path ||= Pathname.new("#{Config::Plex.newest.settings_movie_path}/#{plex_named_path}")
   end
 
-  def tmp_plex_path
-    @tmp_plex_path ||= Rails.root.join("tmp/movies/#{plex_named_path}")
+  def tmp_plex_dir
+    @tmp_plex_dir ||= Rails.root.join("tmp/movies/#{plex_name}")
   end
 
-  def plex_named_path
-    "#{plex_name}/#{plex_name}.mkv"
+  def tmp_plex_path
+    @tmp_plex_path ||= "#{tmp_plex_dir}/#{plex_name}.mkv"
   end
 
   def plex_name
@@ -65,5 +65,9 @@ class Movie < Video
     return config.maxlength = (max + MOVIE_DURATION_MARGIN) if max.to_i > (config.minlength / 60)
 
     config.maxlength = nil
+  end
+
+  def tmp_plex_path_exists?
+    File.exist?(tmp_plex_path)
   end
 end

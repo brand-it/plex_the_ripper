@@ -2,7 +2,7 @@
 
 module SimplyEncrypt
   MODE = 'AES-256-CBC'
-  KEY = Digest::SHA1.hexdigest(Rails.application.secrets.secret_key_base)[..31]
+  KEY = Digest::SHA1.hexdigest(Rails.application.credentials.secret_key_base)[..31]
 
   def encrypt(data)
     return [nil, nil] if data.blank?

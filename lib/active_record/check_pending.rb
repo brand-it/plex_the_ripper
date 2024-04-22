@@ -37,9 +37,9 @@ module ActiveRecord
         ActiveRecord::Base.connection
       end
 
-      def build_watcher(&block)
+      def build_watcher(&)
         paths = Array(connection.migration_context.migrations_paths)
-        @file_watcher.new([], paths.index_with(['rb']), &block)
+        @file_watcher.new([], paths.index_with(['rb']), &)
       end
     end
   end

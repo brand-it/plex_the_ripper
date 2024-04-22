@@ -13,11 +13,11 @@ module TheMovieDb
       end
 
       def next_page
-        @next_page ||= self.class.new(page: page + 1, query: query, year: year)
+        @next_page ||= self.class.new(page: page + 1, query:, year:)
       end
 
       def previous_page
-        @previous_page ||= self.class.new(page: page - 1, query: query, year: year)
+        @previous_page ||= self.class.new(page: page - 1, query:, year:)
       end
     end
   end

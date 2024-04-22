@@ -6,10 +6,10 @@ RSpec.describe DiskInfoService do
   include_context 'with mkv_stubbs'
   before { allow(new_service).to receive(:info).and_return(title_info_object) }
 
-  let(:list_drives_service) { ListDrivesService.new(config_make_mkv: config_make_mkv) }
+  let(:list_drives_service) { ListDrivesService.new(config_make_mkv:) }
 
   let(:config_make_mkv) { create(:config_make_mkv) }
-  let(:new_service) { described_class.new(config_make_mkv: config_make_mkv, disk_name: '/dev/disk2') }
+  let(:new_service) { described_class.new(config_make_mkv:, disk_name: '/dev/disk2') }
 
   describe '#results' do
     subject(:call) { new_service.results }

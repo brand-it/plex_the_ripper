@@ -9,8 +9,8 @@ class ChecksumService
   option :progress_listener, Types.Interface(:call), optional: true
 
   class << self
-    def call(*args)
-      new(*args).call
+    def call(*)
+      new(*).call
     end
   end
 
