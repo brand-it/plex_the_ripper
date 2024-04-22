@@ -3,10 +3,11 @@
 class ApplicationController < ActionController::Base
   include Rescuer
 
-  before_action :plex_config
-  before_action :movie_db_config
-  before_action :mkv_config
+  before_action :continue_upload
   before_action :load_disk_worker
+  before_action :mkv_config
+  before_action :movie_db_config
+  before_action :plex_config
   helper_method :free_disk_space, :total_disk_space
 
   def current_user
@@ -25,6 +26,16 @@ class ApplicationController < ActionController::Base
 
   def load_disk_worker
     LoadDiskWorker.perform_async
+  end
+
+  def continue_upload
+    return if UploadWorker.job.pending?
+
+    Movie.find_each do |movie|
+      next unless movie.tmp_plex_path_exists?
+
+      UploadWorker.perform_async(disk_title: movie.disk_title)
+    end
   end
 
   private
