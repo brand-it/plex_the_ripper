@@ -23,7 +23,7 @@ class RipWorker < ApplicationWorker
 
   def upload_mkv(disk_title)
     sleep 1 while UploadWorker.job.pending?
-    UploadWorker.perform_async(disk_title)
+    UploadWorker.perform_async(disk_title:)
   end
 
   def disk_titles

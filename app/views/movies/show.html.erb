@@ -17,6 +17,9 @@
               <%= link_to_movie_db_movie @movie.the_movie_db_id %>
             </small>
           </p>
+          <p class="text-primary-emphasis">Blue Means the disk title is within the runtime range of the movie.</p>
+          <p class="text-success-emphasis">Gream Means the disk has been ripped before.</p>
+
           <div id='disk-selector'>
             <%= render MovieTitleTableComponent.new(disks: @disks, movie: @movie) %>
           </div>

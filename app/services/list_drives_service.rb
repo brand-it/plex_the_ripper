@@ -2,14 +2,12 @@
 
 class ListDrivesService
   extend Dry::Initializer
-  include Shell
-  include MkvParser
 
   option :noscan, Types::Bool, default: -> { false }
 
   class << self
-    def results(*)
-      new(*).results
+    def results(...)
+      new(...).results
     end
   end
 
@@ -32,7 +30,7 @@ class ListDrivesService
   end
 
   def drives
-    @drives ||= parse_mkv_string(info.stdout_str).select do |i|
+    @drives ||= info.parsed_mkv.select do |i|
       i.is_a?(MkvParser::DRV) && i.enabled.to_i.positive?
     end
   end
