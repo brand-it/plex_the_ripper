@@ -17,7 +17,7 @@ class Config < ApplicationRecord
       return @setting unless block_given?
 
       @setting = Setting.call(block)
-      @setting.attributes.each do |name, _option|
+      @setting.attributes.each_key do |name|
         define_method("settings_#{name}") { settings[name] }
         define_method("settings_#{name}=") { |val| self.settings = { "#{name}": val } }
       end

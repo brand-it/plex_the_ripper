@@ -7,49 +7,41 @@
 
 name: Status
 
-on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+# run this job on every push
+on: [push]
 
 jobs:
   rspec:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
-        ruby-version: 3.1.0
-    - uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
-        node-version: 16.13.1
+        node-version: 20.3.0
     - name: Find yarn cache location
       id: yarn-cache
       run: echo "::set-output name=dir::$(yarn cache dir)"
     - name: JS package cache
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: ${{ steps.yarn-cache.outputs.dir }}
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-    - name: Install packages
-      run: |
-        yarn install --pure-lockfile
     - name: Run tests
       run: bundle exec rspec --format RSpec::Github::Formatter --format progress
 
   rubocop:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         bundler-cache: true
-        ruby-version: 3.1.0
     - name: Run tests
       run: bundle exec rubocop

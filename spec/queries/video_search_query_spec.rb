@@ -3,10 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe VideoSearchQuery do
-  before { create :config_the_movie_db }
+  before { create(:config_the_movie_db) }
 
   describe '#results', vcr: { record: :once, cassette_name: "#{described_class}/results" } do
-    subject(:results) { described_class.new(query: 'stargate', page: page).results }
+    subject(:results) { described_class.new(query: 'stargate', page:).results }
 
     let(:page) { 1 }
 
@@ -27,10 +27,10 @@ RSpec.describe VideoSearchQuery do
     end
 
     it 'includes movie ids' do
-      expect(results.map(&:the_movie_db_id)).to match_array [
-        2164, 4629, 2290, 5148, 72_925, 12_914, 13_001, 2580, 784_993,
-        376_268, 226_412, 46_852, 720_733, 873_627, 875_973
-      ]
+      expect(results.map(&:the_movie_db_id)).to contain_exactly(
+        2164, 4629, 2290, 5148, 72_925, 12_914, 13_001, 2580,
+        784_993, 376_268, 226_412, 46_852, 720_733, 873_627, 875_973
+      )
     end
 
     it 'responds with tv shows' do

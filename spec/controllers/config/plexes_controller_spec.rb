@@ -2,13 +2,13 @@
 
 require 'rails_helper'
 
-RSpec.describe Config::PlexesController, type: :controller do
-  before { create :config_make_mkv }
+RSpec.describe Config::PlexesController do
+  before { create(:config_make_mkv) }
 
-  let(:config) { create :config_plex }
+  let(:config) { create(:config_plex) }
 
   describe 'GET directories' do
-    subject(:get_folders) { get :directories, params: params, format: :json }
+    subject(:get_folders) { get :directories, params:, format: :json }
 
     let(:params) { { id: config.id } }
 

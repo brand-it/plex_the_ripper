@@ -23,7 +23,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Progress, type: :model do
+RSpec.describe Progress do
   describe 'associations' do
     it { is_expected.to belong_to(:progressable).optional(false) }
   end

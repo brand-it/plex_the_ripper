@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'config/plexes/index', type: :view do
+RSpec.describe 'config/plexes/index' do
   before do
     assign(:config_plexes, [
              build_stubbed(:config_plex),
@@ -11,6 +11,6 @@ RSpec.describe 'config/plexes/index', type: :view do
   end
 
   it 'renders a list of config/plexes' do
-    render
+    expect { render }.not_to raise_error
   end
 end

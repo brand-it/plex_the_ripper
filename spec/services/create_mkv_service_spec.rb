@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe CreateMkvService do
-  let(:service) { described_class.new(disk_title: disk_title, progress_listener: progress_listener) }
+  let(:service) { described_class.new(disk_title:, progress_listener:) }
   let(:disk_title) { build_stubbed(:disk_title) }
   let(:progress_listener) { double('progress_listener', call: false) }
 
-  before { create :config_make_mkv }
+  before { create(:config_make_mkv) }
 
   describe '#call' do
     subject(:call) { service.call }

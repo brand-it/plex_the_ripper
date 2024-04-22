@@ -31,7 +31,7 @@ module Ftp
 
     def ftp_options
       {
-        username: username,
+        username:,
         password: plex_config.settings_ftp_password,
         ssl: { verify_mode: OpenSSL::SSL::VERIFY_NONE }
       }

@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
 class LoadDiskWorker < ApplicationWorker
-  option :disk_id, Types::Integer
-
   def perform
-    CreateDisksService.call
+    cable_ready[DiskTitleChannel.channel_name].reload if existing_disks.nil? && disks.present?
+    cable_ready.broadcast
   end
 
-  private
+  def disks
+    @disks ||= existing_disks || CreateDisksService.call
+  end
 
-  def disk
-    @disk ||= Disk.find(disk_id)
+  def existing_disks
+    return @existing_disks if defined?(@existing_disks)
+
+    @existing_disks = FindExistingDisksService.call.presence
   end
 end

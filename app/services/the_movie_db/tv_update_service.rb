@@ -17,8 +17,8 @@ module TheMovieDb
     param :tv, Types.Instance(::Tv)
 
     class << self
-      def call(*args)
-        new(*args).call
+      def call(*)
+        new(*).call
       end
     end
 

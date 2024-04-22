@@ -63,14 +63,10 @@ class Video < ApplicationRecord
   def ratings
     @ratings ||= self.class.ratings.keys & release_dates['results']
                  .flat_map { _1['release_dates'] }
-                 .map { _1['certification'] }
+                 .pluck('certification')
   end
 
   def release_or_air_date
     release_date || episode_first_air_date
-  end
-
-  def tmp_plex_path_exists?
-    File.exist?(tmp_plex_path)
   end
 end

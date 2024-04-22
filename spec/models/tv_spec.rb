@@ -30,7 +30,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe Tv, type: :model do
+RSpec.describe Tv do
   include_context 'IsVideo'
 
   describe 'validations' do

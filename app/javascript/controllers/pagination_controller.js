@@ -1,4 +1,4 @@
-import { Controller } from 'stimulus'
+import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
   static targets = ['showMore']
@@ -9,8 +9,6 @@ export default class extends Controller {
       if (this.showMoreVisable()) this.showMoreTarget.click();
     });
   }
-
-
 
   showMoreVisable() {
     if (!this.hasShowMoreTarget || this.disabled()) return false

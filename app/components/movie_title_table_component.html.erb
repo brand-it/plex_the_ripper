@@ -1,0 +1,40 @@
+
+<% if disks.any? %>
+  <table class="table" id="<%= dom_id %>">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Duration (<%= distance_of_time_in_words @movie.movie_runtime.seconds %>)</th>
+        <th>Size</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody class="disk_titles">
+      <% disks.each do |disk| %>
+        <% disk.disk_titles.sort_by { |d| movie.runtime_range.include?(d.duration) ? 0 : 1  }.each do |disk_title| %>
+          <% text_class = 'text-primary-emphasis' if movie.runtime_range.include?(disk_title.duration) %>
+          <% text_class = 'text-success-emphasis' if movie.disk_title&.name == disk_title.name %>
+          <tr>
+            <th scope="row" class="<%= text_class %>"><%= disk_title.id %></th>
+            <td class="<%= text_class %>"><%= disk_title.name %></td>
+            <td class="<%= text_class %>"><%= distance_of_time_in_words(disk_title.duration.seconds) %></td>
+            <td class="<%= disk_title.size >= free_disk_space ? 'text-danger' : text_class %>">
+              <%= number_to_human_size(disk_title.size, precision: 3) %>
+              <% if disk_title.size >= free_disk_space %>
+                WARNING: Not enough space available to rip need another <%= number_to_human_size(disk_title.size - free_disk_space, precision: 3) %>
+              <% end %>
+            </td>
+            <td class="<%= text_class %>">
+              <%= link_to 'Rip', video_disk_title_path(movie, disk_title), data: { turbo_method: :patch } %>
+            </td>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+<% elsif LoadDiskWorker.job.pending? %>
+  <p class="text-info">Loading Disk this might takes a while. Page will reload once ready. Fell free to refresh the page.</p>
+<% else %>
+  <p class="text-warn">Sorry no Disk is currently loaded or could be detected. Refresh page if your seeing this warning but know a disk is present.</p>
+<% end %>

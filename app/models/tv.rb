@@ -32,7 +32,7 @@ class Tv < Video
   alias_attribute :name, :title
   alias_attribute :original_name, :original_title
 
-  serialize :episode_distribution_runtime, Array
+  serialize :episode_distribution_runtime, coder: JSON
 
   with_options unless: :the_movie_db_id do
     validates :name, presence: true

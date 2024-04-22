@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Movies', type: :request do
-  before { create :config_make_mkv }
+RSpec.describe 'Movies' do
+  before { create(:config_make_mkv) }
 
   describe 'GET /show' do
     let(:movie) { create(:movie) }

@@ -25,7 +25,7 @@
 #
 require 'rails_helper'
 
-RSpec.describe VideoBlob, type: :model do
+RSpec.describe VideoBlob do
   describe 'associations' do
     it { is_expected.to have_many(:progresses).dependent(:destroy) }
     it { is_expected.to belong_to(:video).optional(true) }

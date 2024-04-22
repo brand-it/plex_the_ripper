@@ -56,6 +56,6 @@ module MkvParser
     end
   rescue NameError => e
     Rails.logger.debug { "NameError message: #{e.message} type: #{type} line: #{line}" }
-    Error.new(type: type, line: line)
+    Error.new(type:, line:)
   end
 end
