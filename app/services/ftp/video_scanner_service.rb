@@ -22,7 +22,7 @@ module Ftp
       end.compact.sort_by(&:filename)
     end
 
-    def build_video(path, entry)
+    def build_video(path, entry) # rubocop:disable Metrics/AbcSize
       return unless entry.pathname.end_with?('.mkv') || entry.pathname.end_with?('.mp4')
 
       key = [path, entry.pathname].join('/')
