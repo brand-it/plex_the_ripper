@@ -54,7 +54,7 @@ class Movie < Video
   end
 
   def tmp_plex_path
-    @tmp_plex_path ||= "#{tmp_plex_dir}/#{plex_name}.mkv"
+    @tmp_plex_path ||= tmp_plex_dir.join("#{plex_name}.mkv")
   end
 
   def plex_name
