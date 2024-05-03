@@ -4,9 +4,6 @@ class TheMovieDbsController < ApplicationController
   helper_method :search_service
 
   def index
-    return unless (Video.none? || !synced_recently?) && !ScanPlexWorker.job.pending?
-
-    ScanPlexWorker.perform_async
   end
 
   def next_page

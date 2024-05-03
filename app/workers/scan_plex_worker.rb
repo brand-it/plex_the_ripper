@@ -5,7 +5,6 @@ class ScanPlexWorker < ApplicationWorker
     broadcast_progress(in_progress_component('Scan Plex...', 50, show_percentage: false))
     plex_movies.map do |blob|
       blob.update!(video: create_movie!(blob))
-      job.log("Updated #{blob.filename}")
       self.completed += 1
       percent_completed = (completed / plex_movies.size.to_f * 100)
       broadcast_progress(

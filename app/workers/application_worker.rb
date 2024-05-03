@@ -6,68 +6,31 @@ class ApplicationWorker
   extend Dry::Initializer
   delegate :render, to: :ApplicationController
 
-  class Job
-    extend Dry::Initializer
-
-    option :thread, Types.Instance(Thread), optional: true
-    option :worker, optional: true
-
-    attr_accessor :exception
-
-    delegate :status, :backtrace, to: :thread
-
-    def pending?
-      worker.present? && thread&.alive?
-    end
-
-    def logs
-      @logs ||= []
-    end
-
-    def log(message)
-      logs << message
-    end
-  end
-
   class << self
-    def perform_async(...)
-      return if job.pending?
-
-      ApplicationWorker.jobs[self] = new(...).perform_async
+    def perform_async(**args)
+      Job.sort_by_created_at.active.find_or_initialize_by(name: to_s).tap do |job|
+        job.update!(arguments: args)
+      end
     end
 
     def job
-      ApplicationWorker.jobs[self] || Job.new
+      Job.sort_by_created_at.find_or_initialize_by(name: to_s)
     end
 
-    def jobs
-      @jobs ||= {}.compare_by_identity
+    def process_work
+      job = Job.active.first
+      return unless job
+
+      job.perform
     end
 
-    def find(key)
-      jobs[key.constantize]
+    # Stores the thread that this current worker is running
+    def workers
+      @workers ||= {}
     end
-  end
-
-  def perform_async
-    Job.new(worker: self, thread: async)
   end
 
   private
-
-  def async
-    raise NotImplementedError, 'You must implement the `perform` method' unless respond_to?(:perform)
-
-    thread = Thread.new do
-      perform
-    rescue StandardError => e
-      job.exception = e
-    end
-    thread.report_on_exception = true
-    thread.abort_on_exception = true
-    thread.run
-    thread
-  end
 
   def job
     self.class.job

@@ -33,7 +33,7 @@
       <% end %>
     </tbody>
   </table>
-<% elsif LoadDiskWorker.job.pending? %>
+<% elsif LoadDiskWorker.job.active? %>
   <p class="text-info">Loading Disk this might takes a while. Page will reload once ready. Fell free to refresh the page.</p>
 <% else %>
   <p class="text-warn">Sorry no Disk is currently loaded or could be detected. Refresh page if your seeing this warning but know a disk is present.</p>

@@ -2,18 +2,22 @@
   <thead>
     <tr>
       <th scope="col">#</th>
+      <th scope="col">Name</th>
+      <th scope="col">Worker</th>
       <th scope="col">State</th>
-      <th scope="col">Message</th>
+      <th scope="col">Error Message</th>
       <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
-    <% @jobs.each do |id, job| %>
+    <% @jobs.each do |job| %>
       <tr>
-        <th scope="row"><%= id %></th>
+        <th scope="row"><%= job.id %></th>
+        <th scope="row"><%= job.name %></th>
+        <th><%= job.worker %></th>
         <td><%= job.status %></td>
-        <td><%= job.exception&.message %></td>
-        <td><%= link_to 'details', job_path(id), class: 'btn btn-secondary' %></td>
+        <td><%= job.error_message %></td>
+        <td><%= link_to 'details', job_path(job), class: 'btn btn-secondary' %></td>
       </tr>
     <% end %>
   </tbody>

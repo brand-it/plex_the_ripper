@@ -7,7 +7,7 @@ class CreateMkvService
 
   Result = Struct.new(:mkv_path, :success?)
   TMP_DIR = Rails.root.join('tmp/videos')
-
+  param :test, Types::Bool, default: -> { false }
   option :disk_title, Types.Instance(DiskTitle)
   option :progress_listener, Types.Interface(:call)
   def self.call(...)

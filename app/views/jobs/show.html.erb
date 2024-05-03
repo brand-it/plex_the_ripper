@@ -1,14 +1,16 @@
 <h3 class="mb-5 text-white">
-  <%= @job.worker.class %>
+  <%= @job.name %>
   <small class="text-muted"><%= @job.status %></small>
 </h3>
-<% if @job.exception %>
+
+<%= @job.arguments %>
+<% if @job.errored? %>
   <div class='bg-dark text-danger p-2 border-bottom p-2 rounded-top'>
-    <%= @job.exception.class %>
-    <%= @job.exception.message %>
+    <%= @job.error_class %>
+    <%= @job.error_message %>
   </div>
   <div class='p-2 rounded-bottom overflow-auto lh-sm text-nowrap bg-dark text-light'>
-    <% @job.exception.backtrace.each do |trace| %>
+    <% @job.backtrace.each do |trace| %>
       <% next unless trace.include?(Rails.root.to_s) %>
       <%= trace.gsub(Rails.root.to_s, 'ROOT').strip %><br/>
     <% end %>
@@ -16,18 +18,8 @@
 
   <div class='bg-dark text-danger p-2 border-bottom p-2 rounded-top'>Full Trace</div>
   <div class='p-2 rounded-bottom overflow-auto lh-sm text-nowrap bg-dark text-light'>
-    <% @job.exception.backtrace.each do |trace| %>
+    <% @job.backtrace.each do |trace| %>
       <%= trace.strip %><br/>
-    <% end %>
-  </div>
-<% end %>
-
-<% if @job.logs.any? %>
-
-  <div class='bg-dark text-info p-2 border-bottom p-2 rounded-top'>Logs</div>
-  <div class='p-2 rounded-bottom overflow-auto lh-sm text-nowrap bg-dark text-light'>
-    <% @job.logs.each do |log| %>
-      <%= log.strip %><br/>
     <% end %>
   </div>
 <% end %>

@@ -10,13 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_26_205648) do
-
+ActiveRecord::Schema[7.1].define(version: 2024_05_02_184955) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "disk_titles", force: :cascade do |t|
@@ -26,8 +25,8 @@ ActiveRecord::Schema.define(version: 2021_09_26_205648) do
     t.integer "size", default: 0, null: false
     t.bigint "mkv_progress_id"
     t.bigint "disk_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["disk_id"], name: "index_disk_titles_on_disk_id"
     t.index ["mkv_progress_id"], name: "index_disk_titles_on_mkv_progress_id"
   end
@@ -36,8 +35,8 @@ ActiveRecord::Schema.define(version: 2021_09_26_205648) do
     t.string "name"
     t.string "disk_name"
     t.string "workflow_state"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "episodes", force: :cascade do |t|
@@ -55,6 +54,19 @@ ActiveRecord::Schema.define(version: 2021_09_26_205648) do
     t.index ["season_id"], name: "index_episodes_on_season_id"
   end
 
+  create_table "jobs", force: :cascade do |t|
+    t.datetime "ended_at"
+    t.datetime "started_at"
+    t.string "error_class"
+    t.string "error_message"
+    t.string "name", null: false
+    t.string "status", default: "enqueued", null: false
+    t.text "arguments"
+    t.text "backtrace"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "progresses", force: :cascade do |t|
     t.string "key"
     t.float "percentage"
@@ -63,8 +75,8 @@ ActiveRecord::Schema.define(version: 2021_09_26_205648) do
     t.text "message"
     t.string "progressable_type"
     t.integer "progressable_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "attempts", default: 0, null: false
     t.integer "descriptive", default: 0, null: false
     t.index ["progressable_type", "progressable_id"], name: "index_progresses_on_progressable_type_and_progressable_id"
@@ -78,8 +90,8 @@ ActiveRecord::Schema.define(version: 2021_09_26_205648) do
     t.integer "season_number"
     t.date "air_date"
     t.bigint "tv_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["tv_id"], name: "index_seasons_on_tv_id"
   end
 
@@ -87,8 +99,8 @@ ActiveRecord::Schema.define(version: 2021_09_26_205648) do
     t.string "name", null: false
     t.string "config_type"
     t.bigint "config_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["config_type", "config_id"], name: "index_users_on_config_type_and_config_id"
   end
 
@@ -103,8 +115,8 @@ ActiveRecord::Schema.define(version: 2021_09_26_205648) do
     t.text "checksum"
     t.string "video_type"
     t.integer "video_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["key", "service_name"], name: "index_video_blobs_on_key_and_service_name", unique: true
     t.index ["video_type", "video_id"], name: "index_video_blobs_on_video"
   end
@@ -124,8 +136,8 @@ ActiveRecord::Schema.define(version: 2021_09_26_205648) do
     t.date "episode_first_air_date"
     t.datetime "synced_on"
     t.bigint "disk_title_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.integer "rating", default: 0, null: false
     t.index ["disk_title_id"], name: "index_videos_on_disk_title_id"
     t.index ["type", "the_movie_db_id"], name: "index_videos_on_type_and_the_movie_db_id", unique: true
