@@ -14,9 +14,9 @@
       <tr>
         <th scope="row"><%= job.id %></th>
         <th scope="row"><%= job.name %></th>
-        <th><%= job.worker %></th>
+        <th><%= job.arguments %></th>
         <td><%= job.status %></td>
-        <td><%= job.error_message %></td>
+        <td><%= truncate job.error_message %></td>
         <td><%= link_to 'details', job_path(job), class: 'btn btn-secondary' %></td>
       </tr>
     <% end %>

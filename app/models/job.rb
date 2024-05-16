@@ -41,6 +41,12 @@ class Job < ApplicationRecord
     cancelling
     cancelled
   ].freeze
+  HANGING_STATUSES = %i[
+    enqueued
+    running
+    pausing
+    cancelling
+  ].freeze
   COMPLETED_STATUSES = %i[succeeded errored cancelled].freeze
   enum(:status, STATUSES.index_with(&:to_s))
 
@@ -53,34 +59,39 @@ class Job < ApplicationRecord
 
   before_save :set_ended_at, if: :status_changed?
   before_save :set_started_at, if: :status_changed?
+  before_save :bust_cache, if: :status_changed?
 
   scope :active, -> { where(status: ACTIVE_STATUSES) }
   scope :completed, -> { where(status: COMPLETED_STATUSES) }
   scope :sort_by_created_at, -> { order(created_at: :desc) }
+  scope :hanging, -> { where(status: HANGING_STATUSES) }
 
-  def perform # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def perform
     return if active?
 
-    begin
-      worker = name.constantize.new(*params, **options)
-      raise NotImplementedError, "#{name} must implement #perform method" unless worker.respond_to?(:perform)
+    raise NotImplementedError, "#{name} must implement #perform method" unless worker.respond_to?(:perform)
 
-      ApplicationWorker.workers[id] = Thread.current
-      update!(status: :running)
-      worker.perform
-      update!(status: :succeeded)
-    rescue StandardError => e
-      update!(
-        error_message: e.message,
-        error_class: e.class.name,
-        backtrace: e.backtrace,
-        status: :errored
-      )
-    end
+    update!(status: :running)
+    worker.perform
+    update!(status: :succeeded)
+  rescue StandardError => e
+    record_exception!(e)
   end
 
   def worker
-    ApplicationWorker.workers[id]
+    @worker ||= name.constantize.new(**arguments.symbolize_keys)
+  rescue StandardError => e
+    record_exception!(e)
+    nil
+  end
+
+  def record_exception!(exception)
+    update!(
+      error_message: exception.message,
+      error_class: exception.class.name,
+      backtrace: exception.backtrace,
+      status: :errored
+    )
   end
 
   def active?
@@ -89,12 +100,8 @@ class Job < ApplicationRecord
 
   private
 
-  def params
-    arguments.try(:first) || []
-  end
-
-  def options
-    (arguments.try(:last) || {}).symbolize_keys
+  def bust_cache
+    Rails.cache.delete('active_jobs')
   end
 
   def set_ended_at

@@ -49,4 +49,23 @@
       <% end %>
     <% end %>
   <% end %>
+
+    <%= render ProcessComponent.new worker: RipWorker do |c| %>
+    <%= c.with_body do %>
+      <% if RipWorker.job.active? %>
+        <%=
+          render(
+            ProgressBarComponent.new(
+              model: RipWorker,
+              show_percentage: false,
+              status: :info,
+              message: 'Ripping in progress'
+            )
+          )
+        %>
+      <% else %>
+        <span>Nothing is being ripped to <%= Config::Plex.newest.settings_ftp_host %> </span>
+      <% end %>
+    <% end %>
+  <% end %>
 </div>

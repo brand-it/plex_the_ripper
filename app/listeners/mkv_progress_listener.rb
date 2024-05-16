@@ -42,15 +42,23 @@ class MkvProgressListener
   end
 
   def update_progress_bar
-    component = ProgressBarComponent.new \
-      model: DiskTitle,
-      completed:,
-      status: :info,
-      message: title
-    Rails.logger.debug { "ProgressNotification completed #{component.dom_id} #{title} #{completed}" }
     cable_ready[DiskTitleChannel.channel_name].morph \
       selector: "##{component.dom_id}",
       html: render(component, layout: false)
     cable_ready.broadcast
+  end
+
+  def component # rubocop:disable Metrics/MethodLength
+    progress_bar = render(
+      ProgressBarComponent.new(
+        model: DiskTitle,
+        completed:,
+        status: :info,
+        message: title
+      ), layout: false
+    )
+    component = ProcessComponent.new(worker: RipWorker)
+    component.with_body { progress_bar }
+    component
   end
 end

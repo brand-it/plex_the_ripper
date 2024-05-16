@@ -3,8 +3,7 @@
 class TheMovieDbsController < ApplicationController
   helper_method :search_service
 
-  def index
-  end
+  def index; end
 
   def next_page
     respond_to do |format|
