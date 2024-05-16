@@ -8,7 +8,7 @@
 # example session becoming invalid on new devices and you can share cookies between multiple servers
 # However you can still use the ENV["SECRET_KEY_BASE"] and all this does not mater
 if Rails.application.credentials.secret_key_base.nil?
-  key_file = Rails.root.join("tmp/#{Rails.env}_secret.txt")
+  key_file = Rails.root.join("config/#{Rails.env}_secret.txt")
   unless File.exist?(key_file)
     random_key = SecureRandom.hex(64)
     Rails.logger.warn "Secret key base not found, generating one at #{key_file}"

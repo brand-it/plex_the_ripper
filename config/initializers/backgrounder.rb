@@ -70,8 +70,3 @@ class Backgrounder
     end
   end
 end
-
-# boot the backgrounder once the application is loaded
-Rails.application.config.after_initialize do
-  Backgrounder.start
-end

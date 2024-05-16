@@ -19,5 +19,6 @@
 FactoryBot.define do
   factory :job do
     name { 'UploadWorker' }
+    error_message { 'Error message' }
   end
 end
