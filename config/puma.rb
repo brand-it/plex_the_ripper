@@ -36,7 +36,12 @@ pidfile ENV.fetch('PIDFILE', 'tmp/pids/server.pid')
 # before forking the application. This takes advantage of Copy On Write
 # process behavior so workers use less memory.
 #
-# preload_app!
+preload_app!
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+# after boot kick off background jobs
+on_booted do
+  Backgrounder.start
+end

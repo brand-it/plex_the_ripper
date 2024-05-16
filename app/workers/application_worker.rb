@@ -6,68 +6,40 @@ class ApplicationWorker
   extend Dry::Initializer
   delegate :render, to: :ApplicationController
 
-  class Job
-    extend Dry::Initializer
-
-    option :thread, Types.Instance(Thread), optional: true
-    option :worker, optional: true
-
-    attr_accessor :exception
-
-    delegate :status, :backtrace, to: :thread
-
-    def pending?
-      worker.present? && thread&.alive?
-    end
-
-    def logs
-      @logs ||= []
-    end
-
-    def log(message)
-      logs << message
-    end
-  end
-
   class << self
-    def perform_async(...)
-      return if job.pending?
+    def perform_async(**args)
+      found_job = job
+      return unless found_job.new_record?
 
-      ApplicationWorker.jobs[self] = new(...).perform_async
+      Rails.logger.info "Enqueuing job: #{found_job.name} with arguments: #{args}"
+      found_job.update!(arguments: args)
     end
 
     def job
-      ApplicationWorker.jobs[self] || Job.new
+      Job.sort_by_created_at.active.find_or_initialize_by(name: to_s)
     end
 
-    def jobs
-      @jobs ||= {}.compare_by_identity
+    def process_work # rubocop:disable Metrics/AbcSize
+      job = Job.enqueued.sort_by_created_at.first
+      return if job.nil? || threads[job.id]&.alive?
+
+      ApplicationWorker.threads[job.id] = Thread.current
+      Rails.logger.info "Processing job: #{job.name} with arguments: #{job.arguments}"
+      job.perform
+      ApplicationWorker.threads.delete(job.id)
     end
 
-    def find(key)
-      jobs[key.constantize]
+    # Stores the thread that this current worker is running
+    def threads
+      @threads ||= {}
     end
   end
 
-  def perform_async
-    Job.new(worker: self, thread: async)
+  def enqueue?
+    true # Override in subclass to determine if the job should be enqueued
   end
 
   private
-
-  def async
-    raise NotImplementedError, 'You must implement the `perform` method' unless respond_to?(:perform)
-
-    thread = Thread.new do
-      perform
-    rescue StandardError => e
-      job.exception = e
-    end
-    thread.report_on_exception = true
-    thread.abort_on_exception = true
-    thread.run
-    thread
-  end
 
   def job
     self.class.job

@@ -22,7 +22,6 @@ class Config
       @config_plex = Config::Plex.new(config_plex_params)
 
       if @config_plex.save
-        ScanPlexWorker.perform_async
         redirect_to root_path, notice: 'Plex was successfully created.'
       else
         render :new
@@ -31,7 +30,6 @@ class Config
 
     def update
       if @config_plex.update(config_plex_params)
-        ScanPlexWorker.perform_async
         redirect_to root_path, notice: 'Plex was successfully updated.'
       else
         render :edit

@@ -33,8 +33,8 @@
       <% end %>
     </tbody>
   </table>
-<% elsif LoadDiskWorker.job.pending? %>
-  <p class="text-info">Loading Disk this might takes a while. Page will reload once ready. Fell free to refresh the page.</p>
+<% elsif LoadDiskWorker.job.active? %>
+  <p class="text-info">Stand by the disk is still being loading from the CD drive this could take a while. Page will update once the disk is ready so no need to refresh the page but if you do it won't hurt anything.</p>
 <% else %>
   <p class="text-warn">Sorry no Disk is currently loaded or could be detected. Refresh page if your seeing this warning but know a disk is present.</p>
 <% end %>

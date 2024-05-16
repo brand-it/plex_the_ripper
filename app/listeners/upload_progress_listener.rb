@@ -45,6 +45,6 @@ class UploadProgressListener
   end
 
   def next_update
-    @next_update ||= Time.current + 0.5
+    @next_update ||= 1.second.from_now
   end
 end
