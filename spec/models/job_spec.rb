@@ -10,6 +10,7 @@
 #  ended_at      :datetime
 #  error_class   :string
 #  error_message :string
+#  metadata      :text             default({}), not null
 #  name          :string           not null
 #  started_at    :datetime
 #  status        :string           default("enqueued"), not null

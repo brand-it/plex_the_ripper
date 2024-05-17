@@ -11,7 +11,7 @@ class RipWorker < ApplicationWorker
   end
 
   def progress_listener
-    @progress_listener ||= MkvProgressListener.new
+    @progress_listener ||= MkvProgressListener.new(job:)
   end
 
   private
@@ -22,8 +22,7 @@ class RipWorker < ApplicationWorker
   end
 
   def upload_mkv(disk_title)
-    sleep 1 while UploadWorker.job.active?
-    UploadWorker.perform_async(disk_title:)
+    UploadWorker.perform_async(disk_title_id: disk_title.id)
   end
 
   def disk_titles

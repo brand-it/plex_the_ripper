@@ -2,7 +2,7 @@
 
 class DiskTitlesController < ApplicationController
   def show
-    @rip_worker = Job.find_by(name: 'RipWorker')
+    @job = RipWorker.job
   end
 
   def update

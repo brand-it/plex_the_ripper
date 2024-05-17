@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_02_184955) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_16_191923) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -65,6 +65,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_02_184955) do
     t.text "backtrace"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "metadata", default: "{}", null: false
   end
 
   create_table "progresses", force: :cascade do |t|

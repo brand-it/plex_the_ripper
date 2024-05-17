@@ -1,12 +1,6 @@
 # frozen_string_literal: true
 
 class ScanPlexWorker < ApplicationWorker
-  # Exit early if there are no videos or the last sync was less than 5 minutes ago
-  # this will avoid creating a new job and will not use up a thread
-  def enqueue?
-    Video.any? && last_sync.present? && (last_sync + 5.minutes > Time.zone.now)
-  end
-
   def perform
     broadcast_progress(in_progress_component('Scan Plex...', 50, show_percentage: false))
     plex_movies.map do |blob|

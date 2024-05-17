@@ -10,7 +10,7 @@ class Backgrounder
 
   CRON_TASKS = {
     'ContinueUploadWorker' => 60.seconds.to_i,
-    'ScanPlexWorker' => 5.minutes.to_i,
+    'ScanPlexWorker' => 10.minutes.to_i,
     'LoadDiskWorker' => 5.seconds.to_i
   }.freeze
 
