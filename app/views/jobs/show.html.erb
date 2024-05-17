@@ -3,7 +3,23 @@
   <small class="text-muted"><%= @job.status %></small>
 </h3>
 
-<%= @job.arguments %>
+<% if @job.arguments.present? %>
+  <h4 class="mb-1 text-white">Arguments</h4>
+  <code>
+    <% @job.arguments.each do |key, value| %>
+      <%= key %> : <%= value %><br/>
+    <% end %>
+  </code>
+<% end %>
+
+<% if @job.metadata.present? %>
+  <h4 class="mb-1 text-white">Metadata</h4>
+  <code>
+    <% @job.metadata.each do |key, value| %>
+      <%= key %> : <%= value %><br/>
+    <% end %>
+  </code>
+<% end %>
 <% if @job.errored? %>
   <div class='bg-dark text-danger p-2 border-bottom p-2 rounded-top'>
     <%= @job.error_class %>

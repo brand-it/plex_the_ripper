@@ -22,11 +22,16 @@ class CreateMkvService
 
   private
 
-  def create_mkv
+  def create_mkv # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     @create_mkv ||= Open3.popen2e(cmd) do |stdin, std_out_err, wait_thr|
       stdin.close
       while raw_line = std_out_err.gets # rubocop:disable Lint/AssignmentInCondition
-        progress_listener.call(parse_mkv_string(raw_line).first)
+        begin
+          progress_listener.call(parse_mkv_string(raw_line).first)
+        rescue StandardError => e
+          Rails.logger.error { "Error parsing mkv string: #{e.message}" }
+          Rails.logger.error { e.backtrace.join("\n") }
+        end
       end
       wait_thr.value
     end
