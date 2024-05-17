@@ -56,10 +56,10 @@
         <%=
           render(
             ProgressBarComponent.new(
-              model: RipWorker,
+              model: DiskTitle,
               show_percentage: false,
               status: :info,
-              message: 'Ripping in progress'
+              message: RipWorker.job.metadata[:title]
             )
           )
         %>

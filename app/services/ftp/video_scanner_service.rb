@@ -22,16 +22,22 @@ module Ftp
       end.compact.sort_by(&:filename)
     end
 
-    def build_video(path, entry) # rubocop:disable Metrics/AbcSize
+    def build_video(path, entry)
       return unless entry.pathname.end_with?('.mkv') || entry.pathname.end_with?('.mp4')
 
       key = [path, entry.pathname].join('/')
-      (preloaded_video_blobs.dig(safe_encode(key), 'ftp') || VideoBlob.new).tap do |video_blob|
+
+      find_or_initialize_by(key).tap do |video_blob|
         video_blob.update! filename: safe_encode(entry.pathname),
                            content_type: content_type(entry),
                            optimized: path.include?('Optimized for'),
                            byte_size: entry.size
       end
+    end
+
+    def find_or_initialize_by(key)
+      service_name = safe_encode(plex_config.settings_ftp_host)
+      preloaded_video_blobs.dig(safe_encode(key), service_name) || VideoBlob.new(key: safe_encode(key), service_name:)
     end
 
     def preloaded_video_blobs

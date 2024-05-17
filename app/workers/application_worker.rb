@@ -6,42 +6,52 @@ class ApplicationWorker
   extend Dry::Initializer
   delegate :render, to: :ApplicationController
 
+  option :job, Types.Instance(Job)
+
   class << self
     def perform_async(**args)
       found_job = job
-      return unless found_job.new_record?
+      found_job.arguments = args
+      return unless found_job.new_record? && found_job.worker.enqueue?
 
-      Rails.logger.info "Enqueuing job: #{found_job.name} with arguments: #{args}"
-      found_job.update!(arguments: args)
+      found_job.save!
+      semaphore.synchronize { enqueued_jobs.add(found_job.id) }
     end
 
     def job
       Job.sort_by_created_at.active.find_or_initialize_by(name: to_s)
     end
 
-    def process_work # rubocop:disable Metrics/AbcSize
-      job = Job.enqueued.sort_by_created_at.first
-      return if job.nil? || threads[job.id]&.alive?
+    def process_work
+      id = take_job_id
+      return if id.nil?
 
-      ApplicationWorker.threads[job.id] = Thread.current
-      Rails.logger.info "Processing job: #{job.name} with arguments: #{job.arguments}"
-      job.perform
-      ApplicationWorker.threads.delete(job.id)
+      Job.find_by(id:)&.perform
     end
 
     # Stores the thread that this current worker is running
     def threads
-      @threads ||= {}
+      @@threads ||= {} # rubocop:disable Style/ClassVars
+    end
+
+    def enqueued_jobs
+      @@enqueued_jobs ||= Job.enqueued.pluck(:id).to_set # rubocop:disable Style/ClassVars
+    end
+
+    def take_job_id
+      semaphore.synchronize do
+        job_id = enqueued_jobs.first
+        enqueued_jobs.delete(job_id) if job_id.present?
+        job_id
+      end
+    end
+
+    def semaphore
+      @@semaphore ||= Thread::Mutex.new # rubocop:disable Style/ClassVars
     end
   end
 
   def enqueue?
     true # Override in subclass to determine if the job should be enqueued
-  end
-
-  private
-
-  def job
-    self.class.job
   end
 end

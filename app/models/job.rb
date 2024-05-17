@@ -10,6 +10,7 @@
 #  ended_at      :datetime
 #  error_class   :string
 #  error_message :string
+#  metadata      :text             default({}), not null
 #  name          :string           not null
 #  started_at    :datetime
 #  status        :string           default("enqueued"), not null
@@ -50,8 +51,9 @@ class Job < ApplicationRecord
   COMPLETED_STATUSES = %i[succeeded errored cancelled].freeze
   enum(:status, STATUSES.index_with(&:to_s))
 
-  serialize :backtrace, coder: YAML
   serialize :arguments, coder: JSON
+  serialize :backtrace, coder: YAML
+  serialize :metadata, coder: JSON
 
   validates :name, presence: true
   validates :status, presence: true
@@ -67,7 +69,7 @@ class Job < ApplicationRecord
   scope :hanging, -> { where(status: HANGING_STATUSES) }
 
   def perform
-    return if active?
+    return unless enqueued?
 
     raise NotImplementedError, "#{name} must implement #perform method" unless worker.respond_to?(:perform)
 
@@ -79,7 +81,7 @@ class Job < ApplicationRecord
   end
 
   def worker
-    @worker ||= name.constantize.new(**arguments.symbolize_keys)
+    @worker ||= name.constantize.new(**arguments.symbolize_keys.merge(job: self))
   rescue StandardError => e
     record_exception!(e)
     nil
@@ -94,8 +96,12 @@ class Job < ApplicationRecord
     )
   end
 
+  def backtrace
+    super || []
+  end
+
   def active?
-    ACTIVE_STATUSES.include?(status)
+    ACTIVE_STATUSES.include?(status.to_sym) && id.present?
   end
 
   private
@@ -105,13 +111,13 @@ class Job < ApplicationRecord
   end
 
   def set_ended_at
-    return unless COMPLETED_STATUSES.include?(status) || STOPPING_STATUSES.include?(status)
+    return unless COMPLETED_STATUSES.include?(status.to_sym) || STOPPING_STATUSES.include?(status.to_sym)
 
     self.ended_at ||= Time.current
   end
 
   def set_started_at
-    return unless ACTIVE_STATUSES.include?(status)
+    return unless ACTIVE_STATUSES.include?(status.to_sym)
 
     self.started_at ||= Time.current
   end

@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class LoadDiskWorker < ApplicationWorker
+  def enqueue?
+    existing_disks.nil?
+  end
+
   def perform
     cable_ready[DiskTitleChannel.channel_name].reload if existing_disks.nil? && disks.present?
     cable_ready.broadcast
