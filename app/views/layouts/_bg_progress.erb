@@ -57,9 +57,9 @@
           render(
             ProgressBarComponent.new(
               model: DiskTitle,
-              show_percentage: false,
+              completed: RipWorker.job.metadata['completed'],
               status: :info,
-              message: RipWorker.job.metadata[:title]
+              message: RipWorker.job.metadata['title']
             )
           )
         %>
