@@ -43,7 +43,7 @@ class MkvProgressListener
     (percent * 100).round(2)
   end
 
-  def update_job
+  def update_job!
     return if next_update.future?
 
     job.update!(
