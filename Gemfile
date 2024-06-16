@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.0'
+ruby '3.3.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'bootsnap', require: false
@@ -18,6 +18,7 @@ gem 'jbuilder'
 gem 'jsbundling-rails'
 gem 'kaminari'
 gem 'net-ftp'
+gem "net-pop", require: false
 gem 'os'
 gem 'progressbar'
 gem 'puma'
