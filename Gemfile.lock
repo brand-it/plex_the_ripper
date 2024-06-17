@@ -452,7 +452,6 @@ DEPENDENCIES
   kaminari
   listen
   net-ftp
-  net-pop
   os
   progressbar
   pry

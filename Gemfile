@@ -18,7 +18,6 @@ gem 'jbuilder'
 gem 'jsbundling-rails'
 gem 'kaminari'
 gem 'net-ftp'
-gem "net-pop", require: false
 gem 'os'
 gem 'progressbar'
 gem 'puma'
