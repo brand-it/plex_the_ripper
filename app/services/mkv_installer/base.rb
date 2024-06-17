@@ -3,7 +3,7 @@
 module MkvInstaller
   class Base
     include Shell
-    DOWNLOAD_URI = URI('http://www.makemkv.com/download/')
+    DOWNLOAD_URI = URI('https://www.makemkv.com/download/')
     VERSION_PATTERN = /.*_v(\d*\.\d*\.\d*)/
 
     private
@@ -21,7 +21,7 @@ module MkvInstaller
       temp_file(path).tap do |file|
         conn.get(path) do |req|
           req.options.on_data = proc do |chunk, overall_received_bytes|
-            Rails.logger.debug { "#{path} Received #{overall_received_bytes} characters" }
+            Rails.logger.info("#{path} Received #{overall_received_bytes} characters")
             file.write chunk
           end
         end
@@ -42,11 +42,15 @@ module MkvInstaller
     end
 
     def version
-      @version ||= request.body.scan(VERSION_PATTERN).flatten.max
+      @version ||= request.body.scan(VERSION_PATTERN).flatten.max.tap do |version|
+        raise "Version could not be resolved from #{request.body}" if version.nil?
+      end
     end
 
     def request
-      @request ||= Faraday.get(DOWNLOAD_URI)
+      @request ||= Faraday.get(DOWNLOAD_URI).tap do |response|
+        raise "Failure to access download url #{DOWNLOAD_URI}" if response.status != 200
+      end
     end
   end
 end
