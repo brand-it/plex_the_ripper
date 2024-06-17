@@ -2,7 +2,7 @@
 http_interactions:
 - request:
     method: get
-    uri: http://www.makemkv.com/download/
+    uri: https://www.makemkv.com/download/
     body:
       encoding: US-ASCII
       string: ''
