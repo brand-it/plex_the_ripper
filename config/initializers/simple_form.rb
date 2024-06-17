@@ -181,7 +181,7 @@ module DisableDoubleClickOnSimpleForms
   PROCESSING = 'Processing...'
   def submit(field, options = {})
     field.is_a?(Hash) ? field_disable_with(field) : options_disable_with(options)
-    super(field, options)
+    super
   end
 
   private
