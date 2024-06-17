@@ -42,6 +42,7 @@ preload_app!
 plugin :tmp_restart
 
 # after boot kick off background jobs
+# rubocop:disable Metrics/BlockLength, Rails/Output
 on_booted do
   Backgrounder.start
   rack_port = ARGV.index('-p') ? ARGV[ARGV.index('-p').next].to_i : 3000
@@ -81,3 +82,4 @@ on_booted do
 
   `open http://localhost:#{rack_port}` if Rails.env.production? && OS.mac?
 end
+# rubocop:enable Metrics/BlockLength, Rails/Output
