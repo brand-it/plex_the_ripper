@@ -82,6 +82,10 @@ def check_ruby_version
       This application requires Ruby #{Tool.version('ruby')}!
       Since there are multiple ways to install Ruby, this script won't do it for you.
       Please install Ruby #{Tool.version('ruby')} from your preferred source.
+
+      https://asdf-vm.com/guide/getting-started.html
+
+      * asdf install
     MSG
   end
   success "Ruby #{Tool.version('ruby')} installed!"

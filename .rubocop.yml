@@ -15,7 +15,7 @@ Style/MixinUsage:
     - "Rakefile"
 
 AllCops:
-  TargetRubyVersion: 3.3.0
+  TargetRubyVersion: 3.3.3
   NewCops: enable
   UseCache: true
   Exclude:
