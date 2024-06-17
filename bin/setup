@@ -194,11 +194,21 @@ def database_setup
   log 'Setting up databases...'
   Rake::Task['db:setup'].invoke
   success 'Database setup complete!'
+rescue ActiveRecord::ProtectedEnvironmentError => e
+  warn e.message
+  log "Database more then likely already exists!"
+end
+
+def migrate_db
+  log "running migrations..."
+  Rake::Task['db:migrate'].invoke
+  success 'migration completed'
 end
 
 def compile_assets
   log 'Compiling assets...'
   Rake::Task['assets:precompile'].invoke
+  Rake::Task['assets:clean'].invoke
   success 'Assets compiled!'
 end
 
@@ -218,7 +228,7 @@ Dir.chdir APP_ROOT do
   node_setup
   application_setup
   database_setup
+  migrate_db
   compile_assets
   install_mkv
-  FileUtils.touch('tmp/setup_complete')
 end
