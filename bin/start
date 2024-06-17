@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+
+# Run ths service in production mode with gives the system more caching
+# and better performance. Before it starts it has to run setup checks
+export RAILS_ENV=production
+
+bin/setup
+
+bin/rails server -b 0.0.0.0 -p 8080 -e production

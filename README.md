@@ -1,6 +1,14 @@
 ![Status](https://github.com/brand-it/plex_the_ripper/workflows/Status/badge.svg)
 
-## Setup
+## Usage
+
+This process tries to get things working but it not perfect. I will update this system in the future but know this is designed with unix based systems in mind.
+
+```shell
+make start
+```
+
+## Development Setup
 
 ### 1. Clone Repo
 ```shell
