@@ -7,6 +7,7 @@ class ProgressBarComponent < ViewComponent::Base
   option :status, default: -> { 'info' }, null: nil
   option :message, optional: true
   option :show_percentage, default: -> { true }
+  option :eta, optional: true
 
   def dom_id
     "#{model.model_name.name}-progress-bar"

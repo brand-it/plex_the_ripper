@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_16_191923) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_18_230011) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -102,6 +102,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_16_191923) do
     t.bigint "config_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "time_zone", limit: 255, default: "Pacific Time (US & Canada)", null: false
     t.index ["config_type", "config_id"], name: "index_users_on_config_type_and_config_id"
   end
 

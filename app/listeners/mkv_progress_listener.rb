@@ -4,6 +4,7 @@ class MkvProgressListener
   extend Dry::Initializer
   include CableReady::Broadcaster
   include ActionView::Helpers::UrlHelper
+  include ActionView::Helpers::DateHelper
 
   delegate :job_path, to: 'Rails.application.routes.url_helpers'
   delegate :render, to: :ApplicationController
@@ -69,13 +70,32 @@ class MkvProgressListener
     @next_update = nil
   end
 
+  def eta # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+    return if job.metadata['completed'].to_f >= 100.0
+
+    percentage_completed = job.metadata['completed'].to_f
+    elapsed_time = Time.current - job.started_at
+
+    total_time_estimated = elapsed_time / (percentage_completed / 100)
+    remaining_time = total_time_estimated - elapsed_time
+
+    eta = Time.current + remaining_time
+
+    distance_of_time_in_words(eta, Time.current)
+  rescue StandardError => e
+    Rails.logger.debug { "#{e.message} #{job.started_at} #{job.metadata['completed']}" }
+    Rails.logger.debug { e.backtrace.join("\n") }
+    nil
+  end
+
   def component # rubocop:disable Metrics/MethodLength
     progress_bar = render(
       ProgressBarComponent.new(
         model: DiskTitle,
         completed: job.metadata['completed'],
         status: :info,
-        message: job.metadata['title']
+        message: job.metadata['title'],
+        eta:
       ), layout: false
     )
     component = ProcessComponent.new(worker: RipWorker)

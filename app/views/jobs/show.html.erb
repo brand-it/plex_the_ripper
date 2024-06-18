@@ -2,11 +2,16 @@
   <%= @job.name.titleize %>
   <small class="text-muted"><%= @job.status %></small>
 </h3>
+<% if @job.started_at %>
+  <div class="mb-2">
+    Started At: <%= @job.started_at.to_fs(:usa_pretty)%>
+  </div>
+<% end %>
 
 <% if @job.arguments.present? %>
   <h5 class="mb-1 text-white">Arguments</h5>
   <% @job.arguments.each do |key, value| %>
-    <p class="pl-1"><%= key %>: <%= value %></p>
+    <p class="pl-0"><%= key %>: <%= value %></p>
   <% end %>
 <% end %>
 
@@ -14,7 +19,7 @@
   <h5 class="mb-1 text-white">Metadata</h5>
   <% @job.metadata.each do |key, value| %>
     <% next if key == 'message' %>
-    <p class="pl-1"><%= key %>: <%= value %></p>
+    <p class="pl-0"><%= key %>: <%= value %></p>
   <% end %>
 <% end %>
 
@@ -46,4 +51,3 @@
     </div>
   </div>
 </div>
-
