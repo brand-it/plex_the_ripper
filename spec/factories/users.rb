@@ -19,6 +19,5 @@
 FactoryBot.define do
   factory :user do
     name { Faker::Internet.username }
-    config factory: %i[config_user]
   end
 end
