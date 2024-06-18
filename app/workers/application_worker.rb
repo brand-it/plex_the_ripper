@@ -16,6 +16,7 @@ class ApplicationWorker
 
       found_job.save!
       semaphore.synchronize { enqueued_jobs.add(found_job.id) }
+      found_job
     end
 
     def job

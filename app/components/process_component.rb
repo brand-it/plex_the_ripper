@@ -4,6 +4,7 @@ class ProcessComponent < ViewComponent::Base
   extend Dry::Initializer
   option :worker, Types.Interface(:name)
   renders_one :body
+  renders_one :link
 
   def dom_id
     "#{worker.name.underscore.dasherize}-process"

@@ -1,3 +1,9 @@
+<div class="row mt-auto">
+  <div class="col-12">
+    <%= render 'cast', video: video %>
+  </div>
+</div>
+
 <% if video.credits['cast'].any? %>
   <div class="col-12"><h4>Cast</h4></div>
   <ol class="overflow-scroll-x d-flex p-0">

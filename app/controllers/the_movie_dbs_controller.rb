@@ -7,19 +7,12 @@ class TheMovieDbsController < ApplicationController
 
   def next_page
     respond_to do |format|
-      format.turbo_stream { render layout: false }
       format.html { render :index }
+      format.turbo_stream
     end
   end
 
   private
-
-  def synced_recently?
-    last_sync = Video.maximum(:synced_on)
-    return false if last_sync.nil?
-
-    last_sync + 5.minutes > Time.zone.now
-  end
 
   def search_service
     @search_service ||= VideoSearchQuery.new(**search_params)

@@ -2,6 +2,6 @@
 
 require 'rails_helper'
 
-RSpec.describe DiskTitleChannel do
+RSpec.describe BroadcastChannel do
   pending "add some examples to (or delete) #{__FILE__}"
 end

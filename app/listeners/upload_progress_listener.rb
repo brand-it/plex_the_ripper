@@ -20,7 +20,7 @@ class UploadProgressListener
   end
 
   def update_component
-    cable_ready[DiskTitleChannel.channel_name].morph \
+    cable_ready[BroadcastChannel.channel_name].morph \
       selector: "##{component.dom_id}",
       html: render(component, layout: false)
     cable_ready.broadcast
