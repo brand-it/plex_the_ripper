@@ -2,21 +2,9 @@
 
 class MoviesController < ApplicationController
   def show
-    @movie = movie
+    @movie = Movie.find_or_initialize_by(the_movie_db_id: params[:id])
+    @movie.subscribe(TheMovieDb::MovieListener.new)
+    @movie.save
     @disks = FindExistingDisksService.call
-  end
-
-  def create
-    movie = Movie.new(the_movie_db_id: params[:the_movie_db_id])
-    movie.subscribe(TheMovieDb::MovieListener.new)
-    if movie.save
-      redirect_to movie
-    else
-      redirect_to the_movie_dbs_path, flash: { error: movie.errors.full_messages }
-    end
-  end
-
-  def movie
-    Movie.find(params[:id])
   end
 end
