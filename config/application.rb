@@ -34,3 +34,5 @@ module PlexRipper
     config.faraday_logging = ENV['FARADAY_LOGGING'] == 'true'
   end
 end
+
+Time::DATE_FORMATS[:usa_pretty] = '%-m/%-d/%y at %-l:%M%P'

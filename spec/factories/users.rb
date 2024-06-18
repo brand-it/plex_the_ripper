@@ -7,6 +7,7 @@
 #  id          :integer          not null, primary key
 #  config_type :string
 #  name        :string           not null
+#  time_zone   :string(255)      default("Pacific Time (US & Canada)"), not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  config_id   :bigint
@@ -18,6 +19,5 @@
 FactoryBot.define do
   factory :user do
     name { Faker::Internet.username }
-    config factory: %i[config_user]
   end
 end

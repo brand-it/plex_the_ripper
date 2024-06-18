@@ -2,5 +2,8 @@
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
   <%= f.input :name, autofocus: true, required: true %>
+  <div class="form-group minimal-input string required mb-4">
+    <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.all %>
+  </div>
   <%= f.button :submit %>
 <% end %>

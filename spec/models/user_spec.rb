@@ -7,6 +7,7 @@
 #  id          :integer          not null, primary key
 #  config_type :string
 #  name        :string           not null
+#  time_zone   :string(255)      default("Pacific Time (US & Canada)"), not null
 #  created_at  :datetime         not null
 #  updated_at  :datetime         not null
 #  config_id   :bigint
@@ -18,10 +19,6 @@
 require 'rails_helper'
 
 RSpec.describe User do
-  describe 'associations' do
-    it { is_expected.to belong_to(:config).optional(true) }
-  end
-
   describe 'validations' do
     it { is_expected.to validate_presence_of(:name) }
   end

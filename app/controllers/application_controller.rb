@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   before_action :mkv_config
   before_action :movie_db_config
   before_action :plex_config
+  around_action :set_time_zone
   helper_method :free_disk_space, :total_disk_space
 
   def current_user
@@ -13,6 +14,7 @@ class ApplicationController < ActionController::Base
 
     @current_user = User.find_by(id: cookies[:user_id])
   end
+  helper_method :current_user
 
   def free_disk_space
     @free_disk_space ||= stats.block_size * stats.blocks_available
@@ -59,5 +61,10 @@ class ApplicationController < ActionController::Base
     return @mkv_config if defined? @mkv_config
 
     @mkv_config = Config::MakeMkv.newest
+  end
+
+  def set_time_zone(&)
+    timezone = current_user&.time_zone || Rails.configuration.time_zone
+    Time.use_zone(timezone, &)
   end
 end

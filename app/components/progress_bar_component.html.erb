@@ -8,6 +8,9 @@
     <% if show_percentage %>
       ...
       <%= number_to_percentage completed, precision: 2 %>
+      <% if eta.present? %>
+        (<%= eta %>)
+      <% end %>
     <% end %>
   </div>
 </div>

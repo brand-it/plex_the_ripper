@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  resources :users
+  resources :users do
+    member { get :login }
+  end
   #--------#
   # Config #
   #--------#
   namespace :config do
-    resources :users, only: %i[edit update create new]
     resource :plex do
       member { get 'directories' }
     end
