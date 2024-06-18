@@ -39,9 +39,18 @@ class EjectDiskService
     disk.disk_name
   end
 
-  def broadcasting(message)
-    component = ProgressMessageComponent.new(model: DiskTitle, message:)
-    cable_ready[DiskTitleChannel.channel_name].morph(
+  def broadcasting(message) # rubocop:disable Metrics/MethodLength
+    progress_bar = render(
+      ProgressBarComponent.new(
+        model: Video,
+        completed: 100,
+        status: :success,
+        message:
+      ), layout: false
+    )
+    component = ProcessComponent.new(worker: RipWorker)
+    component.with_body { progress_bar }
+    cable_ready[BroadcastChannel.channel_name].morph(
       selector: "##{component.dom_id}",
       html: render(component, layout: false)
     )

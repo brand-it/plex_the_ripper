@@ -1,27 +1,13 @@
-<%= render 'search' %>
+
+<%= simple_form_for search_service, as: :search, url: the_movie_dbs_path, method: :get, html: { class: 'row m-1 pb-4' }, data: { turbo_frame: 'videos' } do |f| %>
+  <div class='col-8 col-md-10 col-lg-10'>
+    <%= f.input :query, label: 'Search for TV or Movie', autofocus: true, required: false %>
+  </div>
+  <div class='col align-self-center p-0 text-center'>
+    <%= f.button :submit, 'Search', data: { disable_with: 'Searching' } %>
+  </div>
+<% end %>
+
 <div data-controller='pagination'>
-  <% if params.dig(:search, :query).blank? %>
-    <div class='col-md-12'>
-      <div class="text-white">
-        <div class='container'>
-          <h1 class="display-4">Getting Started</h1>
-          <p class="lead">Get started by typing in the name of the TV show or movie.</p>
-        </div>
-      </div>
-    </div>
-  <% elsif search_service.results.none? %>
-    <div class='col-md-12'>
-      <div class="text-white">
-        <div class='container'>
-          <h1 class="display-4">No Results Found For <%= params.dig(:search, :query) %></h1>
-          <p class="lead">Try typing a different movie name</p>
-        </div>
-      </div>
-    </div>
-  <% else %>
-    <div id="videos" class="row">
-      <%= render partial: 'video', collection: search_service.results %>
-      <%= render 'next_page' %>
-    </div>
-  <% end %>
+  <%= render partial: 'videos', locals: { search_service: }  %>
 </div>

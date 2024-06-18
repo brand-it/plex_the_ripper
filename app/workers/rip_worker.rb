@@ -6,6 +6,7 @@ class RipWorker < ApplicationWorker
   def perform
     disk_titles.each do |disk_title|
       result = create_mkv(disk_title) unless disk_title.video.tmp_plex_path_exists?
+      job.save!
       EjectDiskService.call(disk_title.disk) if result&.success?
       upload_mkv(disk_title)
     end

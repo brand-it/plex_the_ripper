@@ -1,41 +1,49 @@
-<h3 class="mb-5 text-white">
-  <%= @job.name %>
+<h3 class="mb-1 text-white">
+  <%= @job.name.titleize %>
   <small class="text-muted"><%= @job.status %></small>
 </h3>
 
 <% if @job.arguments.present? %>
-  <h4 class="mb-1 text-white">Arguments</h4>
-  <code>
-    <% @job.arguments.each do |key, value| %>
-      <%= key %> : <%= value %><br/>
-    <% end %>
-  </code>
+  <h5 class="mb-1 text-white">Arguments</h5>
+  <% @job.arguments.each do |key, value| %>
+    <p class="pl-1"><%= key %>: <%= value %></p>
+  <% end %>
 <% end %>
 
 <% if @job.metadata.present? %>
-  <h4 class="mb-1 text-white">Metadata</h4>
-  <code>
-    <% @job.metadata.each do |key, value| %>
-      <%= key %> : <%= value %><br/>
-    <% end %>
-  </code>
+  <h5 class="mb-1 text-white">Metadata</h5>
+  <% @job.metadata.each do |key, value| %>
+    <% next if key == 'message' %>
+    <p class="pl-1"><%= key %>: <%= value %></p>
+  <% end %>
 <% end %>
+
 <% if @job.errored? %>
-  <div class='bg-dark text-danger p-2 border-bottom p-2 rounded-top'>
+  <div class='bg-dark text-danger p-2 rounded-top'>
     <%= @job.error_class %>
     <%= @job.error_message %>
   </div>
-  <div class='p-2 rounded-bottom overflow-auto lh-sm text-nowrap bg-dark text-light'>
-    <% @job.backtrace.each do |trace| %>
-      <% next unless trace.include?(Rails.root.to_s) %>
-      <%= trace.gsub(Rails.root.to_s, 'ROOT').strip %><br/>
-    <% end %>
-  </div>
-
-  <div class='bg-dark text-danger p-2 border-bottom p-2 rounded-top'>Full Trace</div>
-  <div class='p-2 rounded-bottom overflow-auto lh-sm text-nowrap bg-dark text-light'>
-    <% @job.backtrace.each do |trace| %>
-      <%= trace.strip %><br/>
-    <% end %>
-  </div>
+  <% if @job.backtrace.any? %>
+    <div class='p-2 rounded-bottom border-bottom overflow-auto lh-sm text-nowrap bg-dark text-light'>
+      <% @job.backtrace.each do |trace| %>
+        <% next unless trace.include?(Rails.root.to_s) %>
+        <%= trace.gsub(Rails.root.to_s, 'ROOT').strip %><br/>
+      <% end %>
+    </div>
+    <div class='bg-dark text-danger p-2 rounded-top'>Full Trace</div>
+    <div class='p-2 rounded-bottom overflow-auto lh-sm text-nowrap bg-dark text-light'>
+      <% @job.backtrace.each do |trace| %>
+        <%= trace.strip %><br/>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>
+
+<div class='row min-vh-100'>
+  <div class="col-12">
+    <div class="progress-message text-white bg-black rounded-4 p-4" style="overflow-y: scroll; min-height: 100%; max-height: 100%;">
+      <%= render JobMessageComponent.new(job: @job) %>
+    </div>
+  </div>
+</div>
+

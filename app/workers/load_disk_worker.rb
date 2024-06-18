@@ -6,7 +6,7 @@ class LoadDiskWorker < ApplicationWorker
   end
 
   def perform
-    cable_ready[DiskTitleChannel.channel_name].reload if existing_disks.nil? && disks.present?
+    cable_ready[BroadcastChannel.channel_name].reload if existing_disks.nil? && disks.present?
     cable_ready.broadcast
   end
 
