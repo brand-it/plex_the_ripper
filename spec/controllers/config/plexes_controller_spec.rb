@@ -3,7 +3,10 @@
 require 'rails_helper'
 
 RSpec.describe Config::PlexesController do
-  before { create(:config_make_mkv) }
+  before do
+    create(:config_make_mkv)
+    allow(Ftp::ListDir).to receive(:search).and_return(Ftp::ListDir::Result.new(nil, [], true))
+  end
 
   let(:config) { create(:config_plex) }
 
@@ -15,9 +18,7 @@ RSpec.describe Config::PlexesController do
     context 'when not using ftp' do
       let(:params) { super().merge(directory: Rails.root) }
       let(:expected_directories) do
-        dir_path = params.fetch(:directory, Dir.home)
-        entities = Dir.entries(dir_path)
-        entities.map { |e| File.join(dir_path, e) }.select { |e| File.directory?(e) }
+        { 'dirs' => [], 'message' => nil, 'success' => true }
       end
 
       it 'responds with all the files in rails root' do

@@ -9,6 +9,7 @@ HOMEBREW_PACKAGES = %i[
   makedepend
   openssl
   readline
+  gnupg
 ]
 @bundler_options = []
 @deployment = false
@@ -115,13 +116,24 @@ def setup_mac
   end
   # Once Homebrew is installed and up to date, install required packages.
   log 'Installing packages...'
+  versions = `brew ls --versions`.split("\n").to_h { |x| x.split(' ').take(2) }
   HOMEBREW_PACKAGES.each do |dep|
-    versions = `brew ls --versions #{dep}`.chomp
-    next info(versions) unless versions == ''
+    version = versions[dep.to_s]
+    next info("#{dep} #{version}") if version || `which #{dep}` != ''
     info("installing #{dep}")
     system("brew install #{dep}") || error("Error installing #{dep}!")
   end
   success 'Homebrew packages installed!'
+end
+
+def install_asdf
+  return if `which asdf` != ''
+  `git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0`
+end
+
+def install_brew
+  return if `which brew` != ''
+  `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 end
 
 def ruby_setup
@@ -201,7 +213,8 @@ end
 
 def migrate_db
   log "running migrations..."
-  Rake::Task['db:migrate'].invoke
+  Rake::Task['db:migrate:status'].invoke
+  ActiveRecord::Migration.migrate(:up)
   success 'migration completed'
 end
 
@@ -220,6 +233,8 @@ Dir.chdir APP_ROOT do
   case RUBY_PLATFORM
   when /darwin/
     setup_mac
+    install_brew
+    install_asdf
   else
     warn 'Not running on a Mac. Skipping package installation.'
   end

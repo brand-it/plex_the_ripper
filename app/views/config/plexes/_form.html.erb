@@ -1,13 +1,14 @@
-<%= simple_form_for config_plex, url: config_plex_path do |f| %>
+<%= simple_form_for config_plex, url: config_plex_path, data: { controller: 'plex', plex_url_value: directories_config_plex_path } do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <%= f.simple_fields_for :settings, f.object.settings do |settings_form| %>
-    <%= settings_form.input :movie_path, autofocus: true, required: true %>
-    <%= settings_form.input :tv_path, required: true %>
-    <%= settings_form.input :ftp_username, required: false %>
-    <%= settings_form.input :ftp_host, required: false %>
-    <%= settings_form.input :ftp_password, required: false %>
+    <%= settings_form.input :ftp_username, required: false, autofocus: true, input_html: { data: { plex_target: :username } }%>
+    <%= settings_form.input :ftp_host, required: false, input_html: { data: { plex_target: :host } } %>
+    <%= settings_form.input :ftp_password, required: false, input_html: { data: { plex_target: :password } } %>
+    <div class="dropdown-container">
+    <%= settings_form.input :movie_path, required: true, input_html: { data: { plex_target: :input, action: 'keyup->plex#suggestion' } } %>
+    <%= settings_form.input :tv_path, required: true, input_html: { data: { plex_target: :input, action: 'keyup->plex#suggestion' } } %>
   <% end %>
   <div class='bg-dark w-100 fixed-bottom mt-1 text-right p-3 border-top'>
     <%= f.button :submit %>
