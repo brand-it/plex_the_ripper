@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_18_230011) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_19_200336) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -50,6 +50,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_18_230011) do
     t.date "air_date"
     t.bigint "season_id"
     t.bigint "disk_title_id"
+    t.integer "runtime"
     t.index ["disk_title_id"], name: "index_episodes_on_disk_title_id"
     t.index ["season_id"], name: "index_episodes_on_season_id"
   end

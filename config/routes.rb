@@ -28,11 +28,15 @@ Rails.application.routes.draw do
   #----------#
   # TV Shows #
   #----------#
-  resources :tvs
-  resources :seasons
-  resources :episodes
+  resources :tvs do
+    resources :seasons do
+      member { post :rip }
+    end
+  end
 
-  resources :disks, only: [:index]
+  resources :disks, only: [:index] do
+    member { get :eject }
+  end
   resources :disk_titles, only: %i[show]
   resources :videos do
     resources :disk_titles, only: %i[update show]

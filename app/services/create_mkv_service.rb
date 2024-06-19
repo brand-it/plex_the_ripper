@@ -63,7 +63,6 @@ class CreateMkvService
   end
 
   def recreate_dir(dir)
-    FileUtils.rm_rf(dir)
     FileUtils.mkdir_p(dir)
   end
 

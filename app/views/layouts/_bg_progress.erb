@@ -24,8 +24,9 @@
       <% if LoadDiskWorker.job.active? %>
         <span>Loading the disk info</span>
       <% elsif (disks = FindExistingDisksService.call).any? %>
-        <% disks.map(&:name).each do |disk_name| %>
-          <p class="mb-0"><%= link_to disk_name, the_movie_dbs_path(search: { query: disk_name.titleize }) %> is ready to be ripped.</p>
+        <% disks.each do |disk| %>
+          <p class="mb-0"><%= link_to disk.name, the_movie_dbs_path(search: { query: disk.name.titleize }) %> is ready to be ripped. <%= link_to 'eject', eject_disk_path(disk) %></p>
+
         <% end %>
       <% else %>
         <span>No disks found</span>

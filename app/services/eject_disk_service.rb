@@ -48,7 +48,7 @@ class EjectDiskService
         message:
       ), layout: false
     )
-    component = ProcessComponent.new(worker: RipWorker)
+    component = ProcessComponent.new(worker: LoadDiskWorker)
     component.with_body { progress_bar }
     cable_ready[BroadcastChannel.channel_name].morph(
       selector: "##{component.dom_id}",

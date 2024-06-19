@@ -5,7 +5,7 @@ module Ftp
     extend Dry::Initializer
 
     option :disk_title, Types.Instance(DiskTitle)
-    option :progress_listener, Types.Interface(:call)
+    option :progress_listener, Types.Interface(:call), optional: true
 
     def call
       ftp_destroy_if_file_exists
@@ -23,19 +23,26 @@ module Ftp
     end
 
     def ftp_create_directory
-      ftp.mkdir(disk_title.video.plex_path.dirname)
-    rescue Net::FTPPermError => e
-      Rails.logger.debug { "Net::FTPPermError #{__method__} #{e.message}" }
+      current_dir = ''
+      disk_title.video.plex_path.dirname.to_s.split('/').each do |directory|
+        next current_dir += '' if directory.blank?
+
+        current_dir += "/#{directory}"
+        ftp.mkdir(current_dir)
+      rescue Net::FTPPermError => e
+        Rails.logger.debug { "Net::FTPPermError #{__method__} #{e.message}" }
+      end
     end
 
     def ftp_upload_file
       ftp.putbinaryfile(file, disk_title.video.plex_path) do |chunk|
-        progress_listener.call(chunk_size: chunk.size)
+        progress_listener&.call(chunk_size: chunk.size)
       end
+      progress_listener&.call(chuck_side: file.size)
     end
 
     def tmp_destroy_folder
-      FileUtils.rm_rf(disk_title.video.tmp_plex_path.dirname)
+      FileUtils.rm_rf(disk_title.video.tmp_plex_path)
     end
 
     def file

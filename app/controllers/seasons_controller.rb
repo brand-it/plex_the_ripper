@@ -2,23 +2,24 @@
 
 class SeasonsController < ApplicationController
   def show
-    @season = Season.find(params[:id])
-  end
-
-  def update
+    @tv = Tv.find(params[:tv_id])
     @season = Season.find(params[:id])
     @season.subscribe(TheMovieDbSeasonListener.new)
-
-    if @season.update(season_params)
-      redirect_to season_path(@season)
-    else
-      render :new
-    end
+    @season.save
+    @disks = FindExistingDisksService.call
   end
 
-  private
+  def rip # rubocop:disable Metrics/AbcSize
+    tv = Tv.find(params[:tv_id])
+    season = tv.seasons.find(params[:id])
+    episodes = params[:episodes].reject { _1[:disk_title_id].blank? }
+    episodes = episodes.map do |episode_param|
+      episode = season.episodes.find { _1.id == episode_param[:id].to_i }
+      episode.update!(disk_title_id: episode_param[:disk_title_id])
+      episode
+    end
 
-  def season_params
-    params.require(:season).permit(:the_movie_db_id)
+    job = RipWorker.perform_async(disk_title_ids: episodes.map(&:disk_title_id))
+    redirect_to job_path(job)
   end
 end

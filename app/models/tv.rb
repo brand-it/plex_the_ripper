@@ -47,4 +47,8 @@ class Tv < Video
   def min_max_run_time_seconds
     (episode_run_time.min * 60)..(episode_run_time.max * 60)
   end
+
+  def tvdb_id
+    "{tvdb-#{the_movie_db_id}}"
+  end
 end

@@ -58,7 +58,7 @@ class Movie < Video
   end
 
   def plex_name
-    @plex_name ||= (release_date ? "#{title} (#{release_date.year})" : title)
+    @plex_name ||= (release_date ? "#{title} (#{release_date.year}) #{tvdb_id}" : "#{title} #{tvdb_id}")
   end
 
   def update_maxlength(max)
@@ -69,5 +69,9 @@ class Movie < Video
 
   def tmp_plex_path_exists?
     File.exist?(tmp_plex_path)
+  end
+
+  def tvdb_id
+    "{tvdb-#{the_movie_db_id}}"
   end
 end
