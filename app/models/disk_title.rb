@@ -23,8 +23,13 @@ class DiskTitle < ApplicationRecord
   has_one :movie, dependent: :nullify
   has_one :episode, dependent: :nullify
   belongs_to :disk
+  include ActionView::Helpers::DateHelper
 
   def video
     movie || episode
+  end
+
+  def to_label
+    "##{title_id} #{name} #{distance_of_time_in_words(duration)}"
   end
 end

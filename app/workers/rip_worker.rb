@@ -4,12 +4,13 @@ class RipWorker < ApplicationWorker
   option :disk_title_ids, Types::Array.of(Types::Integer)
 
   def perform
-    disk_titles.each do |disk_title|
+    results = disk_titles.map do |disk_title|
       result = create_mkv(disk_title) unless disk_title.video.tmp_plex_path_exists?
       job.save!
-      EjectDiskService.call(disk_title.disk) if result&.success?
       upload_mkv(disk_title)
+      result
     end
+    EjectDiskService.call(disk_title.disk) if results.all?(&:success?)
   end
 
   def progress_listener

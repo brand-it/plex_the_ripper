@@ -7,7 +7,7 @@
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">
-              <%= link_to 'Select', season_path(season, season: { selected: true }), data: { turbo_method: :patch }, class: 'btn btn-outline-light' %>
+              <%= link_to 'Select', tv_season_path(@tv, season), class: 'btn btn-outline-light' %>
               <%= season.name %>
             </h5>
 

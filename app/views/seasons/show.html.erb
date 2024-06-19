@@ -1,36 +1,46 @@
-<%= render 'the_movie_dbs/search' %>
-<%= simple_form_for :episodes, url: select_episodes_path do |f| %>
-  <div class='row'>
-    <% @season.episodes.each do |episode| %>
-      <div class="card col-6 text-white bg-dark">
-        <div class="row no-gutters">
-          <div class="col-4"><%= imdb_image_tag episode.still_path %></div>
-
-          <div class="col-8">
-            <div class="card-body">
-              <h5 class="card-title">
-                <%= f.fields :selected, model: episode do |form| %>
-                  <%= form.check_box :id, { multiple: true, class: 'toggle', checked: false }, episode.id, nil %>
-                <% end %>
-                #<%= episode.episode_number %>
-                <%= episode.name %>
-              </h5>
-
-              <p class="card-text"><%= episode.overview %></p>
-              <p class="card-text">
-                <small class="text-muted">
-                  <%= episode.air_date  %>
-                  <%= link_to_movie_db_episode(@season.tv.the_movie_db_id, @season.season_number, episode.episode_number) %>
-                </small>
-              </p>
-
-            </div>
-          </div>
-        </div>
-      </div>
-    <% end %>
-    <div class='position-sticky bg-dark w-100 fixed-bottom mt-1 text-right p-3'>
+<% disk_titles = @disks.flat_map { _1.disk_titles } %>
+<h2>
+  <%= @tv.name %>
+  <small class="text-muted"><%= @season.name %></small>
+</h2>
+<%= simple_form_for :episodes, url: rip_tv_season_path(@tv, @season) do |f| %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th></th>
+        <th>#</th>
+        <th>Name</th>
+        <th>Air Date</th>
+        <th>Duration</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @season.episodes.each do |episode| %>
+        <% text_class = 'text-primary-emphasis' if episode.disk_title %>
+        <% text_class = 'text-success-emphasis' if disk_titles.include?(episode.disk_title) %>
+        <%= hidden_field_tag('episodes[][id]', episode.id) %>
+        <tr>
+          <td class="<%= text_class %>">
+            <%= imdb_image_tag episode.still_path, width: 100, height: 100 %>
+          </td>
+          <td class="<%= text_class %>">
+            <%= episode.episode_number %>
+          </td>
+          <td class="<%= text_class %>"><%= episode.name %></td>
+          <td class="<%= text_class %>"><%= episode.air_date  %></td>
+          <td class="<%= text_class %>"><%= distance_of_time_in_words episode.runtime.minutes if episode.runtime%>
+          <td class="<%= text_class %>">
+            <%= select_tag 'episodes[][disk_title_id]', options_from_collection_for_select(disk_titles, :id, :to_label), prompt: "Select Disk Title" %>
+          </td>
+          <td class="<%= text_class %>">
+            <%= link_to_movie_db_episode(@season.tv.the_movie_db_id, @season.season_number, episode.episode_number) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+    <div class='bg-dark w-100 fixed-bottom mt-1 text-right p-3 border-top'>
       <%= f.button :submit, 'Rip Disk' %>
     </div>
-  </div>
+  </table>
 <% end %>

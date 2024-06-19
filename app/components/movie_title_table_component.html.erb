@@ -26,7 +26,7 @@
               <% end %>
             </td>
             <td class="<%= text_class %>">
-              <%= link_to 'Rip', video_disk_title_path(movie, disk_title), data: { turbo_method: :patch } %>
+              <%= link_to 'Rip', video_disk_title_path(movie, disk_title), data: { turbo_method: :patch }, class: 'btn btn-outline-light' %>
             </td>
           </tr>
         <% end %>
