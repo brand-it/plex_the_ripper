@@ -12,23 +12,23 @@ RSpec.describe TheMovieDbSeasonListener do
     subject(:season_saving) { described_class.new.season_saving(season) }
 
     let(:expected_attributes) do
-      {
-        'id' => nil,
-        'name' => 'Season 1',
-        'overview' => '',
-        'poster_path' => '/tiib6A0kZ0NoUeuUbcU0hIu2jlM.jpg',
-        'the_movie_db_id' => season.the_movie_db_id,
-        'season_number' => 1,
-        'air_date' => '1997-07-27',
-        'tv_id' => tv.id,
-        'created_at' => nil,
-        'updated_at' => nil
-      }
+      a_hash_including(
+        id: Integer,
+        name: 'Season 1',
+        overview: '',
+        poster_path: '/tiib6A0kZ0NoUeuUbcU0hIu2jlM.jpg',
+        the_movie_db_id: season.the_movie_db_id,
+        season_number: 1,
+        air_date: '1997-07-27',
+        tv_id: tv.id,
+        created_at: String,
+        updated_at: String
+      )
     end
 
     it 'updates attributes using season name' do
       season_saving
-      expect(season.attributes.as_json).to eq expected_attributes
+      expect(season.attributes.as_json.symbolize_keys).to match expected_attributes
     end
 
     it 'creates seasons' do

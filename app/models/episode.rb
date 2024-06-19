@@ -29,7 +29,9 @@ class Episode < ApplicationRecord
   def plex_path
     raise 'plex config is missing and is required' unless Config::Plex.any?
 
-    @plex_path ||= Pathname.new("#{Config::Plex.newest.settings_tv_path}/#{tv_plex_name}/#{season_name}/#{mkv_file_name}")
+    @plex_path ||= Pathname.new(
+      "#{Config::Plex.newest.settings_tv_path}/#{tv_plex_name}/#{season_name}/#{mkv_file_name}"
+    )
   end
 
   def tmp_plex_dir
