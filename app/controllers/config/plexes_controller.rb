@@ -37,15 +37,24 @@ class Config
     end
 
     def directories
-      dir_path = params.fetch(:directory, Dir.home)
-      entities = Dir.entries(dir_path)
-      entities = entities.map { |e| File.join(dir_path, e) }.select { |e| File.directory?(e) }
       respond_to do |format|
-        format.json { render json: entities }
+        format.json do
+          render json: directories_json
+        end
       end
     end
 
     private
+
+    def directories_json
+      cache_key = Base64.encode64(params.to_s)
+      Rails.cache.fetch(cache_key, namespace: 'plex_directories_json', expires_in: 1.minute) do
+        response = Ftp::ListDir.search(**params.to_unsafe_h)
+        {
+          dirs: response.dirs, message: response.message, success: response.success?
+        }
+      end
+    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_config_plex

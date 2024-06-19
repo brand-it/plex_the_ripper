@@ -116,7 +116,7 @@ def setup_mac
   end
   # Once Homebrew is installed and up to date, install required packages.
   log 'Installing packages...'
-  versions = `brew ls --versions`.split("\n").to_h { _1.split(' ').take(2) }
+  versions = `brew ls --versions`.split("\n").to_h { |x| x.split(' ').take(2) }
   HOMEBREW_PACKAGES.each do |dep|
     version = versions[dep.to_s]
     next info("#{dep} #{version}") if version || `which #{dep}` != ''
@@ -132,6 +132,7 @@ def install_asdf
 end
 
 def install_brew
+  return if `which brew` != ''
   `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
 end
 

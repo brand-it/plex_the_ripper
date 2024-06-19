@@ -38,6 +38,8 @@ module Ftp
     end
 
     # TODO: the rescue needs to be configurlable
+    # try_to { download }
+    # try_to { ftp.putbinaryfile(file, disk_title.video.plex_path) }
     def try_to(rescue_from = DEFAULT_RESCUES)
       @attempts ||= 0
       yield

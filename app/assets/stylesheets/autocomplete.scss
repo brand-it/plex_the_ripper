@@ -1,0 +1,46 @@
+/* Container for the autocomplete */
+.autocomplete-container {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* Input field */
+#autocompleteInput {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+/* Dropdown list */
+.autocomplete-list {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  border: 1px solid #ddd;
+  border-top: none;
+  background-color: #000;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: none;
+  /* Hidden by default */
+}
+
+/* Suggestion item */
+.autocomplete-list div {
+  padding: 10px;
+  cursor: pointer;
+}
+
+/* Highlighted suggestion */
+.autocomplete-list div:hover,
+.autocomplete-list .autocomplete-active {
+  background-color: #007bff;
+  color: white;
+}

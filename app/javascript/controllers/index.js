@@ -9,4 +9,3 @@ application.register("pagination", PaginationController)
 
 import PlexController from "./plex_controller"
 application.register("plex", PlexController)
-  
