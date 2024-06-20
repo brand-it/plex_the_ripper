@@ -10,7 +10,11 @@ class RipWorker < ApplicationWorker
       upload_mkv(disk_title)
       result
     end
-    EjectDiskService.call(disk_title.disk) if results.all?(&:success?)
+    return unless results.all?(&:success?)
+
+    disk_titles.map(&:disk).uniq.each do |disk|
+      EjectDiskService.call(disk)
+    end
   end
 
   def progress_listener
