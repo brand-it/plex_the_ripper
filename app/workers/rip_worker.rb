@@ -10,11 +10,17 @@ class RipWorker < ApplicationWorker
       upload_mkv(disk_title)
       result
     end
+<<<<<<< Updated upstream
     return unless results.all?(&:success?)
 
     disk_titles.map(&:disk).uniq.each do |disk|
       EjectDiskService.call(disk)
     end
+=======
+    EjectDiskService.call(disk_title.disk) if results.all?(&:success?)
+    cable_ready[BroadcastChannel.channel_name].reload
+    cable_ready.broadcast
+>>>>>>> Stashed changes
   end
 
   def progress_listener
