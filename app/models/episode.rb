@@ -68,17 +68,17 @@ class Episode < ApplicationRecord
 
   def episode_plex_name
     if episode_first_air_date
-      "#{title} (#{episode_first_air_date.year}) #{tvdb_id}"
+      "#{title} (#{episode_first_air_date.year})"
     else
-      "#{title} #{tvdb_id}"
+      title
     end
   end
 
   def tv_plex_name
     @tv_plex_name ||= if episode_first_air_date
-                        "#{title} (#{episode_first_air_date.year}) #{season.tv.tvdb_id}"
+                        "#{title} (#{episode_first_air_date.year})"
                       else
-                        "#{title} #{season.tv.tvdb_id}"
+                        title
                       end
   end
 
