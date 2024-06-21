@@ -10,11 +10,8 @@ class RipWorker < ApplicationWorker
       upload_mkv(disk_title)
       result
     end
-    return unless results.all?(&:success?)
-
-    disk_titles.map(&:disk).uniq.each do |disk|
-      EjectDiskService.call(disk)
-    end
+    eject(results)
+    reload_page
   end
 
   def progress_listener
@@ -22,6 +19,19 @@ class RipWorker < ApplicationWorker
   end
 
   private
+
+  def reload_page
+    cable_ready[BroadcastChannel.channel_name].reload
+    cable_ready.broadcast
+  end
+
+  def eject(results)
+    return unless results.all?(&:success?)
+
+    disk_titles.map(&:disk).uniq.each do |disk|
+      EjectDiskService.call(disk)
+    end
+  end
 
   def create_mkv(disk_title)
     CreateMkvService.call disk_title:,
