@@ -38,7 +38,6 @@ module Ftp
       ftp.putbinaryfile(file, disk_title.video.plex_path) do |chunk|
         progress_listener&.call(chunk_size: chunk.size)
       end
-      progress_listener&.call(chuck_side: file.size)
     end
 
     def tmp_destroy_folder
