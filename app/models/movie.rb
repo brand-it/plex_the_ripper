@@ -58,7 +58,7 @@ class Movie < Video
   end
 
   def plex_name
-    @plex_name ||= (release_date ? "#{title} (#{release_date.year}) #{tvdb_id}" : "#{title} #{tvdb_id}")
+    @plex_name ||= (release_date ? "#{title} (#{release_date.year})" : "#{title} #{tvdb_id}")
   end
 
   def update_maxlength(max)
