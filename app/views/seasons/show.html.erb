@@ -1,9 +1,10 @@
-<% disk_titles = @disks.flat_map { _1.disk_titles } %>
+<% disk_titles = @disks.first.disk_titles  %>
 <h2>
   <%= @tv.name %>
   <small class="text-muted"><%= @season.name %></small>
 </h2>
 <%= simple_form_for :episodes, url: rip_tv_season_path(@tv, @season) do |f| %>
+  <%= hidden_field_tag :disk_id, @disks.first.id %>
   <table class="table">
     <thead>
       <tr>
@@ -17,8 +18,7 @@
     </thead>
     <tbody>
       <% @season.episodes.each do |episode| %>
-        <% text_class = 'text-primary-emphasis' if episode.disk_title %>
-        <% text_class = 'text-success-emphasis' if disk_titles.include?(episode.disk_title) %>
+        <% text_class = 'text-primary-emphasis' if episode.disk_titles.any? %>
         <%= hidden_field_tag('episodes[][id]', episode.id) %>
         <tr>
           <td class="<%= text_class %>">

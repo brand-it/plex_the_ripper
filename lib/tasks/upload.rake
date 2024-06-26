@@ -8,7 +8,7 @@ namespace :upload do
       next puts 'skip' unless video.tmp_plex_path_exists?
 
       puts 'uploading'
-
+      raise 'This is broken sorry :('
       progress_bar = ProgressBar.create(
         progress_mark: ' ',
         remainder_mark: "\u{FF65}",

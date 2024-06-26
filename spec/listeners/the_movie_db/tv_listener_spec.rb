@@ -22,7 +22,6 @@ RSpec.describe TheMovieDb::TvListener do
         'episode_distribution_runtime' => [42, 43, 45, 60],
         'movie_runtime' => nil,
         'the_movie_db_id' => 4629,
-        'disk_title_id' => nil,
         'popularity' => nil,
         'overview' => 'The story of Stargate SG-1 begins about a year after ' \
                       'the events of the feature film, when the United States government ' \

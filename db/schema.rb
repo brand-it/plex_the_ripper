@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_24_020532) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_26_050130) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -27,8 +27,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_24_020532) do
     t.bigint "disk_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "video_type"
+    t.integer "video_id"
+    t.integer "episode_id"
     t.index ["disk_id"], name: "index_disk_titles_on_disk_id"
+    t.index ["episode_id"], name: "index_disk_titles_on_episode_id"
     t.index ["mkv_progress_id"], name: "index_disk_titles_on_mkv_progress_id"
+    t.index ["video_type", "video_id"], name: "index_disk_titles_on_video"
   end
 
   create_table "disks", force: :cascade do |t|
@@ -38,6 +43,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_24_020532) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "ejected", default: true, null: false
+    t.string "video_type"
+    t.integer "video_id"
+    t.integer "episode_id"
+    t.index ["episode_id"], name: "index_disks_on_episode_id"
+    t.index ["video_type", "video_id"], name: "index_disks_on_video"
   end
 
   create_table "episodes", force: :cascade do |t|
@@ -50,9 +60,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_24_020532) do
     t.integer "the_movie_db_id"
     t.date "air_date"
     t.bigint "season_id"
-    t.bigint "disk_title_id"
     t.integer "runtime"
-    t.index ["disk_title_id"], name: "index_episodes_on_disk_title_id"
     t.index ["season_id"], name: "index_episodes_on_season_id"
   end
 
@@ -140,11 +148,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_24_020532) do
     t.date "release_date"
     t.date "episode_first_air_date"
     t.datetime "synced_on"
-    t.bigint "disk_title_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "rating", default: 0, null: false
-    t.index ["disk_title_id"], name: "index_videos_on_disk_title_id"
     t.index ["type", "the_movie_db_id"], name: "index_videos_on_type_and_the_movie_db_id", unique: true
   end
 

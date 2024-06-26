@@ -20,15 +20,14 @@
 #  type                         :string
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
-#  disk_title_id                :bigint
 #  the_movie_db_id              :integer
 #
 # Indexes
 #
-#  index_videos_on_disk_title_id             (disk_title_id)
 #  index_videos_on_type_and_the_movie_db_id  (type,the_movie_db_id) UNIQUE
 #
 FactoryBot.define do
-  factory :movie, parent: :video, class: 'Movie' do # rubocop:disable Lint/EmptyBlock
+  factory :movie, parent: :video, class: 'Movie' do
+    type { Movie }
   end
 end

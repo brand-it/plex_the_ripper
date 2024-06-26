@@ -20,12 +20,10 @@
 #  type                         :string
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
-#  disk_title_id                :bigint
 #  the_movie_db_id              :integer
 #
 # Indexes
 #
-#  index_videos_on_disk_title_id             (disk_title_id)
 #  index_videos_on_type_and_the_movie_db_id  (type,the_movie_db_id) UNIQUE
 #
 class Movie < Video
@@ -58,7 +56,7 @@ class Movie < Video
   end
 
   def plex_name
-    @plex_name ||= (release_date ? "#{title} (#{release_date.year})" : "#{title} #{tvdb_id}")
+    @plex_name ||= (release_date ? "#{title} (#{release_date.year})" : title)
   end
 
   def update_maxlength(max)
@@ -69,9 +67,5 @@ class Movie < Video
 
   def tmp_plex_path_exists?
     File.exist?(tmp_plex_path)
-  end
-
-  def tvdb_id
-    "{tvdb-#{the_movie_db_id}}"
   end
 end

@@ -30,7 +30,9 @@ class Config
     end
 
     def default_makemkvcon_path
-      if OS.mac?
+      if Rails.env.test?
+        Rails.root.join('spec/bin/makemkvcon_test')
+      elsif OS.mac?
         locate_mac_makemkvcon
       elsif OS.posix?
         '/usr/bin/makemkv/makemkvcon_test'
