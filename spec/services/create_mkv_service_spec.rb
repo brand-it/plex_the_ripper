@@ -23,7 +23,7 @@ RSpec.describe CreateMkvService do
       end
 
       it 'responds with a result object' do
-        expect(call).to eq(described_class::Result.new(disk_title.video.tmp_plex_path, false))
+        expect(call).to eq(described_class::Result.new(disk_title.tmp_plex_path, false))
       end
     end
   end

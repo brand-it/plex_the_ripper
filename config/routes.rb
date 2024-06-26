@@ -23,7 +23,9 @@ Rails.application.routes.draw do
   #--------#
   # Movies #
   #--------#
-  resources :movies
+  resources :movies do
+    member { post :rip }
+  end
 
   #----------#
   # TV Shows #
@@ -36,10 +38,6 @@ Rails.application.routes.draw do
 
   resources :disks, only: [:index] do
     member { post :eject }
-  end
-  resources :disk_titles, only: %i[show]
-  resources :videos do
-    resources :disk_titles, only: %i[update show]
   end
 
   resource :start

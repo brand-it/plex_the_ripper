@@ -13,25 +13,27 @@
 #  runtime         :integer
 #  still_path      :string
 #  workflow_state  :string
-#  disk_title_id   :bigint
 #  season_id       :bigint
 #  the_movie_db_id :integer
 #
 # Indexes
 #
-#  index_episodes_on_disk_title_id  (disk_title_id)
-#  index_episodes_on_season_id      (season_id)
+#  index_episodes_on_season_id  (season_id)
 #
 class Episode < ApplicationRecord
   belongs_to :season
-
   belongs_to :disk_title, optional: true
+  has_many :disk_titles, dependent: :nullify
+
+  validates :episode_number, presence: true
+
+  delegate :tv, to: :season
 
   def plex_path
     raise 'plex config is missing and is required' unless Config::Plex.any?
 
     @plex_path ||= Pathname.new(
-      "#{Config::Plex.newest.settings_tv_path}/#{tv_plex_name}/#{season_name}/#{mkv_file_name}"
+      "#{Config::Plex.newest.settings_tv_path}/#{tv_plex_name}/#{season_name}/#{plex_name}"
     )
   end
 
@@ -40,10 +42,10 @@ class Episode < ApplicationRecord
   end
 
   def tmp_plex_path
-    @tmp_plex_path ||= tmp_plex_dir.join(mkv_file_name)
+    @tmp_plex_path ||= tmp_plex_dir.join(plex_name)
   end
 
-  def mkv_file_name
+  def plex_name
     "#{episode_plex_name} - s#{format_season_number}e#{format_episode_number} - #{name}.mkv"
   end
 
@@ -81,10 +83,6 @@ class Episode < ApplicationRecord
                       else
                         title
                       end
-  end
-
-  def tvdb_id
-    "{tvdb-#{the_movie_db_id}}"
   end
 
   def tmp_plex_path_exists?

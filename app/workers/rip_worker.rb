@@ -1,48 +1,63 @@
 # frozen_string_literal: true
 
 class RipWorker < ApplicationWorker
+  include ActionView::Helpers::UrlHelper
+  include ActionView::Helpers::DateHelper
+
+  delegate :movie_path, :tv_season_path, to: 'Rails.application.routes.url_helpers'
+
+  option :disk_id, Types::Integer
   option :disk_title_ids, Types::Array.of(Types::Integer)
 
   def perform
-    results = disk_titles.map do |disk_title|
-      result = create_mkv(disk_title) unless disk_title.video.tmp_plex_path_exists?
-      job.save!
-      upload_mkv(disk_title)
-      result
+    if create_mkvs.all?(&:success?)
+      EjectDiskService.call(disk)
+      redirect_to_season_or_movie
+    else
+      reload_page!
     end
-    eject(results)
-    reload_page
-  end
-
-  def progress_listener
-    @progress_listener ||= MkvProgressListener.new(job:)
   end
 
   private
 
-  def reload_page
+  def create_mkvs
+    disk_titles.filter_map do |disk_title|
+      progress_listener = MkvProgressListener.new(job:)
+      result = CreateMkvService.call(disk_title:, progress_listener:)
+      job.save!
+      upload_mkv(disk_title)
+      result
+    end
+  end
+
+  def reload_page!
     cable_ready[BroadcastChannel.channel_name].reload
     cable_ready.broadcast
   end
 
-  def eject(results)
-    return unless results.all?(&:success?)
-
-    disk_titles.map(&:disk).uniq.each do |disk|
-      EjectDiskService.call(disk)
-    end
+  def redirect_to_season_or_movie
+    reload_page! if redirect_url.blank?
+    cable_ready[BroadcastChannel.channel_name].redirect_to(url: redirect_url)
+    cable_ready.broadcast
   end
 
-  def create_mkv(disk_title)
-    CreateMkvService.call disk_title:,
-                          progress_listener:
+  def redirect_url # rubocop:disable Metrics/AbcSize
+    if disk.video.is_a?(Movie)
+      movie_path(disk.video)
+    elsif disk.video.is_a?(Tv)
+      tv_season_path(disk.episode.season.tv, disk.episode.season)
+    end
   end
 
   def upload_mkv(disk_title)
     UploadWorker.perform_async(disk_title_id: disk_title.id)
   end
 
+  def disk
+    @disk ||= Disk.find(disk_id)
+  end
+
   def disk_titles
-    @disk_titles ||= DiskTitle.where(id: disk_title_ids)
+    @disk_titles ||= disk.disk_titles.where(id: disk_title_ids)
   end
 end

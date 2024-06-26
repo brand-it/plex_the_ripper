@@ -14,7 +14,7 @@
       <% disks.each do |disk| %>
         <% disk.disk_titles.sort_by { |d| movie.runtime_range.include?(d.duration) ? 0 : 1  }.each do |disk_title| %>
           <% text_class = 'text-primary-emphasis' if movie.runtime_range.include?(disk_title.duration) %>
-          <% text_class = 'text-success-emphasis' if movie.disk_title&.name == disk_title.name %>
+          <% text_class = 'text-success-emphasis' if movie.disk_titles.include?(disk_title) %>
           <tr>
             <th scope="row" class="<%= text_class %>"><%= disk_title.id %></th>
             <td class="<%= text_class %>"><%= disk_title.name %></td>
@@ -26,7 +26,7 @@
               <% end %>
             </td>
             <td class="<%= text_class %>">
-              <%= link_to 'Rip', video_disk_title_path(movie, disk_title), data: { turbo_method: :patch }, class: 'btn btn-outline-light' %>
+              <%= link_to 'Rip', rip_movie_path(movie, disk_title_id: disk_title.id), data: { turbo_method: :post }, class: 'btn btn-outline-light' %>
             </td>
           </tr>
         <% end %>

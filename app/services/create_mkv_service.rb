@@ -59,7 +59,7 @@ class CreateMkvService
   end
 
   def tmp_path
-    @tmp_path ||= disk_title.video.tmp_plex_path
+    @tmp_path ||= disk_title.tmp_plex_path
   end
 
   def recreate_dir(dir)

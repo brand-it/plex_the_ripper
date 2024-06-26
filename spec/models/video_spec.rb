@@ -26,23 +26,12 @@
 #
 #  index_videos_on_type_and_the_movie_db_id  (type,the_movie_db_id) UNIQUE
 #
-class Tv < Video
-  alias_attribute :name, :title
-  alias_attribute :original_name, :original_title
+require 'rails_helper'
 
-  serialize :episode_distribution_runtime, coder: JSON
-
-  with_options unless: :the_movie_db_id do
-    validates :name, presence: true
-    validates :original_name, presence: true
-  end
-
-  has_many :seasons, dependent: :destroy
-
-  before_save { broadcast(:tv_saving, self) }
-  after_commit { broadcast(:tv_saved, id, async: true) }
-
-  def min_max_run_time_seconds
-    (episode_run_time.min * 60)..(episode_run_time.max * 60)
+RSpec.describe Video do
+  describe 'associations' do
+    it { is_expected.to have_many(:disk_titles).dependent(:nullify) }
+    it { is_expected.to have_many(:video_blobs).dependent(:destroy) }
+    it { is_expected.to have_many(:optimized_video_blobs).dependent(:destroy) }
   end
 end

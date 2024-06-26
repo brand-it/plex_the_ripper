@@ -20,12 +20,10 @@
 #  type                         :string
 #  created_at                   :datetime         not null
 #  updated_at                   :datetime         not null
-#  disk_title_id                :bigint
 #  the_movie_db_id              :integer
 #
 # Indexes
 #
-#  index_videos_on_disk_title_id             (disk_title_id)
 #  index_videos_on_type_and_the_movie_db_id  (type,the_movie_db_id) UNIQUE
 #
 class Video < ApplicationRecord
@@ -33,7 +31,7 @@ class Video < ApplicationRecord
 
   enum rating: { 'N/A': 0, NR: 1, 'NC-17': 2, R: 3, 'PG-13': 4, PG: 5, G: 6 }
 
-  belongs_to :disk_title, optional: true
+  has_many :disk_titles, dependent: :nullify
   has_many :video_blobs, dependent: :destroy
   has_many :optimized_video_blobs, lambda {
                                      VideoBlob.optimized
