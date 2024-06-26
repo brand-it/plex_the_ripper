@@ -31,7 +31,7 @@ require 'rails_helper'
 RSpec.describe Video do
   describe 'associations' do
     it { is_expected.to have_many(:disk_titles).dependent(:nullify) }
-    it { is_expected.to have_many(:video_blobs).dependent(:nullify) }
-    it { is_expected.to have_many(:optimized_video_blobs).dependent(:nullify) }
+    it { is_expected.to have_many(:video_blobs).dependent(:destroy) }
+    it { is_expected.to have_many(:optimized_video_blobs).dependent(:destroy) }
   end
 end
