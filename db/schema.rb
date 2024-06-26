@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_19_200336) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_24_020532) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -37,6 +37,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_19_200336) do
     t.string "workflow_state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "ejected", default: true, null: false
   end
 
   create_table "episodes", force: :cascade do |t|
@@ -120,6 +121,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_19_200336) do
     t.integer "video_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "episode_id"
     t.index ["key", "service_name"], name: "index_video_blobs_on_key_and_service_name", unique: true
     t.index ["video_type", "video_id"], name: "index_video_blobs_on_video"
   end

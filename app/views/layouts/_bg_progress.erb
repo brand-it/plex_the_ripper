@@ -22,11 +22,10 @@
   <%= render ProcessComponent.new worker: LoadDiskWorker do |c| %>
     <%= c.with_body do %>
       <% if LoadDiskWorker.job.active? %>
-        <span>Loading the disk info</span>
+        <span>Loading the disk ...</span>
       <% elsif (disks = FindExistingDisksService.call).any? %>
         <% disks.each do |disk| %>
-          <p class="mb-0"><%= link_to disk.name, the_movie_dbs_path(search: { query: disk.name.titleize }) %> is ready to be ripped. <%= link_to 'eject', eject_disk_path(disk) %></p>
-
+          <p class="mb-0"><%= link_to disk.name, the_movie_dbs_path(search: { query: disk.name.titleize }) %> is ready to be ripped. <%= link_to 'eject', eject_disk_path(disk), data: { turbo_method: :post } %></p>
         <% end %>
       <% else %>
         <span>No disks found</span>
