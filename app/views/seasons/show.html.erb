@@ -29,7 +29,7 @@
           </td>
           <td class="<%= text_class %>"><%= episode.name %></td>
           <td class="<%= text_class %>"><%= episode.air_date  %></td>
-          <td class="<%= text_class %>"><%= distance_of_time_in_words episode.runtime.minutes if episode.runtime%>
+          <td class="<%= text_class %>"><%= distance_of_time_in_words episode.runtime.seconds if episode.runtime%>
           <td class="<%= text_class %>">
             <%= select_tag 'episodes[][disk_title_id]', options_from_collection_for_select(disk_titles, :id, :to_label), prompt: "Select Disk Title" %>
           </td>

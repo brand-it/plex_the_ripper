@@ -6,6 +6,7 @@
 #
 #  id             :integer          not null, primary key
 #  disk_name      :string
+#  ejected        :boolean          default(TRUE), not null
 #  name           :string
 #  workflow_state :string
 #  created_at     :datetime         not null
@@ -16,7 +17,10 @@ class Disk < ApplicationRecord
 
   after_commit { broadcast(:disk_updated, self) }
 
-  has_many :disk_titles, dependent: :destroy
+  has_many :disk_titles, dependent: :destroy, autosave: true
+
+  scope :not_ejected, -> { where(ejected: false) }
+  scope :ejected, -> { where(ejected: true) }
 
   def disk_info
     @disk_info ||= DiskInfoService.new(disk_name:).results

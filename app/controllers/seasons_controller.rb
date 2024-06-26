@@ -6,7 +6,7 @@ class SeasonsController < ApplicationController
     @season = Season.find(params[:id])
     @season.subscribe(TheMovieDbSeasonListener.new)
     @season.save
-    @disks = FindExistingDisksService.call
+    @disks = Disk.not_ejected
   end
 
   def rip # rubocop:disable Metrics/AbcSize

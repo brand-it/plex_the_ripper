@@ -16,7 +16,7 @@ class FindExistingDisksService
   # /dev/disk4 on /Volumes/PLANET51 (udf, local, nodev, nosuid, read-only, noowners)
   def call # rubocop:disable Metrics/MethodLength
     index = 0
-    devices.reduce(Disk.all) do |disks, device|
+    devices.reduce(Disk.not_ejected) do |disks, device|
       if index.zero?
         disks.where(
           name: device.name,

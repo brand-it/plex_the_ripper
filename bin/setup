@@ -214,7 +214,8 @@ end
 def migrate_db
   log "running migrations..."
   Rake::Task['db:migrate:status'].invoke
-  ActiveRecord::Migration.migrate(:up)
+  ActiveRecord::Migration.pending_migrations
+  ActiveRecord::Tasks::DatabaseTasks.migrate
   success 'migration completed'
 end
 
@@ -223,10 +224,6 @@ def compile_assets
   Rake::Task['assets:precompile'].invoke
   Rake::Task['assets:clean'].invoke
   success 'Assets compiled!'
-end
-
-def install_mkv
-  Rake::Task['mkv:install'].invoke
 end
 
 Dir.chdir APP_ROOT do
@@ -245,5 +242,4 @@ Dir.chdir APP_ROOT do
   database_setup
   migrate_db
   compile_assets
-  install_mkv
 end

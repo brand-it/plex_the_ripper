@@ -10,6 +10,7 @@
 #  file_path       :string
 #  name            :string
 #  overview        :string
+#  runtime         :integer
 #  still_path      :string
 #  workflow_state  :string
 #  disk_title_id   :bigint

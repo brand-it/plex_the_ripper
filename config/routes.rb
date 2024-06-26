@@ -35,7 +35,7 @@ Rails.application.routes.draw do
   end
 
   resources :disks, only: [:index] do
-    member { get :eject }
+    member { post :eject }
   end
   resources :disk_titles, only: %i[show]
   resources :videos do

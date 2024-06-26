@@ -10,6 +10,7 @@ class CreateDisksService
 
     drives.map do |drive|
       Disk.find_or_initialize_by(name: drive.drive_name, disk_name: drive.disc_name).tap do |disk|
+        disk.disk_titles.delete_all
         disk.disk_info.each { |title| update_disk_title(disk, title) }
         disk.save!
       end

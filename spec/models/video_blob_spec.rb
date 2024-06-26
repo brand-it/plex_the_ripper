@@ -16,6 +16,7 @@
 #  video_type   :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  episode_id   :bigint
 #  video_id     :integer
 #
 # Indexes

@@ -16,6 +16,7 @@
 #  video_type   :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
+#  episode_id   :bigint
 #  video_id     :integer
 #
 # Indexes
@@ -34,6 +35,7 @@ class VideoBlob < ApplicationRecord
   TV_SHOW_WITHOUT_NUMBER = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*mkv/
   TV_SHOW_WITHOUT_YEAR = /(?<title>.*)\s-\s(?<number>.*)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*mkv/
   belongs_to :video, polymorphic: true, optional: true
+  belongs_to :episode, optional: true
 
   has_many :progresses, dependent: :destroy, as: :progressable
 
