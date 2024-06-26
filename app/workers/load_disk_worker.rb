@@ -7,7 +7,7 @@ class LoadDiskWorker < ApplicationWorker
 
   def perform
     Disk.where.not(id: disks.map(&:id)).in_batches.update_all(ejected: true)
-    if disks.any? { _1.ejected }
+    if disks.any?(&:ejected)
       disks.each { _1.update!(ejected: false) }
       broadcast_reload!
     else
@@ -31,18 +31,18 @@ class LoadDiskWorker < ApplicationWorker
   end
 
   def broadcast_reload!
-    cable_ready[BroadcastChannel.channel_name].reload 
+    cable_ready[BroadcastChannel.channel_name].reload
     cable_ready.broadcast
   end
 
   def broadcast_loading!
     component = ProcessComponent.new worker: LoadDiskWorker
-    component.with_body { "Loading the disk ..." }
+    component.with_body { 'Loading the disk ...' }
     broadcast(component)
   end
 
   def broadcast_no_disk_found!
-    component = ProcessComponent.new worker: LoadDiskWorker 
+    component = ProcessComponent.new worker: LoadDiskWorker
     component.with_body { 'No disks found' }
     broadcast(component)
   end
