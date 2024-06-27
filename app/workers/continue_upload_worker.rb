@@ -2,14 +2,15 @@
 
 class ContinueUploadWorker < ApplicationWorker
   def enqueue?
-    (pending_movies + pending_episodes).any?
+    pending_disk_titles.any?
   end
 
   def perform
-    DiskTitle.find_each do |disk_title|
-      next unless disk_title.tmp_plex_path_exists?
-
+    pending_disk_titles.each do |disk_title|
       UploadWorker.perform_async(disk_title_id: disk_title.id)
     end
   end
+
+  def pending_disk_titles
+    @pending_disk_titles ||= DiskTitle.all.select { _1.tmp_plex_path_exists? } end
 end

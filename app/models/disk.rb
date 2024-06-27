@@ -26,8 +26,8 @@ class Disk < ApplicationRecord
   after_commit { broadcast(:disk_updated, self) }
 
   has_many :disk_titles, dependent: :destroy, autosave: true
-  belongs_to :video, polymorphic: true
-  belongs_to :episode
+  belongs_to :video, polymorphic: true, optional: true
+  belongs_to :episode, optional: true
 
   validates :disk_name, presence: true
 

@@ -56,7 +56,7 @@ class DiskTitle < ApplicationRecord
   end
 
   def tmp_plex_path_exists?
-    require_movie_or_episode!
+    return false if video.nil?
     video.is_a?(Tv) ? episode.tmp_plex_path_exists? : video.tmp_plex_path_exists?
   end
 

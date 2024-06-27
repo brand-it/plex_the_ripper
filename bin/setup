@@ -214,7 +214,6 @@ end
 def migrate_db
   log "running migrations..."
   Rake::Task['db:migrate:status'].invoke
-  ActiveRecord::Migration.pending_migrations
   ActiveRecord::Tasks::DatabaseTasks.migrate
   success 'migration completed'
 end
