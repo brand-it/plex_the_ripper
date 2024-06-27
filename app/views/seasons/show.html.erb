@@ -1,10 +1,10 @@
-<% disk_titles = @disks.first.disk_titles  %>
+<% disk_titles = @disks.first&.disk_titles || [] %>
 <h2>
   <%= @tv.name %>
   <small class="text-muted"><%= @season.name %></small>
 </h2>
 <%= simple_form_for :episodes, url: rip_tv_season_path(@tv, @season) do |f| %>
-  <%= hidden_field_tag :disk_id, @disks.first.id %>
+  <%= hidden_field_tag :disk_id, @disks.first&.id %>
   <table class="table">
     <thead>
       <tr>
