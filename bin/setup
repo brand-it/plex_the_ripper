@@ -138,11 +138,16 @@ end
 
 def ruby_setup
   log 'Updating Rubygems...'
-  system 'gem update --system'
+  major, minor, _ = `gem --version`.strip.split('.')
+
+  system 'gem update --system' if major.to_i < 3 && minor.to_i < 5
   bundler_version = `grep -A 1 "BUNDLED WITH" Gemfile.lock | tail -n 1`.strip
   error "Couldn't determine the version of bundler to use!" if bundler_version == ''
-  log "Installing bundler #{bundler_version}..."
-  system("gem install bundler -v #{bundler_version}") || error('Error installing bundler!')
+  current_version = `bundle version`.strip.match(/Bundler\sversion\s(?<version>\d+\.\d+\.\d+)\s/)[:version]
+  if current_version != bundler_version
+    log "Installing bundler #{bundler_version} current version is #{current_version}..."
+    system("gem install bundler -v #{bundler_version}") || error('Error installing bundler!')
+  end
   log 'Installing gems...'
   @bundler_options.each do |option, value|
     system("bundle config set #{option} '#{value}' --local")

@@ -1,6 +1,6 @@
-<% disk_titles = @disks.first&.disk_titles || [] %>
+<% disk_titles = @disks.first&.disk_titles.not_ripped || [] %>
 <h2>
-  <%= @tv.name %>
+  <%= link_to @tv.name, tv_path(@tv) %>
   <small class="text-muted"><%= @season.name %></small>
 </h2>
 <%= simple_form_for :episodes, url: rip_tv_season_path(@tv, @season) do |f| %>
@@ -17,8 +17,9 @@
       </tr>
     </thead>
     <tbody>
+      <% selected_disk_titles = @season.ripped_disk_titles.map(&:id) %>
       <% @season.episodes.each do |episode| %>
-        <% text_class = 'text-primary-emphasis' if episode.disk_titles.any? %>
+        <% text_class = 'text-primary-emphasis' if episode.ripped_disk_titles.any? %>
         <%= hidden_field_tag('episodes[][id]', episode.id) %>
         <tr>
           <td class="<%= text_class %>">
@@ -29,9 +30,13 @@
           </td>
           <td class="<%= text_class %>"><%= episode.name %></td>
           <td class="<%= text_class %>"><%= episode.air_date  %></td>
-          <td class="<%= text_class %>"><%= distance_of_time_in_words episode.runtime.seconds if episode.runtime%>
+          <td class="<%= text_class %>"><%= distance_of_time_in_words(episode.runtime) if episode.runtime %>
           <td class="<%= text_class %>">
-            <%= select_tag 'episodes[][disk_title_id]', options_from_collection_for_select(disk_titles, :id, :to_label), prompt: "Select Disk Title" %>
+            <%
+              selected_disk_title = disk_titles.find { episode.runtime_range.include?(_1.duration) && selected_disk_titles.exclude?(_1.id) } if episode.ripped_disk_titles.empty?
+              selected_disk_titles << selected_disk_title.id if selected_disk_title
+            %>
+            <%= select_tag 'episodes[][disk_title_id]', options_from_collection_for_select(disk_titles, :id, :to_label, selected_disk_title&.id), prompt: "Select Disk Title" %>
           </td>
           <td class="<%= text_class %>">
             <%= link_to_movie_db_episode(@season.tv.the_movie_db_id, @season.season_number, episode.episode_number) %>

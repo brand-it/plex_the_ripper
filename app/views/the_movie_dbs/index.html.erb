@@ -7,7 +7,4 @@
     <%= f.button :submit, 'Search', data: { disable_with: 'Searching' } %>
   </div>
 <% end %>
-
-<div data-controller='pagination'>
-  <%= render partial: 'videos', locals: { search_service: }  %>
-</div>
+<%= render partial: 'videos', locals: { search_service: }  %>

@@ -13,7 +13,6 @@
 #  metadata     :text
 #  optimized    :boolean          default(FALSE), not null
 #  service_name :string           not null
-#  video_type   :string
 #  created_at   :datetime         not null
 #  updated_at   :datetime         not null
 #  episode_id   :bigint
@@ -22,7 +21,7 @@
 # Indexes
 #
 #  index_video_blobs_on_key_and_service_name  (key,service_name) UNIQUE
-#  index_video_blobs_on_video                 (video_type,video_id)
+#  index_video_blobs_on_video                 (video_id)
 #
 FactoryBot.define do
   factory :video_blob do

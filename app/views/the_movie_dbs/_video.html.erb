@@ -1,43 +1,15 @@
-<div class="col-lg-6 col-sm-12 mb-2">
-  <div class="card text-white bg-dark h-100">
-    <div class="row mb-4">
-      <div class="col-4">
-        <%= imdb_image_tag video.poster_path, klass: 'img-fluid card-img-top' %>
-        <% if video.is_a?(Tv) %>
-          <%= link_to 'Select', tv_path(video.the_movie_db_id), class: 'btn btn-outline-light w-100 rounded-0', data: { turbo: false, disable_with: 'Loading...' } %>
-        <% elsif video.is_a?(Movie) %>
-          <%= link_to 'Select', movie_path(video.the_movie_db_id), class: 'btn btn-outline-light w-100 rounded-0', data: { turbo: false, disable_with: 'Loading...' } %>
-        <% end %>
-      </div>
-      <div class="col-8 pl-3 pt-3">
-        <div class="card-body p-0">
-          <h5 class="card-title">
-            <%= video.is_a?(Tv) ? icon('tv', type: 'fas') : icon('film', type: 'fas') %>
-            <%= video.title %>
-            <% if video.release_or_air_date %>
-              (<%= video.release_or_air_date&.year %>)
-            <% end %>
-          </h5>
+<div class="width-225 m-1">
+  <%= link_to (video.is_a?(Tv) ? tv_path(video.the_movie_db_id) : movie_path(video.the_movie_db_id)), class: 'btn img-poster-btn p-1 mb-2', data: { turbo: false, disable_with: 'Loading...' } do %>
+    <%= imdb_image_tag video.poster_path, klass: 'img-poster', width: 200 %>
+  <% end %>
 
-          <small class='text-muted'><%= video.original_title %></small>
-          <p class="card-text"><%= video.overview %></p>
-          <p class="card-text">
-
-            <small class="text-muted">
-              <%= video.release_or_air_date %>
-              <% if video.is_a?(Tv) %>
-                <%= link_to_movie_db_tv video.the_movie_db_id %>
-              <% else %>
-                <%= link_to_movie_db_movie video.the_movie_db_id %>
-              <% end %>
-
-              <% video.video_blobs.each do |blob| %>
-                <div><%= blob.key %></div>
-              <% end %>
-            </small>
-          </p>
-        </div>
-      </div>
-    </div>
-  </div>
+  <h6 class="card-title height-60">
+    <%= video.is_a?(Tv) ? icon('tv', type: 'fas') : icon('film', type: 'fas') %>
+    <% text = video.release_or_air_date ? "#{video.title} (#{video.release_or_air_date.year})" : video.title %>
+    <% if video.is_a?(Tv) %>
+      <%= link_to_movie_db_tv video.the_movie_db_id, text: %>
+    <% else %>
+      <%= link_to_movie_db_movie video.the_movie_db_id, text: %>
+    <% end %>
+  </h6>
 </div>

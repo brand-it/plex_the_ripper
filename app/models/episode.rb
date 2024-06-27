@@ -22,12 +22,22 @@
 #
 class Episode < ApplicationRecord
   belongs_to :season
-  belongs_to :disk_title, optional: true
   has_many :disk_titles, dependent: :nullify
+  has_many :ripped_disk_titles, -> { ripped }, class_name: 'DiskTitle', dependent: false, inverse_of: :episode
 
   validates :episode_number, presence: true
 
   delegate :tv, to: :season
+
+  def runtime
+    @runtime ||= super&.minutes
+  end
+
+  def runtime_range
+    return if runtime.nil?
+
+    @runtime_range ||= (runtime - 1.minute)...(runtime + 1.minute)
+  end
 
   def plex_path
     raise 'plex config is missing and is required' unless Config::Plex.any?

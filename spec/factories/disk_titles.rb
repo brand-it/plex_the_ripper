@@ -7,8 +7,8 @@
 #  id              :integer          not null, primary key
 #  duration        :integer
 #  name            :string           not null
+#  ripped_at       :datetime
 #  size            :integer          default(0), not null
-#  video_type      :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  disk_id         :bigint
@@ -22,7 +22,7 @@
 #  index_disk_titles_on_disk_id          (disk_id)
 #  index_disk_titles_on_episode_id       (episode_id)
 #  index_disk_titles_on_mkv_progress_id  (mkv_progress_id)
-#  index_disk_titles_on_video            (video_type,video_id)
+#  index_disk_titles_on_video            (video_id)
 #
 FactoryBot.define do
   factory :disk_title do

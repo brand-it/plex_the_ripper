@@ -2,8 +2,8 @@
 
 class TvsController < ApplicationController
   def show
-    @tv = Tv.find_or_initialize_by(the_movie_db_id: params[:id])
+    @tv = Tv.find_video(params[:id]) || Tv.new(the_movie_db_id: params[:id])
     @tv.subscribe(TheMovieDb::TvListener.new)
-    @tv.save
+    @tv.save!
   end
 end

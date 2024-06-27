@@ -8,7 +8,6 @@
 #  disk_name      :string
 #  ejected        :boolean          default(TRUE), not null
 #  name           :string
-#  video_type     :string
 #  workflow_state :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -18,7 +17,7 @@
 # Indexes
 #
 #  index_disks_on_episode_id  (episode_id)
-#  index_disks_on_video       (video_type,video_id)
+#  index_disks_on_video       (video_id)
 #
 class Disk < ApplicationRecord
   include Wisper::Publisher
@@ -26,7 +25,8 @@ class Disk < ApplicationRecord
   after_commit { broadcast(:disk_updated, self) }
 
   has_many :disk_titles, dependent: :destroy, autosave: true
-  belongs_to :video, polymorphic: true, optional: true
+  has_many :not_ripped_disk_titles, -> { not_ripped }, dependent: false, inverse_of: :disk
+  belongs_to :video, optional: true
   belongs_to :episode, optional: true
 
   validates :disk_name, presence: true

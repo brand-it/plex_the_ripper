@@ -10,7 +10,6 @@ class CreateDisksService
 
     drives.map do |drive|
       Disk.find_or_initialize_by(name: drive.drive_name, disk_name: drive.disc_name).tap do |disk|
-        disk.disk_titles.delete_all
         disk.disk_info.each { |title| update_disk_title(disk, title) }
         disk.save!
       end
@@ -27,8 +26,8 @@ class CreateDisksService
   end
 
   def find_or_build_disk_title(disk, title)
-    disk.disk_titles.find { |t| t.title_id == title.id } ||
-      disk.disk_titles.build(title_id: title.id)
+    disk.not_ripped_disk_titles.find { |t| t.title_id == title.id } ||
+      disk.not_ripped_disk_titles.build(title_id: title.id)
   end
 
   def drives
