@@ -12,5 +12,6 @@ class ContinueUploadWorker < ApplicationWorker
   end
 
   def pending_disk_titles
-    @pending_disk_titles ||= DiskTitle.all.select { _1.tmp_plex_path_exists? } end
+    @pending_disk_titles ||= DiskTitle.all.select(&:tmp_plex_path_exists?)
+  end
 end
