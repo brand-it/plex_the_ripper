@@ -16,7 +16,10 @@ class CreateMkvService
 
   def call
     Result.new(tmp_path, create_mkv.success?).tap do |result|
-      rename_file if result.success?
+      if result.success?
+        rename_file
+        disk_title.update!(ripped_at: Time.current)
+      end
     end
   end
 

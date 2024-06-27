@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_26_050130) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_27_210903) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -27,13 +27,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_050130) do
     t.bigint "disk_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "video_type"
     t.integer "video_id"
     t.integer "episode_id"
+    t.datetime "ripped_at"
     t.index ["disk_id"], name: "index_disk_titles_on_disk_id"
     t.index ["episode_id"], name: "index_disk_titles_on_episode_id"
     t.index ["mkv_progress_id"], name: "index_disk_titles_on_mkv_progress_id"
-    t.index ["video_type", "video_id"], name: "index_disk_titles_on_video"
+    t.index ["video_id"], name: "index_disk_titles_on_video"
   end
 
   create_table "disks", force: :cascade do |t|
@@ -43,11 +43,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_050130) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "ejected", default: true, null: false
-    t.string "video_type"
     t.integer "video_id"
     t.integer "episode_id"
     t.index ["episode_id"], name: "index_disks_on_episode_id"
-    t.index ["video_type", "video_id"], name: "index_disks_on_video"
+    t.index ["video_id"], name: "index_disks_on_video"
   end
 
   create_table "episodes", force: :cascade do |t|
@@ -125,13 +124,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_26_050130) do
     t.bigint "byte_size", null: false
     t.boolean "optimized", default: false, null: false
     t.text "checksum"
-    t.string "video_type"
     t.integer "video_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "episode_id"
     t.index ["key", "service_name"], name: "index_video_blobs_on_key_and_service_name", unique: true
-    t.index ["video_type", "video_id"], name: "index_video_blobs_on_video"
+    t.index ["video_id"], name: "index_video_blobs_on_video"
   end
 
   create_table "videos", force: :cascade do |t|

@@ -5,6 +5,7 @@ export default class extends Controller {
 
   connect() {
     if (!this.hasShowMoreTarget || this.showMoreTarget.dataset.disableWith === undefined) return
+    console.log("loading");
     window.addEventListener("scroll", () => {
       if (this.showMoreVisable()) this.showMoreTarget.click();
     });

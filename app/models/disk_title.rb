@@ -7,8 +7,8 @@
 #  id              :integer          not null, primary key
 #  duration        :integer
 #  name            :string           not null
+#  ripped_at       :datetime
 #  size            :integer          default(0), not null
-#  video_type      :string
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
 #  disk_id         :bigint
@@ -22,17 +22,24 @@
 #  index_disk_titles_on_disk_id          (disk_id)
 #  index_disk_titles_on_episode_id       (episode_id)
 #  index_disk_titles_on_mkv_progress_id  (mkv_progress_id)
-#  index_disk_titles_on_video            (video_type,video_id)
+#  index_disk_titles_on_video            (video_id)
 #
 class DiskTitle < ApplicationRecord
   include ActionView::Helpers::DateHelper
 
-  belongs_to :video, polymorphic: true, optional: true
+  belongs_to :video, optional: true
   belongs_to :episode, optional: true
   belongs_to :disk
 
+  scope :not_ripped, -> { where(ripped_at: nil) }
+  scope :ripped, -> { where.not(ripped_at: nil) }
+
+  def duration
+    super&.seconds
+  end
+
   def to_label
-    "##{title_id} #{name} #{distance_of_time_in_words(duration.seconds)}"
+    "##{title_id} #{name} #{distance_of_time_in_words(duration)}"
   end
 
   def tmp_plex_path

@@ -8,7 +8,6 @@
 #  disk_name      :string
 #  ejected        :boolean          default(TRUE), not null
 #  name           :string
-#  video_type     :string
 #  workflow_state :string
 #  created_at     :datetime         not null
 #  updated_at     :datetime         not null
@@ -18,7 +17,7 @@
 # Indexes
 #
 #  index_disks_on_episode_id  (episode_id)
-#  index_disks_on_video       (video_type,video_id)
+#  index_disks_on_video       (video_id)
 #
 require 'rails_helper'
 

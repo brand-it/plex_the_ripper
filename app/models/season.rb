@@ -23,6 +23,8 @@ class Season < ApplicationRecord
   include Wisper::Publisher
 
   has_many :episodes, dependent: :destroy
+  has_many :disk_titles, through: :episodes
+  has_many :ripped_disk_titles, -> { ripped }, through: :episodes, source: :disk_titles
   belongs_to :tv
 
   validates :season_number, presence: true
