@@ -1,4 +1,4 @@
-<% disk_titles = @disks.first&.disk_titles.not_ripped || [] %>
+<% disk_titles = @disks.first&.disk_titles || [] %>
 <h2>
   <%= link_to @tv.name, tv_path(@tv) %>
   <small class="text-muted"><%= @season.name %></small>
