@@ -25,7 +25,7 @@ require 'rails_helper'
 RSpec.describe Disk do
   describe 'associations' do
     it { is_expected.to have_many(:disk_titles) }
-    it { is_expected.to belong_to(:video) }
-    it { is_expected.to belong_to(:episode) }
+    it { is_expected.to belong_to(:video).optional(true) }
+    it { is_expected.to belong_to(:episode).optional(true) }
   end
 end
