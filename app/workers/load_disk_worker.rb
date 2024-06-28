@@ -6,13 +6,10 @@ class LoadDiskWorker < ApplicationWorker
   end
 
   def perform
-    Disk.where.not(id: disks.map(&:id)).in_batches.update_all(ejected: true)
-    if disks.any?(&:ejected)
-      disks.each { _1.update!(ejected: false) }
-      broadcast_reload!
-    else
-      broadcast_no_disk_found!
-    end
+    Disk.ejected.in_batches.update_all(ejected: true)
+    reload_page = disks.any?(&:ejected)
+    disks.each { _1.update!(ejected: false) }
+    reload_page ? broadcast_reload! : broadcast_no_disk_found!
   end
 
   def disks
