@@ -26,6 +26,7 @@ module TheMovieDb
     def call
       tv.attributes = tv_params.symbolize_keys
       build_seasons
+      delete_missing
     end
 
     private
@@ -38,12 +39,26 @@ module TheMovieDb
       end
     end
 
+    def delete_missing
+      the_movie_db_ids = the_movie_db_details['seasons'].map { _1['id'].to_i }
+      tv.seasons.each do |season|
+        next if the_movie_db_ids.include?(season.the_movie_db_id)
+
+        season.mark_for_destruction
+      end
+    end
+
     def build_seasons
       Array.wrap(the_movie_db_details['seasons']).each do |season|
-        tv.seasons.build(season.slice(*SEASON_PERMITTED_PARAMS)).tap do |tv_season|
-          tv_season.the_movie_db_id = season['id']
+        find_or_build(season['id']).tap do |tv_season|
+          tv_season.attributes = season.slice(*SEASON_PERMITTED_PARAMS).symbolize_keys
         end
       end
+    end
+
+    def find_or_build(the_movie_db_id)
+      tv.seasons.find { _1.the_movie_db_id == the_movie_db_id.to_i } ||
+        tv.seasons.build(the_movie_db_id: the_movie_db_id.to_i)
     end
   end
 end
