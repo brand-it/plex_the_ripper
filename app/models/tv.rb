@@ -37,7 +37,7 @@ class Tv < Video
     validates :original_name, presence: true
   end
 
-  has_many :seasons, dependent: :destroy
+  has_many :seasons, -> { order_by_season_number }, dependent: :destroy, inverse_of: :tv
 
   before_save { broadcast(:tv_saving, self) }
   after_commit { broadcast(:tv_saved, id, async: true) }

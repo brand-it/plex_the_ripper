@@ -27,6 +27,8 @@ class Episode < ApplicationRecord
 
   validates :episode_number, presence: true
 
+  scope :order_by_episode_number, -> { order(:episode_number) }
+
   delegate :tv, to: :season
 
   def runtime
