@@ -22,7 +22,7 @@
 class Season < ApplicationRecord
   include Wisper::Publisher
 
-  has_many :episodes, -> { order_by_episode_number}, dependent: :destroy, inverse_of: :season
+  has_many :episodes, -> { order_by_episode_number }, dependent: :destroy, inverse_of: :season
   has_many :disk_titles, through: :episodes
   has_many :ripped_disk_titles, -> { ripped }, through: :episodes, source: :disk_titles
   belongs_to :tv
