@@ -4,8 +4,14 @@
 REPO="brand-it/plex_the_ripper"
 API_URL="https://api.github.com/repos/$REPO/releases/latest"
 DOWNLOAD_URL="https://github.com/$REPO/archive/refs/tags/"
-TEMP_DIR="/tmp/latest"
+TEMP_DIR="./tmp/latest"
 GITIGNORE=".gitignore"
+VERSION_FILE="./current_version.txt"
+RSYNC_EXCLUDE_FILE="./tmp/rsync_exclude"
+
+# Create necessary directories
+mkdir -p "$(dirname $TEMP_DIR)"
+mkdir -p "$(dirname $RSYNC_EXCLUDE_FILE)"
 
 # Get latest release tag from GitHub API
 echo "Fetching the latest release info..."
@@ -16,6 +22,19 @@ if [ -z "$LATEST_RELEASE" ]; then
 fi
 
 echo "Latest release: $LATEST_RELEASE"
+
+# Check current version
+CURRENT_VERSION=""
+if [ -f $VERSION_FILE ]; then
+  CURRENT_VERSION=$(cat $VERSION_FILE)
+fi
+
+if [ "$CURRENT_VERSION" = "$LATEST_RELEASE" ]; then
+  echo "Already up to date with the latest release: $CURRENT_VERSION"
+  exit 0
+fi
+
+echo "Updating from version $CURRENT_VERSION to $LATEST_RELEASE"
 
 # Download the latest release zip file
 DOWNLOAD_LINK="${DOWNLOAD_URL}${LATEST_RELEASE}.zip"

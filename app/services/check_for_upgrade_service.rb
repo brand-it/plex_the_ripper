@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class CheckForUpgradeService
+  Result = Struct.new(:upgrade, :version)
   REPO = 'brand-it/plex_the_ripper'
   API_URL = "https://api.github.com/repos/#{REPO}/releases/latest".freeze
 
@@ -9,7 +10,8 @@ class CheckForUpgradeService
   end
 
   def call
-    release_info['tag_name'] != PlexRipper::VERSION
+    latest_version = release_info['tag_name']&.gsub('v', '')
+    Result.new((latest_version && latest_version != PlexRipper::VERSION), latest_version)
   end
 
   def release_info
