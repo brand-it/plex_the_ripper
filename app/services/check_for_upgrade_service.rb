@@ -10,8 +10,15 @@ class CheckForUpgradeService
   end
 
   def call
-    latest_version = release_info['tag_name']&.gsub('v', '')
-    Result.new((latest_version && latest_version != PlexRipper::VERSION), latest_version)
+    Result.new(newer_version?, latest_version)
+  end
+
+  def newer_version?
+    return false if release_info['tag_name'].blank?
+
+    release_version = Gem::Version.new(release_info['tag_name']&.gsub('v', ''))
+    current_version = Gem::Version.new(PlexRipper::VERSION)
+    release_version > current_version
   end
 
   def release_info
