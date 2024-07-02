@@ -10,12 +10,23 @@ class CheckForUpgradeService
   end
 
   def call
-    latest_version = release_info['tag_name']&.gsub('v', '')
-    Result.new((latest_version && latest_version != PlexRipper::VERSION), latest_version)
+    Result.new(newer_version?, latest_version)
+  end
+
+  def newer_version?
+    return false if latest_version.blank?
+
+    release_version = Gem::Version.new(latest_version)
+    current_version = Gem::Version.new(PlexRipper::VERSION)
+    release_version > current_version
+  end
+
+  def latest_version
+    @latest_version ||= release_info['tag_name']&.gsub('v', '')
   end
 
   def release_info
-    Rails.cache.fetch('new_version_available', expires_in: 24.hours) do
+    Rails.cache.fetch(PlexRipper::VERSION, namespace: 'new_version_available', expires_in: 24.hours) do
       uri = URI(API_URL)
       response = Net::HTTP.get(uri)
       JSON.parse(response)
