@@ -1,6 +1,11 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
+  resource :system, only: [] do
+    patch :restart
+    get :wait
+    get :health
+  end
   resources :users do
     member { get :login }
   end

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+
+<html lang='en' data-bs-theme="<%= light_dark_mode %>">
+  <head>
+    <title>Plex The Ripper</title>
+    <%= render 'layouts/head' %>
+  </head>
+  <body>
+    <div class="d-flex w-100 flex-column">
+      <main role="main" class="inner p-3">
+        <%= bootstrap_alerts %>
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

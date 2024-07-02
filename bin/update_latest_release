@@ -32,7 +32,7 @@ EXTRACTED_DIR=$(find $TEMP_DIR -mindepth 1 -maxdepth 1 -type d)
 
 # Update the files while respecting .gitignore
 echo "Updating files..."
-rsync -av --exclude-from=$GITIGNORE $EXTRACTED_DIR/ .
+rsync -av --delete --exclude-from=$GITIGNORE $EXTRACTED_DIR/ .
 
 # Cleanup
 echo "Cleaning up..."

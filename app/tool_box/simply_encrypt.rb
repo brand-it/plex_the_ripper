@@ -16,7 +16,7 @@ module SimplyEncrypt
     [encode(encrypted), encode(vi)]
   end
 
-  def decrypt(data, iv) # rubocop:disable Naming/MethodParameterName, Metrics/AbcSize
+  def decrypt(data, iv) # rubocop:disable Naming/MethodParameterName
     return if data.blank? || iv.blank?
 
     decipher = OpenSSL::Cipher.new(MODE)
@@ -26,7 +26,6 @@ module SimplyEncrypt
     decipher.update(decode(data)) + decipher.final
   rescue StandardError => e
     Rails.logger.error e.message
-    Rails.logger.error e.backtrace.join("\n")
     nil
   end
 

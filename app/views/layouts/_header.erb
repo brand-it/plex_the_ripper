@@ -10,6 +10,9 @@
       <% if current_user %>
         <%= link_to current_user.name, user_path(current_user), class: 'nav-link' %>
       <% end %>
+      <% if CheckForUpgradeService.call %>
+        <%= link_to 'Update & Restart', restart_system_path, data: { turbo_method: :patch, turbo_confirm: 'Are you sure you want to update & restart the server?' }, class: 'btn btn-primary' %>
+      <% end %>
       <span class="nav-link">
         <%= number_to_human_size(free_disk_space, precision: 3) %> / <%= number_to_human_size(total_disk_space, precision: 3) %>
       </span>
