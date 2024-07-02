@@ -1,9 +1,65 @@
 #!/usr/bin/env sh
 
-# Run ths service in production mode with gives the system more caching
-# and better performance. Before it starts it has to run setup checks
-export RAILS_ENV=production
+# Variables
+RUNNING=1
+FIRST_START=1
+SERVER_EXIT_CODE=0
+URL="http://localhost:8080"
+HEALTH_CHECK_URL="http://localhost:8080/system/health"
 
-bin/setup
 
-bin/rails server -b 0.0.0.0 -p 8080 -e production
+check_health() {
+  STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" $HEALTH_CHECK_URL)
+  if [ "$STATUS_CODE" -eq 200 ]; then
+    return 0
+  else
+    return 1
+  fi
+}
+
+# Function to start the web server
+start_server() {
+  export RAILS_ENV=production
+
+  echo "Running bin/update_latest_release..."
+  bin/update_latest_release
+
+  echo "Running bin/setup..."
+  bin/setup
+
+  echo "Starting Rails server..."
+  bin/rails server -b 0.0.0.0 -p 8080 -e production &
+  SERVER_PID=$!
+
+  if [ $FIRST_START -eq 1 ]; then
+    echo "Checking server health..."
+    until check_health; do
+      echo "Waiting for server to be healthy..."
+      sleep 1
+    done
+    echo "Opening web page in default browser..."
+    if command -v xdg-open > /dev/null; then
+      xdg-open $URL
+    elif command -v open > /dev/null; then
+      open $URL
+    else
+      echo "Could not detect the command to open the browser."
+    fi
+    FIRST_START=0
+  fi
+
+  wait $SERVER_PID
+  SERVER_EXIT_CODE=$?
+}
+
+# Main loop to handle restarts
+while [ $RUNNING -eq 1 ]; do
+  echo "Starting up Server"
+  start_server
+  if [ $SERVER_EXIT_CODE -eq 1 ]; then
+    RUNNING=0
+  fi
+done
+
+echo "Shutting down server..."
+exit 0

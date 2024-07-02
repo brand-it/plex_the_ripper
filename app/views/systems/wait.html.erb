@@ -1,0 +1,19 @@
+<h1 class="text-center m-5">System is starting up this will be a bit</h1>
+<h1 class="text-center"><%= icon('spinner', class: 'fa-spin') %></h1>
+
+<script>
+  async function checkHealthAndRedirect() {
+    try {
+      const response = await fetch('/system/health');
+      if (response.ok) {
+        window.location.href = '/';
+      } else {
+        setTimeout(checkHealthAndRedirect, 1000);
+      }
+    } catch (error) {
+        setTimeout(checkHealthAndRedirect, 1000);
+    }
+  }
+  setTimeout(checkHealthAndRedirect, 1000); // Retry after 1 seconds
+
+</script>

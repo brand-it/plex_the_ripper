@@ -20,6 +20,7 @@ require 'view_component/engine'
 require 'sys/filesystem'
 
 module PlexRipper
+  VERSION = '1.3.0'
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1

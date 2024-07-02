@@ -79,7 +79,5 @@ on_booted do
                   |__/      |__/
           Welcome to start ripping movies & TV shows visit http://localhost:#{rack_port}
   STR
-
-  `open http://localhost:#{rack_port}` if Rails.env.production? && OS.mac?
 end
 # rubocop:enable Metrics/BlockLength, Rails/Output
