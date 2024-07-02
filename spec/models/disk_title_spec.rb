@@ -33,6 +33,11 @@ RSpec.describe DiskTitle do
     it { is_expected.to belong_to(:video).optional(true) }
   end
 
+  describe 'scopes' do
+    it { is_expected.to have_scope(:not_ripped).where(ripped_at: nil) }
+    it { is_expected.to have_scope(:ripped).where.not(ripped_at: nil) }
+  end
+
   describe '#to_label' do
     let(:disk_title) { create(:disk_title, title_id: 1, name: 'Sample Title', duration: 3600) }
 

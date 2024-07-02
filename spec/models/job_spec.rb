@@ -20,5 +20,10 @@
 require 'rails_helper'
 
 RSpec.describe Job do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe 'scopes' do
+    it { is_expected.to have_scope(:active).where(status: described_class::ACTIVE_STATUSES) }
+    it { is_expected.to have_scope(:completed).where(status: described_class::COMPLETED_STATUSES) }
+    it { is_expected.to have_scope(:sort_by_created_at).order(created_at: :desc) }
+    it { is_expected.to have_scope(:hanging).where(status: described_class::HANGING_STATUSES) }
+  end
 end
