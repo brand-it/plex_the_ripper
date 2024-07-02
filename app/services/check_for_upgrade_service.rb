@@ -26,7 +26,7 @@ class CheckForUpgradeService
   end
 
   def release_info
-    Rails.cache.fetch(PlexRipper::VERSION, namespace: 'new_version_available', expires_in: 24.hours) do
+    Rails.cache.fetch(PlexRipper::VERSION, namespace: 'new_version_available', expires_in: 1.hour) do
       uri = URI(API_URL)
       response = Net::HTTP.get(uri)
       JSON.parse(response)

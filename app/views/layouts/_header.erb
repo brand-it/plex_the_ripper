@@ -12,6 +12,8 @@
       <% end %>
       <% if (result = CheckForUpgradeService.call).upgrade %>
         <%= link_to "Upgrade & Restart (v#{result.version})", restart_system_path, data: { turbo_method: :patch, turbo_confirm: 'Are you sure you want to update & restart the server?' }, class: 'btn btn-primary' %>
+      <% else %>
+          <%= link_to "Restart", restart_system_path, data: { turbo_method: :patch, turbo_confirm: 'Are you sure you want to restart the server?' }, class: 'btn btn-primary' %>
       <% end %>
       <span class="nav-link">
         v<%= PlexRipper::VERSION %>

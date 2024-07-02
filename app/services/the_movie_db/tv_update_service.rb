@@ -41,10 +41,12 @@ module TheMovieDb
 
     def delete_missing
       the_movie_db_ids = movie_db_seasons.map { _1['id'].to_i }
+      found_movie_db_ids = []
       tv.seasons.each do |season|
-        next if the_movie_db_ids.include?(season.the_movie_db_id)
+        next if the_movie_db_ids.include?(season.the_movie_db_id) && found_movie_db_ids.exclude?(season.the_movie_db_id)
 
         season.mark_for_destruction
+        found_movie_db_ids << season.the_movie_db_id
       end
     end
 
