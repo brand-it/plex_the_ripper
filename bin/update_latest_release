@@ -1,0 +1,41 @@
+#!/bin/bash
+
+# Variables
+REPO="brand-it/plex_the_ripper"
+API_URL="https://api.github.com/repos/$REPO/releases/latest"
+DOWNLOAD_URL="https://github.com/$REPO/archive/refs/tags/"
+TEMP_DIR="/tmp/latest"
+GITIGNORE=".gitignore"
+
+# Get latest release tag from GitHub API
+echo "Fetching the latest release info..."
+LATEST_RELEASE=$(curl -s $API_URL | grep "tag_name" | cut -d '"' -f 4)
+if [ -z "$LATEST_RELEASE" ]; then
+  echo "Failed to fetch the latest release. Exiting..."
+  exit 1
+fi
+
+echo "Latest release: $LATEST_RELEASE"
+
+# Download the latest release zip file
+DOWNLOAD_LINK="${DOWNLOAD_URL}${LATEST_RELEASE}.zip"
+echo "Downloading the latest release from $DOWNLOAD_LINK..."
+curl -L $DOWNLOAD_LINK -o $TEMP_DIR.zip
+
+# Unzip the file to a temporary directory
+echo "Unzipping the release..."
+mkdir -p $TEMP_DIR
+unzip -q $TEMP_DIR.zip -d $TEMP_DIR
+
+# Find the extracted directory (assuming there's only one top-level directory)
+EXTRACTED_DIR=$(find $TEMP_DIR -mindepth 1 -maxdepth 1 -type d)
+
+# Update the files while respecting .gitignore
+echo "Updating files..."
+rsync -av --exclude-from=$GITIGNORE $EXTRACTED_DIR/ .
+
+# Cleanup
+echo "Cleaning up..."
+rm -rf $TEMP_DIR $TEMP_DIR.zip
+
+echo "Update complete!"
