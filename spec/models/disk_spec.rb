@@ -24,7 +24,13 @@ require 'rails_helper'
 RSpec.describe Disk do
   describe 'associations' do
     it { is_expected.to have_many(:disk_titles) }
+    it { is_expected.to have_many(:not_ripped_disk_titles).dependent(false).class_name('DiskTitle') }
     it { is_expected.to belong_to(:video).optional(true) }
     it { is_expected.to belong_to(:episode).optional(true) }
+  end
+
+  describe 'scopes' do
+    it { is_expected.to have_scope(:not_ejected).where(ejected: false) }
+    it { is_expected.to have_scope(:ejected).where(ejected: true) }
   end
 end

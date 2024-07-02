@@ -31,6 +31,10 @@ RSpec.describe Episode do
     it { is_expected.to validate_presence_of(:episode_number) }
   end
 
+  describe 'scopes' do
+    it { is_expected.to have_scope(:order_by_episode_number).order(:episode_number) }
+  end
+
   describe '#tv' do
     subject(:tv) { build_stubbed(:episode).tv }
 
