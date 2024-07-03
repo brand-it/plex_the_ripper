@@ -18,7 +18,7 @@ module Rescuer
 
     def not_found(exception)
       flash[:error] = exception.message
-      redirect_to root_path
+      redirect_back_or_to root_path
     end
 
     def movie_config_invalid(exception)
