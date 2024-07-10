@@ -4,7 +4,7 @@ class ScanPlexWorker < ApplicationWorker
   def perform
     broadcast_progress(in_progress_component('Scan Plex...', 50, show_percentage: false))
     plex_movies.map do |blob|
-      blob.update!(video: create_movie!(blob))
+      blob.update!(video: find_or_create_video!(blob))
       self.completed += 1
       percent_completed = (completed / plex_movies.size.to_f * 100)
       broadcast_progress(
@@ -70,12 +70,14 @@ class ScanPlexWorker < ApplicationWorker
     dirname&.results&.dig('results', 0, 'id') || filename&.results&.dig('results', 0, 'id')
   end
 
-  def create_movie!(blob)
-    the_movie_db_id = search_for_movie(blob)
+  def search_for_tv_show(blob); end
+
+  def find_or_create_video!(blob)
+    the_movie_db_id = search_for_video(blob)
     return if the_movie_db_id.nil?
 
-    Movie.find_or_initialize_by(the_movie_db_id:).tap do |m|
-      m.subscribe(TheMovieDb::MovieListener.new)
+    Video.find_or_initialize_by(the_movie_db_id:).tap do |m|
+      m.subscribe(TheMovieDb::VideoListener.new)
       m.save!
     end
   end

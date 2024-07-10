@@ -28,7 +28,7 @@
 #
 class Movie < Video
   before_save { broadcast(:movie_saving, self) }
-  after_commit { broadcast(:movie_saved, id) }
+  after_commit { broadcast(:movie_saved, self) }
 
   MOVIE_RUNNTIME_MARGIN = 10.minutes.to_i
 

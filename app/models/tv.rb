@@ -40,7 +40,7 @@ class Tv < Video
   has_many :seasons, -> { order_by_season_number }, dependent: :destroy, inverse_of: :tv
 
   before_save { broadcast(:tv_saving, self) }
-  after_commit { broadcast(:tv_saved, id, async: true) }
+  after_commit { broadcast(:tv_saved, self) }
 
   def min_max_run_time_seconds
     (episode_run_time.min * 60)..(episode_run_time.max * 60)
