@@ -4,7 +4,7 @@ class LoadDiskWorker < ApplicationWorker
   include Shell
 
   def enqueue?
-    existing_disks.nil? && ListDrivesService.call.any?
+    existing_disks.nil?
   end
 
   def perform
