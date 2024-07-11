@@ -25,8 +25,22 @@ class RipWorker < ApplicationWorker
       progress_listener = MkvProgressListener.new(job:)
       result = CreateMkvService.call(disk_title:, progress_listener:)
       job.save!
+      notify_slack!(disk_title)
       upload_mkv(disk_title)
       result
+    end
+  end
+
+  def notify_slack!(disk_title)
+    notifier = ::Slack::Notifier.new Slack::Config.newest.settings_webhook_url,
+                                     channel: Slack::Config.newest.settings_channel
+    if disk_title.video.is_a?(Movie)
+      notifier.post text: "Processed #{disk_title.video.title}"
+    elsif disk_title.video.is_a?(Tv)
+      episode = disk_title.episode
+      season = episode.season
+      notifier.post text: "Processed #{disk_title.video.title} S#{season.season_number}E#{episode.episode_number} " \
+                          "- #{episode.name}"
     end
   end
 

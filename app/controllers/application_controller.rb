@@ -45,6 +45,17 @@ class ApplicationController < ActionController::Base
   end
   helper_method :modify_config_make_mkv_path
 
+  def modify_config_slack_path
+    plex_config.persisted? ? edit_config_slack_path : new_config_slack_path
+  end
+  helper_method :modify_config_slack_path
+
+  def slack_config
+    return @slack_config if defined? @slack_config
+
+    @slack_config = Config::Slack.newest
+  end
+
   def plex_config
     return @plex_config if defined? @plex_config
 

@@ -370,6 +370,7 @@ GEM
     simple_form (5.3.1)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
+    slack-notifier (2.4.0)
     spring (4.2.1)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
@@ -480,6 +481,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simple_form
+  slack-notifier
   spring
   sprockets-rails
   sqlite3 (~> 1.6)

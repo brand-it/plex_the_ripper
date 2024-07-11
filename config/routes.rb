@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     resource :plex do
       member { get 'directories' }
     end
+    resource :slack, only: %i[edit update create new]
     resource :the_movie_db, only: %i[edit update create new]
     resource :make_mkv, only: %i[edit update create new] do
       collection { get :install }

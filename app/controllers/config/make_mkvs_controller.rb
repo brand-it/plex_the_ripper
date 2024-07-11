@@ -42,7 +42,7 @@ class Config
     end
 
     def make_mkv_params
-      params.require(:config_make_mkv).permit(:settings_makemkvcon_path, :settings_registration_key)
+      params.require(:config_slack).permit(:settings_makemkvcon_path, :settings_registration_key)
     end
   end
 end
