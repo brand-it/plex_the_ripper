@@ -6,9 +6,9 @@
 # the maximum value specified for Puma. Default is set to 5 threads for minimum
 # and maximum; this matches the default thread size of Active Record.
 #
-max_threads_count = ENV.fetch('RAILS_MAX_THREADS', 5)
-min_threads_count = ENV.fetch('RAILS_MIN_THREADS') { max_threads_count }
-threads min_threads_count, max_threads_count
+# max_threads_count = ENV.fetch('RAILS_MAX_THREADS', 5)
+# min_threads_count = ENV.fetch('RAILS_MIN_THREADS') { max_threads_count }
+# threads min_threads_count, max_threads_count
 
 workers 0 # Won't work on multiple process because it shares memory for webhooks
 
@@ -39,7 +39,7 @@ pidfile ENV.fetch('PIDFILE', 'tmp/pids/server.pid')
 preload_app!
 
 # Allow puma to be restarted by `rails restart` command.
-plugin :tmp_restart
+# plugin :tmp_restart
 
 # after boot kick off background jobs
 # rubocop:disable Metrics/BlockLength, Rails/Output

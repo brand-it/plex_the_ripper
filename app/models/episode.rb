@@ -24,6 +24,7 @@ class Episode < ApplicationRecord
   belongs_to :season
   has_many :disk_titles, dependent: :nullify
   has_many :ripped_disk_titles, -> { ripped }, class_name: 'DiskTitle', dependent: false, inverse_of: :episode
+  has_many :video_blobs, dependent: :nullify
 
   validates :episode_number, presence: true
 

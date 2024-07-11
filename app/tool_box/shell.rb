@@ -28,7 +28,7 @@ module Shell
   end
 
   def devices
-    @devices ||= `mount`.each_line.filter_map do |line|
+    @devices ||= capture3('mount').stdout_str.each_line.filter_map do |line|
       next unless line.start_with?('/dev/')
 
       match = line.match(MOUNT_LINE)
@@ -51,9 +51,9 @@ module Shell
 
   def process_running?(process_name)
     output = if OS.mac? || OS.linux?
-               `ps aux | grep #{process_name} | grep -v grep`
+               capture3("ps aux | grep #{process_name} | grep -v grep").stdout_str
              elsif OS.windows?
-               `tasklist | findstr #{process_name}`
+               capture3("tasklist | findstr #{process_name}").stdout_str
              else
                raise Error, 'Unsupported OS'
              end
