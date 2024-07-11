@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.9.2
+      - Faraday v2.10.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -19,7 +19,7 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 10 Jul 2024 22:55:18 GMT
+      - Thu, 11 Jul 2024 04:59:56 GMT
       Content-Type:
       - text/html; charset=UTF-8
       Transfer-Encoding:
@@ -35,15 +35,15 @@ http_interactions:
       Cf-Cache-Status:
       - HIT
       Age:
-      - '4122'
+      - '26000'
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=1wePVieq3HNMW%2BkTXQETRQBmINaQVOKuAhJDG%2BeizKBSuPX24CDPjr5eIg9bZ6xmdaFIumO7Y3GWXoJyR7MEid9krs%2BYf8N%2BqqJ8fTkAaAbbNkbxzyI1tIbaM21DMGH4WeU%3D"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=TT1Osn1alGpxYXHxtFDx0JvKSt5oxtEQ7EIrEB9AMzBtlqUHaNoV4s0brxsuNIVc0PdMWWaefzLdyZyp32ci2T8HqmiwThz9ZvKWdj0H%2F%2BOSeOqWTncVjBK45p%2FT%2FBllbKE%3D"}],"group":"cf-nel","max_age":604800}'
       Nel:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
       Server:
       - cloudflare
       Cf-Ray:
-      - 8a1423fd286424e8-SJC
+      - 8a163a1cbc62159c-SJC
       Alt-Svc:
       - h3=":443"; ma=86400
     body:
@@ -186,5 +186,5 @@ http_interactions:
         id=\"logo_softpedia\"><a href='http://www.softpedia.com/progClean/MakeMKV-Clean-117330.html'>\n<div
         id=\"logo_softpediaimg\" align=\"center\"></div>\n</a> </div>\n</div>\n<div
         id=\"footer\">Copyright &#169 2008-2024 GuinpinSoft inc</div>\n</div>\n</body>\n</html>\n"
-  recorded_at: Wed, 10 Jul 2024 22:55:18 GMT
+  recorded_at: Thu, 11 Jul 2024 04:59:56 GMT
 recorded_with: VCR 6.2.0

@@ -2,6 +2,20 @@
 
 module Shell
   class Error < StandardError; end
+  MOUNT_LINE = %r{\A(?<disk_name>\S+)\son\s(?:/Volumes/|)(?<name>.*)\s[(]}
+  Device = Struct.new(:name, :disk_name) do
+    def rdisk_name
+      disk_name.gsub('/dev/', '/dev/r')
+    end
+
+    def optical?
+      @disk_info ||= `diskutil info #{disk_name}`.strip.downcase
+      @disk_info.include?('optical') ||
+        @disk_info.include?('cd-rom') ||
+        @disk_info.include?('dvd-rom') ||
+        @disk_info.include?('blu-ray')
+    end
+  end
 
   Standard = Struct.new(:stdout_str, :stderr_str, :status, keyword_init: true) do
     include MkvParser
@@ -10,6 +24,15 @@ module Shell
 
     def parsed_mkv
       @parsed_mkv ||= parse_mkv_string(stdout_str)
+    end
+  end
+
+  def devices
+    @devices ||= `mount`.each_line.filter_map do |line|
+      next unless line.start_with?('/dev/')
+
+      match = line.match(MOUNT_LINE)
+      Device.new(match[:name], match[:disk_name])
     end
   end
 

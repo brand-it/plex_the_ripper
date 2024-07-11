@@ -8,13 +8,15 @@ class ListDrivesService
   option :noscan, Types::Bool, default: -> { false }
 
   class << self
-    def results(...)
-      new(...).results
+    def call(...)
+      new(...).call
     end
   end
 
-  def results
-    drives
+  def call
+    @call ||= info.parsed_mkv.select do |i|
+      i.is_a?(MkvParser::DRV) && i.enabled.to_i.positive?
+    end
   end
 
   private
@@ -29,11 +31,5 @@ class ListDrivesService
         'disc:9999'
       ].compact.join(' ')
     )
-  end
-
-  def drives
-    @drives ||= info.parsed_mkv.select do |i|
-      i.is_a?(MkvParser::DRV) && i.enabled.to_i.positive?
-    end
   end
 end

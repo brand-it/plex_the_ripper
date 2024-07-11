@@ -2,7 +2,7 @@
 
 module TheMovieDb
   class VideoListener
-    def tv_saving(tv) # rubocop:disable Naming/MethodParameterName
+    def tv_saving(tv)
       TheMovieDb::TvUpdateService.call(tv, tv.the_movie_db_details)
     end
 

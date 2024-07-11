@@ -42,15 +42,16 @@ class VideoBlob < ApplicationRecord
     '.mxf', '.f4p', '.gxf', '.m2v', '.yuv', '.amv',
     '.svi', '.nsv'
   ].freeze
-  MOVIE_MATCHER_WITH_YEAR = /(?<title>.*)[(](?<year>\d{4})[)]/
-  MOVIE_MATCHER = /(?<title>.*)/
+  TITLE_MATCHER = /(?<title>.*)/
+  MATCHER_WITH_YEAR = /#{TITLE_MATCHER}[(](?<year>\d{4})[)]/
+
   # TODO: Currently not activly used but these are the patterns we are looking for
   TV_SHOW_SEASON_EPISODE = /[sS](?<season>\d+)[eE](?<episode>\d+)/
-  TV_SHOW_MATCHER_FULL = /(?<title>.*)\s\((?<year>.*)\)\s-\s#{TV_SHOW_SEASON_EPISODE}\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
-  TV_SHOW_WITHOUT_EP_NAME = /(?<title>.*)\s\((?<year>.*)\)\s-\s#{TV_SHOW_SEASON_EPISODE}\s-\s(?<date>.*).*#{Regexp.union(VIDEO_FORMATS)}/
-  TV_SHOW_WITHOUT_DATE = /(?<title>.*)\s\((?<year>.*)\)\s-\s#{TV_SHOW_SEASON_EPISODE}\s-\s(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
-  TV_SHOW_WITHOUT_NUMBER = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
-  TV_SHOW_WITHOUT_YEAR = /(?<title>.*)\s-\s#{TV_SHOW_SEASON_EPISODE}\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
+  TV_SHOW_MATCHER_FULL = /#{MATCHER_WITH_YEAR}.*-\s+#{TV_SHOW_SEASON_EPISODE}\s+-\s+(?<date>.*)\s+-\s+(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
+  TV_SHOW_WITHOUT_EP_NAME = /#{MATCHER_WITH_YEAR}.*-\s+#{TV_SHOW_SEASON_EPISODE}\s+-\s+(?<date>.*).*#{Regexp.union(VIDEO_FORMATS)}/
+  TV_SHOW_WITHOUT_DATE = /#{MATCHER_WITH_YEAR}.*-\s+#{TV_SHOW_SEASON_EPISODE}\s+-\s+(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
+  TV_SHOW_WITHOUT_NUMBER = /#{MATCHER_WITH_YEAR}.*-\s+(?<date>.*)\s+-\s+(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
+  TV_SHOW_WITHOUT_YEAR = /#{TITLE_MATCHER}.*-\s+#{TV_SHOW_SEASON_EPISODE}\s+-\s+(?<date>.*)\s+-\s+(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
   TV_SHOW_NUMBER_ONLY = /#{TV_SHOW_SEASON_EPISODE}\.*#{Regexp.union(VIDEO_FORMATS)}/
   belongs_to :video, optional: true
   belongs_to :episode, optional: true
@@ -86,16 +87,16 @@ class VideoBlob < ApplicationRecord
   def parsed_tv_show
     return @parsed_tv_show if @parsed_tv_filename
 
-    match = (filename.match(TV_SHOW_MATCHER_FULL) ||
+    match = (filename.match(TV_SHOW_WITHOUT_DATE) ||
+             filename.match(TV_SHOW_MATCHER_FULL) ||
             filename.match(TV_SHOW_WITHOUT_EP_NAME) ||
-            filename.match(TV_SHOW_WITHOUT_DATE) ||
             filename.match(TV_SHOW_WITHOUT_NUMBER) ||
             filename.match(TV_SHOW_WITHOUT_YEAR) ||
             filename.match(TV_SHOW_NUMBER_ONLY)
             )&.named_captures || {}
 
-    dir_match = (directory_name.match(MOVIE_MATCHER_WITH_YEAR) ||
-                directory_name.match(MOVIE_MATCHER)
+    dir_match = (directory_name.match(MATCHER_WITH_YEAR) ||
+                directory_name.match(TITLE_MATCHER)
                 )&.named_captures || {}
 
     @parsed_tv_show = TvShow.new(
@@ -109,10 +110,10 @@ class VideoBlob < ApplicationRecord
   def parsed_movie
     return @parsed_movie if @parsed_movie
 
-    match = (filename.match(MOVIE_MATCHER_WITH_YEAR) ||
-            filename.match(MOVIE_MATCHER) ||
-            directory_name.match(MOVIE_MATCHER_WITH_YEAR) ||
-            directory_name.match(MOVIE_MATCHER))&.named_captures || {}
+    match = (filename.match(MATCHER_WITH_YEAR) ||
+            filename.match(TITLE_MATCHER) ||
+            directory_name.match(MATCHER_WITH_YEAR) ||
+            directory_name.match(TITLE_MATCHER))&.named_captures || {}
     return @parsed_movie = Movie.new(nil, nil) if match.nil?
 
     @parsed_movie = Movie.new(match['title'], match['year']&.to_i)

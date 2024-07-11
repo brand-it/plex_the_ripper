@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.9.2
+      - Faraday v2.10.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -25,34 +25,36 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 10 Jul 2024 22:36:44 GMT
+      - Thu, 11 Jul 2024 04:56:45 GMT
       Server:
       - openresty
       Cache-Control:
-      - public, max-age=8031
+      - public, max-age=13157
       X-Memc:
       - HIT
       X-Memc-Key:
       - fda81fb3883828c4476669567684b647
       X-Memc-Age:
-      - '19285'
+      - '14770'
       X-Memc-Expires:
-      - '8031'
+      - '13157'
       Etag:
-      - W/"11f74f4744f0fdcb8de419ea5d7163d6"
+      - W/"7b787b6849d1226121fce2a984043bf3"
       Vary:
       - Accept-Encoding,accept-encoding
       - Origin
       X-Cache:
-      - Miss from cloudfront
+      - Hit from cloudfront
       Via:
-      - 1.1 ed5ba246b51eb150051f8ae94c8c45a6.cloudfront.net (CloudFront)
+      - 1.1 dee6f6319b26c06091b49860450185bc.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - SEA900-P5
+      - SFO53-C1
       Alt-Svc:
       - h3=":443"; ma=86400
       X-Amz-Cf-Id:
-      - I0JtBfaTSQrmM7sIg-982XbDaVWm3V3KI5_xcLaVdJRJf8BM9rVPEQ==
+      - DnTNqANiDdhKv0EwS4AS3asQm3ZP9ClufjdUnTg5GAmUKNdhF4dljA==
+      Age:
+      - '191'
     body:
       encoding: ASCII-8BIT
       string: '{"adult":false,"backdrop_path":"/yY76zq9XSuJ4nWyPDuwkdV7Wt0c.jpg","belongs_to_collection":null,"budget":205000000,"genres":[{"id":28,"name":"Action"},{"id":53,"name":"Thriller"},{"id":878,"name":"Science
@@ -62,6 +64,6 @@ http_interactions:
         on a mission that will unfold in something beyond real time.","popularity":92.592,"poster_path":"/k68nPLbIST6NP96JmTxmZijEvCA.jpg","production_companies":[{"id":174,"logo_path":"/zhD3hhtKB5qyv7ZeL4uLpNxgMVU.png","name":"Warner
         Bros. Pictures","origin_country":"US"},{"id":9996,"logo_path":"/3tvBqYsBhxWeHlu62SIJ1el93O7.png","name":"Syncopy","origin_country":"GB"}],"production_countries":[{"iso_3166_1":"GB","name":"United
         Kingdom"},{"iso_3166_1":"US","name":"United States of America"}],"release_date":"2020-08-22","revenue":365304105,"runtime":150,"spoken_languages":[{"english_name":"English","iso_639_1":"en","name":"English"},{"english_name":"Estonian","iso_639_1":"et","name":"Eesti"}],"status":"Released","tagline":"Time
-        runs out.","title":"Tenet","video":false,"vote_average":7.187,"vote_count":9555}'
-  recorded_at: Wed, 10 Jul 2024 22:36:44 GMT
+        runs out.","title":"Tenet","video":false,"vote_average":7.187,"vote_count":9557}'
+  recorded_at: Thu, 11 Jul 2024 04:59:56 GMT
 recorded_with: VCR 6.2.0

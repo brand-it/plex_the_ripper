@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v2.9.2
+      - Faraday v2.10.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -25,19 +25,19 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 10 Jul 2024 22:36:43 GMT
+      - Thu, 11 Jul 2024 04:56:46 GMT
       Server:
       - openresty
       Cache-Control:
-      - public, max-age=4243
+      - public, max-age=4289
       X-Memc:
       - HIT
       X-Memc-Key:
       - f0aa97bd2b767882ba78988ac2b35a46
       X-Memc-Age:
-      - '18412'
+      - '18559'
       X-Memc-Expires:
-      - '4243'
+      - '4289'
       Etag:
       - W/"3558381a2a612db2546db44a6ff0d5ac"
       Vary:
@@ -46,15 +46,15 @@ http_interactions:
       X-Cache:
       - Hit from cloudfront
       Via:
-      - 1.1 7f908c32ed2ff2036a2c0fe12120ac4a.cloudfront.net (CloudFront)
+      - 1.1 a3b511649bade26170091701ae26b616.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - SEA900-P5
+      - SFO53-C1
       Alt-Svc:
       - h3=":443"; ma=86400
       X-Amz-Cf-Id:
-      - as4o3spZkDl8fOYpTLOdZqzzSX3ysNSb_BwAuvueEzevIoWLfI3F6A==
+      - m0rYGAqV4ue568xsqlrOXUsOqN4ucL3170HaFWFhAY4JTrD_dtCFtg==
       Age:
-      - '1'
+      - '191'
     body:
       encoding: ASCII-8BIT
       string: '{"adult":false,"backdrop_path":"/5mXZ0sdVPfj4bSkhPSWwTX2LcM5.jpg","created_by":[{"id":72082,"credit_id":"5257781d760ee36aaa54c1a1","name":"Brad
