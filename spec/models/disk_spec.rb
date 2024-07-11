@@ -7,6 +7,7 @@
 #  id             :integer          not null, primary key
 #  disk_name      :string
 #  ejected        :boolean          default(TRUE), not null
+#  loading        :boolean          default(FALSE), not null
 #  name           :string
 #  workflow_state :string
 #  created_at     :datetime         not null
@@ -32,5 +33,7 @@ RSpec.describe Disk do
   describe 'scopes' do
     it { is_expected.to have_scope(:not_ejected).where(ejected: false) }
     it { is_expected.to have_scope(:ejected).where(ejected: true) }
+    it { is_expected.to have_scope(:not_loading).where(loading: false) }
+    it { is_expected.to have_scope(:loading).where(loading: true) }
   end
 end

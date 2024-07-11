@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v1.7.1
+      - Faraday v2.10.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -25,75 +25,39 @@ http_interactions:
       Connection:
       - keep-alive
       Date:
-      - Wed, 13 Oct 2021 16:53:38 GMT
+      - Thu, 11 Jul 2024 04:56:34 GMT
       Server:
       - openresty
-      Access-Control-Allow-Origin:
-      - "*"
-      Access-Control-Allow-Methods:
-      - GET, HEAD, POST, PUT, DELETE, OPTIONS
-      Access-Control-Expose-Headers:
-      - ETag, X-RateLimit-Limit, X-RateLimit-Remaining, X-RateLimit-Reset, Retry-After,
-        Content-Length, Content-Range
       Cache-Control:
-      - public, max-age=28800
+      - public, max-age=10790
       X-Memc:
       - HIT
       X-Memc-Key:
-      - 30ff4f3be4809812818cd528b9abf7e9e0c5d105
+      - 0c75525a5c7ef79749ff366a16880398
       X-Memc-Age:
-      - '5549'
+      - '14657'
       X-Memc-Expires:
-      - '11200'
+      - '10790'
       Etag:
-      - W/"0ed85f248b0be13e45ef1135f2b0fbf8"
+      - W/"7f41c54e345ee2c2c295d5e8eeab146e"
       Vary:
-      - Accept-Encoding
+      - Accept-Encoding,accept-encoding
+      - Origin
       X-Cache:
-      - Miss from cloudfront
+      - Hit from cloudfront
       Via:
-      - 1.1 4db6285f05eea501ed4657d6127ec5f9.cloudfront.net (CloudFront)
+      - 1.1 e8075a4d83e15c8c6543597e1a8de938.cloudfront.net (CloudFront)
       X-Amz-Cf-Pop:
-      - LAX50-C2
+      - SFO53-C1
+      Alt-Svc:
+      - h3=":443"; ma=86400
       X-Amz-Cf-Id:
-      - mNgJDWs8kTRqFzrE9JZhfysJG5E3eO_hdr_UvDVTcB0S4-NgsSC6Xg==
+      - gu-_eNSNC6k5aOG26z9MtJr-O69Pmifxd-EUsRO2J-9Xuy10TBSVCw==
+      Age:
+      - '203'
     body:
       encoding: ASCII-8BIT
-      string: '{"air_date":"2016-07-15","crew":[{"job":"Director","department":"Directing","credit_id":"57b20164c3a36869e5000ba5","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c46cc3a36841e700099e","adult":false,"gender":2,"id":1179419,"known_for_department":"Writing","name":"Matt
-        Duffer","original_name":"Matt Duffer","popularity":1.764,"profile_path":"/kXO5CnSxC0znMAICGxnPeuGP73U.jpg"},{"job":"Writer","department":"Writing","credit_id":"5789c497c3a36841e70009b9","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director","department":"Directing","credit_id":"57b20174c3a3686a54000afa","adult":false,"gender":2,"id":1179422,"known_for_department":"Writing","name":"Ross
-        Duffer","original_name":"Ross Duffer","popularity":1.84,"profile_path":"/kN1HdFViQkcJOQlNcvvFJIx9Uju.jpg"},{"job":"Director
-        of Photography","department":"Camera","credit_id":"60a81c446ee3d70029419e54","adult":false,"gender":2,"id":1485876,"known_for_department":"Camera","name":"Tim
-        Ives","original_name":"Tim Ives","popularity":0.6,"profile_path":"/cgQkPbS2akrEZlawCi5DN0AkPqs.jpg"}],"episode_number":1,"guest_stars":[{"character":"Troy","credit_id":"5bc10b8e92514179ba020982","order":41,"adult":false,"gender":2,"id":1668667,"known_for_department":"Acting","name":"Peyton
-        Wich","original_name":"Peyton Wich","popularity":1.228,"profile_path":"/52101r7ph1aiJtlZ2pIXD5L7BKV.jpg"},{"character":"Benny
-        Hammond","credit_id":"5d257da9a698cf0fa7a83b45","order":67,"adult":false,"gender":2,"id":1293892,"known_for_department":"Acting","name":"Chris
-        Sullivan","original_name":"Chris Sullivan","popularity":1.712,"profile_path":"/5I4pxgfl5agN38qrZqtFf8TlkUh.jpg"},{"character":"James","credit_id":"5d257df6e24e3a00102bf53b","order":73,"adult":false,"gender":0,"id":2358366,"known_for_department":"Acting","name":"Cade
-        Jones","original_name":"Cade Jones","popularity":0.6,"profile_path":null},{"character":"Principal
-        Coleman","credit_id":"59fca957c3a3681a6402d7da","order":76,"adult":false,"gender":2,"id":114850,"known_for_department":"Acting","name":"Tony
-        Vaughn","original_name":"Tony Vaughn","popularity":1.135,"profile_path":"/m99yAF6psRJSOslZkxPY8i7u7NR.jpg"},{"character":"Barbara
-        Holland","credit_id":"59f6602c925141428202220d","order":86,"adult":false,"gender":1,"id":1753911,"known_for_department":"Acting","name":"Shannon
-        Purser","original_name":"Shannon Purser","popularity":2.239,"profile_path":"/zI5C3e0Rk5GjIdP7S4Dfde8R12N.jpg"},{"character":"Earl","credit_id":"5d258723a698cf59f5a78feb","order":89,"adult":false,"gender":2,"id":21084,"known_for_department":"Acting","name":"David
-        Dwyer","original_name":"David Dwyer","popularity":1.538,"profile_path":"/kMTtoYRHltlJI9YzWPKe56gK99h.jpg"},{"character":"High
-        School Principal","credit_id":"5d25874169d28054b700c6e7","order":90,"adult":false,"gender":1,"id":1895872,"known_for_department":"Acting","name":"Salem
-        Murphy","original_name":"Salem Murphy","popularity":0.6,"profile_path":"/43zUWawBYErN7PuG7EBytxo8Xdq.jpg"},{"character":"The
-        Monster","credit_id":"5b36ede80e0a26400a03468e","order":91,"adult":false,"gender":2,"id":1052211,"known_for_department":"Acting","name":"Mark
-        Steger","original_name":"Mark Steger","popularity":1.594,"profile_path":"/3EeztYq3OfdeHsqjYSwRuNHrvnk.jpg"},{"character":"Calvin
-        Powell","credit_id":"5d26171ea698cf52eba6bfae","order":107,"adult":false,"gender":2,"id":1281250,"known_for_department":"Acting","name":"Rob
-        Morgan","original_name":"Rob Morgan","popularity":4.117,"profile_path":"/yIQd0L0kn1HyZGeEMkUREzMslP0.jpg"},{"character":"Phil
-        Callahan","credit_id":"5d26185f37b3a96a3452a8a9","order":108,"adult":false,"gender":2,"id":1674830,"known_for_department":"Acting","name":"John
-        Reynolds","original_name":"John Reynolds","popularity":2.23,"profile_path":"/1yzDTZqIeFQaI4i8eGC0TB1UfZg.jpg"},{"character":"Ted
-        Wheeler","credit_id":"5d267e6774645700126c239a","order":108,"adult":false,"gender":2,"id":141762,"known_for_department":"Acting","name":"Joe
-        Chrest","original_name":"Joe Chrest","popularity":4.739,"profile_path":"/ox45oYzfnI9mxDYNeP01ZTRWGXC.jpg"},{"character":"Will
-        Byers","credit_id":"5759b99a9251416b530002a5","order":109,"adult":false,"gender":2,"id":1393177,"known_for_department":"Acting","name":"Noah
-        Schnapp","original_name":"Noah Schnapp","popularity":3.522,"profile_path":"/srlhjolts0jECgbzWPS456rBz9K.jpg"},{"character":"Steve
-        Harrington","credit_id":"5759b9d89251410a9900213e","order":110,"adult":false,"gender":2,"id":1467219,"known_for_department":"Acting","name":"Joe
-        Keery","original_name":"Joe Keery","popularity":6.462,"profile_path":"/kXoE2UWf01V89yVDD08MCXrEiRe.jpg"},{"character":"Florence","credit_id":"59fca93b92514113bb02ef2b","order":134,"adult":false,"gender":0,"id":1916844,"known_for_department":"Acting","name":"Susan
-        Shalhoub Larkin","original_name":"Susan Shalhoub Larkin","popularity":0.6,"profile_path":null},{"character":"Scott
-        Clarke","credit_id":"5d2578ada698cf0010ab31cb","order":134,"adult":false,"gender":2,"id":1381393,"known_for_department":"Acting","name":"Randy
-        Havens","original_name":"Randy Havens","popularity":3.72,"profile_path":"/7Lh5eGcXZUoPJcTWaUw369R706E.jpg"}],"name":"Chapter
-        One: The Vanishing of Will Byers","overview":"On his way home from a friend''s
-        house, young Will sees something terrifying. Nearby, a sinister secret lurks
-        in the depths of a government lab.","id":1198665,"production_code":"tt6020684","season_number":1,"still_path":"/AdwF2jXvhdODr6gUZ61bHKRkz09.jpg","vote_average":7.683,"vote_count":202}'
-  recorded_at: Wed, 13 Oct 2021 16:53:38 GMT
-recorded_with: VCR 6.0.0
+      string: !binary |-
+        eyJhaXJfZGF0ZSI6IjIwMTYtMDctMTUiLCJjcmV3IjpbeyJqb2IiOiJEaXJlY3RvciIsImRlcGFydG1lbnQiOiJEaXJlY3RpbmciLCJjcmVkaXRfaWQiOiI1N2IyMDE2NGMzYTM2ODY5ZTUwMDBiYTUiLCJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjExNzk0MTksImtub3duX2Zvcl9kZXBhcnRtZW50IjoiV3JpdGluZyIsIm5hbWUiOiJNYXR0IER1ZmZlciIsIm9yaWdpbmFsX25hbWUiOiJNYXR0IER1ZmZlciIsInBvcHVsYXJpdHkiOjMuNzM1LCJwcm9maWxlX3BhdGgiOiIva1hPNUNuU3hDMHpuTUFJQ0d4blBldUdQNzNVLmpwZyJ9LHsiam9iIjoiV3JpdGVyIiwiZGVwYXJ0bWVudCI6IldyaXRpbmciLCJjcmVkaXRfaWQiOiI1Nzg5YzQ2Y2MzYTM2ODQxZTcwMDA5OWUiLCJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjExNzk0MTksImtub3duX2Zvcl9kZXBhcnRtZW50IjoiV3JpdGluZyIsIm5hbWUiOiJNYXR0IER1ZmZlciIsIm9yaWdpbmFsX25hbWUiOiJNYXR0IER1ZmZlciIsInBvcHVsYXJpdHkiOjMuNzM1LCJwcm9maWxlX3BhdGgiOiIva1hPNUNuU3hDMHpuTUFJQ0d4blBldUdQNzNVLmpwZyJ9LHsiam9iIjoiV3JpdGVyIiwiZGVwYXJ0bWVudCI6IldyaXRpbmciLCJjcmVkaXRfaWQiOiI1Nzg5YzQ5N2MzYTM2ODQxZTcwMDA5YjkiLCJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjExNzk0MjIsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiV3JpdGluZyIsIm5hbWUiOiJSb3NzIER1ZmZlciIsIm9yaWdpbmFsX25hbWUiOiJSb3NzIER1ZmZlciIsInBvcHVsYXJpdHkiOjYuNDQ2LCJwcm9maWxlX3BhdGgiOiIva04xSGRGVmlRa2NKT1FsTmN2dkZKSXg5VWp1LmpwZyJ9LHsiam9iIjoiRGlyZWN0b3IiLCJkZXBhcnRtZW50IjoiRGlyZWN0aW5nIiwiY3JlZGl0X2lkIjoiNTdiMjAxNzRjM2EzNjg2YTU0MDAwYWZhIiwiYWR1bHQiOmZhbHNlLCJnZW5kZXIiOjIsImlkIjoxMTc5NDIyLCJrbm93bl9mb3JfZGVwYXJ0bWVudCI6IldyaXRpbmciLCJuYW1lIjoiUm9zcyBEdWZmZXIiLCJvcmlnaW5hbF9uYW1lIjoiUm9zcyBEdWZmZXIiLCJwb3B1bGFyaXR5Ijo2LjQ0NiwicHJvZmlsZV9wYXRoIjoiL2tOMUhkRlZpUWtjSk9RbE5jdnZGSkl4OVVqdS5qcGcifSx7ImpvYiI6IkRpcmVjdG9yIG9mIFBob3RvZ3JhcGh5IiwiZGVwYXJ0bWVudCI6IkNhbWVyYSIsImNyZWRpdF9pZCI6IjYwYTgxYzQ0NmVlM2Q3MDAyOTQxOWU1NCIsImFkdWx0IjpmYWxzZSwiZ2VuZGVyIjoyLCJpZCI6MTQ4NTg3Niwia25vd25fZm9yX2RlcGFydG1lbnQiOiJDYW1lcmEiLCJuYW1lIjoiVGltIEl2ZXMiLCJvcmlnaW5hbF9uYW1lIjoiVGltIEl2ZXMiLCJwb3B1bGFyaXR5IjowLjgxMywicHJvZmlsZV9wYXRoIjoiL2NnUWtQYlMyYWtyRVpsYXdDaTVETjBBa1Bxcy5qcGcifV0sImVwaXNvZGVfbnVtYmVyIjoxLCJndWVzdF9zdGFycyI6W3siY2hhcmFjdGVyIjoiV2lsbCBCeWVycyIsImNyZWRpdF9pZCI6IjU3NTliOTlhOTI1MTQxNmI1MzAwMDJhNSIsIm9yZGVyIjo0LCJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjEzOTMxNzcsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6Ik5vYWggU2NobmFwcCIsIm9yaWdpbmFsX25hbWUiOiJOb2FoIFNjaG5hcHAiLCJwb3B1bGFyaXR5IjoxNC44ODgsInByb2ZpbGVfcGF0aCI6Ii8zR1NXV3JxUWppbzZHOEw0MnVnR0JHTmtzMzcuanBnIn0seyJjaGFyYWN0ZXIiOiJTdGV2ZSBIYXJyaW5ndG9uIiwiY3JlZGl0X2lkIjoiNTc1OWI5ZDg5MjUxNDEwYTk5MDAyMTNlIiwib3JkZXIiOjksImFkdWx0IjpmYWxzZSwiZ2VuZGVyIjoyLCJpZCI6MTQ2NzIxOSwia25vd25fZm9yX2RlcGFydG1lbnQiOiJBY3RpbmciLCJuYW1lIjoiSm9lIEtlZXJ5Iiwib3JpZ2luYWxfbmFtZSI6IkpvZSBLZWVyeSIsInBvcHVsYXJpdHkiOjI0LjgyOCwicHJvZmlsZV9wYXRoIjoiL2F5SUFWTE1mWkdFR0lGd0FvM3BQblk3cDU5LmpwZyJ9LHsiY2hhcmFjdGVyIjoiVHJveSIsImNyZWRpdF9pZCI6IjViYzEwYjhlOTI1MTQxNzliYTAyMDk4MiIsIm9yZGVyIjo1MjAsImFkdWx0IjpmYWxzZSwiZ2VuZGVyIjoyLCJpZCI6MTY2ODY2Nywia25vd25fZm9yX2RlcGFydG1lbnQiOiJBY3RpbmciLCJuYW1lIjoiUGV5dG9uIFdpY2giLCJvcmlnaW5hbF9uYW1lIjoiUGV5dG9uIFdpY2giLCJwb3B1bGFyaXR5Ijo0LjQzMSwicHJvZmlsZV9wYXRoIjoiLzUyMTAxcjdwaDFhaUp0bFoycElYRDVMN0JLVi5qcGcifSx7ImNoYXJhY3RlciI6IkJlbm55IEhhbW1vbmQiLCJjcmVkaXRfaWQiOiI1ZDI1N2RhOWE2OThjZjBmYTdhODNiNDUiLCJvcmRlciI6NTMxLCJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjEyOTM4OTIsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IkNocmlzIFN1bGxpdmFuIiwib3JpZ2luYWxfbmFtZSI6IkNocmlzIFN1bGxpdmFuIiwicG9wdWxhcml0eSI6MTEuNzMzLCJwcm9maWxlX3BhdGgiOiIvZ0taOXhTRnJEelVQdjI3aUFrTXBINlFmMFNrLmpwZyJ9LHsiY2hhcmFjdGVyIjoiSmFtZXMiLCJjcmVkaXRfaWQiOiI1ZDI1N2RmNmUyNGUzYTAwMTAyYmY1M2IiLCJvcmRlciI6NTM2LCJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjIzNTgzNjYsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IkNhZGUgSm9uZXMiLCJvcmlnaW5hbF9uYW1lIjoiQ2FkZSBKb25lcyIsInBvcHVsYXJpdHkiOjAuNzQyLCJwcm9maWxlX3BhdGgiOiIva1pFbnBvUG4zZ0lZa2lVUnR4NVVpVWxsbHFsLmpwZyJ9LHsiY2hhcmFjdGVyIjoiUHJpbmNpcGFsIENvbGVtYW4iLCJjcmVkaXRfaWQiOiI1OWZjYTk1N2MzYTM2ODFhNjQwMmQ3ZGEiLCJvcmRlciI6NTM5LCJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjExNDg1MCwia25vd25fZm9yX2RlcGFydG1lbnQiOiJBY3RpbmciLCJuYW1lIjoiVG9ueSBWYXVnaG4iLCJvcmlnaW5hbF9uYW1lIjoiVG9ueSBWYXVnaG4iLCJwb3B1bGFyaXR5Ijo0Ljk5NiwicHJvZmlsZV9wYXRoIjoiL205OXlBRjZwc1JKU09zbFpreFBZOGk3dTdOUi5qcGcifSx7ImNoYXJhY3RlciI6IkJhcmJhcmEg4oCcQmFyYuKAnSBIb2xsYW5kIiwiY3JlZGl0X2lkIjoiNTlmNjYwMmM5MjUxNDE0MjgyMDIyMjBkIiwib3JkZXIiOjU1MiwiYWR1bHQiOmZhbHNlLCJnZW5kZXIiOjEsImlkIjoxNzUzOTExLCJrbm93bl9mb3JfZGVwYXJ0bWVudCI6IkFjdGluZyIsIm5hbWUiOiJTaGFubm9uIFB1cnNlciIsIm9yaWdpbmFsX25hbWUiOiJTaGFubm9uIFB1cnNlciIsInBvcHVsYXJpdHkiOjQuMjU1LCJwcm9maWxlX3BhdGgiOiIvekk1QzNlMFJrNUdqSWRQN1M0RGZkZThSMTJOLmpwZyJ9LHsiY2hhcmFjdGVyIjoiRWFybCIsImNyZWRpdF9pZCI6IjVkMjU4NzIzYTY5OGNmNTlmNWE3OGZlYiIsIm9yZGVyIjo1NTYsImFkdWx0IjpmYWxzZSwiZ2VuZGVyIjoyLCJpZCI6MjEwODQsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IkRhdmlkIER3eWVyIiwib3JpZ2luYWxfbmFtZSI6IkRhdmlkIER3eWVyIiwicG9wdWxhcml0eSI6Ny44MTgsInByb2ZpbGVfcGF0aCI6Ii9rTVR0b1lSSGx0bEpJOVl6V1BLZTU2Z0s5OWguanBnIn0seyJjaGFyYWN0ZXIiOiJIaWdoIFNjaG9vbCBQcmluY2lwYWwiLCJjcmVkaXRfaWQiOiI1ZDI1ODc0MTY5ZDI4MDU0YjcwMGM2ZTciLCJvcmRlciI6NTU3LCJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MSwiaWQiOjE4OTU4NzIsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IlNhbGVtIE11cnBoeSIsIm9yaWdpbmFsX25hbWUiOiJTYWxlbSBNdXJwaHkiLCJwb3B1bGFyaXR5Ijo1LjM5OCwicHJvZmlsZV9wYXRoIjoiLzQzelVXYXdCWUVyTjdQdUc3RUJ5dHhvOFhkcS5qcGcifSx7ImNoYXJhY3RlciI6IlRoZSBNb25zdGVyIiwiY3JlZGl0X2lkIjoiNWIzNmVkZTgwZTBhMjY0MDBhMDM0NjhlIiwib3JkZXIiOjU1OCwiYWR1bHQiOmZhbHNlLCJnZW5kZXIiOjIsImlkIjoxMDUyMjExLCJrbm93bl9mb3JfZGVwYXJ0bWVudCI6IkFjdGluZyIsIm5hbWUiOiJNYXJrIFN0ZWdlciIsIm9yaWdpbmFsX25hbWUiOiJNYXJrIFN0ZWdlciIsInBvcHVsYXJpdHkiOjUuNTc0LCJwcm9maWxlX3BhdGgiOiIvM0VlenRZcTNPZmRlSHNxallTd1J1Tkhydm5rLmpwZyJ9LHsiY2hhcmFjdGVyIjoiRmxvcmVuY2UiLCJjcmVkaXRfaWQiOiI1OWZjYTkzYjkyNTE0MTEzYmIwMmVmMmIiLCJvcmRlciI6NTk5LCJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MSwiaWQiOjE5MTY4NDQsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IlN1c2FuIFNoYWxob3ViIExhcmtpbiIsIm9yaWdpbmFsX25hbWUiOiJTdXNhbiBTaGFsaG91YiBMYXJraW4iLCJwb3B1bGFyaXR5IjoxMS41NiwicHJvZmlsZV9wYXRoIjoiL3BMQXdoWUFIall5eE1acmZDQ2dMQnFMY21jVS5qcGcifSx7ImNoYXJhY3RlciI6IlNjb3R0IENsYXJrZSIsImNyZWRpdF9pZCI6IjVkMjU3OGFkYTY5OGNmMDAxMGFiMzFjYiIsIm9yZGVyIjo2MDQsImFkdWx0IjpmYWxzZSwiZ2VuZGVyIjoyLCJpZCI6MTM4MTM5Mywia25vd25fZm9yX2RlcGFydG1lbnQiOiJBY3RpbmciLCJuYW1lIjoiUmFuZHkgSGF2ZW5zIiwib3JpZ2luYWxfbmFtZSI6IlJhbmR5IEhhdmVucyIsInBvcHVsYXJpdHkiOjExLjEyNCwicHJvZmlsZV9wYXRoIjoiLzdMaDVlR2NYWlVvUEpjVFdhVXczNjlSNzA2RS5qcGcifSx7ImNoYXJhY3RlciI6IkNhbHZpbiBQb3dlbGwiLCJjcmVkaXRfaWQiOiI1ZDI2MTcxZWE2OThjZjUyZWJhNmJmYWUiLCJvcmRlciI6Njg1LCJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjEyODEyNTAsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IlJvYiBNb3JnYW4iLCJvcmlnaW5hbF9uYW1lIjoiUm9iIE1vcmdhbiIsInBvcHVsYXJpdHkiOjE3LjY2NywicHJvZmlsZV9wYXRoIjoiL3BzNndSM0pabms2TVk5dGJ0T0xPUmdhZHFzNi5qcGcifSx7ImNoYXJhY3RlciI6IlBoaWwgQ2FsbGFoYW4iLCJjcmVkaXRfaWQiOiI1ZDI2MTg1ZjM3YjNhOTZhMzQ1MmE4YTkiLCJvcmRlciI6NjkyLCJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjE2NzQ4MzAsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IkpvaG4gUmV5bm9sZHMiLCJvcmlnaW5hbF9uYW1lIjoiSm9obiBSZXlub2xkcyIsInBvcHVsYXJpdHkiOjcuMjU4LCJwcm9maWxlX3BhdGgiOiIvMXl6RFRacUllRlFhSTRpOGVHQzBUQjFVZlpnLmpwZyJ9LHsiY2hhcmFjdGVyIjoiVGVkIFdoZWVsZXIiLCJjcmVkaXRfaWQiOiI1ZDI2N2U2Nzc0NjQ1NzAwMTI2YzIzOWEiLCJvcmRlciI6Njk2LCJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjE0MTc2Miwia25vd25fZm9yX2RlcGFydG1lbnQiOiJBY3RpbmciLCJuYW1lIjoiSm9lIENocmVzdCIsIm9yaWdpbmFsX25hbWUiOiJKb2UgQ2hyZXN0IiwicG9wdWxhcml0eSI6MTUuOTkyLCJwcm9maWxlX3BhdGgiOiIvN21jc0pHbnFSb1ZQVHR4QVVaRUt0MmRabmx3LmpwZyJ9XSwibmFtZSI6IkNoYXB0ZXIgT25lOiBUaGUgVmFuaXNoaW5nIG9mIFdpbGwgQnllcnMiLCJvdmVydmlldyI6Ik9uIGhpcyB3YXkgaG9tZSBmcm9tIGEgZnJpZW5kJ3MgaG91c2UsIHlvdW5nIFdpbGwgc2VlcyBzb21ldGhpbmcgdGVycmlmeWluZy4gTmVhcmJ5LCBhIHNpbmlzdGVyIHNlY3JldCBsdXJrcyBpbiB0aGUgZGVwdGhzIG9mIGEgZ292ZXJubWVudCBsYWIuIiwiaWQiOjExOTg2NjUsInByb2R1Y3Rpb25fY29kZSI6IjAiLCJydW50aW1lIjo0OCwic2Vhc29uX251bWJlciI6MSwic3RpbGxfcGF0aCI6Ii9BZHdGMmpYdmhkT0RyNmdVWjYxYkhLUmt6MDkuanBnIiwidm90ZV9hdmVyYWdlIjo4LjQxMiwidm90ZV9jb3VudCI6MTMyN30=
+  recorded_at: Thu, 11 Jul 2024 04:59:57 GMT
+recorded_with: VCR 6.2.0

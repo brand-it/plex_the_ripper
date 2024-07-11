@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_27_210903) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_11_043012) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -45,6 +45,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_27_210903) do
     t.boolean "ejected", default: true, null: false
     t.integer "video_id"
     t.integer "episode_id"
+    t.boolean "loading", default: false, null: false
     t.index ["episode_id"], name: "index_disks_on_episode_id"
     t.index ["video_id"], name: "index_disks_on_video"
   end

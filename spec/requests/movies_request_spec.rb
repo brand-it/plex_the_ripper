@@ -6,8 +6,8 @@ RSpec.describe '/movies' do
   before do
     create(:config_make_mkv)
     create(:config_the_movie_db)
-    stub = instance_double(TheMovieDb::MovieListener, :movie_saving)
-    allow(TheMovieDb::MovieListener).to receive(:new).and_return(stub)
+    stub = instance_double(TheMovieDb::VideoListener, :movie_saving)
+    allow(TheMovieDb::VideoListener).to receive(:new).and_return(stub)
   end
 
   describe '/:id/rip' do

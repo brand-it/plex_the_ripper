@@ -24,40 +24,105 @@
 #  index_video_blobs_on_video                 (video_id)
 #
 class VideoBlob < ApplicationRecord
-  Movie = Struct.new(:title, :year)
-  MOVIE_MATCHER_WITH_YEAR = /(?<title>.*)[(](?<year>\d{4})[)]/
-  MOVIE_MATCHER = /(?<title>.*)/
+  Movie = Struct.new(:title, :year) do
+    def season
+      nil
+    end
+
+    def episode
+      nil
+    end
+  end
+  TvShow = Struct.new(:title, :year, :season, :episode)
+
+  VIDEO_FORMATS = [
+    '.avi', '.mp4', '.mkv', '.mov', '.wmv', '.flv', '.webm', '.mpeg',
+    '.mpg', '.3gp', '.m4v', '.swf', '.rm', '.vob',
+    '.ogv', '.ts', '.f4v', '.divx', '.asf', '.mts', '.m2ts', '.dv',
+    '.mxf', '.f4p', '.gxf', '.m2v', '.yuv', '.amv',
+    '.svi', '.nsv'
+  ].freeze
+  TITLE_MATCHER = /(?<title>.*)/
+  MATCHER_WITH_YEAR = /#{TITLE_MATCHER}[(](?<year>\d{4})[)]/
+
   # TODO: Currently not activly used but these are the patterns we are looking for
-  TV_SHOW_MATCHER_FULL = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<number>.*)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*mkv/
-  TV_SHOW_WITHOUT_EP_NAME = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<number>.*)\s-\s(?<date>.*).*mkv/
-  TV_SHOW_WITHOUT_DATE = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<number>.*)\s-\s(?<episode_name>.*).*mkv/
-  TV_SHOW_WITHOUT_NUMBER = /(?<title>.*)\s\((?<year>.*)\)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*mkv/
-  TV_SHOW_WITHOUT_YEAR = /(?<title>.*)\s-\s(?<number>.*)\s-\s(?<date>.*)\s-\s(?<episode_name>.*).*mkv/
+  TV_SHOW_SEASON_EPISODE = /[sS](?<season>\d+)[eE](?<episode>\d+)/
+  TV_SHOW_MATCHER_FULL = /#{MATCHER_WITH_YEAR}.*-\s+#{TV_SHOW_SEASON_EPISODE}\s+-\s+(?<date>.*)\s+-\s+(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
+  TV_SHOW_WITHOUT_EP_NAME = /#{MATCHER_WITH_YEAR}.*-\s+#{TV_SHOW_SEASON_EPISODE}\s+-\s+(?<date>.*).*#{Regexp.union(VIDEO_FORMATS)}/
+  TV_SHOW_WITHOUT_DATE = /#{MATCHER_WITH_YEAR}.*-\s+#{TV_SHOW_SEASON_EPISODE}\s+-\s+(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
+  TV_SHOW_WITHOUT_NUMBER = /#{MATCHER_WITH_YEAR}.*-\s+(?<date>.*)\s+-\s+(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
+  TV_SHOW_WITHOUT_YEAR = /#{TITLE_MATCHER}.*-\s+#{TV_SHOW_SEASON_EPISODE}\s+-\s+(?<date>.*)\s+-\s+(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
+  TV_SHOW_NUMBER_ONLY = /#{TV_SHOW_SEASON_EPISODE}\.*#{Regexp.union(VIDEO_FORMATS)}/
   belongs_to :video, optional: true
   belongs_to :episode, optional: true
-
-  has_many :progresses, dependent: :destroy, as: :progressable
 
   scope :optimized, -> { where(optimized: true) }
   scope :checksum, -> { where.not(checksum: nil) }
   scope :missing_checksum, -> { where(checksum: nil) }
 
-  def parsed_filename
-    return @parsed_filename if @parsed_filename
+  delegate :title, :year, :episode, :season, to: :parsed, allow_nil: true
 
-    match = filename.match(MOVIE_MATCHER_WITH_YEAR) || filename.match(MOVIE_MATCHER)
-    return @parsed_filename = Movie.new(nil, nil) if match.nil?
+  def tv_show?
+    return false if Config::Plex.newest&.tv_path.blank?
 
-    @parsed_filename = Movie.new(match.named_captures['title'], match.named_captures['year'])
+    key&.starts_with?(Config::Plex.newest.tv_path) || false
   end
 
-  def parsed_dirname
-    return @parsed_dirname if @parsed_dirname
+  def movie?
+    return false if Config::Plex.newest&.movie_path.blank?
 
-    name = key.gsub("#{Config::Plex.newest.movie_path}/", '').split('/').first.to_s
-    match = name.match(MOVIE_MATCHER_WITH_YEAR) || name.match(MOVIE_MATCHER)
-    return @parsed_dirname = Movie.new(nil, nil) if match.nil?
+    key&.starts_with?(Config::Plex.newest.movie_path) || false
+  end
 
-    @parsed_dirname = Movie.new(match.named_captures['title'], match.named_captures['year'])
+  private
+
+  def parsed
+    if movie?
+      parsed_movie
+    elsif tv_show?
+      parsed_tv_show
+    end
+  end
+
+  def parsed_tv_show
+    return @parsed_tv_show if @parsed_tv_filename
+
+    match = (filename.match(TV_SHOW_WITHOUT_DATE) ||
+             filename.match(TV_SHOW_MATCHER_FULL) ||
+            filename.match(TV_SHOW_WITHOUT_EP_NAME) ||
+            filename.match(TV_SHOW_WITHOUT_NUMBER) ||
+            filename.match(TV_SHOW_WITHOUT_YEAR) ||
+            filename.match(TV_SHOW_NUMBER_ONLY)
+            )&.named_captures || {}
+
+    dir_match = (directory_name.match(MATCHER_WITH_YEAR) ||
+                directory_name.match(TITLE_MATCHER)
+                )&.named_captures || {}
+
+    @parsed_tv_show = TvShow.new(
+      match['title'] || dir_match['title'],
+      (match['year'] || dir_match['year'])&.to_i,
+      match['season']&.to_i,
+      match['episode']&.to_i
+    )
+  end
+
+  def parsed_movie
+    return @parsed_movie if @parsed_movie
+
+    match = (filename.match(MATCHER_WITH_YEAR) ||
+            filename.match(TITLE_MATCHER) ||
+            directory_name.match(MATCHER_WITH_YEAR) ||
+            directory_name.match(TITLE_MATCHER))&.named_captures || {}
+    return @parsed_movie = Movie.new(nil, nil) if match.nil?
+
+    @parsed_movie = Movie.new(match['title'], match['year']&.to_i)
+  end
+
+  def directory_name
+    return '' if key.blank?
+
+    path = movie? ? Config::Plex.newest.movie_path : Config::Plex.newest.tv_path
+    @directory_name ||= key.gsub("#{path}/", '').split('/').first.to_s
   end
 end

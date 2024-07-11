@@ -40,11 +40,6 @@ class Video < ApplicationRecord
   scope :with_video_blobs, -> { includes(:video_blobs).where.not(video_blobs: { id: nil }) }
   scope :optimized, -> { includes(:optimized_video_blobs).where.not(video_blobs: { id: nil }) }
   scope :optimized_with_checksum, -> { optimized.merge(VideoBlob.checksum) }
-  class << self
-    def find_video(id)
-      id.nil? ? find(id) : (find_by(the_movie_db_id: id) || find(id))
-    end
-  end
 
   def credits
     @credits ||= "TheMovieDb::#{type}::Credits".constantize.new(the_movie_db_id).results

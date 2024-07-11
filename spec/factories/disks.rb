@@ -7,6 +7,7 @@
 #  id             :integer          not null, primary key
 #  disk_name      :string
 #  ejected        :boolean          default(TRUE), not null
+#  loading        :boolean          default(FALSE), not null
 #  name           :string
 #  workflow_state :string
 #  created_at     :datetime         not null

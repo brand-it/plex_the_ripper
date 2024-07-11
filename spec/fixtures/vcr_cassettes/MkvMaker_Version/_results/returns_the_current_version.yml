@@ -8,7 +8,7 @@ http_interactions:
       string: ''
     headers:
       User-Agent:
-      - Faraday v1.7.1
+      - Faraday v2.10.0
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
       Accept:
@@ -19,38 +19,33 @@ http_interactions:
       message: OK
     headers:
       Date:
-      - Wed, 13 Oct 2021 17:00:33 GMT
+      - Thu, 11 Jul 2024 04:59:56 GMT
       Content-Type:
-      - text/html
+      - text/html; charset=UTF-8
       Transfer-Encoding:
       - chunked
       Connection:
       - keep-alive
       Last-Modified:
-      - Wed, 07 Jul 2021 22:55:04 GMT
+      - Wed, 15 May 2024 09:47:45 GMT
+      Vary:
+      - Accept-Encoding
       Cache-Control:
       - max-age=18000
-      Expires:
-      - Tue, 12 Oct 2021 12:51:35 GMT
       Cf-Cache-Status:
       - HIT
       Age:
-      - '101397'
-      Expect-Ct:
-      - max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+      - '26000'
       Report-To:
-      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v3?s=HbZxVKwk4x4t21U2od9A1UNWdGjU%2FNzv4WRI89lKWFdAzIoGLOfylhotBP%2FyH1uc%2FUKKLmPMD9Re7RVSEDqDlxIxJftUUFuvahCZc%2FojQQJNNMQINsNkCDtuAHFUoOU6PRaemv2Ub31vZFcUJI0%3D"}],"group":"cf-nel","max_age":604800}'
+      - '{"endpoints":[{"url":"https:\/\/a.nel.cloudflare.com\/report\/v4?s=TT1Osn1alGpxYXHxtFDx0JvKSt5oxtEQ7EIrEB9AMzBtlqUHaNoV4s0brxsuNIVc0PdMWWaefzLdyZyp32ci2T8HqmiwThz9ZvKWdj0H%2F%2BOSeOqWTncVjBK45p%2FT%2FBllbKE%3D"}],"group":"cf-nel","max_age":604800}'
       Nel:
       - '{"success_fraction":0,"report_to":"cf-nel","max_age":604800}'
-      Vary:
-      - Accept-Encoding
       Server:
       - cloudflare
       Cf-Ray:
-      - 69da1ff498ef5f88-SMF
+      - 8a163a1cbc62159c-SJC
       Alt-Svc:
-      - h3=":443"; ma=86400, h3-29=":443"; ma=86400, h3-28=":443"; ma=86400, h3-27=":443";
-        ma=86400
+      - h3=":443"; ma=86400
     body:
       encoding: ASCII-8BIT
       string: "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n<html
@@ -64,26 +59,64 @@ http_interactions:
         id=\"content\">\n<h2>Download MakeMKV beta</h2>\nMakeMKV for Windows and Mac
         OS X is available for download below. MakeMKV for Linux\nis available on the
         <a href=\"https://www.makemkv.com/forum/viewtopic.php?f=3&t=224\">\nforum
-        page</a>.\n<ul class=\"bullets\">\n<li><a href='/download/Setup_MakeMKV_v1.16.4.exe'>MakeMKV
-        1.16.4 for Windows</a></li>\n<ul class=\"bullets2\">\n<li>Requires Windows
+        page</a>.\n<ul class=\"bullets\">\n<li><a href='/download/Setup_MakeMKV_v1.17.7.exe'>MakeMKV
+        1.17.7 for Windows</a></li>\n<ul class=\"bullets2\">\n<li>Requires Windows
         XP or later, x86 or x64.</li>\n</ul>\n</ul>\n<ul class=\"bullets\">\n<li><a
-        href='/download/makemkv_v1.16.4_osx.dmg'>MakeMKV 1.16.4 for Mac OS X</a></li>\n<ul
-        class=\"bullets2\">\n<li>Requires x64 Mac OS X 10.7 or later.<br/><sub>NOTE:
-        MakeMKV is not signed by Apple, you might need to <a href=\"https://support.apple.com/kb/ht5290\">adjust
+        href='/download/makemkv_v1.17.7_osx.dmg'>MakeMKV 1.17.7 for Mac OS X</a></li>\n<ul
+        class=\"bullets2\">\n<li>Requires x64 or ARM64 Mac OS X 10.7 or later.<br/><sub>NOTE:
+        MakeMKV is not signed by Apple, you might need to <a href='http://support.apple.com/kb/ht5290'>adjust
         gatekeeper options</a> in order to install the program.</sub></li>\n</ul>\n<br/>\t\n<li>Files
-        integrity may be checked using <a href='/download/makemkv-sha-1.16.4.txt'>hash
-        file</a></li>\n</ul>\n<h4>Revision history</h4>\n<li>MakeMKV v1.16.4 (8.7.2021
-        )</li>\n<ul class=\"bullets2\">\n<li>Much better support for discs with Java
-        playlist obfuscation</li>\n<li>Any Java runtime version is now supported,
-        including Java 16</li>\n<li>Mac OS: Support for Mac OS 12.0 Monterey</li>\n<li>Some
-        small improvements</li>\n<li>Bug fixes:</li>\n<ul class=\"bullets3\">\n<li>Program
-        failed to recognize some AAC streams with exotic channel encoding</li>\n<li>Picture
-        dimensions were displayed incorrectly for some exotic HEVC streams</li>\n<li>Conversion
-        of some DVDs could fail at the very end of title</li>\n</ul>\n</ul>\n<li>MakeMKV
-        v1.16.3 (18.3.2021 )</li>\n<ul class=\"bullets2\">\n<li>Bug fixes:</li>\n<ul
-        class=\"bullets3\">\n<li>Some non-English messages were displayed incorrectly</li>\n<li>Opening
-        DVD in manual mode from GUI was broken in 1.16.0</li>\n<li>Some E-AC3 streams
-        with surround channels were ignored when opening M2TS files</li>\n</ul>\n</ul>\n<li>MakeMKV
+        integrity may be checked using <a href='/download/makemkv-sha-1.17.7.txt'>hash
+        file</a></li>\n</ul>\n<h4>Revision history</h4>\n<li>MakeMKV v1.17.7 (15.5.2024)</li>\n<ul
+        class=\"bullets2\">\n<li>Version bump, no changes</li>\n</ul>\n<li>MakeMKV
+        v1.17.6 (20.1.2024)</li>\n<ul class=\"bullets2\">\n<li>Improved handling for
+        discs with mastering errors</li>\n<li>Small improvements and bugfixes</li>\n</ul>\n<li>MakeMKV
+        v1.17.5 (25.9.2023)</li>\n<ul class=\"bullets2\">\n<li>Improved handling for
+        discs with mastering errors</li>\n<li>Fixed several bughs related to HD-DVD
+        handling (just about time...)</li>\n<li>Fixed Linux ARM64 executabe crashing
+        on certain hardware configurations </li>\n<li>Small improvements and bugfixes</li>\n</ul>\n<li>MakeMKV
+        v1.17.4 (29.5.2023)</li>\n<ul class=\"bullets2\">\n<li>Added support for AACS
+        v81</li>\n<li>Small improvements and bugfixes</li>\n<li>Notable bug fixes:</li>\n<ul
+        class=\"bullets3\">\n<li>4K BDAV discs with 4K-only content could fail to
+        open</li>\n</ul>\n</ul>\n<li>MakeMKV v1.17.3 (1.2.2023)</li>\n<ul class=\"bullets2\">\n<li>Added
+        support for 4K BDAV discs</li>\n<li>Small improvements and bugfixes</li>\n<li>Notable
+        bug fixes:</li>\n<ul class=\"bullets3\">\n<li>DV HEVC streams with certain
+        encoding were processed in a non-compatible way</li>\n<li>CellWalk scan faild
+        on some DVDs</li>\n<li>Linux AArch64 version crashed on Raspberry PI3</li>\n</ul>\n<li>MakeMKV
+        v1.17.2 (10.10.2022 )</li>\n<ul class=\"bullets2\">\n<li>Improved handling
+        for discs with mastering errors</li>\n<li>Small improvements and bugfixes</li>\n</ul>\n<li>MakeMKV
+        v1.17.1 (13.7.2022 )</li>\n<ul class=\"bullets2\">\n<li>Small improvements
+        and bugfixes</li>\n<li>Bug fixes:</li>\n<ul class=\"bullets3\">\n<li>Program
+        could hang when scanning certain protected DVD discs using CellWallk method</li>\n<li>Some
+        titles were truncated on DVDs with structure protection, when using CellWallk
+        method</li>\n<li>Small bugfixes</li>\n</ul>\n<li>1.17.0 regressions:</li>\n<ul
+        class=\"bullets3\">\n<li>On some UHD HEVC streams program spitted thousands
+        of invalid &quot;Corrupt&quot; messages, appearing to hang</li>\n<li>Program
+        crashed decoding certain AC3 (DD) streams, usually during transcoding</li>\n</ul>\n</ul>\n<li>MakeMKV
+        v1.17.0 (27.6.2022 )</li>\n<ul class=\"bullets2\">\n<li>Improved handling
+        for discs with mastering errors</li>\n<li>A new, rewritten DVD engine - much
+        better handling for discs with structure protection</li>\n<li>Many internal
+        improvements and small bugfixes</li>\n<li>Notable Bug fixes:</li>\n<ul class=\"bullets3\">\n<li>Program
+        failed to recognize some exotic USB drives</li>\n<li>Program failed on some
+        DVD streams recorded from sattelite feed (TiVO DVD)</li>\n<li>Program could
+        hang if internet connection wasn't available</li>\n</ul>\n</ul>\n<li>MakeMKV
+        v1.16.7 (27.2.2022 )</li>\n<ul class=\"bullets2\">\n<li>Improved handling
+        for discs with mastering errors</li>\n<li>Many internal improvements and small
+        bugfixes</li>\n</ul>\n<li>MakeMKV v1.16.5 (1.11.2021 )</li>\n<ul class=\"bullets2\">\n<li>Miscellaneous
+        UI improvements</li>\n<li>WinCDArb update, fixes occasional \"no optical drives\"
+        error</li>\n<li>LibMMBD stability improvements</li>\n<li>Many small bug-fixes</li>\n</ul>\n<li>MakeMKV
+        v1.16.4 (8.7.2021 )</li>\n<ul class=\"bullets2\">\n<li>Much better support
+        for discs with Java playlist obfuscation</li>\n<li>Any Java runtime version
+        is now supported, including Java 16</li>\n<li>Mac OS: Support for Mac OS 12.0
+        Monterey</li>\n<li>Some small improvements</li>\n<li>Bug fixes:</li>\n<ul
+        class=\"bullets3\">\n<li>Program failed to recognize some AAC streams with
+        exotic channel encoding</li>\n<li>Picture dimensions were displayed incorrectly
+        for some exotic HEVC streams</li>\n<li>Conversion of some DVDs could fail
+        at the very end of title</li>\n</ul>\n</ul>\n<li>MakeMKV v1.16.3 (18.3.2021
+        )</li>\n<ul class=\"bullets2\">\n<li>Bug fixes:</li>\n<ul class=\"bullets3\">\n<li>Some
+        non-English messages were displayed incorrectly</li>\n<li>Opening DVD in manual
+        mode from GUI was broken in 1.16.0</li>\n<li>Some E-AC3 streams with surround
+        channels were ignored when opening M2TS files</li>\n</ul>\n</ul>\n<li>MakeMKV
         v1.16.2 (17.3.2021 )</li>\n<ul class=\"bullets2\">\n<li>Bug fixes:</li>\n<ul
         class=\"bullets3\">\n<li>Mac OS: Program produced random errors when running
         on OS X 10.11 El Captain or earlier versions</li>\n<li>Linux: ccextractor
@@ -125,12 +158,7 @@ http_interactions:
         v1.15.0 (3.3.2020 )</li>\n<ul class=\"bullets2\">\n<li>User interface update</li>\n<li>New
         preferences page for LibMMBD integration</li>\n<li>Improved handling for discs
         with mastering errors</li>\n<li>Better tolerance for corrupted input data</li>\n<li>Many
-        internal improvements</li>\n</ul>\n<li>MakeMKV v1.14.7 (4.12.2019 )</li>\n<ul
-        class=\"bullets2\">\n<li>Bug fixes:</li>\n<ul class=\"bullets3\">\n<li>Better
-        compatibility for decrypted AACS 2.1 FMTS files</li>\n<li>Fixed variable expansion
-        bug for default file name template</li>\n</ul>\n</ul>\n<li>MakeMKV v1.14.6
-        (2.12.2019 )</li>\n<ul class=\"bullets2\">\n<li>Added support for AACS 2.1</li>\n<li>Many
-        small bugfixes and improvements</li>\n</ul>\n<li><a href='/download/history.html'>Previous
+        internal improvements</li>\n</ul>\n<li><a href='/download/history.html'>Previous
         history</a></li>\n</ul>\n<h4>\nSystem Requirements</h4>\n<ul class=\"bullets\">\n<li>Supported
         OS</li>\n<ul class=\"bullets3\">\n<li>Windows XP or later</li>\n<li>Mac OS
         X 10.6 and later</li>\n<li>Linux x86 or amd64</li>\n</ul>\n<li>512 MB of RAM,
@@ -152,11 +180,11 @@ http_interactions:
         id=\"sidebar\">\n<ul>\n<li><a href=\"/\">Home</a></li>\n<li><a href=\"/download/\">Download</a></li>\n<li><a
         href=\"/aboutmkv/\">About MKV</a></li>\n<li><a href=\"/onlinehelp/\">Online
         Help</a></li>\n<li><a href=\"/faq/\">F.A.Q.</a></li>\n<li><a href=\"/forum/\">Forum</a></li>\n</ul>\n<div
-        id=\"side_space\"></div>\n<div id=\"d_button\"> <a href='/download/Setup_MakeMKV_v1.16.4.exe'>\n<div
+        id=\"side_space\"></div>\n<div id=\"d_button\"> <a href='/download/Setup_MakeMKV_v1.17.7.exe'>\n<div
         id=\"d_buttonimg\" align=\"center\">Download MakeMKV for Windows</div>\n</a>
         </div>\n<div id=\"d_buttonimg_preload\"></div>\n<div id=\"side_space2\"></div>\n<div
         id=\"logo_softpedia\"><a href='http://www.softpedia.com/progClean/MakeMKV-Clean-117330.html'>\n<div
         id=\"logo_softpediaimg\" align=\"center\"></div>\n</a> </div>\n</div>\n<div
-        id=\"footer\">Copyright &#169 2008-2020 GuinpinSoft inc</div>\n</div>\n</body>\n</html>\n"
-  recorded_at: Wed, 13 Oct 2021 17:00:33 GMT
-recorded_with: VCR 6.0.0
+        id=\"footer\">Copyright &#169 2008-2024 GuinpinSoft inc</div>\n</div>\n</body>\n</html>\n"
+  recorded_at: Thu, 11 Jul 2024 04:59:56 GMT
+recorded_with: VCR 6.2.0

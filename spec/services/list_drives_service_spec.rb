@@ -10,7 +10,7 @@ RSpec.describe ListDrivesService do
   let(:new_service) { described_class.new(config_make_mkv:) }
 
   describe '#results' do
-    subject(:call) { new_service.results }
+    subject(:call) { new_service.call }
 
     let(:expected_response) do
       MkvParser::DRV.new(

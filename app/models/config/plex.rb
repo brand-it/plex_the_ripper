@@ -29,11 +29,11 @@ class Config
     end
 
     def movie_path
-      settings_movie_path.delete_suffix('/')
+      settings_movie_path&.delete_suffix('/')
     end
 
     def tv_path
-      settings_tv_path.delete_suffix('/')
+      settings_tv_path&.delete_suffix('/')
     end
   end
 end

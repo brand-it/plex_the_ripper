@@ -8,10 +8,8 @@ module Ftp
     end
 
     def call
-      Result.new(
-        collect_mkv_files(plex_config.settings_movie_path),
+      collect_mkv_files(plex_config.settings_movie_path) +
         collect_mkv_files(plex_config.settings_tv_path)
-      )
     end
 
     def collect_mkv_files(path)

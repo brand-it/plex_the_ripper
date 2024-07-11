@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 class LoadDiskWorker < ApplicationWorker
+  include Shell
+
   def enqueue?
-    existing_disks.nil?
+    existing_disks.nil? && ListDrivesService.call.any?
   end
 
   def perform
@@ -17,7 +19,6 @@ class LoadDiskWorker < ApplicationWorker
   end
 
   def create_disks
-    broadcast_loading!
     CreateDisksService.call
   end
 
@@ -30,12 +31,6 @@ class LoadDiskWorker < ApplicationWorker
   def broadcast_reload!
     cable_ready[BroadcastChannel.channel_name].reload
     cable_ready.broadcast
-  end
-
-  def broadcast_loading!
-    component = ProcessComponent.new worker: LoadDiskWorker
-    component.with_body { 'Loading the disk ...' }
-    broadcast(component)
   end
 
   def broadcast_no_disk_found!
