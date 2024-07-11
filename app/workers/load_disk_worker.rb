@@ -8,7 +8,7 @@ class LoadDiskWorker < ApplicationWorker
   end
 
   def perform
-    Disk.ejected.in_batches.update_all(ejected: true)
+    Disk.not_ejected.in_batches.update_all(ejected: true)
     reload_page = disks.any?(&:ejected)
     disks.each { _1.update!(ejected: false) }
     reload_page ? broadcast_reload! : broadcast_no_disk_found!

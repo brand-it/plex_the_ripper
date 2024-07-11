@@ -7,6 +7,8 @@ SERVER_EXIT_CODE=0
 URL="http://localhost:8080"
 HEALTH_CHECK_URL="http://localhost:8080/system/health"
 
+# Bin directory path
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
 check_health() {
   STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" $HEALTH_CHECK_URL)
@@ -22,13 +24,13 @@ start_server() {
   export RAILS_ENV=production
 
   echo "Running bin/update_latest_release..."
-  bin/update_latest_release
+  $SCRIPT_DIR/update_latest_release
 
   echo "Running bin/setup..."
-  bin/setup
+  $SCRIPT_DIR/setup
 
   echo "Starting Rails server..."
-  bin/rails server -b 0.0.0.0 -p 8080 -e production &
+  $SCRIPT_DIR/rails server -b 0.0.0.0 -p 8080 -e production &
   SERVER_PID=$!
 
   if [ $FIRST_START -eq 1 ]; then

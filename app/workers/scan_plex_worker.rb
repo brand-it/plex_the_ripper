@@ -6,6 +6,7 @@ class ScanPlexWorker < ApplicationWorker
     plex_videos.map do |blob|
       blob.video = find_or_create_video(blob)
       blob.episode = search_for_episode(blob, blob.video)
+      blob.save!
       self.completed += 1
       percent_completed = (completed / plex_videos.size.to_f * 100)
       broadcast_progress(
@@ -72,7 +73,7 @@ class ScanPlexWorker < ApplicationWorker
   end
 
   def search_for_episode(blob, video)
-    return unless video.is_a?(Tv)
+    return unless video.is_a?(::Tv)
 
     season = video.seasons.find { _1.season_number == blob.season }
     return if season.nil?

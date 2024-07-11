@@ -9,10 +9,13 @@
     <thead>
       <tr>
         <th></th>
+        <th>Ripped</th>
+        <th>Uploaded</th>
         <th>#</th>
         <th>Name</th>
         <th>Air Date</th>
         <th>Duration</th>
+        <th></th>
         <th></th>
       </tr>
     </thead>
@@ -24,6 +27,24 @@
         <tr>
           <td class="<%= text_class %>">
             <%= imdb_image_tag episode.still_path, width: 100, height: 100 %>
+          </td>
+          <td class="text-center">
+            <h1>
+              <% if episode.ripped_disk_titles.any? %>
+                <%= icon('square-check') %>
+              <% else %>
+                <%= icon('square') %>
+              <% end %>
+            </h1>
+          </td>
+          <td class="text-center">
+            <h1>
+              <% if episode.video_blobs.any? %>
+                <%= icon('square-check') %>
+              <% else %>
+                <%= icon('square') %>
+              <% end %>
+            </h1>
           </td>
           <td class="<%= text_class %>">
             <%= episode.episode_number %>
