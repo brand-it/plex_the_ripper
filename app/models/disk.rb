@@ -7,6 +7,7 @@
 #  id             :integer          not null, primary key
 #  disk_name      :string
 #  ejected        :boolean          default(TRUE), not null
+#  loading        :boolean          default(FALSE), not null
 #  name           :string
 #  workflow_state :string
 #  created_at     :datetime         not null
@@ -31,8 +32,10 @@ class Disk < ApplicationRecord
 
   validates :disk_name, presence: true
 
-  scope :not_ejected, -> { where(ejected: false) }
   scope :ejected, -> { where(ejected: true) }
+  scope :loading, -> { where(loading: true) }
+  scope :not_ejected, -> { where(ejected: false) }
+  scope :not_loading, -> { where(loading: false) }
 
   def disk_info
     @disk_info ||= DiskInfoService.new(disk_name:).results

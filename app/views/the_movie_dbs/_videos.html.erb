@@ -3,12 +3,13 @@
     <div class='col-md-12'>
       <div class="text-white">
         <div class='container'>
-          <h1 class="display-4">Getting Started</h1>
-          <p class="lead">Get started by typing in the name of the TV show or movie.</p>
+          <h1 class="display-4">To Getting Started</h1>
+          <p class="lead">Type in the name of the movie or TV show your looking for into the search bar above.</p>
         </div>
       </div>
     </div>
-  <% elsif search_service.results.none? %>
+  <% end %>
+  <% if search_service.results.none? && params.dig(:search, :query).present? %>
     <div class='col-md-12'>
       <div class="text-white">
         <div class='container'>

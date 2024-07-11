@@ -44,7 +44,7 @@ plugin :tmp_restart
 # after boot kick off background jobs
 # rubocop:disable Metrics/BlockLength, Rails/Output
 on_booted do
-  Backgrounder.start
+  Backgrounder.start if ENV.fetch('BACKGROUNDER', 'true') == 'true'
   rack_port = ARGV.index('-p') ? ARGV[ARGV.index('-p').next].to_i : 3000
   rack_port = ENV['PORT'].to_i if rack_port.zero?
   puts <<~STR

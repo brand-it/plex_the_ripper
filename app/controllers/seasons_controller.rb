@@ -4,7 +4,7 @@ class SeasonsController < ApplicationController
   def show
     @tv = Tv.find(params[:tv_id])
     @season = @tv.seasons.includes(:episodes).find(params[:id])
-    @season.subscribe(TheMovieDbSeasonListener.new)
+    @season.subscribe(TheMovieDb::EpisodesListener.new)
     @season.save!
     @disks = Disk.not_ejected
   end

@@ -13,6 +13,7 @@ module TheMovieDb
       overview
     ].freeze
     SEASON_PERMITTED_PARAMS = %w[name overview poster_path season_number air_date].freeze
+    EPISODE_PERMITTED_PARAMS = %w[name episode_number overview air_date still_path runtime].freeze
 
     param :tv, Types.Instance(::Tv)
     param :the_movie_db_details, Types::Coercible::Hash

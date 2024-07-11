@@ -1,22 +1,39 @@
 # frozen_string_literal: true
 
 class CreateDisksService
+  include CableReady::Broadcaster
+  include Shell
+
+  delegate :render, to: :ApplicationController
+
   class << self
     delegate :call, to: :new
   end
 
   def call
-    return [] if drives.empty?
+    return [] if devices.empty?
 
     drives.map do |drive|
-      Disk.find_or_initialize_by(name: drive.drive_name, disk_name: drive.disc_name).tap do |disk|
-        disk.disk_info.each { |title| update_disk_title(disk, title) }
-        disk.save!
+      Disk.find_or_initialize_by(name: drive.drive_name, disk_name: drive.disc_name)
+          .tap do |disk|
+        disk.update!(loading: true)
+        broadcast_loading!(disk.name)
+        disk.disk_info.each { update_disk_title(disk, _1) }
+        disk.update!(loading: false)
       end
     end
   end
 
   private
+
+  def broadcast_loading!(name = nil)
+    component = ProcessComponent.new worker: LoadDiskWorker
+    component.with_body { name ? "Loading #{name} ..." : 'Loading the disk ...' }
+    cable_ready[BroadcastChannel.channel_name].morph \
+      selector: "##{component.dom_id}",
+      html: render(component, layout: false)
+    cable_ready.broadcast
+  end
 
   def update_disk_title(disk, title)
     disk_title = find_or_build_disk_title(disk, title)
@@ -31,6 +48,6 @@ class CreateDisksService
   end
 
   def drives
-    @drives ||= ListDrivesService.results
+    @drives ||= ListDrivesService.call
   end
 end

@@ -4,7 +4,7 @@ class MoviesController < ApplicationController
   # movie GET    /movies/:id(.:format)
   def show
     @movie = Movie.find_or_initialize_by(the_movie_db_id: params[:id])
-    @movie.subscribe(TheMovieDb::MovieListener.new)
+    @movie.subscribe(TheMovieDb::VideoListener.new)
     @movie.save!
     @disks = Disk.not_ejected
   end

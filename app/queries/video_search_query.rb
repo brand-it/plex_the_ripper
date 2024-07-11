@@ -10,7 +10,7 @@ class VideoSearchQuery
 
   def results
     return @results if defined?(@results)
-    return @results = Video.order(popularity: :desc).includes(:video_blobs).page(page) if query.blank?
+    return @results = Video.order(updated_at: :desc).includes(:video_blobs).page(page) if query.blank?
 
     db_results = the_movie_db_ids.map { find_or_build_video(**_1) }
     @results = Results.new db_results, search, page
@@ -41,40 +41,6 @@ class VideoSearchQuery
                            .relation.includes(:video_blobs).load
   end
 
-  # {
-  #   'adult' => false,
-  #   'backdrop_path' => '/jqFC2WjYF07hx2X7cs0XmY9jBX6.jpg',
-  #   'genre_ids' => [878],
-  #   'id' => 1_003_598,
-  #   'media_type' => 'movie',
-  #   'original_language' => 'en',
-  #   'original_title' => 'Avengers: Secret Wars',
-  #   'overview' => 'An upcoming film in Phase 6 of the Marvel Cinematic Universe and the',
-  #   'popularity' => 22.216,
-  #   'poster_path' => '/8chwENebfUEJzZ7sMUA0nOgiCKk.jpg',
-  #   'release_date' => '2027-05-05',
-  #   'title' => 'Avengers: Secret Wars',
-  #   'video' => false,
-  #   'vote_average' => 0.0,
-  #   'vote_count' => 0
-  # }
-  # {
-  #   'adult' => false,
-  #   'backdrop_path' => '/44TJgVKPto88kOF2R036dgkjJms.jpg',
-  #   'first_air_date' => '1999-10-30',
-  #   'genre_ids' => [16, 10_759, 10_765],
-  #   'id' => 1300,
-  #   'media_type' => 'tv',
-  #   'name' => 'The Avengers: United They Stand',
-  #   'origin_country' => ['US']
-  #   'original_language' => 'en',
-  #   'original_name' => 'The Avengers: United They Stand',
-  #   'overview' => 'When the planet is threatened by Super Villains',
-  #   'popularity' => 15.278,
-  #   'poster_path' => '/p2SrnKTQjLRXBCcTZtYkTZCwLpp.jpg',
-  #   'vote_average' => 5.8,
-  #   'vote_count' => 18,
-  # }
   def find_or_build_video(data: nil, id: nil, type: nil)
     videos.find { _1.the_movie_db_id == id && _1.type == type } ||
       Video.new(the_movie_db_id: id, type:).tap do |video|
