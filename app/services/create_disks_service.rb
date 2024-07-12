@@ -2,7 +2,6 @@
 
 class CreateDisksService
   include CableReady::Broadcaster
-  include Shell
 
   delegate :render, to: :ApplicationController
 
@@ -11,7 +10,7 @@ class CreateDisksService
   end
 
   def call
-    return [] if devices.empty?
+    return [] if drives.empty?
 
     drives.map do |drive|
       Disk.find_or_initialize_by(name: drive.drive_name, disk_name: drive.disc_name)

@@ -3,9 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe CreateMkvService do
-  let(:service) { described_class.new(disk_title:, progress_listener:) }
+  let(:service) { described_class.new(disk_title:) }
   let(:disk_title) { build_stubbed(:disk_title) }
-  let(:progress_listener) { double('progress_listener', call: false) }
 
   before { create(:config_make_mkv) }
 
@@ -16,11 +15,6 @@ RSpec.describe CreateMkvService do
       let(:disk_title) { build_stubbed(:disk_title, :with_movie) }
 
       before { allow(service).to receive(:cmd).and_return('ls /not-a-real-folder') }
-
-      it 'calls progress listener' do
-        call
-        expect(progress_listener).to have_received(:call).with(MkvParser::Error.new(type: 'ls', line: [0]))
-      end
 
       it 'responds with a result object' do
         expect(call).to eq(described_class::Result.new(disk_title.tmp_plex_path, false))

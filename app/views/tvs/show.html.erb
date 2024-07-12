@@ -1,3 +1,15 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <%= link_to 'Search', root_path %>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><%= @tv.name %></li>
+  </ol>
+</nav>
+<hr/>
+
+<%= render SearchComponent.new %>
+
 <div class="display-flex">
   <% @tv.seasons.each do |season| %>
     <div class="width-225 m-1">

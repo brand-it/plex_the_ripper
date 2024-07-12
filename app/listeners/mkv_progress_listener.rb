@@ -5,20 +5,43 @@ class MkvProgressListener
   include CableReady::Broadcaster
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::DateHelper
+  include SlackUtility
+
+  NOTIFICATION_TITLE = 'Saving to MKV file'
 
   delegate :job_path, to: 'Rails.application.routes.url_helpers'
   delegate :render, to: :ApplicationController
 
-  attr_reader :title, :message, :completed
-
+  option :disk_title, Types.Instance(DiskTitle)
   option :job, Types.Instance(Job)
 
-  def call(mkv_message) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def start
+    job.metadata['completed'] = 0.0
+    notify_slack("Started #{title}")
+    update_progress_bar
+    job.save!
+  end
+
+  def success
+    job.metadata['completed'] = 100.0
+    notify_slack("Completed #{title}")
+    update_progress_bar
+    job.save!
+  end
+
+  def failure
+    job.metadata['completed'] = 0.0
+    notify_slack("Failure #{title}")
+
+    update_progress_bar
+    job.save!
+  end
+
+  def raw_line(mkv_message) # rubocop:disable Metrics/MethodLength
     case mkv_message
     when MkvParser::PRGV
       job.metadata['completed'] ||= 0.0
       job.metadata['completed'] = percentage(mkv_message.current, mkv_message.pmax)
-      update_progress_bar
     when MkvParser::PRGT, MkvParser::PRGC
       job.metadata['title'] = mkv_message.name
     when MkvParser::MSG
@@ -28,6 +51,8 @@ class MkvProgressListener
 
     update_job!
   end
+
+  private
 
   def store_message(mkv_message)
     return if mkv_message.blank?
@@ -49,6 +74,7 @@ class MkvProgressListener
   def update_job!
     return if next_update.future?
 
+    update_progress_bar
     job.save!
     @next_update = nil
   end
@@ -67,10 +93,9 @@ class MkvProgressListener
       selector: "##{component.dom_id}",
       html: render(component, layout: false)
     cable_ready.broadcast
-    @next_update = nil
   end
 
-  def eta # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def eta # rubocop:disable Metrics/MethodLength
     return if job.metadata['completed'].to_f >= 100.0
 
     percentage_completed = job.metadata['completed'].to_f
@@ -106,5 +131,16 @@ class MkvProgressListener
 
   def next_update
     @next_update ||= 1.second.from_now
+  end
+
+  def title
+    @title ||= if disk_title.video.is_a?(Movie)
+                 disk_title.video.title
+               elsif disk_title.video.is_a?(Tv)
+                 episode = disk_title.episode
+                 season = episode.season
+                 "#{disk_title.video.title} S#{season.season_number}E#{episode.episode_number} " \
+                   "- #{episode.name}"
+               end
   end
 end

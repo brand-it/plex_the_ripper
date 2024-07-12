@@ -13,7 +13,7 @@ HOMEBREW_PACKAGES = %i[
 ]
 @bundler_options = []
 @deployment = false
-install_packages = false
+
 OptionParser.new do |opts|
   opts.on('--path [path]', String) do |path|
     @bundler_options << ['path', path]

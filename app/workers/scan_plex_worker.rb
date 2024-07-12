@@ -13,6 +13,7 @@ class ScanPlexWorker < ApplicationWorker
         in_progress_component('Updating Database...', percent_completed)
       )
     end
+    @next_update = Time.current
     broadcast_progress(completed_component)
   end
 
@@ -23,10 +24,13 @@ class ScanPlexWorker < ApplicationWorker
   private
 
   def broadcast_progress(component)
+    return if next_update.future?
+
     cable_ready[BroadcastChannel.channel_name].morph \
       selector: "##{component.dom_id}",
       html: render(component, layout: false)
     cable_ready.broadcast
+    @next_update = nil
   end
 
   def completed_component
@@ -106,6 +110,10 @@ class ScanPlexWorker < ApplicationWorker
 
   def plex_videos
     @plex_videos ||= Ftp::VideoScannerService.call
+  end
+
+  def next_update
+    @next_update ||= 1.second.from_now
   end
 
   attr_writer :completed

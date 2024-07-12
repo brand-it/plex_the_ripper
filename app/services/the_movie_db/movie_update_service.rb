@@ -14,8 +14,7 @@ module TheMovieDb
       title
     ].freeze
     param :movie, Types.Instance(::Movie)
-    param :the_movie_db_details, Types::Coercible::Hash
-
+    param :the_movie_db_details, Types::Coercible::Hash, default: -> { movie.the_movie_db_details }
     class << self
       def call(*)
         new(*).call

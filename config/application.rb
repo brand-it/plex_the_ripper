@@ -25,6 +25,8 @@ module PlexRipper
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 7.1
 
+    config.active_record.sqlite3_production_warning = false
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration can go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded after loading
@@ -33,6 +35,9 @@ module PlexRipper
       g.stylesheets false
     end
     config.faraday_logging = ENV['FARADAY_LOGGING'] == 'true'
+    port = ENV['PORT']&.to_i
+    port ||= ARGV.index('-p') ? ARGV[ARGV.index('-p').next].to_i : 3000
+    routes.default_url_options = { host: 'localhost', port:  }
   end
 end
 

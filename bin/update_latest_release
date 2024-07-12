@@ -34,6 +34,19 @@ if [ "$CURRENT_VERSION" = "$LATEST_RELEASE" ]; then
   exit 0
 fi
 
+# Compare versions to ensure no downgrade
+if [ ! -z "$CURRENT_VERSION" ]; then
+  # Remove the "v" prefix for comparison
+  LATEST_VERSION_NUMBER="${LATEST_RELEASE#v}"
+  CURRENT_VERSION_NUMBER="${CURRENT_VERSION#v}"
+
+  # Compare versions using sort -V for version number sorting
+  if [[ $(printf '%s\n' "$LATEST_VERSION_NUMBER" "$CURRENT_VERSION_NUMBER" | sort -V | head -n1) != "$CURRENT_VERSION_NUMBER" ]]; then
+    echo "Current version ($CURRENT_VERSION) is greater than or equal to the latest release ($LATEST_RELEASE). No update needed."
+    exit 0
+  fi
+fi
+
 echo "Updating from version $CURRENT_VERSION to $LATEST_RELEASE"
 
 # Download the latest release zip file

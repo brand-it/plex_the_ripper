@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class FindExistingDisksService
-  include Shell
-
   class << self
     delegate :call, to: :new
   end
@@ -12,17 +10,21 @@ class FindExistingDisksService
     devices.reduce(Disk.not_ejected) do |disks, device|
       if index.zero?
         disks.where(
-          name: device.name,
-          disk_name: [device.disk_name, device.rdisk_name]
+          name: device.drive_name,
+          disk_name: device.disc_name
         )
       else
         disks.or(
           Disk.where(
-            name: device.name,
-            disk_name: [device.disk_name, device.rdisk_name]
+            name: device.drive_name,
+            disk_name: device.disc_name
           )
         )
       end.tap { index += 1 }
     end
+  end
+
+  def devices
+    @devices ||= ListDrivesService.call
   end
 end

@@ -1,25 +1,19 @@
 # frozen_string_literal: true
 
 class LoadDiskWorker < ApplicationWorker
-  include Shell
-
   def enqueue?
     existing_disks.nil?
   end
 
   def perform
-    Disk.not_ejected.in_batches.update_all(ejected: true)
+    Disk.not_ejected.update_all(ejected: true)
     reload_page = disks.any?(&:ejected)
     disks.each { _1.update!(ejected: false) }
     reload_page ? broadcast_reload! : broadcast_no_disk_found!
   end
 
   def disks
-    @disks ||= existing_disks || create_disks
-  end
-
-  def create_disks
-    CreateDisksService.call
+    @disks ||= CreateDisksService.call
   end
 
   def existing_disks

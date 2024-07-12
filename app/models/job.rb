@@ -65,6 +65,7 @@ class Job < ApplicationRecord
 
   scope :active, -> { where(status: ACTIVE_STATUSES) }
   scope :completed, -> { where(status: COMPLETED_STATUSES) }
+  scope :problem, -> { where(status: [:errored] + HANGING_STATUSES) }
   scope :sort_by_created_at, -> { order(created_at: :desc) }
   scope :hanging, -> { where(status: HANGING_STATUSES) }
 

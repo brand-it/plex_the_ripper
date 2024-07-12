@@ -1,5 +1,6 @@
 <div class="width-225 m-1">
-  <%= link_to (video.is_a?(Tv) ? tv_path(video.the_movie_db_id) : movie_path(video.the_movie_db_id)), class: 'btn img-poster-btn p-1 mb-2', data: { turbo: false, disable_with: 'Loading...' } do %>
+  <%= link_to (video.is_a?(Tv) ? tv_path("tmdb:#{video.the_movie_db_id
+  }") : movie_path("tmdb:#{video.the_movie_db_id}")), class: 'btn img-poster-btn p-1 mb-2', data: { turbo: false, disable_with: 'Loading...' } do %>
     <%= imdb_image_tag video.poster_path, klass: 'img-poster', width: 200 %>
   <% end %>
 
