@@ -2,21 +2,49 @@
 
 class UploadProgressListener
   extend Dry::Initializer
+  include SlackUtility
   include CableReady::Broadcaster
 
   delegate :render, to: :ApplicationController
 
-  option :completed, Types::Integer.optional, default: -> { 0 }
-  option :title, Types::String.optional, default: -> { 'Uploading Video' }
-  option :message, Types::String.optional, default: -> { '' }
+  option :disk_title, Types.Instance(::DiskTitle)
   option :file_size, Types::Integer
+  attr_reader :completed
 
-  def call(chunk_size: nil)
+  def update_progress(chunk_size: nil)
+    @completed ||= 0
     @completed += chunk_size
-    return if next_update.future? && percentage < 100
+    return if next_update.future?
 
     update_component
     @next_update = nil # clear next_update timer
+  end
+
+  def start
+    notify_slack("Started Uploading #{title}")
+    update_component
+  end
+
+  def finished
+    @completed = file_size
+    notify_slack("Finished Uploading #{title}")
+    update_component
+  end
+
+  private
+
+  def component # rubocop:disable Metrics/MethodLength
+    progress_bar = render(
+      ProgressBarComponent.new(
+        model: Video,
+        completed: percentage,
+        status: percentage < 100 ? :info : :success,
+        message: title
+      ), layout: false
+    )
+    component = ProcessComponent.new(worker: UploadWorker)
+    component.with_body { progress_bar }
+    component
   end
 
   def update_component
@@ -26,25 +54,22 @@ class UploadProgressListener
     cable_ready.broadcast
   end
 
-  def component # rubocop:disable Metrics/MethodLength
-    progress_bar = render(
-      ProgressBarComponent.new(
-        model: Video,
-        completed: percentage,
-        status: :info,
-        message: title
-      ), layout: false
-    )
-    component = ProcessComponent.new(worker: UploadWorker)
-    component.with_body { progress_bar }
-    component
-  end
-
   def percentage
-    completed / file_size.to_f * 100
+    (@completed.to_i / file_size.to_f) * 100
   end
 
   def next_update
     @next_update ||= 1.second.from_now
+  end
+
+  def title
+    if disk_title.video.is_a?(Tv)
+      episode = disk_title.episode
+      season = episode.season
+      "#{disk_title.video.title} - S#{season.season_number}E#{episode.episode_number} " \
+        "#{episode.name}"
+    else
+      disk_title.video.title
+    end
   end
 end

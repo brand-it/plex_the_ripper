@@ -3,7 +3,6 @@
 class ListDrivesService
   extend Dry::Initializer
   include Shell
-  include MkvParser
 
   option :noscan, Types::Bool, default: -> { false }
 

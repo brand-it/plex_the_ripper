@@ -25,7 +25,7 @@
         <% disks.each do |disk| %>
           <span>Loading <%= disk.name %> ...</span>
         <% end %>
-      <% elsif (disks = FindExistingDisksService.call).any? %>
+      <% elsif (disks = Disk.not_ejected).any? %>
         <% disks.each do |disk| %>
           <p class="mb-0"><%= link_to disk.name, the_movie_dbs_path(search: { query: disk.name.titleize }) %> is ready to be ripped. <%= link_to 'eject', eject_disk_path(disk), data: { turbo_method: :post } %></p>
         <% end %>

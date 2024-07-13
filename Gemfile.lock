@@ -244,7 +244,7 @@ GEM
     puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.8.0)
-    rack (3.1.6)
+    rack (3.1.7)
     rack-mini-profiler (3.3.1)
       rack (>= 1.2.0)
     rack-session (2.0.0)
@@ -344,7 +344,7 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rspec (3.0.2)
+    rubocop-rspec (3.0.3)
       rubocop (~> 1.61)
     rubocop-rspec_rails (2.30.0)
       rubocop (~> 1.61)
@@ -370,6 +370,7 @@ GEM
     simple_form (5.3.1)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
+    slack-notifier (2.4.0)
     spring (4.2.1)
     sprockets (4.2.1)
       concurrent-ruby (~> 1.0)
@@ -480,6 +481,7 @@ DEPENDENCIES
   selenium-webdriver
   shoulda-matchers
   simple_form
+  slack-notifier
   spring
   sprockets-rails
   sqlite3 (~> 1.6)

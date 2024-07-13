@@ -98,4 +98,9 @@ RSpec.configure do |config|
     Rails.application.load_tasks
     Rake::Task['javascript:build'].invoke
   end
+
+  config.after do
+    FileUtils.rm_rf(Rails.root.join('tmp/tv'))
+    FileUtils.rm_rf(Rails.root.join('tmp/movies'))
+  end
 end

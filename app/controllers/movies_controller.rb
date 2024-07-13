@@ -3,7 +3,11 @@
 class MoviesController < ApplicationController
   # movie GET    /movies/:id(.:format)
   def show
-    @movie = Movie.find_or_initialize_by(the_movie_db_id: params[:id])
+    @movie = if params[:id].start_with?('tmdb:')
+               Movie.find_or_initialize_by(the_movie_db_id: params[:id].split(':').last)
+             else
+               Movie.find(params[:id])
+             end
     @movie.subscribe(TheMovieDb::VideoListener.new)
     @movie.save!
     @disks = Disk.not_ejected

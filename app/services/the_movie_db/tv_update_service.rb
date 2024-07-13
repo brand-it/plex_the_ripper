@@ -16,7 +16,7 @@ module TheMovieDb
     EPISODE_PERMITTED_PARAMS = %w[name episode_number overview air_date still_path runtime].freeze
 
     param :tv, Types.Instance(::Tv)
-    param :the_movie_db_details, Types::Coercible::Hash
+    param :the_movie_db_details, Types::Coercible::Hash, default: -> { tv.the_movie_db_details }
 
     class << self
       def call(*)

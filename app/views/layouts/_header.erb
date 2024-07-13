@@ -1,11 +1,12 @@
 <header>
   <div>
     <nav class="nav justify-content-center">
-      <%= link_to 'Home', root_path, class: 'nav-link' %>
+      <%= link_to 'Search', root_path, class: 'nav-link' %>
       <%= link_to 'The Movie DB', modify_config_the_movie_db_path, class: 'nav-link' %>
       <%= link_to 'Plex', modify_config_plex_path, class: 'nav-link' %>
       <%= link_to 'Make MKV', modify_config_make_mkv_path, class: 'nav-link' %>
       <%= link_to 'Users', users_path, class: 'nav-link' %>
+      <%= link_to 'Slack', modify_config_slack_path, class: 'nav-link' %>
       <%= link_to 'Jobs', jobs_path, class: 'nav-link' %>
       <% if current_user %>
         <%= link_to current_user.name, user_path(current_user), class: 'nav-link' %>
@@ -13,7 +14,7 @@
       <% if (result = CheckForUpgradeService.call).upgrade %>
         <%= link_to "Upgrade & Restart (v#{result.version})", restart_system_path, data: { turbo_method: :patch, turbo_confirm: 'Are you sure you want to update & restart the server?' }, class: 'btn btn-primary' %>
       <% else %>
-          <%= link_to "Restart", restart_system_path, data: { turbo_method: :patch, turbo_confirm: 'Are you sure you want to restart the server?' }, class: 'btn btn-primary' %>
+          <%= link_to "Restart", restart_system_path, data: { turbo_method: :patch, turbo_confirm: 'Are you sure you want to restart the server?' }, class: 'nav-link' %>
       <% end %>
       <span class="nav-link">
         v<%= PlexRipper::VERSION %>

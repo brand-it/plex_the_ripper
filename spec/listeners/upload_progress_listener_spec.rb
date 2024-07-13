@@ -5,22 +5,21 @@ require 'rails_helper'
 RSpec.describe UploadProgressListener do
   subject(:listener) { described_class.new(**args) }
 
-  describe '#call' do
-    subject(:call) { listener.call(chunk_size: 10) }
+  describe '#update_progress' do
+    subject(:update_progress) { listener.update_progress(chunk_size: 10) }
 
+    let(:disk_title) { build_stubbed(:disk_title) }
     let(:args) do
       {
-        completed: 0,
-        title: 'title',
-        message: 'message',
+        disk_title:,
         file_size: 12
       }
     end
 
-    it { expect { call }.not_to raise_error }
+    it { expect { update_progress }.not_to raise_error }
 
     it 'changes the completed size based on the chunk size' do
-      call
+      update_progress
 
       expect(listener.completed).to eq 10
     end

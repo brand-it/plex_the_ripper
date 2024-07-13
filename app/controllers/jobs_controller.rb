@@ -2,7 +2,7 @@
 
 class JobsController < ApplicationController
   def index
-    @jobs = Job.sort_by_created_at.limit(100)
+    @jobs = Job.sort_by_created_at.active.or(Job.problem).limit(100)
   end
 
   def show

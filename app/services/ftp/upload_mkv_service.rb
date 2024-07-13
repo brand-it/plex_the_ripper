@@ -3,15 +3,17 @@
 module Ftp
   class UploadMkvService < Base
     extend Dry::Initializer
+    include Wisper::Publisher
 
     option :disk_title, Types.Instance(DiskTitle)
-    option :progress_listener, Types.Interface(:call), optional: true
 
     def call
+      broadcast(:started)
       ftp_destroy_if_file_exists
       ftp_create_directory
       try_to { ftp_upload_file }
       tmp_destroy_folder
+      broadcast(:finished)
     end
 
     private
@@ -36,7 +38,7 @@ module Ftp
 
     def ftp_upload_file
       ftp.putbinaryfile(file, disk_title.plex_path) do |chunk|
-        progress_listener&.call(chunk_size: chunk.size)
+        broadcast(:update_progress, chunk_size: chunk.size)
       end
     end
 

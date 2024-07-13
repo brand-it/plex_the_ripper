@@ -22,8 +22,9 @@ class RipWorker < ApplicationWorker
 
   def create_mkvs
     disk_titles.filter_map do |disk_title|
-      progress_listener = MkvProgressListener.new(job:)
-      result = CreateMkvService.call(disk_title:, progress_listener:)
+      service = CreateMkvService.new(disk_title:)
+      service.subscribe(MkvProgressListener.new(job:, disk_title:))
+      result = service.call
       job.save!
       upload_mkv(disk_title)
       result
@@ -41,11 +42,11 @@ class RipWorker < ApplicationWorker
     cable_ready.broadcast
   end
 
-  def redirect_url # rubocop:disable Metrics/AbcSize
+  def redirect_url
     if disk.video.is_a?(Movie)
-      movie_path(disk.video)
+      movie_url(disk.video)
     elsif disk.video.is_a?(Tv)
-      tv_season_path(disk.episode.season.tv, disk.episode.season)
+      tv_season_url(disk.episode.season.tv, disk.episode.season)
     end
   end
 
