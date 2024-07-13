@@ -82,6 +82,6 @@ on_booted do
 end
 
 on_stopped do
-  Backgrounder.shutdown 
+  Backgrounder.shutdown
 end
 # rubocop:enable Metrics/BlockLength, Rails/Output
