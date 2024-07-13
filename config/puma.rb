@@ -80,4 +80,8 @@ on_booted do
           Welcome to start ripping movies & TV shows visit http://localhost:#{rack_port}
   STR
 end
+
+on_stopped do
+  Backgrounder.shutdown 
+end
 # rubocop:enable Metrics/BlockLength, Rails/Output

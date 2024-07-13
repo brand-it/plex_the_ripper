@@ -28,7 +28,7 @@ require 'rails_helper'
 
 RSpec.describe DiskTitle do
   describe 'associations' do
-    it { is_expected.to belong_to(:disk).optional(false) }
+    it { is_expected.to belong_to(:disk).optional(true) }
     it { is_expected.to belong_to(:episode).optional(true) }
     it { is_expected.to belong_to(:video).optional(true) }
   end

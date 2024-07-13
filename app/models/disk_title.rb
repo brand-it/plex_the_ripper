@@ -29,7 +29,7 @@ class DiskTitle < ApplicationRecord
 
   belongs_to :video, optional: true
   belongs_to :episode, optional: true
-  belongs_to :disk
+  belongs_to :disk, optional: true
 
   scope :not_ripped, -> { where(ripped_at: nil) }
   scope :ripped, -> { where.not(ripped_at: nil) }
