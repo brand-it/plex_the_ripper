@@ -21,7 +21,18 @@ class Backgrounder
     def start
       Rails.logger.info "Starting background #{TOTAL_WORKERS} workers and scheduler"
       fix_broken_jobs
-      (worker_threads + [scheduled_thread]).each(&:run)
+      @threads = (worker_threads + [scheduled_thread])
+      @threads.each(&:run)
+    end
+
+    def shutdown
+      Rails.logger.info "Shutting down background #{TOTAL_WORKERS} workers and scheduler"
+      Timeout.timeout(5) do
+        Array.wrap(@threads).each(&:stop)
+      end
+    rescue StandardError => e
+      Rails.logger.warn "Warning: #{e.message}"
+      Array.wrap(@threads).each(&:kill)
     end
 
     private

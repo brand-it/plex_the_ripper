@@ -16,6 +16,7 @@ class EjectDiskService
     broadcasting("Ejecting Disk #{disk.name}")
     eject!
     disk.update!(ejected: true)
+    Disk.ejected.destroy_all
     broadcasting("Disk Ejected #{disk.name} - Ready for new disk")
   rescue StandardError => e
     broadcasting(e.message)

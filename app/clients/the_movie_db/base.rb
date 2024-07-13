@@ -6,7 +6,7 @@ module TheMovieDb
 
     HOST = 'api.themoviedb.org'
     VERSION = '3'
-    CACHE_TTL = 1.day
+    CACHE_TTL = 7.days
     CACHE_NAMESPACE = 'the_movie_db'
     class << self
       def option_names
