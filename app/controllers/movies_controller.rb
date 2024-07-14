@@ -17,7 +17,8 @@ class MoviesController < ApplicationController
   def rip
     movie = Movie.find(params[:id])
     disk_title = DiskTitle.find(params[:disk_title_id])
-    disk_title.update!(video: movie)
+    video_blob = VideoBlob.find_or_create(video: movie)
+    disk_title.update!(video: movie, video_blob:)
     job = RipWorker.perform_async(disk_id: disk_title.disk.id, disk_title_ids: [disk_title.id])
     redirect_to job_path(job)
   end
