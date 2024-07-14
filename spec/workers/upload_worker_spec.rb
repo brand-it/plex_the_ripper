@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe UploadWorker, type: :worker do
   subject(:worker) { described_class.new(disk_title_id:, job:) }
 
-  let(:disk_title) { create(:disk_title, video: movie) }
+  let(:disk_title) { create(:disk_title, video: movie, video_blob:) }
+  let(:video_blob) { create(:video_blob, video: movie) }
   let(:movie) { create(:movie) }
   let(:disk_title_id) { disk_title.id }
   let(:job) { create(:job) }

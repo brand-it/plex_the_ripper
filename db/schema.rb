@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_11_043012) do
+ActiveRecord::Schema[7.1].define(version: 2024_07_14_235006) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -30,9 +30,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_043012) do
     t.integer "video_id"
     t.integer "episode_id"
     t.datetime "ripped_at"
+    t.integer "video_blob_id"
     t.index ["disk_id"], name: "index_disk_titles_on_disk_id"
     t.index ["episode_id"], name: "index_disk_titles_on_episode_id"
     t.index ["mkv_progress_id"], name: "index_disk_titles_on_mkv_progress_id"
+    t.index ["video_blob_id"], name: "index_disk_titles_on_video_blob_id"
     t.index ["video_id"], name: "index_disk_titles_on_video"
   end
 
@@ -121,7 +123,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_043012) do
     t.string "filename", null: false
     t.string "content_type", null: false
     t.text "metadata"
-    t.string "service_name", null: false
     t.bigint "byte_size", null: false
     t.boolean "optimized", default: false, null: false
     t.text "checksum"
@@ -129,7 +130,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_043012) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "episode_id"
-    t.index ["key", "service_name"], name: "index_video_blobs_on_key_and_service_name", unique: true
+    t.integer "extra_type", default: 0
+    t.integer "extra_type_number", null: false
+    t.index ["extra_type_number", "video_id", "extra_type"], name: "idx_on_extra_type_number_video_id_extra_type_1978193db6", unique: true
+    t.index ["key"], name: "index_video_blobs_on_key", unique: true
+    t.index ["key"], name: "index_video_blobs_on_key_and_service_name", unique: true
     t.index ["video_id"], name: "index_video_blobs_on_video"
   end
 
@@ -146,7 +151,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_11_043012) do
     t.float "popularity"
     t.date "release_date"
     t.date "episode_first_air_date"
-    t.datetime "synced_on"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "rating", default: 0, null: false

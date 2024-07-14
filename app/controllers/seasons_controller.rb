@@ -24,7 +24,8 @@ class SeasonsController < ApplicationController
     episode_params.map do |episode_param|
       episode = season.episodes.find { _1.id == episode_param[:id].to_i }
       disk_title = disk.disk_titles.find { _1.id == episode_param[:disk_title_id].to_i }
-      disk_title.update!(video: tv, episode:)
+      video_blob = VideoBlob.find_or_create(video: tv, episode:)
+      disk_title.update!(video: tv, episode:, video_blob:)
       disk_title
     end
   end

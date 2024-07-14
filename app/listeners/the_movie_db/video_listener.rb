@@ -2,11 +2,11 @@
 
 module TheMovieDb
   class VideoListener
-    def tv_saving(tv)
+    def tv_validating(tv)
       TheMovieDb::TvUpdateService.call(tv)
     end
 
-    def movie_saving(movie)
+    def movie_validating(movie)
       TheMovieDb::MovieUpdateService.call(movie)
     end
   end

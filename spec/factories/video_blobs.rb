@@ -4,31 +4,37 @@
 #
 # Table name: video_blobs
 #
-#  id           :integer          not null, primary key
-#  byte_size    :bigint           not null
-#  checksum     :text
-#  content_type :string           not null
-#  filename     :string           not null
-#  key          :string           not null
-#  metadata     :text
-#  optimized    :boolean          default(FALSE), not null
-#  service_name :string           not null
-#  created_at   :datetime         not null
-#  updated_at   :datetime         not null
-#  episode_id   :bigint
-#  video_id     :integer
+#  id                :integer          not null, primary key
+#  byte_size         :bigint           not null
+#  checksum          :text
+#  content_type      :string           not null
+#  extra_type        :integer          default("feature_films")
+#  extra_type_number :integer          not null
+#  filename          :string           not null
+#  key               :string           not null
+#  metadata          :text
+#  optimized         :boolean          default(FALSE), not null
+#  created_at        :datetime         not null
+#  updated_at        :datetime         not null
+#  episode_id        :bigint
+#  video_id          :integer
 #
 # Indexes
 #
-#  index_video_blobs_on_key_and_service_name  (key,service_name) UNIQUE
-#  index_video_blobs_on_video                 (video_id)
+#  idx_on_extra_type_number_video_id_extra_type_1978193db6  (extra_type_number,video_id,extra_type) UNIQUE
+#  index_video_blobs_on_key                                 (key) UNIQUE
+#  index_video_blobs_on_key_and_service_name                (key) UNIQUE
+#  index_video_blobs_on_video                               (video_id)
 #
 FactoryBot.define do
   factory :video_blob do
     filename { 'Back to the Future Part III.mkv' }
-    key { 'error-incidunt/omnis_eos/perferendis-iure/Back to the Future Part III.mkv' }
-    service_name { :ftp }
+    sequence(:key) { "error-incidunt/#{_1}/perferendis-iure/Back to the Future Part III.mkv" }
     content_type { 'video/x-matroska' }
     byte_size { 123_456_789 }
+
+    after(:stub) do |blob, _context|
+      blob.send(:set_extra_type_number)
+    end
   end
 end

@@ -15,7 +15,6 @@
 #  poster_path                  :string
 #  rating                       :integer          default("N/A"), not null
 #  release_date                 :date
-#  synced_on                    :datetime
 #  title                        :string
 #  type                         :string
 #  created_at                   :datetime         not null
@@ -28,11 +27,10 @@
 #
 class Video < ApplicationRecord
   include Wisper::Publisher
-
   enum rating: { 'N/A': 0, NR: 1, 'NC-17': 2, R: 3, 'PG-13': 4, PG: 5, G: 6 }
 
   has_many :disk_titles, dependent: :nullify
-  has_many :video_blobs, dependent: :destroy
+  has_many :video_blobs, dependent: :nullify
   has_many :optimized_video_blobs, lambda {
                                      VideoBlob.optimized
                                    }, class_name: 'VideoBlob', inverse_of: :video, dependent: :destroy
@@ -40,6 +38,16 @@ class Video < ApplicationRecord
   scope :with_video_blobs, -> { includes(:video_blobs).where.not(video_blobs: { id: nil }) }
   scope :optimized, -> { includes(:optimized_video_blobs).where.not(video_blobs: { id: nil }) }
   scope :optimized_with_checksum, -> { optimized.merge(VideoBlob.checksum) }
+
+  validates :title, presence: true
+
+  def movie?
+    is_a?(::Movie)
+  end
+
+  def tv?
+    is_a?(::Tv)
+  end
 
   def credits
     @credits ||= "TheMovieDb::#{type}::Credits".constantize.new(the_movie_db_id).results
@@ -60,6 +68,14 @@ class Video < ApplicationRecord
   end
 
   def release_or_air_date
-    release_date || episode_first_air_date
+    if is_a?(Movie)
+      release_date
+    elsif is_a?(Tv)
+      episode_first_air_date
+    end
+  end
+
+  def plex_name
+    release_or_air_date ? "#{title} (#{release_or_air_date.year})" : title
   end
 end

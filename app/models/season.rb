@@ -33,4 +33,12 @@ class Season < ApplicationRecord
 
   before_save { broadcast(:season_saving, self) }
   after_commit { broadcast(:season_saved, id, async: true) }
+
+  def season_name
+    "Season #{format_season_number}"
+  end
+
+  def format_season_number
+    format('%02d', season_number)
+  end
 end

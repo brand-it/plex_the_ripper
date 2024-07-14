@@ -15,7 +15,6 @@
 #  poster_path                  :string
 #  rating                       :integer          default("N/A"), not null
 #  release_date                 :date
-#  synced_on                    :datetime
 #  title                        :string
 #  type                         :string
 #  created_at                   :datetime         not null
@@ -27,6 +26,7 @@
 #  index_videos_on_type_and_the_movie_db_id  (type,the_movie_db_id) UNIQUE
 #
 class Movie < Video
+  before_validation { broadcast(:movie_validating, self) }
   before_save { broadcast(:movie_saving, self) }
   after_commit { broadcast(:movie_saved, self) }
 
@@ -39,33 +39,5 @@ class Movie < Video
 
   def runtime_range
     (movie_runtime - MOVIE_RUNNTIME_MARGIN)..(movie_runtime + MOVIE_RUNNTIME_MARGIN)
-  end
-
-  def plex_path
-    raise 'plex config is missing and is required' unless Config::Plex.any?
-
-    @plex_path ||= Pathname.new("#{Config::Plex.newest.settings_movie_path}/#{plex_name}/#{plex_name}.mkv")
-  end
-
-  def tmp_plex_dir
-    @tmp_plex_dir ||= Rails.root.join("tmp/movies/#{plex_name}")
-  end
-
-  def tmp_plex_path
-    @tmp_plex_path ||= tmp_plex_dir.join("#{plex_name}.mkv")
-  end
-
-  def plex_name
-    @plex_name ||= (release_date ? "#{title} (#{release_date.year})" : title)
-  end
-
-  def update_maxlength(max)
-    return config.maxlength = (max + MOVIE_DURATION_MARGIN) if max.to_i > (config.minlength / 60)
-
-    config.maxlength = nil
-  end
-
-  def tmp_plex_path_exists?
-    File.exist?(tmp_plex_path)
   end
 end

@@ -14,15 +14,21 @@ class Config
       @config_make_mkv = Config::MakeMkv.new(make_mkv_params)
 
       if @config_make_mkv.save
-        redirect_to root_path, notice: 'Make MKV Config was successfully created.'
+        redirect_to root_path, success: 'Make MKV Config was successfully created.'
       else
+        flash.now[:error] = 'Could not create MKV Config'
         render :new
       end
     end
 
     def update
-      flash[:success] = 'Updated Make MKV' if @config_make_mkv.update(make_mkv_params)
-      redirect_to root_path
+      if @config_make_mkv.update(make_mkv_params)
+        flash[:success] = 'Updated Make MKV'
+        redirect_to root_path
+      else
+        flash.now[:error] = 'Could not update MKV Config'
+        render :edit
+      end
     end
 
     def install
@@ -42,7 +48,7 @@ class Config
     end
 
     def make_mkv_params
-      params.require(:config_slack).permit(:settings_makemkvcon_path, :settings_registration_key)
+      params.require(:config_make_mkv).permit(:settings_makemkvcon_path, :settings_registration_key)
     end
   end
 end

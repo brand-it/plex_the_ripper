@@ -30,7 +30,6 @@ module TheMovieDb
     def movie_params
       the_movie_db_details.slice(*PERMITTED_PARAMS).tap do |params|
         params[:movie_runtime] = convert_min_to_seconds(the_movie_db_details['runtime'])
-        params[:synced_on] = Time.current
       end
     end
 
