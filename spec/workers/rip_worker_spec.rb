@@ -15,6 +15,14 @@ RSpec.describe RipWorker, type: :worker do
   describe '#perform' do
     subject(:perform) { worker.perform }
 
+    let(:stub) { instance_double(CreateMkvService, :call) }
+
+    before do
+      allow(CreateMkvService).to receive(:new).and_return(stub)
+      allow(stub).to receive(:subscribe)
+      allow(stub).to receive(:call)
+    end
+
     it { expect { perform }.not_to raise_error }
   end
 end

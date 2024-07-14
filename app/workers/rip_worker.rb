@@ -4,7 +4,7 @@ class RipWorker < ApplicationWorker
   include ActionView::Helpers::UrlHelper
   include ActionView::Helpers::DateHelper
 
-  delegate :movie_path, :tv_season_path, to: 'Rails.application.routes.url_helpers'
+  delegate :movie_url, :tv_season_url, to: 'Rails.application.routes.url_helpers'
 
   option :disk_id, Types::Integer
   option :disk_title_ids, Types::Array.of(Types::Integer)
@@ -16,6 +16,9 @@ class RipWorker < ApplicationWorker
     else
       reload_page!
     end
+  rescue StandardError => e
+    reload_page!
+    raise e
   end
 
   private
