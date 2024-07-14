@@ -39,7 +39,7 @@ class Episode < ApplicationRecord
   def runtime_range
     return if runtime.nil?
 
-    @runtime_range ||= (runtime - 1.minute)...(runtime + 1.minute)
+    @runtime_range ||= (runtime - 3.minutes)...(runtime + 3.minutes)
   end
 
   def plex_path
