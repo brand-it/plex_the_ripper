@@ -31,7 +31,7 @@
     <tbody>
       <% selected_disk_titles = @season.ripped_disk_titles.map(&:id) %>
       <% @season.episodes.each do |episode| %>
-        <% text_class = 'text-primary-emphasis' if episode.ripped_disk_titles.ripped.any? %>
+        <% text_class = 'text-primary-emphasis' if episode.ripped_disk_titles.any? %>
         <%= hidden_field_tag('episodes[][id]', episode.id) %>
         <tr>
           <td class="<%= text_class %>">
@@ -39,7 +39,7 @@
           </td>
           <td class="text-center">
             <h1>
-              <% if episode.ripped_disk_titles.ripped.any? %>
+              <% if episode.ripped_disk_titles.any? %>
                 <%= icon('square-check') %>
               <% else %>
                 <%= icon('square') %>

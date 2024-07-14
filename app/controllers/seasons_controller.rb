@@ -3,7 +3,7 @@
 class SeasonsController < ApplicationController
   def show
     @tv = Tv.find(params[:tv_id])
-    @season = @tv.seasons.includes(:episodes).find(params[:id])
+    @season = @tv.seasons.includes(episodes: [:ripped_disk_titles]).find(params[:id])
     @season.subscribe(TheMovieDb::EpisodesListener.new)
     @season.save!
     @disks = Disk.not_ejected
