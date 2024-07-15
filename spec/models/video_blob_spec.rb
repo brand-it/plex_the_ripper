@@ -14,6 +14,7 @@
 #  key               :string           not null
 #  metadata          :text
 #  optimized         :boolean          default(FALSE), not null
+#  uploaded_on       :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  episode_id        :bigint

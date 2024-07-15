@@ -6,6 +6,7 @@ class ScanPlexWorker < ApplicationWorker
     plex_videos.map do |blob|
       blob.video = find_or_create_video(blob)
       blob.episode = search_for_episode(blob, blob.video)
+      blob.uploaded_on ||= Time.current
       blob.save!
       self.completed += 1
       percent_completed = (completed / plex_videos.size.to_f * 100)

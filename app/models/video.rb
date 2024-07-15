@@ -30,6 +30,7 @@ class Video < ApplicationRecord
   enum rating: { 'N/A': 0, NR: 1, 'NC-17': 2, R: 3, 'PG-13': 4, PG: 5, G: 6 }
 
   has_many :disk_titles, dependent: :nullify
+  has_many :ripped_disk_titles, -> { ripped }, class_name: 'DiskTitle', dependent: false, inverse_of: :video
   has_many :video_blobs, dependent: :nullify
   has_many :optimized_video_blobs, lambda {
                                      VideoBlob.optimized

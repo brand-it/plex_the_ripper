@@ -17,7 +17,11 @@ class CreateDisksService
           .tap do |disk|
         disk.update!(loading: true)
         broadcast_loading!(disk.name)
-        disk.disk_info.each { update_disk_title(disk, _1) }
+        disk.disk_titles.each(&:mark_for_distruction)
+        disk.disk_info.each do |info|
+          disk_title = find_or_build_disk_title(disk, info)
+          disk_title.unmark_for_destruction
+        end
         disk.update!(loading: false)
       end
     end
@@ -34,16 +38,18 @@ class CreateDisksService
     cable_ready.broadcast
   end
 
-  def update_disk_title(disk, title)
-    disk_title = find_or_build_disk_title(disk, title)
-    disk_title.assign_attributes name: title.filename,
-                                 size: title.size_in_bytes,
-                                 duration: title.duration_seconds
-  end
-
   def find_or_build_disk_title(disk, title)
-    disk.not_ripped_disk_titles.find { |t| t.title_id == title.id } ||
-      disk.not_ripped_disk_titles.build(title_id: title.id)
+    disk.disk_titles.find do |disk_title|
+      disk_title.title_id == title.id.to_i &&
+        title.filename == disk_title.name &&
+        title.size_in_bytes.to_i == disk_title.size &&
+        title.duration_seconds.to_i == disk_title.duration
+    end || disk.disk_titles.build(
+      title_id: title.id,
+      name: title.filename,
+      size: title.size_in_bytes,
+      duration: title.duration_seconds
+    )
   end
 
   def drives

@@ -38,13 +38,21 @@ class DiskTitle < ApplicationRecord
   scope :not_ripped, -> { where(ripped_at: nil) }
   scope :ripped, -> { where.not(ripped_at: nil) }
 
-  delegate :tmp_plex_path, :plex_path, :tmp_plex_path_exists?, :tmp_plex_dir, to: :video_blob
-
   def duration
     super&.seconds
   end
 
   def to_label
     "##{title_id} #{name} #{distance_of_time_in_words(duration)}"
+  end
+end
+
+class YourClass
+  def safe_remove_instance_variable(var_name)
+    if instance_variable_defined?(var_name)
+      remove_instance_variable(var_name)
+    else
+      puts "Instance variable #{var_name} is not defined."
+    end
   end
 end

@@ -2,6 +2,7 @@
 
 class MovieTitleTableComponent < ViewComponent::Base
   extend Dry::Initializer
+  include IconHelper
 
   option :disks, Types::Coercible::Array.of(Types.Instance(Disk))
   option :movie, Types.Instance(Movie)

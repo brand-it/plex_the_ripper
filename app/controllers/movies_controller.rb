@@ -16,10 +16,23 @@ class MoviesController < ApplicationController
   # rip_movie POST   /movies/:id/rip(.:format)
   def rip
     movie = Movie.find(params[:id])
-    disk_title = DiskTitle.find(params[:disk_title_id])
-    video_blob = VideoBlob.find_or_create(video: movie)
-    disk_title.update!(video: movie, video_blob:)
-    job = RipWorker.perform_async(disk_id: disk_title.disk.id, disk_title_ids: [disk_title.id])
+    disk = Disk.find(params[:disk_id])
+    disk_titles = movies_params.filter_map do |movie_params|
+      next if movie_params[:extra_type].blank?
+
+      disk_title = disk.disk_titles.find(movie_params[:disk_title_id])
+      disk_title.update!(video: movie)
+      disk_title
+    end
+    job = RipWorker.perform_async(
+      disk_id: disk.id,
+      disk_title_ids: disk_titles.map(&:id),
+      extra_types: movies_params.pluck(:extra_type).compact_blank
+    )
     redirect_to job_path(job)
+  end
+
+  def movies_params
+    params.required(:movies)
   end
 end

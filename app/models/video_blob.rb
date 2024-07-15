@@ -14,6 +14,7 @@
 #  key               :string           not null
 #  metadata          :text
 #  optimized         :boolean          default(FALSE), not null
+#  uploaded_on       :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  episode_id        :bigint
@@ -76,8 +77,28 @@ class VideoBlob < ApplicationRecord
 
   validates :key, presence: true, uniqueness: true
 
-  before_validation :set_extra_type_number
-  before_create :set_defaults
+  after_initialize :set_extra_type_number
+
+  def self.build_from_disk_title(disk_title, extra_type)
+    extra_type = extra_type.presence || EXTRA_TYPES.first
+    blob = VideoBlob.new(
+      video: disk_title.video,
+      episode: disk_title.episode,
+      extra_type:
+    )
+    VideoBlob.find_or_initialize_by(
+      video: disk_title.video,
+      episode: disk_title.episode,
+      filename: blob.plex_name.to_s,
+      key: blob.plex_path.to_s,
+      content_type: 'video/x-matroska',
+      extra_type:
+    )
+  end
+
+  def uploaded?
+    uploaded_on.present?
+  end
 
   def tv_show?
     video&.tv? || key_tv_show?
@@ -115,8 +136,6 @@ class VideoBlob < ApplicationRecord
     File.exist?(tmp_plex_path)
   end
 
-  private
-
   def plex_name
     if video&.movie?
       video_plex_name
@@ -124,6 +143,8 @@ class VideoBlob < ApplicationRecord
       episode_plex_name
     end
   end
+
+  private
 
   def plex_dir_name
     if feature_films?
@@ -222,14 +243,9 @@ class VideoBlob < ApplicationRecord
     "#{plex_root_path}/#{directory_name}"
   end
 
-  def set_defaults
-    self.key ||= plex_path
-    self.filename ||= "#{plex_name}.mkv"
-  end
-
   def set_extra_type_number
     return if extra_type_number
 
-    self.extra_type_number ||= VideoBlob.where(video:, extra_type:).pluck(:extra_type_number).max.to_i + 1
+    self.extra_type_number = VideoBlob.where(video:, extra_type:).pluck(:extra_type_number).max.to_i + 1
   end
 end

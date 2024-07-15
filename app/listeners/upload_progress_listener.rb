@@ -7,7 +7,7 @@ class UploadProgressListener
 
   delegate :render, to: :ApplicationController
 
-  option :disk_title, Types.Instance(::DiskTitle)
+  option :video_blob, Types.Instance(::VideoBlob)
   option :file_size, Types::Integer
   attr_reader :completed
 
@@ -63,13 +63,13 @@ class UploadProgressListener
   end
 
   def title
-    if disk_title.video.is_a?(Tv)
-      episode = disk_title.episode
+    if video_blob.video.is_a?(Tv)
+      episode = video_blob.episode
       season = episode.season
-      "#{disk_title.video.title} - S#{season.season_number}E#{episode.episode_number} " \
+      "#{video_blob.video.title} - S#{season.season_number}E#{episode.episode_number} " \
         "#{episode.name}"
     else
-      disk_title.video.title
+      video_blob.video.title
     end
   end
 end
