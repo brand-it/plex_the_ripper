@@ -5,7 +5,7 @@ module Ftp
     extend Dry::Initializer
     include Wisper::Publisher
 
-    option :disk_title, Types.Instance(DiskTitle)
+    option :video_blob, Types.Instance(::VideoBlob)
 
     def call
       broadcast(:started)
@@ -19,14 +19,14 @@ module Ftp
     private
 
     def ftp_destroy_if_file_exists
-      ftp.delete(disk_title.plex_path)
+      ftp.delete(video_blob.plex_path)
     rescue Net::FTPPermError => e
       Rails.logger.debug { "Net::FTPPermError #{__method__} #{e.message}" }
     end
 
     def ftp_create_directory
       current_dir = ''
-      disk_title.plex_path.dirname.to_s.split('/').each do |directory|
+      video_blob.plex_path.dirname.to_s.split('/').each do |directory|
         next current_dir += '' if directory.blank?
 
         current_dir += "/#{directory}"
@@ -37,17 +37,21 @@ module Ftp
     end
 
     def ftp_upload_file
-      ftp.putbinaryfile(file, disk_title.plex_path) do |chunk|
+      ftp.putbinaryfile(file, video_blob.plex_path) do |chunk|
         broadcast(:update_progress, chunk_size: chunk.size)
       end
     end
 
+    def mark_as_uploaded!
+      video_blob.update!(uploaded_on: Time.current)
+    end
+
     def tmp_destroy_folder
-      FileUtils.rm_rf(disk_title.tmp_plex_path)
+      FileUtils.rm_rf(video_blob.tmp_plex_path)
     end
 
     def file
-      @file ||= File.new(disk_title.tmp_plex_path)
+      @file ||= File.new(video_blob.tmp_plex_path)
     end
   end
 end

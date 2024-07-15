@@ -15,7 +15,6 @@
 #  poster_path                  :string
 #  rating                       :integer          default("N/A"), not null
 #  release_date                 :date
-#  synced_on                    :datetime
 #  title                        :string
 #  type                         :string
 #  created_at                   :datetime         not null
@@ -29,9 +28,6 @@
 require 'rails_helper'
 
 RSpec.describe Movie do
-  include_examples 'IsVideo'
-
-  # V
   describe 'validations' do
     it { is_expected.to validate_presence_of(:title) }
     it { is_expected.to validate_presence_of(:original_title) }

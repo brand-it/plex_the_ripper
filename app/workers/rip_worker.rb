@@ -8,6 +8,7 @@ class RipWorker < ApplicationWorker
 
   option :disk_id, Types::Integer
   option :disk_title_ids, Types::Array.of(Types::Integer)
+  option :extra_types, Types::Array.of(Types::String), optional: true, default: -> { [] }
 
   def perform
     if create_mkvs.all?(&:success?)
@@ -24,8 +25,9 @@ class RipWorker < ApplicationWorker
   private
 
   def create_mkvs
-    disk_titles.filter_map do |disk_title|
-      service = CreateMkvService.new(disk_title:)
+    disk_title_ids.zip(extra_types).filter_map do |disk_title_id, extra_type|
+      disk_title = DiskTitle.find(disk_title_id)
+      service = CreateMkvService.new(disk_title:, extra_type:)
       service.subscribe(MkvProgressListener.new(job:, disk_title:))
       result = service.call
       job.save!
@@ -54,7 +56,7 @@ class RipWorker < ApplicationWorker
   end
 
   def upload_mkv(disk_title)
-    UploadWorker.perform_async(disk_title_id: disk_title.id)
+    UploadWorker.perform_async(video_blob_id: disk_title.video_blob_id)
   end
 
   def disk

@@ -36,7 +36,6 @@ module TheMovieDb
       the_movie_db_details.slice(*PERMITTED_PARAMS).tap do |params|
         params[:episode_distribution_runtime] = Array.wrap(the_movie_db_details['episode_run_time']).sort
         params[:episode_first_air_date] = the_movie_db_details['first_air_date']
-        params[:synced_on] = Time.current
       end
     end
 

@@ -15,7 +15,6 @@
 #  poster_path                  :string
 #  rating                       :integer          default("N/A"), not null
 #  release_date                 :date
-#  synced_on                    :datetime
 #  title                        :string
 #  type                         :string
 #  created_at                   :datetime         not null

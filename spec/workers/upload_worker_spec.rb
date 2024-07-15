@@ -3,11 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe UploadWorker, type: :worker do
-  subject(:worker) { described_class.new(disk_title_id:, job:) }
+  subject(:worker) { described_class.new(video_blob_id:, job:) }
 
-  let(:disk_title) { create(:disk_title, video: movie) }
+  let(:disk_title) { create(:disk_title, video: movie, video_blob:) }
+  let(:video_blob) { create(:video_blob, video: movie) }
   let(:movie) { create(:movie) }
-  let(:disk_title_id) { disk_title.id }
+  let(:video_blob_id) { video_blob.id }
   let(:job) { create(:job) }
   let(:stub_ftp) { instance_double(Net::FTP) }
 
@@ -18,7 +19,7 @@ RSpec.describe UploadWorker, type: :worker do
     allow(stub_ftp).to receive(:mkdir)
     allow(stub_ftp).to receive(:putbinaryfile)
 
-    FileUtils.mkdir_p(disk_title.tmp_plex_path)
+    FileUtils.mkdir_p(video_blob.tmp_plex_path)
   end
 
   describe '#perform' do

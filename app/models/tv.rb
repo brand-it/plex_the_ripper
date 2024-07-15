@@ -15,7 +15,6 @@
 #  poster_path                  :string
 #  rating                       :integer          default("N/A"), not null
 #  release_date                 :date
-#  synced_on                    :datetime
 #  title                        :string
 #  type                         :string
 #  created_at                   :datetime         not null
@@ -39,6 +38,7 @@ class Tv < Video
 
   has_many :seasons, -> { order_by_season_number }, dependent: :destroy, inverse_of: :tv
 
+  before_validation { broadcast(:tv_validating, self) }
   before_save { broadcast(:tv_saving, self) }
   after_commit { broadcast(:tv_saved, self) }
 

@@ -10,6 +10,7 @@ class CreateMkvService
   TMP_DIR = Rails.root.join('tmp/videos')
 
   option :disk_title, Types.Instance(DiskTitle)
+  option :extra_type, Types::Coercible::String, default: -> { VideoBlob::EXTRA_TYPES.first }
 
   def self.call(...)
     new(...).call
@@ -17,10 +18,11 @@ class CreateMkvService
 
   def call
     broadcast(:start)
-    Result.new(tmp_path, create_mkv.success?).tap do |result|
+    Result.new(video_blob.tmp_plex_path, create_mkv.success?).tap do |result|
       if result.success?
+        video_blob.update!(byte_size:)
         rename_file
-        disk_title.update!(ripped_at: Time.current)
+        disk_title.update!(ripped_at: Time.current, video_blob:)
         broadcast(:success)
       else
         broadcast(:failure)
@@ -30,7 +32,7 @@ class CreateMkvService
 
   private
 
-  def create_mkv # rubocop:disable Metrics/MethodLength
+  def create_mkv
     @create_mkv ||= Open3.popen2e(cmd) do |stdin, std_out_err, wait_thr|
       stdin.close
       while raw_line = std_out_err.gets # rubocop:disable Lint/AssignmentInCondition
@@ -46,7 +48,11 @@ class CreateMkvService
   end
 
   def rename_file
-    File.rename(tmp_dir.join(disk_title.name), tmp_path)
+    File.rename(tmp_dir.join(disk_title.name), video_blob.tmp_plex_path)
+  end
+
+  def byte_size
+    File.size(tmp_dir.join(disk_title.name))
   end
 
   def cmd
@@ -63,11 +69,11 @@ class CreateMkvService
   end
 
   def tmp_dir
-    @tmp_dir ||= tmp_path.dirname.tap(&method(:recreate_dir))
+    @tmp_dir ||= video_blob.tmp_plex_dir.tap(&method(:recreate_dir))
   end
 
-  def tmp_path
-    @tmp_path ||= disk_title.tmp_plex_path
+  def video_blob
+    @video_blob ||= VideoBlob.build_from_disk_title(disk_title, extra_type)
   end
 
   def recreate_dir(dir)

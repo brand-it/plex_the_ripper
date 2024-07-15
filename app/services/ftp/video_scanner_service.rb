@@ -34,15 +34,13 @@ module Ftp
     end
 
     def find_or_initialize_by(key)
-      service_name = safe_encode(plex_config.settings_ftp_host)
-      preloaded_video_blobs.dig(safe_encode(key), service_name) || VideoBlob.new(key: safe_encode(key), service_name:)
+      preloaded_video_blobs[safe_encode(key)] || VideoBlob.new(key: safe_encode(key))
     end
 
     def preloaded_video_blobs
       @preloaded_video_blobs ||= {}.tap do |hash|
-        VideoBlob.find_each do |video_blob|
-          hash[video_blob.key] ||= {}
-          hash[video_blob.key][video_blob.service_name] = video_blob
+        VideoBlob.includes(:video).find_each do |video_blob|
+          hash[video_blob.key] ||= video_blob
         end
       end
     end

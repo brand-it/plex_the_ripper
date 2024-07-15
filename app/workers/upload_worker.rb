@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 class UploadWorker < ApplicationWorker
-  option :disk_title_id, Types::Integer
+  option :video_blob_id, Types::Integer
 
   def perform
-    disk_title = DiskTitle.find(disk_title_id)
-    service = Ftp::UploadMkvService.new(disk_title:)
-    service.subscribe(UploadProgressListener.new(disk_title:, file_size: disk_title.size))
+    video_blob = VideoBlob.find(video_blob_id)
+    service = Ftp::UploadMkvService.new(video_blob:)
+    service.subscribe(UploadProgressListener.new(video_blob:, file_size: video_blob.byte_size))
     service.call
   end
 end

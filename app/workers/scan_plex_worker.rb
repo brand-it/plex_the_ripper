@@ -6,14 +6,16 @@ class ScanPlexWorker < ApplicationWorker
     plex_videos.map do |blob|
       blob.video = find_or_create_video(blob)
       blob.episode = search_for_episode(blob, blob.video)
+      blob.uploaded_on ||= Time.current
       blob.save!
       self.completed += 1
       percent_completed = (completed / plex_videos.size.to_f * 100)
+      next if next_update.future?
+
       broadcast_progress(
         in_progress_component('Updating Database...', percent_completed)
       )
     end
-    @next_update = Time.current
     broadcast_progress(completed_component)
   end
 
@@ -24,8 +26,6 @@ class ScanPlexWorker < ApplicationWorker
   private
 
   def broadcast_progress(component)
-    return if next_update.future?
-
     cable_ready[BroadcastChannel.channel_name].morph \
       selector: "##{component.dom_id}",
       html: render(component, layout: false)
@@ -63,14 +63,14 @@ class ScanPlexWorker < ApplicationWorker
   end
 
   def search_for_movie(blob)
-    options = { query: blob.title, year: blob.year }.compact
+    options = { query: blob.parsed_title, year: blob.parsed_year }.compact
     search = TheMovieDb::Search::Movie.new(**options) if options[:query].present?
 
     search&.results&.dig('results', 0, 'id')
   end
 
   def search_for_tv_show(blob)
-    options = { query: blob.title, year: blob.year }.compact
+    options = { query: blob.parsed_title, year: blob.parsed_year }.compact
     search = TheMovieDb::Search::Tv.new(**options) if options[:query].present?
 
     search&.results&.dig('results', 0, 'id')
@@ -79,12 +79,12 @@ class ScanPlexWorker < ApplicationWorker
   def search_for_episode(blob, video)
     return unless video.is_a?(::Tv)
 
-    season = video.seasons.find { _1.season_number == blob.season }
+    season = video.seasons.find { _1.season_number == blob.parsed_season }
     return if season.nil?
 
     season.subscribe(TheMovieDb::EpisodesListener.new)
     season.save!
-    season.episodes.find { _1.episode_number == blob.episode }
+    season.episodes.find { _1.episode_number == blob.parsed_episode }
   end
 
   def find_or_create_video(blob)
@@ -95,17 +95,24 @@ class ScanPlexWorker < ApplicationWorker
                       end
     return if the_movie_db_id.nil?
 
+    find_or_initialize_video(blob, the_movie_db_id).tap do |m|
+      m.subscribe(TheMovieDb::VideoListener.new)
+      m.save!
+    end
+  end
+
+  def find_or_initialize_video(blob, the_movie_db_id)
     model = if blob.tv_show?
               Tv
             elsif blob.movie?
               Movie
-            else
-              return
             end
-    model.find_or_initialize_by(the_movie_db_id:).tap do |m|
-      m.subscribe(TheMovieDb::VideoListener.new)
-      m.save!
-    end
+    videos.find { _1.the_movie_db_id == the_movie_db_id } ||
+      model&.new(the_movie_db_id:)&.tap { videos.push(_1) }
+  end
+
+  def videos
+    @videos ||= Video.all.to_a
   end
 
   def plex_videos

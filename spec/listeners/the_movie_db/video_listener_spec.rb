@@ -8,7 +8,7 @@ RSpec.describe TheMovieDb::VideoListener do
   before { create(:config_the_movie_db) }
 
   describe '#tv_saving', :vcr, freeze: Time.zone.local(1990) do
-    subject(:tv_saving) { described_class.new.tv_saving(tv) }
+    subject(:tv_saving) { described_class.new.tv_validating(tv) }
 
     let(:expected_attributes) do
       {
@@ -31,7 +31,6 @@ RSpec.describe TheMovieDb::VideoListener do
                       'from Earth who explore the galaxy and defend against alien threats such ' \
                       "as the Goa'uld, Replicators, and the Ori.",
         'type' => 'Tv',
-        'synced_on' => Time.zone.local(1990),
         'updated_at' => nil,
         'created_at' => nil,
         'release_date' => nil
