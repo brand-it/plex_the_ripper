@@ -77,7 +77,7 @@ class VideoBlob < ApplicationRecord
 
   validates :key, presence: true, uniqueness: true
 
-  after_initialize :set_extra_type_number
+  before_validation :set_extra_type_number
 
   def self.build_from_disk_title(disk_title, extra_type)
     extra_type = extra_type.presence || EXTRA_TYPES.first
@@ -142,6 +142,10 @@ class VideoBlob < ApplicationRecord
     elsif video&.tv?
       episode_plex_name
     end
+  end
+
+  def extra_type_number
+    super || (VideoBlob.where(video:, extra_type:).pluck(:extra_type_number).max.to_i + 1)
   end
 
   private
@@ -244,7 +248,7 @@ class VideoBlob < ApplicationRecord
   end
 
   def set_extra_type_number
-    return if extra_type_number
+    return if attributes[:extra_type_number]
 
     self.extra_type_number = VideoBlob.where(video:, extra_type:).pluck(:extra_type_number).max.to_i + 1
   end

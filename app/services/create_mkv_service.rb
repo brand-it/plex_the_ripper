@@ -32,7 +32,7 @@ class CreateMkvService
 
   private
 
-  def create_mkv # rubocop:disable Metrics/MethodLength
+  def create_mkv
     @create_mkv ||= Open3.popen2e(cmd) do |stdin, std_out_err, wait_thr|
       stdin.close
       while raw_line = std_out_err.gets # rubocop:disable Lint/AssignmentInCondition

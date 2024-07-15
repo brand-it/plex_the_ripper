@@ -8,10 +8,10 @@ RSpec.describe UploadProgressListener do
   describe '#update_progress' do
     subject(:update_progress) { listener.update_progress(chunk_size: 10) }
 
-    let(:disk_title) { build_stubbed(:disk_title) }
+    let(:video_blob) { build_stubbed(:video_blob) }
     let(:args) do
       {
-        disk_title:,
+        video_blob:,
         file_size: 12
       }
     end

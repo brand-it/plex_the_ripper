@@ -18,7 +18,7 @@ RSpec.describe CreateMkvService do
       before { allow(service).to receive(:cmd).and_return('ls /not-a-real-folder') }
 
       it 'responds with a result object' do
-        expect(call).to eq(described_class::Result.new(disk_title.tmp_plex_path, false))
+        expect(call).to eq(described_class::Result.new(video_blob.tmp_plex_path, false))
       end
     end
   end

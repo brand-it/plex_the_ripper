@@ -13,9 +13,11 @@ RSpec.describe '/movies' do
   describe '/:id/rip' do
     let!(:movie) { create(:movie) }
     let!(:disk_title) { create(:disk_title) }
+    let(:disk_id) { disk_title.disk.id }
 
     it 'renders a successful response' do
-      post rip_movie_url(movie, disk_title_id: disk_title.id)
+      post rip_movie_url(movie),
+           params: { disk_id:, movies: [{ extra_type: 'feature_film', disk_title_id: disk_title.id }] }
       expect(Job.count).to eq 1
 
       expect(response).to have_http_status :found
