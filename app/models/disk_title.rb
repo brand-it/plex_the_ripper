@@ -46,13 +46,3 @@ class DiskTitle < ApplicationRecord
     "##{title_id} #{name} #{distance_of_time_in_words(duration)}"
   end
 end
-
-class YourClass
-  def safe_remove_instance_variable(var_name)
-    if instance_variable_defined?(var_name)
-      remove_instance_variable(var_name)
-    else
-      puts "Instance variable #{var_name} is not defined."
-    end
-  end
-end
