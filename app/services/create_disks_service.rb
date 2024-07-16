@@ -17,7 +17,7 @@ class CreateDisksService
           .tap do |disk|
         disk.update!(loading: true)
         broadcast_loading!(disk.name)
-        disk.disk_titles.each(&:mark_for_distruction)
+        disk.disk_titles.each(&:mark_for_destruction)
         disk.disk_info.each do |info|
           disk_title = find_or_build_disk_title(disk, info)
           disk_title.unmark_for_destruction

@@ -14,6 +14,7 @@
 #  key               :string           not null
 #  metadata          :text
 #  optimized         :boolean          default(FALSE), not null
+#  uploadable        :boolean          default(FALSE), not null
 #  uploaded_on       :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -63,7 +64,7 @@ class VideoBlob < ApplicationRecord
 
   enum :extra_type, EXTRA_TYPES
 
-  belongs_to :video, optional: true
+  belongs_to :video
   belongs_to :episode, optional: true
   has_many :disk_titles, dependent: :nullify
 
@@ -75,25 +76,19 @@ class VideoBlob < ApplicationRecord
   delegate :plex_name, to: :video, prefix: true, allow_nil: true
   delegate :plex_name, to: :episode, prefix: true, allow_nil: true
 
-  validates :key, presence: true, uniqueness: true
+  before_validation :set_defaults
 
-  before_validation :set_extra_type_number
+  validates :key, presence: true, uniqueness: { message: ->(blob, _) { "#{blob.key} has already been taken" } }
 
-  def self.build_from_disk_title(disk_title, extra_type)
-    extra_type = extra_type.presence || EXTRA_TYPES.first
-    blob = VideoBlob.new(
-      video: disk_title.video,
-      episode: disk_title.episode,
-      extra_type:
-    )
-    VideoBlob.find_or_initialize_by(
-      video: disk_title.video,
-      episode: disk_title.episode,
-      filename: blob.plex_name.to_s,
-      key: blob.plex_path.to_s,
-      content_type: 'video/x-matroska',
-      extra_type:
-    )
+  def title
+    if video.tv?
+      season = episode.season
+      "#{video.title} - S#{season.season_number}E#{episode.episode_number} #{episode.name}"
+    elsif feature_films?
+      video.title
+    else
+      "#{extra_type.humanize} ##{extra_type_number} #{video.title}"
+    end
   end
 
   def uploaded?
@@ -142,10 +137,6 @@ class VideoBlob < ApplicationRecord
     elsif video&.tv?
       episode_plex_name
     end
-  end
-
-  def extra_type_number
-    super || (VideoBlob.where(video:, extra_type:).pluck(:extra_type_number).max.to_i + 1)
   end
 
   private
@@ -206,8 +197,8 @@ class VideoBlob < ApplicationRecord
                 )&.named_captures || {}
 
     @parsed_tv_show = TvShow.new(
-      match['title'] || dir_match['title'],
-      (match['year'] || dir_match['year'])&.to_i,
+      dir_match['title'] || match['title'],
+      (dir_match['year'] || match['year'])&.to_i,
       match['season']&.to_i,
       match['episode']&.to_i
     )
@@ -216,10 +207,12 @@ class VideoBlob < ApplicationRecord
   def parsed_movie
     return @parsed_movie if @parsed_movie
 
-    match = (filename.match(MATCHER_WITH_YEAR) ||
-            filename.match(TITLE_MATCHER) ||
-            directory_name.match(MATCHER_WITH_YEAR) ||
-            directory_name.match(TITLE_MATCHER))&.named_captures || {}
+    match = (
+      directory_name.match(MATCHER_WITH_YEAR) ||
+             directory_name.match(TITLE_MATCHER) ||
+             filename.match(MATCHER_WITH_YEAR) ||
+             filename.match(TITLE_MATCHER)
+    )&.named_captures || {}
     return @parsed_movie = Movie.new(nil, nil) if match.nil?
 
     @parsed_movie = Movie.new(match['title'], match['year']&.to_i)
@@ -247,8 +240,24 @@ class VideoBlob < ApplicationRecord
     "#{plex_root_path}/#{directory_name}"
   end
 
+  def set_defaults
+    set_extra_type_from_key
+    set_extra_type_number
+    self.filename ||= plex_name.to_s
+    self.key ||= plex_path.to_s
+    self.content_type ||= 'video/x-matroska'
+    self.byte_size ||= 0
+  end
+
+  def set_extra_type_from_key
+    return if key.nil?
+
+    self.extra_type = EXTRA_TYPE_TO_DIRECTORY.find { |_, name| key.include?(name) }&.first
+    self.extra_type ||= EXTRA_TYPES.first
+  end
+
   def set_extra_type_number
-    return if attributes[:extra_type_number]
+    return if extra_type_number
 
     self.extra_type_number = VideoBlob.where(video:, extra_type:).pluck(:extra_type_number).max.to_i + 1
   end

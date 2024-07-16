@@ -3,17 +3,17 @@
 module Shell
   class Error < StandardError; end
   MOUNT_LINE = %r{\A(?<disk_name>\S+)\son\s(?:/Volumes/|)(?<name>.*)\s[(]}
-  Device = Struct.new(:name, :disk_name) do
+  Device = Struct.new(:drive_name, :disc_name) do
     def rdisk_name
-      disk_name.gsub('/dev/', '/dev/r')
+      disc_name.gsub('/dev/', '/dev/r')
     end
 
     def optical?
-      @disk_info ||= `diskutil info #{disk_name}`.strip.downcase
-      @disk_info.include?('optical') ||
-        @disk_info.include?('cd-rom') ||
-        @disk_info.include?('dvd-rom') ||
-        @disk_info.include?('blu-ray')
+      @disc_info ||= `diskutil info #{disc_name}`.strip.downcase
+      @disc_info.include?('optical') ||
+        @disc_info.include?('cd-rom') ||
+        @disc_info.include?('dvd-rom') ||
+        @disc_info.include?('blu-ray')
     end
   end
 

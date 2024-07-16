@@ -3,10 +3,14 @@
 require 'rails_helper'
 
 RSpec.describe FindExistingDisksService do
-  include_context 'with mkv_stubbs'
+  let(:service) { described_class.new }
 
   describe '#call' do
-    subject(:call) { described_class.call }
+    subject(:call) { service.call }
+
+    before do
+      allow(service).to receive(:devices).and_return([Shell::Device.new('07804', '/dev/disk8')])
+    end
 
     context 'when no disks exist' do
       it { is_expected.to eq [] }

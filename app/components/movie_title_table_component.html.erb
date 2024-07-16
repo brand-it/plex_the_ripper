@@ -18,8 +18,9 @@
       <tbody class="disk_titles">
         <% disk.disk_titles.sort_by { |d| movie.runtime_range.include?(d.duration) ? 0 : 1  }.each do |disk_title| %>
           <%= hidden_field_tag "movies[][disk_title_id]", disk_title.id %>
-          <% text_class = 'text-primary-emphasis' if movie.runtime_range.include?(disk_title.duration) %>
-          <% text_class = 'text-success-emphasis' if movie.video_blobs.any? %>
+          <% in_range = movie.runtime_range.include?(disk_title.duration) %>
+          <% text_class = 'text-primary-emphasis' if in_range %>
+          <% text_class = 'text-success-emphasis' if movie.video_blobs.any? && in_range %>
           <tr>
             <td scope="row" class="<%= text_class %>"><%= disk_title.id %></td>
             <td class="text-center">
@@ -56,7 +57,7 @@
             </td>
             <td class="<%= text_class %>">
 
-              <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys), prompt: "Extra Type" %>
+              <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, (in_range ? 'feature_films' : 'other')), prompt: "Don't Rip" %>
             </td>
           </tr>
         <% end %>

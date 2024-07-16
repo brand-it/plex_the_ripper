@@ -15,35 +15,41 @@ class MkvProgressListener
   option :disk_title, Types.Instance(DiskTitle)
   option :job, Types.Instance(Job)
 
-  def start
+  attr_reader :video_blob
+
+  def start(video_blob)
+    @video_blob = video_blob
     job.metadata['completed'] = 0.0
-    notify_slack("Started #{title}")
+    notify_slack("Started #{video_blob.title}")
     update_progress_bar
     job.save!
   end
 
-  def success
+  def success(video_blob)
+    @video_blob = video_blob
     job.metadata['completed'] = 100.0
-    notify_slack("Completed #{title}")
+    notify_slack("Completed #{video_blob.title}")
     update_progress_bar
     job.save!
   end
 
-  def failure
+  def failure(video_blob)
+    @video_blob = video_blob
     job.metadata['completed'] = 0.0
-    notify_slack("Failure #{title}")
+    notify_slack("Failure #{video_blob.title}")
 
     update_progress_bar
     job.save!
   end
 
-  def raw_line(mkv_message) # rubocop:disable Metrics/MethodLength
+  def raw_line(mkv_message, video_blob) # rubocop:disable Metrics/MethodLength
+    @video_blob = video_blob
     case mkv_message
     when MkvParser::PRGV
       job.metadata['completed'] ||= 0.0
       job.metadata['completed'] = percentage(mkv_message.current, mkv_message.pmax)
     when MkvParser::PRGT, MkvParser::PRGC
-      job.metadata['title'] = mkv_message.name
+      job.metadata['title'] = "#{video_blob.title}\n#{mkv_message.name}"
     when MkvParser::MSG
       store_message(mkv_message.message)
       update_message_component
@@ -131,16 +137,5 @@ class MkvProgressListener
 
   def next_update
     @next_update ||= 1.second.from_now
-  end
-
-  def title
-    @title ||= if disk_title.video.is_a?(Movie)
-                 disk_title.video.title
-               elsif disk_title.video.is_a?(Tv)
-                 episode = disk_title.episode
-                 season = episode.season
-                 "#{disk_title.video.title} S#{season.season_number}E#{episode.episode_number} " \
-                   "- #{episode.name}"
-               end
   end
 end

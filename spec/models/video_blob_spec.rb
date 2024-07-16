@@ -14,6 +14,7 @@
 #  key               :string           not null
 #  metadata          :text
 #  optimized         :boolean          default(FALSE), not null
+#  uploadable        :boolean          default(FALSE), not null
 #  uploaded_on       :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -33,7 +34,7 @@ RSpec.describe VideoBlob do
   subject(:video_blob) { build(:video_blob, extra_type_number: 1) }
 
   describe 'associations' do
-    it { is_expected.to belong_to(:video).optional(true) }
+    it { is_expected.to belong_to(:video) }
     it { is_expected.to belong_to(:episode).optional(true) }
     it { is_expected.to have_many(:disk_titles).dependent(:nullify) }
   end
@@ -42,11 +43,6 @@ RSpec.describe VideoBlob do
     it { is_expected.to have_scope(:optimized).where(optimized: true) }
     it { is_expected.to have_scope(:checksum).where.not(checksum: nil) }
     it { is_expected.to have_scope(:missing_checksum).where(checksum: nil) }
-  end
-
-  describe 'validations' do
-    it { is_expected.to validate_presence_of(:key) }
-    it { is_expected.to validate_uniqueness_of(:key) }
   end
 
   describe '#extra_type_directory' do
@@ -143,7 +139,7 @@ RSpec.describe VideoBlob do
   end
 
   describe '#movie?' do
-    subject(:tv_show?) { video_blob.movie? }
+    subject(:movie?) { video_blob.movie? }
 
     before do
       allow(Config::Plex).to receive(:newest).and_return(config_plex)
@@ -152,28 +148,28 @@ RSpec.describe VideoBlob do
     context 'when path does not start with movie path' do
       let(:config_plex) { build_stubbed(:config_plex, settings_movie_path: '/Media/Movie') }
 
-      let(:video_blob) { build_stubbed(:video_blob, key: '/Movie') }
+      let(:video_blob) { build_stubbed(:video_blob, key: '/Movie', video: nil) }
 
       it { is_expected.to be(false) }
     end
 
     context 'when path does start with movie path' do
       let(:config_plex) { build_stubbed(:config_plex, settings_movie_path: '/Media/Movie') }
-      let(:video_blob) { build_stubbed(:video_blob, key: '/Media/Movie') }
+      let(:video_blob) { build_stubbed(:video_blob, video: nil, key: '/Media/Movie') }
 
       it { is_expected.to be(true) }
     end
 
     context 'when config it missing' do
       let(:config_plex) { nil }
-      let(:video_blob) { build_stubbed(:video_blob, key: '/Media/Movie') }
+      let(:video_blob) { build_stubbed(:video_blob, video: nil, key: '/Media/Movie') }
 
       it { is_expected.to be(false) }
     end
 
     context 'when config path is blank' do
       let(:config_plex) { build_stubbed(:config_plex, settings_movie_path: '') }
-      let(:video_blob) { build_stubbed(:video_blob, key: '/Media/Movie') }
+      let(:video_blob) { build_stubbed(:video_blob, video: nil, key: '/Media/Movie') }
 
       it { is_expected.to be(false) }
     end

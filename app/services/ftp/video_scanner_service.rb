@@ -26,10 +26,10 @@ module Ftp
       key = [path, entry.pathname].join('/')
 
       find_or_initialize_by(key).tap do |video_blob|
-        video_blob.update! filename: safe_encode(entry.pathname),
-                           content_type: content_type(entry),
-                           optimized: path.include?('Optimized for'),
-                           byte_size: entry.size
+        video_blob.assign_attributes filename: safe_encode(entry.pathname),
+                                     content_type: content_type(entry),
+                                     optimized: path.include?('Optimized for'),
+                                     byte_size: entry.size
       end
     end
 

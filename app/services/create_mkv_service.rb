@@ -17,15 +17,16 @@ class CreateMkvService
   end
 
   def call
-    broadcast(:start)
+    disk_title.update!(video_blob:)
+    broadcast(:start, video_blob)
     Result.new(video_blob.tmp_plex_path, create_mkv.success?).tap do |result|
       if result.success?
-        video_blob.update!(byte_size:)
+        video_blob.update!(byte_size:, uploadable: true)
         rename_file
-        disk_title.update!(ripped_at: Time.current, video_blob:)
-        broadcast(:success)
+        disk_title.update!(ripped_at: Time.current)
+        broadcast(:success, video_blob)
       else
-        broadcast(:failure)
+        broadcast(:failure, video_blob)
       end
     end
   end
@@ -37,7 +38,7 @@ class CreateMkvService
       stdin.close
       while raw_line = std_out_err.gets # rubocop:disable Lint/AssignmentInCondition
         begin
-          broadcast(:raw_line, parse_mkv_string(raw_line).first)
+          broadcast(:raw_line, parse_mkv_string(raw_line).first, video_blob)
         rescue StandardError => e
           Rails.logger.error { "Error parsing mkv string: #{e.message}" }
           Rails.logger.error { e.backtrace.join("\n") }
@@ -73,7 +74,19 @@ class CreateMkvService
   end
 
   def video_blob
-    @video_blob ||= VideoBlob.build_from_disk_title(disk_title, extra_type)
+    @video_blob ||= if extra_type == 'feature_films'
+                      VideoBlob.find_or_create_by!(
+                        video: disk_title.video,
+                        episode: disk_title.episode,
+                        extra_type:
+                      )
+                    else
+                      VideoBlob.create!(
+                        video: disk_title.video,
+                        episode: disk_title.episode,
+                        extra_type:
+                      )
+                    end
   end
 
   def recreate_dir(dir)

@@ -6,7 +6,7 @@ RSpec.describe UploadWorker, type: :worker do
   subject(:worker) { described_class.new(video_blob_id:, job:) }
 
   let(:disk_title) { create(:disk_title, video: movie, video_blob:) }
-  let(:video_blob) { create(:video_blob, video: movie) }
+  let(:video_blob) { create(:video_blob, video: movie, uploadable: true) }
   let(:movie) { create(:movie) }
   let(:video_blob_id) { video_blob.id }
   let(:job) { create(:job) }

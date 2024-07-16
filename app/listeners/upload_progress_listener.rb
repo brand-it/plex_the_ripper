@@ -21,13 +21,13 @@ class UploadProgressListener
   end
 
   def start
-    notify_slack("Started Uploading #{title}")
+    notify_slack("Started Uploading #{video_blob.title}")
     update_component
   end
 
   def finished
     @completed = file_size
-    notify_slack("Finished Uploading #{title}")
+    notify_slack("Finished Uploading #{video_blob.title}")
     update_component
   end
 
@@ -39,7 +39,7 @@ class UploadProgressListener
         model: Video,
         completed: percentage,
         status: percentage < 100 ? :info : :success,
-        message: title
+        message: video_blob.title
       ), layout: false
     )
     component = ProcessComponent.new(worker: UploadWorker)
@@ -60,16 +60,5 @@ class UploadProgressListener
 
   def next_update
     @next_update ||= 1.second.from_now
-  end
-
-  def title
-    if video_blob.video.is_a?(Tv)
-      episode = video_blob.episode
-      season = episode.season
-      "#{video_blob.video.title} - S#{season.season_number}E#{episode.episode_number} " \
-        "#{episode.name}"
-    else
-      video_blob.video.title
-    end
   end
 end

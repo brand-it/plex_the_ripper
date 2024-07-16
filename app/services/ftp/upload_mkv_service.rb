@@ -13,6 +13,7 @@ module Ftp
       ftp_create_directory
       try_to { ftp_upload_file }
       tmp_destroy_folder
+      mark_as_uploaded!
       broadcast(:finished)
     end
 
@@ -43,7 +44,7 @@ module Ftp
     end
 
     def mark_as_uploaded!
-      video_blob.update!(uploaded_on: Time.current)
+      video_blob.update!(uploaded_on: Time.current, uploadable: false)
     end
 
     def tmp_destroy_folder
