@@ -20,7 +20,7 @@ class MkvProgressListener
   def start(video_blob)
     @video_blob = video_blob
     job.metadata['completed'] = 0.0
-    notify_slack("Started #{video_blob.title}")
+    notify_slack("Started #{video_blob.title}") if video_blob.feature_films?
     update_progress_bar
     job.save!
   end
@@ -28,7 +28,7 @@ class MkvProgressListener
   def success(video_blob)
     @video_blob = video_blob
     job.metadata['completed'] = 100.0
-    notify_slack("Completed #{video_blob.title}")
+    notify_slack("Completed #{video_blob.title}") if video_blob.feature_films?
     update_progress_bar
     job.save!
   end
