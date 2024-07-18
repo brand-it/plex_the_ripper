@@ -6,7 +6,11 @@ class CreateMkvService
   include Wisper::Publisher
   include MkvParser
 
-  Result = Struct.new(:mkv_path, :success?)
+  Result = Struct.new(:mkv_path, :success) do
+    def success?
+      success
+    end
+  end
   TMP_DIR = Rails.root.join('tmp/videos')
 
   option :disk_title, Types.Instance(DiskTitle)
@@ -21,13 +25,16 @@ class CreateMkvService
     broadcast(:start, video_blob)
     Result.new(video_blob.tmp_plex_path, create_mkv.success?).tap do |result|
       if result.success?
-        video_blob.update!(byte_size:, uploadable: true)
         rename_file
+        video_blob.update!(byte_size:, uploadable: true)
         disk_title.update!(ripped_at: Time.current)
         broadcast(:success, video_blob)
       else
         broadcast(:failure, video_blob)
       end
+    rescue StandardError => e
+      broadcast(:failure, video_blob, e)
+      result.success = false
     end
   end
 

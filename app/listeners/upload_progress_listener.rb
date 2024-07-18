@@ -21,13 +21,11 @@ class UploadProgressListener
   end
 
   def start
-    notify_slack("Started Uploading #{video_blob.title}") if video_blob.feature_films?
     update_component
   end
 
   def finished
     @completed = file_size
-    notify_slack("Finished Uploading #{video_blob.title}") if video_blob.feature_films?
     update_component
   end
 

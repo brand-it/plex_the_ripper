@@ -12,7 +12,6 @@ class MkvProgressListener
   delegate :job_path, to: 'Rails.application.routes.url_helpers'
   delegate :render, to: :ApplicationController
 
-  option :disk_title, Types.Instance(DiskTitle)
   option :job, Types.Instance(Job)
 
   attr_reader :video_blob
@@ -20,7 +19,6 @@ class MkvProgressListener
   def start(video_blob)
     @video_blob = video_blob
     job.metadata['completed'] = 0.0
-    notify_slack("Started #{video_blob.title}") if video_blob.feature_films?
     update_progress_bar
     job.save!
   end
@@ -28,18 +26,19 @@ class MkvProgressListener
   def success(video_blob)
     @video_blob = video_blob
     job.metadata['completed'] = 100.0
-    notify_slack("Completed #{video_blob.title}") if video_blob.feature_films?
     update_progress_bar
     job.save!
   end
 
-  def failure(video_blob)
+  def failure(video_blob, exception = nil)
     @video_blob = video_blob
     job.metadata['completed'] = 0.0
+    job.metadata['title'] = "#{video_blob.title} #{exception.message}" if exception
     notify_slack("Failure #{video_blob.title}")
+    job.save!
 
     update_progress_bar
-    job.save!
+    reload_page!
   end
 
   def raw_line(mkv_message, video_blob) # rubocop:disable Metrics/MethodLength
@@ -59,6 +58,11 @@ class MkvProgressListener
   end
 
   private
+
+  def reload_page!
+    cable_ready[BroadcastChannel.channel_name].reload
+    cable_ready.broadcast
+  end
 
   def store_message(mkv_message)
     return if mkv_message.blank?
