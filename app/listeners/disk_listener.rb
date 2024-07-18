@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MkvProgressListener
+class DiskListener
   extend Dry::Initializer
   include CableReady::Broadcaster
   include ActionView::Helpers::UrlHelper

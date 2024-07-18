@@ -2,6 +2,7 @@
 
 module Shell
   class Error < StandardError; end
+  MAKEMKVCON_WAIT = 10.seconds
   MOUNT_LINE = %r{\A(?<disk_name>\S+)\son\s(?:/Volumes/|)(?<name>.*)\s[(]}
   Device = Struct.new(:drive_name, :disc_name) do
     def rdisk_name
@@ -45,7 +46,11 @@ module Shell
 
   def makemkvcon(*cmd)
     makemkvcon_path = Config::MakeMkv.newest.settings.makemkvcon_path
-    sleep 1 while process_running?('makemkvcon')
+    while process_running?('makemkvcon')
+      @started_waiting ||= Time.current + MAKEMKVCON_WAIT
+      kill_process('makemkvcon') unless @started_waiting.future?
+      sleep 1
+    end
     system!([makemkvcon_path, *cmd].join(' '))
   end
 
@@ -58,6 +63,20 @@ module Shell
                raise Error, 'Unsupported OS'
              end
     !output.empty?
+  end
+
+  def kill_process(name)
+    pid = find_process_id(name)
+    return if pid.to_i.zero?
+
+    `kill -9 #{pid}`
+  end
+
+  def find_process_id(process_name)
+    result = `ps aux | grep #{process_name} | grep -v grep`
+    result.split("\n").map do |line|
+      line.split[1] # PID is the second element in the line
+    end
   end
 
   def system!(*cmd)
