@@ -7,34 +7,38 @@ class DiskListener
   include ActionView::Helpers::DateHelper
   include SlackUtility
 
-  option :disk, Types.Instance(::Disk)
-
   delegate :render, to: :ApplicationController
 
-  def disk_ejecting
+  def disk_ejecting(disk)
     cable_broadcast("Ejecting Disk #{disk.name}", :info)
   end
 
-  def disk_ejected
+  def disk_ejected(disk)
     message = "Disk Ejected #{disk.name} - Ready for new disk"
     notify_slack(message)
-    cable_broadcast(message, :success)
+    cable_broadcast(message)
   end
 
-  def disk_eject_failed(exception)
+  def disk_eject_failed(disk, exception)
     message = "Failed to eject #{disk.name} - #{exception.message}"
     notify_slack(message)
-    cable_broadcast(message, :error)
+    cable_broadcast(message)
+  end
+
+  def disk_loading(disk)
+    message = disk.name ? "Loading #{disk.name} ..." : 'Loading the disk ...'
+    cable_broadcast(message)
+  end
+
+  def disk_loaded(disk)
+    cable_broadcast
   end
 
   private
 
-  def cable_broadcast(message, status)
-    progress_bar = render(
-      ProgressBarComponent.new(model: Video, show_percentage: false, status:, message:), layout: false
-    )
-    component = ProcessComponent.new(worker: LoadDiskWorker)
-    component.with_body { progress_bar }
+  def cable_broadcast(message = nil)
+    component = LoadDiskProcessComponent.new(message:)
+
     cable_ready[BroadcastChannel.channel_name].morph(
       selector: "##{component.dom_id}",
       html: render(component, layout: false)

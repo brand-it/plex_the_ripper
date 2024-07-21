@@ -1,25 +1,19 @@
 # frozen_string_literal: true
 
-class EjectDiskService
-  extend Dry::Initializer
+class EjectDiskService < ApplicationService
   include Shell
-  include Wisper::Publisher
 
   param :disk, Types.Instance(Disk)
 
-  def self.call(...)
-    new(...).call
-  end
-
   def call
-    broadcast(:disk_ejecting)
+    broadcast(:disk_ejecting, disk)
     eject!
     disk.update!(ejected: true)
     disk.disk_titles.not_ripped.destroy_all
     Disk.ejected.destroy_all
-    broadcast(:disk_ejected)
+    broadcast(:disk_ejected, disk)
   rescue StandardError => e
-    broadcast(:disk_eject_failed, e)
+    broadcast(:disk_eject_failed, disk, e)
   end
 
   private

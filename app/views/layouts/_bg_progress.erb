@@ -19,21 +19,7 @@
     <% end %>
   <% end %>
 
-  <%= render ProcessComponent.new worker: LoadDiskWorker do |c| %>
-    <%= c.with_body do %>
-      <% if LoadDiskWorker.job.active? && (disks = Disk.loading).any? %>
-        <% disks.each do |disk| %>
-          <span>Loading <%= disk.name %> ...</span>
-        <% end %>
-      <% elsif (disks = Disk.not_ejected).any? %>
-        <% disks.each do |disk| %>
-          <p class="mb-0"><%= link_to disk.name, the_movie_dbs_path(search: { query: disk.name.titleize }) %> is ready to be ripped. <%= link_to 'eject', eject_disk_path(disk), data: { turbo_method: :post } %></p>
-        <% end %>
-      <% else %>
-        <span>No disks found</span>
-      <% end %>
-    <% end %>
-  <% end %>
+  <%= render LoadDiskProcessComponent.new %>
   <%= render ProcessComponent.new worker: UploadWorker do |c| %>
     <%= c.with_body do %>
       <% if UploadWorker.job.active? %>
@@ -53,24 +39,26 @@
       <% end %>
     <% end %>
   <% end %>
-  <%= render ProcessComponent.new worker: RipWorker do |c| %>
-    <% if RipWorker.job.active? %>
-      <% c.with_body do %>
-        <%=
-          render(
-            ProgressBarComponent.new(
-              model: DiskTitle,
-              completed: RipWorker.job.metadata['completed'],
-              status: :info,
-              message: RipWorker.job.metadata['title']
+  <% if RipWorker.job && @job != RipWorker.job %>
+    <%= render ProcessComponent.new worker: RipWorker do |c| %>
+      <% if RipWorker.job.active? %>
+        <% c.with_body do %>
+          <%=
+            render(
+              ProgressBarComponent.new(
+                model: DiskTitle,
+                completed: RipWorker.job.metadata['completed'],
+                status: :info,
+                message: RipWorker.job.metadata['title']
+              )
             )
-          )
-        %>
-      <% end %>
-      <% c.with_link { link_to 'View Details', job_path(RipWorker.job) } %>
-    <% else %>
-      <% c.with_body do %>
-        <span>Nothing is being ripped to <%= Config::Plex.newest.settings_ftp_host %> </span>
+          %>
+        <% end %>
+        <% c.with_link { link_to 'View Details', job_path(RipWorker.job) } %>
+      <% else %>
+        <% c.with_body do %>
+          <span>Nothing is being ripped to <%= Config::Plex.newest.settings_ftp_host %> </span>
+        <% end %>
       <% end %>
     <% end %>
   <% end %>

@@ -1,53 +1,61 @@
-<h3 class="mb-1 text-white">
-  <%= @job.name.titleize %>
-  <small class="text-muted"><%= @job.status %></small>
-</h3>
-<% if @job.started_at %>
-  <div class="mb-2">
-    Started At: <%= @job.started_at.to_fs(:usa_pretty)%>
+<% content_for :sidebar_before do %>
+ <div class="header">
+    <h4>
+      <%= @job.name.titleize %>
+      <small class="text-muted"><%= @job.status %></small>
+    </h4>
+    <% if @job.started_at %>
+      <div class="mb-2">
+        Started At: <%= @job.started_at.to_fs(:usa_pretty)%>
+      </div>
+    <% end %>
   </div>
-<% end %>
+  <% if  @job.arguments.present? || @job.metadata.present? || @job.errored? %>
+    <div class="body">
+      <% if @job.arguments.present? %>
+        <h5 class="mb-1 text-white">Arguments</h5>
+        <% @job.arguments.each do |key, value| %>
+          <p class="pl-0"><%= key %>: <%= value %></p>
+        <% end %>
+      <% end %>
 
-<% if @job.arguments.present? %>
-  <h5 class="mb-1 text-white">Arguments</h5>
-  <% @job.arguments.each do |key, value| %>
-    <p class="pl-0"><%= key %>: <%= value %></p>
-  <% end %>
-<% end %>
+      <% if @job.metadata.present? %>
+        <h5 class="mb-1 text-white">Metadata</h5>
+        <% @job.metadata.each do |key, value| %>
+          <% next if key == 'message' %>
+          <p class="pl-0"><%= key %>: <%= value %></p>
+        <% end %>
+      <% end %>
 
-<% if @job.metadata.present? %>
-  <h5 class="mb-1 text-white">Metadata</h5>
-  <% @job.metadata.each do |key, value| %>
-    <% next if key == 'message' %>
-    <p class="pl-0"><%= key %>: <%= value %></p>
-  <% end %>
-<% end %>
-
-<% if @job.errored? %>
-  <div class='bg-dark text-danger p-2 rounded-top'>
-    <%= @job.error_class %>
-    <%= @job.error_message %>
-  </div>
-  <% if @job.backtrace.any? %>
-    <div class='p-2 rounded-bottom border-bottom overflow-auto lh-sm text-nowrap bg-dark text-light'>
-      <% @job.backtrace.each do |trace| %>
-        <% next unless trace.include?(Rails.root.to_s) %>
-        <%= trace.gsub(Rails.root.to_s, 'ROOT').strip %><br/>
+      <% if @job.errored? %>
+        <div class="mini-console">
+          <div class='title text-danger'>
+            <%= @job.error_class %>
+            <%= @job.error_message %>
+          </div>
+          <% if @job.backtrace.any? %>
+            <div class="console">
+              <% @job.backtrace.each do |trace| %>
+                <% next unless trace.include?(Rails.root.to_s) %>
+                <p><%= trace.gsub(Rails.root.to_s, 'ROOT').strip %></p>
+              <% end %>
+            </div>
+          <% end %>
+        </div>
+        <% if @job.backtrace.any? %>
+          <div class="mini-console">
+            <div class='title'>Full Trace</div>
+            <div class="console">
+              <% @job.backtrace.each do |trace| %>
+                <p><%= trace.strip %></p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
       <% end %>
     </div>
-    <div class='bg-dark text-danger p-2 rounded-top'>Full Trace</div>
-    <div class='p-2 rounded-bottom overflow-auto lh-sm text-nowrap bg-dark text-light'>
-      <% @job.backtrace.each do |trace| %>
-        <%= trace.strip %><br/>
-      <% end %>
-    </div>
   <% end %>
 <% end %>
-
-<div class='row min-vh-100'>
-  <div class="col-12">
-    <div class="progress-message text-white bg-black rounded-4 p-4" style="overflow-y: scroll; min-height: 100%; max-height: 100%;">
-      <%= render JobMessageComponent.new(job: @job) %>
-    </div>
-  </div>
+<div class="console-content">
+   <%= render JobMessageComponent.new(job: @job) %>
 </div>

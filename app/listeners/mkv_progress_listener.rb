@@ -16,32 +16,35 @@ class MkvProgressListener
 
   attr_reader :video_blob
 
-  def start(video_blob)
+  def mkv_start(video_blob)
     @video_blob = video_blob
     job.metadata['completed'] = 0.0
     update_progress_bar
     job.save!
   end
 
-  def success(video_blob)
+  def mkv_success(video_blob)
     @video_blob = video_blob
     job.metadata['completed'] = 100.0
     update_progress_bar
     job.save!
   end
 
-  def failure(video_blob, exception = nil)
+  def mkv_failure(video_blob, exception = nil)
     @video_blob = video_blob
     job.metadata['completed'] = 0.0
-    job.metadata['title'] = "#{video_blob.title} #{exception.message}" if exception
-    notify_slack("Failure #{video_blob.title}")
+    if exception
+      job.metadata['title'] = "#{video_blob.title} #{exception.message}"
+      store_message(exception.message)
+    end
+    notify_slack("Failure #{[video_blob.title, exception&.message].compact_blank.join(' ')}\n#{last_message}")
     job.save!
 
     update_progress_bar
     reload_page!
   end
 
-  def raw_line(mkv_message, video_blob) # rubocop:disable Metrics/MethodLength
+  def mkv_raw_line(mkv_message, video_blob) # rubocop:disable Metrics/MethodLength
     @video_blob = video_blob
     case mkv_message
     when MkvParser::PRGV
@@ -70,6 +73,10 @@ class MkvProgressListener
     job.metadata['message'] ||= []
     job.metadata['message'] << mkv_message
     job.metadata['message'].compact_blank!
+  end
+
+  def last_message
+    job.metadata['message'].last
   end
 
   def percentage(completed, total)

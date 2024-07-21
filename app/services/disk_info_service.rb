@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-class DiskInfoService
-  extend Dry::Initializer
+class DiskInfoService < ApplicationService
   include Shell
   include MkvParser
 

@@ -1,18 +1,10 @@
 # frozen_string_literal: true
 
-class ChecksumService
-  extend Dry::Initializer
-
+class ChecksumService < ApplicationService
   CHUNK_SIZE = 5.megabytes
 
   option :io, Types.Interface(:read)
   option :progress_listener, Types.Interface(:call), optional: true
-
-  class << self
-    def call(*)
-      new(*).call
-    end
-  end
 
   def call
     compute_checksum_in_chunks(io)

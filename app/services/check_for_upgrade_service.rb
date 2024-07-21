@@ -1,13 +1,9 @@
 # frozen_string_literal: true
 
-class CheckForUpgradeService
+class CheckForUpgradeService < ApplicationService
   Result = Struct.new(:upgrade, :version)
   REPO = 'brand-it/plex_the_ripper'
   API_URL = "https://api.github.com/repos/#{REPO}/releases/latest".freeze
-
-  def self.call
-    new.call
-  end
 
   def call
     Result.new(newer_version?, latest_version)

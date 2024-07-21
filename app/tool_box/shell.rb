@@ -86,4 +86,12 @@ module Shell
     Rails.logger.debug { "#{cmd}\n#{response}" }
     response
   end
+
+  def list_drives(no_scan = false)
+    makemkvcon(
+      ['-r','--cache=1',('--noscan' if noscan), 'info', 'disc:9999'].compact.join(' ')
+    ).parsed_mkv.select do |i|
+      i.is_a?(MkvParser::DRV) && i.enabled.to_i.positive?
+    end
+  end
 end

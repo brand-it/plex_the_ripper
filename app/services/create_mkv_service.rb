@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-class CreateMkvService
-  class Error < StandardError; end
-  extend Dry::Initializer
-  include Wisper::Publisher
+class CreateMkvService < ApplicationService
   include MkvParser
 
   Result = Struct.new(:mkv_path, :success) do
@@ -16,24 +13,20 @@ class CreateMkvService
   option :disk_title, Types.Instance(DiskTitle)
   option :extra_type, Types::Coercible::String, default: -> { VideoBlob::EXTRA_TYPES.first }
 
-  def self.call(...)
-    new(...).call
-  end
-
   def call
     disk_title.update!(video_blob:)
-    broadcast(:start, video_blob)
+    broadcast(:mkv_start, video_blob)
     Result.new(video_blob.tmp_plex_path, create_mkv.success?).tap do |result|
       if result.success?
         rename_file
         video_blob.update!(byte_size:, uploadable: true)
         disk_title.update!(ripped_at: Time.current)
-        broadcast(:success, video_blob)
+        broadcast(:mkv_success, video_blob)
       else
-        broadcast(:failure, video_blob)
+        broadcast(:mkv_failure, video_blob)
       end
     rescue StandardError => e
-      broadcast(:failure, video_blob, e)
+      broadcast(:mkv_failure, video_blob, e)
       result.success = false
     end
   end
@@ -45,7 +38,7 @@ class CreateMkvService
       stdin.close
       while raw_line = std_out_err.gets # rubocop:disable Lint/AssignmentInCondition
         begin
-          broadcast(:raw_line, parse_mkv_string(raw_line).first, video_blob)
+          broadcast(:mkv_raw_line, parse_mkv_string(raw_line).first, video_blob)
         rescue StandardError => e
           Rails.logger.error { "Error parsing mkv string: #{e.message}" }
           Rails.logger.error { e.backtrace.join("\n") }
