@@ -1,16 +1,16 @@
-<div id="<%= dom_id %>">
+<div>
   <div class="progress mb-2">
     <div class="progress-bar progress-bar-striped progress-bar-animated bg-<%= status %>" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= completed %>%">
     </div>
   </div>
-  <% if show_percentage %>
-    <div>
-      <%= message.presence || model.model_name.singular %>
+  <div>
+    <%= message.presence %>
+    <% if show_percentage %>
       ...
       <%= number_to_percentage completed, precision: 2 %>
       <% if eta.present? %>
         (<%= eta %>)
       <% end %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 </div>

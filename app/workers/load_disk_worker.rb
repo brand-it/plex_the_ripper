@@ -2,7 +2,7 @@
 
 class LoadDiskWorker < ApplicationWorker
   def enqueue?
-    existing_disks.nil?
+    Disk.verified_disks.empty?
   end
 
   def perform
@@ -13,13 +13,9 @@ class LoadDiskWorker < ApplicationWorker
   end
 
   def disks
-    @disks ||= CreateDisksService.call
-  end
-
-  def existing_disks
-    return @existing_disks if defined?(@existing_disks)
-
-    @existing_disks = FindExistingDisksService.call.presence
+    @disks ||= CreateDisksService.new.tap do |service|
+      service.subscribe(DiskListener.new)
+    end.call
   end
 
   def broadcast_reload!
@@ -28,8 +24,7 @@ class LoadDiskWorker < ApplicationWorker
   end
 
   def broadcast_no_disk_found!
-    component = ProcessComponent.new worker: LoadDiskWorker
-    component.with_body { 'No disks found' }
+    component = LoadDiskProcessComponent.new
     broadcast(component)
   end
 

@@ -1,0 +1,22 @@
+<%= render ProcessComponent.new dom_id: dom_id do |c| %>
+  <%= c.with_title do %>
+    Upload Status
+  <% end %>
+  <%= c.with_body do %>
+    <% if uploadable_video_blobs.any? %>
+      <% uploadable_video_blobs.each do |blob| %>
+        <%=
+          render(
+            ProgressBarComponent.new(
+              show_percentage: false,
+              status: :info,
+              message: "Pending upload #{blob.title}"
+            )
+          )
+        %>
+      <% end %>
+    <% else %>
+      <span>Nothing is being uploaded to <%= ftp_host %> </span>
+    <% end %>
+  <% end %>
+<% end %>

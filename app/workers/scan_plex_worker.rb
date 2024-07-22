@@ -36,7 +36,6 @@ class ScanPlexWorker < ApplicationWorker
   def completed_component
     progress_bar = render(
       ProgressBarComponent.new(
-        model: Movie,
         completed: 100,
         status: :success,
         message: 'Plex scan complete!'
@@ -50,7 +49,6 @@ class ScanPlexWorker < ApplicationWorker
   def in_progress_component(message, completed, show_percentage: true)
     progress_bar = render(
       ProgressBarComponent.new(
-        model: Movie,
         completed:,
         status: :info,
         message: message || 'Scanning Plex...',

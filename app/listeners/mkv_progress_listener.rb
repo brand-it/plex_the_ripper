@@ -106,6 +106,7 @@ class MkvProgressListener
   end
 
   def update_progress_bar
+    component = RipProcessComponent.new
     cable_ready[BroadcastChannel.channel_name].morph \
       selector: "##{component.dom_id}",
       html: render(component, layout: false)
@@ -128,22 +129,6 @@ class MkvProgressListener
     Rails.logger.debug { "#{e.message} #{job.started_at} #{job.metadata['completed']}" }
     Rails.logger.debug { e.backtrace.join("\n") }
     nil
-  end
-
-  def component # rubocop:disable Metrics/MethodLength
-    progress_bar = render(
-      ProgressBarComponent.new(
-        model: DiskTitle,
-        completed: job.metadata['completed'],
-        status: :info,
-        message: job.metadata['title'],
-        eta:
-      ), layout: false
-    )
-    component = ProcessComponent.new(worker: RipWorker)
-    component.with_body { progress_bar }
-    component.with_link { link_to 'View Details', job_path(job) }
-    component
   end
 
   def next_update

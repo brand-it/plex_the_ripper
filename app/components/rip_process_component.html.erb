@@ -1,0 +1,27 @@
+<% if hide %>
+  <div id="<%= dom_id %>" class="hidden"></div>
+<% else %>
+  <%= render ProcessComponent.new dom_id: do |c| %>
+    <%= c.with_title do %>
+      Rip Status
+    <% end %>
+    <% if job_active? %>
+      <% c.with_body do %>
+        <%=
+          render(
+            ProgressBarComponent.new(
+              completed: RipWorker.job.metadata['completed'],
+              status: :info,
+              message: RipWorker.job.metadata['title']
+            )
+          )
+        %>
+      <% end %>
+      <% c.with_link { link_to 'View Details', job_path(RipWorker.job) } %>
+    <% else %>
+      <% c.with_body do %>
+        <span>Nothing is being ripped to <%= ftp_host %> </span>
+      <% end %>
+    <% end %>
+  <% end %>
+<% end %>

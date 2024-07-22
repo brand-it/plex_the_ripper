@@ -47,8 +47,9 @@ module Shell
   def makemkvcon(*cmd)
     makemkvcon_path = Config::MakeMkv.newest.settings.makemkvcon_path
     while process_running?('makemkvcon')
-      @started_waiting ||= Time.current + MAKEMKVCON_WAIT
-      kill_process('makemkvcon') unless @started_waiting.future?
+      @wait_until ||= Time.current + MAKEMKVCON_WAIT
+      Rails.logger.info("makemkvcon process running waiting for #{@wait_until}")
+      kill_process('makemkvcon') unless @wait_until.future?
       sleep 1
     end
     system!([makemkvcon_path, *cmd].join(' '))
@@ -69,6 +70,7 @@ module Shell
     pid = find_process_id(name)
     return if pid.to_i.zero?
 
+    Rails.logger.warn("Killing process #{name} - #{pid}")
     `kill -9 #{pid}`
   end
 
@@ -87,9 +89,9 @@ module Shell
     response
   end
 
-  def list_drives(no_scan = false)
+  def list_drives(noscan: false)
     makemkvcon(
-      ['-r','--cache=1',('--noscan' if noscan), 'info', 'disc:9999'].compact.join(' ')
+      ['-r', '--cache=1', ('--noscan' if noscan), 'info', 'disc:9999'].compact.join(' ')
     ).parsed_mkv.select do |i|
       i.is_a?(MkvParser::DRV) && i.enabled.to_i.positive?
     end

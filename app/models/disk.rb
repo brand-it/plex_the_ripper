@@ -40,4 +40,20 @@ class Disk < ApplicationRecord
   def disk_info
     @disk_info ||= DiskInfoService.new(disk_name:).results
   end
+  class << self
+    include Shell
+
+    def verified_disks
+      index = 0
+      devices.reduce(Disk.not_ejected) do |disks, device|
+        disk_name = [device.disc_name, device.rdisk_name]
+        name = device.drive_name
+        if index.zero?
+          disks.where(name:, disk_name:)
+        else
+          disks.or(Disk.not_ejected.where(name:, disk_name:))
+        end.tap { index += 1 }
+      end
+    end
+  end
 end

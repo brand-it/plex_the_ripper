@@ -31,10 +31,9 @@ class UploadProgressListener
 
   private
 
-  def component # rubocop:disable Metrics/MethodLength
+  def component
     progress_bar = render(
       ProgressBarComponent.new(
-        model: Video,
         completed: percentage,
         status: percentage < 100 ? :info : :success,
         message: video_blob.title

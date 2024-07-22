@@ -10,7 +10,7 @@ class DiskListener
   delegate :render, to: :ApplicationController
 
   def disk_ejecting(disk)
-    cable_broadcast("Ejecting Disk #{disk.name}", :info)
+    cable_broadcast("Ejecting Disk #{disk.name}")
   end
 
   def disk_ejected(disk)
@@ -25,12 +25,11 @@ class DiskListener
     cable_broadcast(message)
   end
 
-  def disk_loading(disk)
-    message = disk.name ? "Loading #{disk.name} ..." : 'Loading the disk ...'
-    cable_broadcast(message)
+  def disk_loading
+    cable_broadcast
   end
 
-  def disk_loaded(disk)
+  def disk_loaded
     cable_broadcast
   end
 
