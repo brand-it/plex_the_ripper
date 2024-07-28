@@ -38,7 +38,8 @@ class MkvDiskLoadListener
       store_message(exception.message)
       exception.backtrace.each { store_message(_1) }
     end
-    notify_slack("Failure #{[video_blob.title, exception&.message, exception&.backtrace&.join("\n")].compact_blank.join(' ')}\n#{last_message}")
+    notify_slack("Failure #{[video_blob.title, exception&.message,
+                             exception&.backtrace&.join("\n")].compact_blank.join(' ')}\n#{last_message}")
     job.save!
 
     update_progress_bar
