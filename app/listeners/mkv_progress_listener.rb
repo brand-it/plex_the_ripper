@@ -36,8 +36,12 @@ class MkvProgressListener
     if exception
       job.metadata['title'] = "#{video_blob.title} #{exception.message}"
       store_message(exception.message)
+      exception.backtrace.each { store_message(_1) }
     end
-    notify_slack("Failure #{[video_blob.title, exception&.message].compact_blank.join(' ')}\n#{last_message}")
+    notify_slack(
+      "Failure #{[video_blob.title, exception&.message,
+                  exception&.backtrace&.join("\n")].compact_blank.join(' ')}\n#{last_message}"
+    )
     job.save!
 
     update_progress_bar
@@ -112,7 +116,7 @@ class MkvProgressListener
     cable_ready.broadcast
   end
 
-  def eta # rubocop:disable Metrics/MethodLength
+  def eta
     return if job.metadata['completed'].to_f >= 100.0
 
     percentage_completed = job.metadata['completed'].to_f

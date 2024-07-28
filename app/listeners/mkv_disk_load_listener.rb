@@ -38,8 +38,10 @@ class MkvDiskLoadListener
       store_message(exception.message)
       exception.backtrace.each { store_message(_1) }
     end
-    notify_slack("Failure #{[video_blob.title, exception&.message,
-                             exception&.backtrace&.join("\n")].compact_blank.join(' ')}\n#{last_message}")
+    notify_slack(
+      "Failure #{[video_blob.title, exception&.message,
+                  exception&.backtrace&.join("\n")].compact_blank.join(' ')}\n#{last_message}"
+    )
     job.save!
 
     update_progress_bar
@@ -68,11 +70,11 @@ class MkvDiskLoadListener
     cable_ready.broadcast
   end
 
-  def store_message(mkv_message)
-    return if mkv_message.blank?
+  def store_message(message)
+    return if message.blank?
 
     job.metadata['message'] ||= []
-    job.metadata['message'] << mkv_message
+    job.metadata['message'] << message
     job.metadata['message'].compact_blank!
   end
 
