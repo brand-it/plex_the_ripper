@@ -3,26 +3,48 @@
 class CreateDisksService < ApplicationService
   include Shell
 
+  option :job, Types.Instance(Job)
+
   def call
     return [] if (drives = list_drives).empty?
 
-    drives.map do |drive|
-      Disk.find_or_initialize_by(name: drive.drive_name, disk_name: drive.disc_name)
-          .tap do |disk|
-        disk.update!(loading: true)
-        broadcast(:disk_loading)
-        disk.disk_titles.each(&:mark_for_destruction)
-        disk.disk_info.each do |info|
-          disk_title = find_or_build_disk_title(disk, info)
-          disk_title.unmark_for_destruction
-        end
-        broadcast(:disk_loaded)
-        disk.update!(loading: false)
-      end
-    end
+    disks = drives.map { create_or_update_disks(_1) }
+
+    disks.each { _1.update!(ejected: false) }
+    broadcast(:disk_loaded)
+    disks
   end
 
   private
+
+  def create_or_update_disks(drive)
+    find_or_initalize_disk(drive).tap do |disk|
+      disk.update!(loading: true)
+      broadcast(:disk_loading)
+      disk.disk_titles.each(&:mark_for_destruction)
+      find_or_build_disk_titles(disk)
+      broadcast(:disk_loaded)
+    ensure
+      disk.update!(loading: false)
+    end
+  end
+
+  def find_or_build_disk_titles(disk)
+    disk_info(disk).each do |info|
+      disk_title = find_or_build_disk_title(disk, info)
+      disk_title.unmark_for_destruction
+    end
+  end
+
+  def find_or_initalize_disk(drive)
+    Disk.find_or_initialize_by(name: drive.drive_name, disk_name: drive.disc_name)
+  end
+
+  def disk_info(disk)
+    service = DiskInfoService.new(disk_name: disk.disk_name)
+    service.subscribe(MkvDiskLoadListener.new(job:))
+    service.call
+  end
 
   def find_or_build_disk_title(disk, title)
     disk.disk_titles.find do |disk_title|

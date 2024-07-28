@@ -7,7 +7,7 @@
       <p><%= message %></p>
     <% elsif job_active? && disks_loading.any? %>
       <% disks_loading.each do |disk| %>
-        <span>Loading <%= link_to disk.name, the_movie_dbs_path(search: { query: disk.name.titleize }) %> ...</span>
+        <p class="mb-1">Loading <%= link_to disk.name, the_movie_dbs_path(search: { query: disk.name.titleize }) %> ...</p>
       <% end %>
     <% elsif disks_not_ejected.any? %>
       <% disks_not_ejected.each do |disk| %>

@@ -2,6 +2,9 @@
 
 module Shell
   class Error < StandardError; end
+  include MkvParser
+  include Wisper::Publisher
+
   MAKEMKVCON_WAIT = 10.seconds
   MOUNT_LINE = %r{\A(?<disk_name>\S+)\son\s(?:/Volumes/|)(?<name>.*)\s[(]}
   Device = Struct.new(:drive_name, :disc_name) do
@@ -44,15 +47,41 @@ module Shell
     Standard.new(stdout_str:, stderr_str:, status:)
   end
 
-  def makemkvcon(*cmd)
-    makemkvcon_path = Config::MakeMkv.newest.settings.makemkvcon_path
+  def wait_makemkvcon(*cmd)
     while process_running?('makemkvcon')
       @wait_until ||= Time.current + MAKEMKVCON_WAIT
-      Rails.logger.info("makemkvcon process running waiting for #{@wait_until}")
+      broadcast(:mkv_waiting)
       kill_process('makemkvcon') unless @wait_until.future?
       sleep 1
     end
-    system!([makemkvcon_path, *cmd].join(' '))
+    makemkvcon(*cmd)
+  end
+
+  def makemkvcon(*cmd)
+    makemkvcon_path = Shellwords.escape(Config::MakeMkv.newest.settings.makemkvcon_path)
+    out = {
+      stdout: [],
+      stderr: []
+    }
+    Open3.popen3([makemkvcon_path, *cmd].join(' ')) do |stdin, stdout_str, stderr_str, wait_thr|
+      stdin.close
+      [[stdout_str, :stdout], [stderr_str, :stderr]].each do |std, type|
+        while (raw_line = std.gets)
+          begin
+            out[type] << raw_line
+            broadcast(:mkv_raw_line, parse_mkv_string(raw_line).first)
+          rescue StandardError => e
+            Rails.logger.error { "Error parsing mkv string: #{e.message}" }
+            Rails.logger.error { e.backtrace.join("\n") }
+          end
+        end
+      end
+      Standard.new(
+        stdout_str: out[:stdout].compact_blank.join,
+        stderr_str: out[:stderr].compact_blank.join,
+        status: wait_thr.value
+      )
+    end
   end
 
   def process_running?(process_name)
@@ -90,7 +119,7 @@ module Shell
   end
 
   def list_drives(noscan: false)
-    makemkvcon(
+    wait_makemkvcon(
       ['-r', '--cache=1', ('--noscan' if noscan), 'info', 'disc:9999'].compact.join(' ')
     ).parsed_mkv.select do |i|
       i.is_a?(MkvParser::DRV) && i.enabled.to_i.positive?

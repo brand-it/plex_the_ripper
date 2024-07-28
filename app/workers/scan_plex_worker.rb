@@ -2,21 +2,22 @@
 
 class ScanPlexWorker < ApplicationWorker
   def perform
-    broadcast_progress(in_progress_component('Scan Plex...', 50, show_percentage: false))
+    broadcast_progress(ScanPlexProcessComponent.new)
     plex_videos.map do |blob|
       blob.video = find_or_create_video(blob)
       blob.episode = search_for_episode(blob, blob.video)
       blob.uploaded_on ||= Time.current
       blob.save!
       self.completed += 1
-      percent_completed = (completed / plex_videos.size.to_f * 100)
+      job.metadata['completed'] = (completed / plex_videos.size.to_f * 100)
       next if next_update.future?
 
-      broadcast_progress(
-        in_progress_component('Updating Database...', percent_completed)
-      )
+      job.save!
+      broadcast_component(ScanPlexProcessComponent.new)
+      @next_update = 1.second.from_now
     end
-    broadcast_progress(completed_component)
+    job.update!(metadata: { 'completed' => 100 })
+    broadcast_component(ScanPlexProcessComponent.new)
   end
 
   def completed
@@ -24,41 +25,6 @@ class ScanPlexWorker < ApplicationWorker
   end
 
   private
-
-  def broadcast_progress(component)
-    cable_ready[BroadcastChannel.channel_name].morph \
-      selector: "##{component.dom_id}",
-      html: render(component, layout: false)
-    cable_ready.broadcast
-    @next_update = nil
-  end
-
-  def completed_component
-    progress_bar = render(
-      ProgressBarComponent.new(
-        completed: 100,
-        status: :success,
-        message: 'Plex scan complete!'
-      ), layout: false
-    )
-    component = ProcessComponent.new(worker: ScanPlexWorker)
-    component.with_body { progress_bar }
-    component
-  end
-
-  def in_progress_component(message, completed, show_percentage: true)
-    progress_bar = render(
-      ProgressBarComponent.new(
-        completed:,
-        status: :info,
-        message: message || 'Scanning Plex...',
-        show_percentage:
-      ), layout: false
-    )
-    component = ProcessComponent.new(worker: ScanPlexWorker)
-    component.with_body { progress_bar }
-    component
-  end
 
   def search_for_movie(blob)
     options = { query: blob.parsed_title, year: blob.parsed_year }.compact

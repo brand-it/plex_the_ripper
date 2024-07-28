@@ -64,6 +64,7 @@ class Backgrounder
 
           Object.const_get(task).perform_async
           schedule[task] = Time.current.to_i + duration
+          sleep 1 # make sure we don't unique all at the same time
         end
       end
     end

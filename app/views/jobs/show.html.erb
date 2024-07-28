@@ -11,8 +11,9 @@
         </div>
       <% end %>
     </div>
-    <% if  @job.arguments.present? || @job.metadata.present? || @job.errored? %>
-      <div class="body">
+    <div class="body">
+      <% metadata = @job.metadata.reject { _1 == 'message' } %>
+      <% if @job.arguments.present? || metadata.present? || @job.errored? %>
         <% if @job.arguments.present? %>
           <div class="mini-console">
             <div class="console">
@@ -24,12 +25,11 @@
           </div>
         <% end %>
 
-        <% if @job.metadata.present? %>
+        <% if metadata.present? %>
           <div class="mini-console">
             <div class="console">
               <h5 class="title">Metadata</h5>
               <% @job.metadata.each do |key, value| %>
-                <% next if key == 'message' %>
                 <p class="pl-0"><%= key %>: <%= value %></p>
               <% end %>
             </div>
@@ -62,10 +62,12 @@
             </div>
           <% end %>
         <% end %>
-      </div>
-    <% end %>
+      <% else %>
+        No Metadata or Backtrace info to show
+      <% end %>
+    </div>
   </div>
 <% end %>
-<div class="console-content">
+<div class="console-content" data-controller="console">
    <%= render JobMessageComponent.new(job: @job) %>
 </div>

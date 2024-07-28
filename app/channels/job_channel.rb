@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class VideoProgressChannel < ApplicationCable::Channel
+class JobChannel < ApplicationCable::Channel
   def subscribed
     stream_from channel_name
   end

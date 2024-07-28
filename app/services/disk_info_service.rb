@@ -2,7 +2,6 @@
 
 class DiskInfoService < ApplicationService
   include Shell
-  include MkvParser
 
   class TitleInfo
     extend Dry::Initializer
@@ -53,15 +52,17 @@ class DiskInfoService < ApplicationService
 
   option :disk_name, Types::String
 
-  def results
+  def call
     tinfos.each do |tinfo|
       find_or_init_title_info(tinfo)
     end
     title_info.values
   end
 
+  private
+
   def info
-    @info ||= makemkvcon("info dev:#{disk_name} -r")
+    @info ||= wait_makemkvcon("info dev:#{disk_name} -r")
   end
 
   def tinfos

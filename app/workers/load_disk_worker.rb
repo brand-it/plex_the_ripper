@@ -7,31 +7,10 @@ class LoadDiskWorker < ApplicationWorker
 
   def perform
     Disk.not_ejected.update_all(ejected: true)
-    reload_page = disks.any?(&:ejected)
-    disks.each { _1.update!(ejected: false) }
-    reload_page ? broadcast_reload! : broadcast_no_disk_found!
-  end
-
-  def disks
-    @disks ||= CreateDisksService.new.tap do |service|
-      service.subscribe(DiskListener.new)
+    Disk.loading.update_all(loading: false)
+    CreateDisksService.new(job:).tap do |service|
+      service.subscribe(DiskListener.new(job:))
+      service.subscribe(MkvDiskLoadListener.new(job:))
     end.call
-  end
-
-  def broadcast_reload!
-    cable_ready[BroadcastChannel.channel_name].reload
-    cable_ready.broadcast
-  end
-
-  def broadcast_no_disk_found!
-    component = LoadDiskProcessComponent.new
-    broadcast(component)
-  end
-
-  def broadcast(component)
-    cable_ready[BroadcastChannel.channel_name].morph \
-      selector: "##{component.dom_id}",
-      html: render(component, layout: false)
-    cable_ready.broadcast
   end
 end

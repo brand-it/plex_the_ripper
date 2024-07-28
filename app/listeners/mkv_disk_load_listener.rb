@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MkvProgressListener
+class MkvDiskLoadListener
   extend Dry::Initializer
   include CableReady::Broadcaster
   include ActionView::Helpers::UrlHelper
@@ -36,8 +36,9 @@ class MkvProgressListener
     if exception
       job.metadata['title'] = "#{video_blob.title} #{exception.message}"
       store_message(exception.message)
+      exception.backtrace.each { store_message(_1) }
     end
-    notify_slack("Failure #{[video_blob.title, exception&.message].compact_blank.join(' ')}\n#{last_message}")
+    notify_slack("Failure #{[video_blob.title, exception&.message, exception&.backtrace&.join("\n")].compact_blank.join(' ')}\n#{last_message}")
     job.save!
 
     update_progress_bar
@@ -50,7 +51,7 @@ class MkvProgressListener
       job.metadata['completed'] ||= 0.0
       job.metadata['completed'] = percentage(mkv_message.current, mkv_message.pmax)
     when MkvParser::PRGT, MkvParser::PRGC
-      job.metadata['title'] = [video_blob&.title, mkv_message.name].compact_blank.join("\n")
+      job.metadata['title'] = "#{video_blob.title}\n#{mkv_message.name}"
     when MkvParser::MSG
       store_message(mkv_message.message)
       update_message_component
@@ -105,29 +106,11 @@ class MkvProgressListener
   end
 
   def update_progress_bar
-    component = RipProcessComponent.new
+    component = LoadDiskProcessComponent.new
     cable_ready[BroadcastChannel.channel_name].morph \
       selector: "##{component.dom_id}",
       html: render(component, layout: false)
     cable_ready.broadcast
-  end
-
-  def eta # rubocop:disable Metrics/MethodLength
-    return if job.metadata['completed'].to_f >= 100.0
-
-    percentage_completed = job.metadata['completed'].to_f
-    elapsed_time = Time.current - job.started_at
-
-    total_time_estimated = elapsed_time / (percentage_completed / 100)
-    remaining_time = total_time_estimated - elapsed_time
-
-    eta = Time.current + remaining_time
-
-    distance_of_time_in_words(eta, Time.current)
-  rescue StandardError => e
-    Rails.logger.debug { "#{e.message} #{job.started_at} #{job.metadata['completed']}" }
-    Rails.logger.debug { e.backtrace.join("\n") }
-    nil
   end
 
   def next_update

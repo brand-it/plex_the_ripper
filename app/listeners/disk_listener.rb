@@ -30,7 +30,7 @@ class DiskListener
   end
 
   def disk_loaded
-    cable_broadcast
+    reload_page!
   end
 
   private

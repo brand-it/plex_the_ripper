@@ -36,10 +36,6 @@ class Disk < ApplicationRecord
   scope :loading, -> { where(loading: true) }
   scope :not_ejected, -> { where(ejected: false) }
   scope :not_loading, -> { where(loading: false) }
-
-  def disk_info
-    @disk_info ||= DiskInfoService.new(disk_name:).results
-  end
   class << self
     include Shell
 

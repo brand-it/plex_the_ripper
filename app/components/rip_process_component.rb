@@ -5,8 +5,12 @@ class RipProcessComponent < ViewComponent::Base
     RipWorker.job
   end
 
+  def job
+    self.class.job
+  end
+
   def hide
-    params[:controller] == 'jobs' && params[:id] == RipWorker.job&.id
+    params[:controller] == 'jobs' && params[:id] == RipWorker.job&.id && params[:action] == 'show'
   end
 
   def dom_id

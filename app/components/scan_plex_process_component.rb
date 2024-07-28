@@ -1,8 +1,22 @@
 # frozen_string_literal: true
 
 class ScanPlexProcessComponent < ViewComponent::Base
+  extend Dry::Initializer
+
   def self.job
     ScanPlexWorker.job
+  end
+
+  def completed
+    job.metadata['completed'].presence || 0.0
+  end
+
+  def status
+    (completed >= 100 ? :success : :info)
+  end
+
+  def job
+    self.class.job
   end
 
   def job_active?

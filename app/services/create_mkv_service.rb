@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class CreateMkvService < ApplicationService
-  include MkvParser
+  include Shell
 
   Result = Struct.new(:mkv_path, :success) do
     def success?
@@ -16,7 +16,7 @@ class CreateMkvService < ApplicationService
   def call
     disk_title.update!(video_blob:)
     broadcast(:mkv_start, video_blob)
-    Result.new(video_blob.tmp_plex_path, create_mkv.success?).tap do |result|
+    Result.new(video_blob.tmp_plex_path, makemkvcon(cmd).success?).tap do |result|
       if result.success?
         rename_file
         video_blob.update!(byte_size:, uploadable: true)
@@ -33,21 +33,6 @@ class CreateMkvService < ApplicationService
 
   private
 
-  def create_mkv
-    @create_mkv ||= Open3.popen2e(cmd) do |stdin, std_out_err, wait_thr|
-      stdin.close
-      while raw_line = std_out_err.gets # rubocop:disable Lint/AssignmentInCondition
-        begin
-          broadcast(:mkv_raw_line, parse_mkv_string(raw_line).first, video_blob)
-        rescue StandardError => e
-          Rails.logger.error { "Error parsing mkv string: #{e.message}" }
-          Rails.logger.error { e.backtrace.join("\n") }
-        end
-      end
-      wait_thr.value
-    end
-  end
-
   def rename_file
     File.rename(tmp_dir.join(disk_title.name), video_blob.tmp_plex_path)
   end
@@ -58,7 +43,6 @@ class CreateMkvService < ApplicationService
 
   def cmd
     [
-      Shellwords.escape(config.settings.makemkvcon_path),
       'mkv',
       Shellwords.escape("dev:#{disk_title.disk.disk_name}"),
       Shellwords.escape(disk_title.title_id),
