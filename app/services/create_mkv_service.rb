@@ -38,7 +38,7 @@ class CreateMkvService < ApplicationService
   end
 
   def byte_size
-    File.size(tmp_dir.join(disk_title.name))
+    File.size(video_blob.tmp_plex_path)
   end
 
   def cmd
