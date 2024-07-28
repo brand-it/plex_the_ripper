@@ -11,7 +11,9 @@ class RipWorker < ApplicationWorker
   option :extra_types, Types::Array.of(Types::String), optional: true, default: -> { [] }
 
   def perform
-    eject_disk if create_mkvs.all?(&:success?)
+    create_mkvs.tap do |results|
+      eject_disk if results.all?(&:success?)
+    end
   end
 
   private

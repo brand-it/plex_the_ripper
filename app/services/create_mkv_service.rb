@@ -11,7 +11,7 @@ class CreateMkvService < ApplicationService
   TMP_DIR = Rails.root.join('tmp/videos')
 
   option :disk_title, Types.Instance(DiskTitle)
-  option :extra_type, Types::Coercible::String, default: -> { VideoBlob::EXTRA_TYPES.first }
+  option :extra_type, Types::Coercible::String, default: -> { VideoBlob::EXTRA_TYPES.first.first }
 
   def call
     disk_title.update!(video_blob:)

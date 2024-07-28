@@ -1,7 +1,7 @@
 <% if hide %>
   <div id="<%= dom_id %>" class="hidden"></div>
 <% else %>
-  <%= render ProcessComponent.new dom_id: do |c| %>
+  <%= render ProcessComponent.new dom_id: dom_id do |c| %>
     <%= c.with_title do %>
       Rip Status
     <% end %>
@@ -12,7 +12,8 @@
             ProgressBarComponent.new(
               completed: job.metadata['completed'],
               status: :info,
-              message: job.metadata['title']
+              message: job.metadata['title'],
+              eta:
             )
           )
         %>

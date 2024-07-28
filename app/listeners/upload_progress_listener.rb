@@ -9,50 +9,47 @@ class UploadProgressListener
 
   option :video_blob, Types.Instance(::VideoBlob)
   option :file_size, Types::Integer
+  option :job, Types.Instance(::Job)
+
   attr_reader :completed
 
-  def update_progress(chunk_size: nil)
-    @completed ||= 0
-    @completed += chunk_size
+  def upload_progress(chunk_size: nil)
+    job.metadata['completed'] ||= 0
+    job.metadata['completed'] += chunk_size
     return if next_update.future?
 
+    job.save!
     update_component
-    @next_update = nil # clear next_update timer
+    @next_update = 1.second.from_now
   end
 
-  def start
+  def upload_start
+    job.metadata['completed'] ||= 0
+    job.metadata['video_blob_id'] = video_blob.id
+    job.save!
     update_component
   end
 
-  def finished
-    @completed = file_size
+  def upload_finished
+    job.metadata['completed'] = file_size
+    job.save!
+    video_blob.update!(uploadable: false, uploaded_on: Time.current)
     update_component
+  end
+
+  def upload_error
+    job.metadata
+    job.save!
   end
 
   private
 
-  def component
-    progress_bar = render(
-      ProgressBarComponent.new(
-        completed: percentage,
-        status: percentage < 100 ? :info : :success,
-        message: video_blob.title
-      ), layout: false
-    )
-    component = ProcessComponent.new(worker: UploadWorker)
-    component.with_body { progress_bar }
-    component
-  end
-
   def update_component
+    component = UploadProcessComponent.new
     cable_ready[BroadcastChannel.channel_name].morph \
       selector: "##{component.dom_id}",
       html: render(component, layout: false)
     cable_ready.broadcast
-  end
-
-  def percentage
-    (@completed.to_i / file_size.to_f) * 100
   end
 
   def next_update

@@ -39,10 +39,35 @@ RSpec.describe VideoBlob do
     it { is_expected.to have_many(:disk_titles).dependent(:nullify) }
   end
 
-  describe 'scopes' do
-    it { is_expected.to have_scope(:optimized).where(optimized: true) }
+  describe 'scopes', :freeze do
     it { is_expected.to have_scope(:checksum).where.not(checksum: nil) }
     it { is_expected.to have_scope(:missing_checksum).where(checksum: nil) }
+    it { is_expected.to have_scope(:optimized).where(optimized: true) }
+    it { is_expected.to have_scope(:uploadable).where(uploadable: true, uploaded_on: nil) }
+
+    it {
+      expect(subject).to have_scope(:uploaded_recently).where(described_class.arel_table[:uploaded_on].gteq(10.minutes.ago))
+    }
+  end
+
+  describe 'extra_types' do
+    subject(:extra_type) { described_class.extra_types }
+
+    it 'defines a list of types' do
+      expect(extra_type).to eq(
+        {
+          'feature_films' => 0,
+          'behind_the_scenes' => 1,
+          'deleted_scenes' => 2,
+          'featurettes' => 3,
+          'interviews' => 4,
+          'scenes' => 5,
+          'shorts' => 6,
+          'trailers' => 7,
+          'other' => 8
+        }
+      )
+    end
   end
 
   describe '#extra_type_directory' do

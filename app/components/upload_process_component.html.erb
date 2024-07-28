@@ -3,14 +3,27 @@
     Upload Status
   <% end %>
   <%= c.with_body do %>
-    <% if uploadable_video_blobs.any? %>
-      <% uploadable_video_blobs.each do |blob| %>
+    <% if uploadable_video_blobs.any? || uploaded_recently_video_blobs.any? %>
+      <% uploaded_recently_video_blobs.each do |blob| %>
         <%=
           render(
             ProgressBarComponent.new(
-              show_percentage: false,
+              completed: 100,
+              status: :success,
+              message: "Uploaded #{blob.title}"
+            )
+          )
+        %>
+      <% end %>
+      <% uploadable_video_blobs.each do |blob| %>
+        <%=
+          video_blob_job = find_job_by_video_blob(blob)
+          render(
+            ProgressBarComponent.new(
+              show_percentage: video_blob_job.present?,
               status: :info,
-              message: "Pending upload #{blob.title}"
+              message: video_blob_job ? "Uploading #{blob.title}" : "Pending upload #{blob.title}",
+              eta: (eta if video_blob_job)
             )
           )
         %>

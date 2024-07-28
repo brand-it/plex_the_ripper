@@ -6,6 +6,6 @@ RSpec.describe LoadDiskProcessComponent, type: :component do
   before { render_inline(described_class.new) }
 
   it 'renders something useful' do
-    expect(rendered_content).to include('Search for TV or Movie')
+    expect(rendered_content).to include('No disks found - insert disk to continue')
   end
 end

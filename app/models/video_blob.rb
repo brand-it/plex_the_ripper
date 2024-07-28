@@ -39,10 +39,18 @@ class VideoBlob < ApplicationRecord
     end
   end
   TvShow = Struct.new(:title, :year, :season, :episode)
-  EXTRA_TYPES = %i[feature_films behind_the_scenes deleted_scenes featurettes interviews scenes shorts trailers
-                   other].freeze
-  EXTRA_TYPE_TO_DIRECTORY = EXTRA_TYPES.to_h { [_1, _1.to_s.humanize.titleize] }
-
+  # Sort order is important don't change...
+  EXTRA_TYPES = {
+    feature_films: { dir_name: 'Feature Films' },
+    behind_the_scenes: { dir_name: 'Behind The Scenes' },
+    deleted_scenes: { dir_name: 'Deleted Scenes' },
+    featurettes: { dir_name: 'Featurettes' },
+    interviews: { dir_name: 'Interviews' },
+    scenes: { dir_name: 'Scenes' },
+    shorts: { dir_name: 'Shorts' },
+    trailers: { dir_name: 'Trailers' },
+    other: { dir_name: 'Other' }
+  }.with_indifferent_access
   VIDEO_FORMATS = [
     '.avi', '.mp4', '.mkv', '.mov', '.wmv', '.flv', '.webm', '.mpeg',
     '.mpg', '.3gp', '.m4v', '.swf', '.rm', '.vob',
@@ -62,15 +70,17 @@ class VideoBlob < ApplicationRecord
   TV_SHOW_WITHOUT_YEAR = /#{TITLE_MATCHER}.*-\s+#{TV_SHOW_SEASON_EPISODE}\s+-\s+(?<date>.*)\s+-\s+(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
   TV_SHOW_NUMBER_ONLY = /#{TV_SHOW_SEASON_EPISODE}\.*#{Regexp.union(VIDEO_FORMATS)}/
 
-  enum :extra_type, EXTRA_TYPES
+  enum :extra_type, EXTRA_TYPES.keys
 
   belongs_to :video
   belongs_to :episode, optional: true
   has_many :disk_titles, dependent: :nullify
 
-  scope :optimized, -> { where(optimized: true) }
   scope :checksum, -> { where.not(checksum: nil) }
   scope :missing_checksum, -> { where(checksum: nil) }
+  scope :optimized, -> { where(optimized: true) }
+  scope :uploadable, -> { where(uploadable: true, uploaded_on: nil) }
+  scope :uploaded_recently, -> { where(arel_table[:uploaded_on].gteq(10.minutes.ago)) }
 
   delegate :title, :year, :episode, :season, to: :parsed, allow_nil: true, prefix: true
   delegate :plex_name, to: :video, prefix: true, allow_nil: true
@@ -158,7 +168,7 @@ class VideoBlob < ApplicationRecord
   end
 
   def extra_type_directory
-    EXTRA_TYPE_TO_DIRECTORY[extra_type.to_sym]
+    EXTRA_TYPES[extra_type][:dir_name]
   end
 
   def parsed
@@ -250,10 +260,16 @@ class VideoBlob < ApplicationRecord
   end
 
   def set_extra_type_from_key
-    return if key.nil?
+    return unless feature_films?
 
-    self.extra_type = EXTRA_TYPE_TO_DIRECTORY.find { |_, name| key.include?(name) }&.first
-    self.extra_type ||= EXTRA_TYPES.first
+    self.extra_type = match_extra_type_by_dir(key) ||
+                      EXTRA_TYPES.first.first
+  end
+
+  def match_extra_type_by_dir(name)
+    return if name.blank?
+
+    VideoBlob::EXTRA_TYPES.find { name.include?(_1[1][:dir_name]) }&.first
   end
 
   def set_extra_type_number
