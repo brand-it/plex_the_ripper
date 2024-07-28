@@ -33,14 +33,25 @@ class MkvDiskLoadListener
   def mkv_failure(video_blob, exception = nil)
     @video_blob = video_blob
     job.metadata['completed'] = 0.0
+    backtrace = exception&.backtrace&.map do |trace|
+      trace.gsub(Rails.root.to_s, 'ROOT').strip
+    end || []
+
     if exception
-      job.metadata['title'] = "#{video_blob.title} #{exception.message}"
+      job.metadata['title'] = exception.message
       store_message(exception.message)
-      exception.backtrace.each { store_message(_1) }
+      backtrace.each { store_message(_1) }
     end
+
     notify_slack(
-      "Failure #{[video_blob.title, exception&.message,
-                  exception&.backtrace&.join("\n")].compact_blank.join(' ')}\n#{last_message}"
+      "Failure #{
+        [
+          video_blob.title,
+          exception&.message,
+          backtrace.join("\n"),
+          last_message
+        ].compact_blank.join("\n")
+      }"
     )
     job.save!
 
