@@ -48,8 +48,8 @@ class MkvProgressListener
         [
           video_blob.title,
           exception&.message,
-          backtrace.join("\n"),
-          last_message
+          last_message,
+          ("```#{backtrace.join("\n")}```" if backtrace.any?)
         ].compact_blank.join("\n")
       }"
     )
