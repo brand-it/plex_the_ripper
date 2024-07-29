@@ -22,7 +22,7 @@ export default class extends Controller {
   }
 
   isAtBottom() {
-    return this.consoleTarget.scrollHeight - this.consoleTarget.clientHeight <= this.consoleTarget.scrollTop + 50;
+    return this.consoleTarget.scrollHeight - this.consoleTarget.clientHeight <= this.consoleTarget.scrollTop + 200;
   }
 
   scrollToBottom() {
