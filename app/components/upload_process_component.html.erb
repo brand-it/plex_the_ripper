@@ -23,7 +23,7 @@
             ProgressBarComponent.new(
               show_percentage: video_blob_job.present?,
               status: :info,
-              completed: video_blob_job&.completed
+              completed: video_blob_job&.completed,
               message: video_blob_job ? "Uploading #{blob.title}" : "Pending upload #{blob.title}",
               eta: (eta if video_blob_job)
             )
