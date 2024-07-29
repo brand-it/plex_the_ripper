@@ -3,9 +3,6 @@
 module Ftp
   class VideoScannerService < Base
     Result = Struct.new(:movies, :tv_shows)
-    def self.call
-      new.call
-    end
 
     def call
       collect_mkv_files(plex_config.settings_movie_path) +

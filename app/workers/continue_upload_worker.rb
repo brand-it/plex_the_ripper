@@ -12,6 +12,6 @@ class ContinueUploadWorker < ApplicationWorker
   end
 
   def pending_video_blobs
-    @pending_video_blobs ||= ::VideoBlob.where(uploadable: true)
+    @pending_video_blobs ||= ::VideoBlob.uploadable
   end
 end

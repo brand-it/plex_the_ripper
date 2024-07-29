@@ -14,8 +14,8 @@ class UploadProgressListener
   attr_reader :completed
 
   def upload_progress(chunk_size: nil)
-    job.metadata['completed'] ||= 0
-    job.metadata['completed'] += chunk_size
+    job.completed ||= 0
+    job.completed += chunk_size
     return if next_update.future?
 
     job.save!
@@ -37,8 +37,8 @@ class UploadProgressListener
     update_component
   end
 
-  def upload_error
-    job.metadata
+  def upload_error(exception)
+    job.metadata['message'] = exception.message
     job.save!
   end
 

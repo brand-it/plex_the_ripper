@@ -18,29 +18,29 @@ class MkvProgressListener
 
   def mkv_start(video_blob)
     @video_blob = video_blob
-    job.metadata['completed'] = 0.0
+    job.completed = 0
     update_progress_bar
     job.save!
   end
 
   def mkv_success(video_blob)
     @video_blob = video_blob
-    job.metadata['completed'] = 100.0
+    job.completed = 100
     update_progress_bar
     job.save!
   end
 
   def mkv_failure(video_blob, exception = nil)
     @video_blob = video_blob
-    job.metadata['completed'] = 0.0
+    job.completed = 0
     backtrace = exception&.backtrace&.map do |trace|
       trace.gsub(Rails.root.to_s, 'ROOT').strip
     end || []
 
     if exception
-      job.metadata['title'] = exception.message
-      store_message(exception.message)
-      backtrace.each { store_message(_1) }
+      job.title = exception.message
+      job.add_message(exception.message)
+      backtrace.each { job.add_message(_1) }
     end
 
     notify_slack(
@@ -62,12 +62,11 @@ class MkvProgressListener
   def mkv_raw_line(mkv_message)
     case mkv_message
     when MkvParser::PRGV
-      job.metadata['completed'] ||= 0.0
-      job.metadata['completed'] = percentage(mkv_message.current, mkv_message.pmax)
+      job.completed = percentage(mkv_message.current, mkv_message.pmax)
     when MkvParser::PRGT, MkvParser::PRGC
-      job.metadata['title'] = [video_blob&.title, mkv_message.name].compact_blank.join("\n")
+      job.title = [video_blob&.title, mkv_message.name].compact_blank.join("\n")
     when MkvParser::MSG
-      store_message(mkv_message.message)
+      job.add_message(mkv_message.message)
       update_message_component
     end
 
@@ -79,14 +78,6 @@ class MkvProgressListener
   def reload_page!
     cable_ready[BroadcastChannel.channel_name].reload
     cable_ready.broadcast
-  end
-
-  def store_message(mkv_message)
-    return if mkv_message.blank?
-
-    job.metadata['message'] ||= []
-    job.metadata['message'] << mkv_message
-    job.metadata['message'].compact_blank!
   end
 
   def last_message
@@ -125,24 +116,6 @@ class MkvProgressListener
       selector: "##{component.dom_id}",
       html: render(component, layout: false)
     cable_ready.broadcast
-  end
-
-  def eta
-    return if job.metadata['completed'].to_f >= 100.0
-
-    percentage_completed = job.metadata['completed'].to_f
-    elapsed_time = Time.current - job.started_at
-
-    total_time_estimated = elapsed_time / (percentage_completed / 100)
-    remaining_time = total_time_estimated - elapsed_time
-
-    eta = Time.current + remaining_time
-
-    distance_of_time_in_words(eta, Time.current)
-  rescue StandardError => e
-    Rails.logger.debug { "#{e.message} #{job.started_at} #{job.metadata['completed']}" }
-    Rails.logger.debug { e.backtrace.join("\n") }
-    nil
   end
 
   def next_update

@@ -105,6 +105,27 @@ class Job < ApplicationRecord
     ACTIVE_STATUSES.include?(status.to_sym) && id.present?
   end
 
+  def add_message(message)
+    return if message.blank?
+
+    metadata['message'] ||= []
+    metadata['message'] << message
+    metadata['message'].compact_blank!
+    message
+  end
+
+  def title=(value)
+    metadata['title'] = value
+  end
+
+  def completed
+    metadata['completed']
+  end
+
+  def completed=(value)
+    metadata['completed'] = value.to_f
+  end
+
   private
 
   def bust_cache

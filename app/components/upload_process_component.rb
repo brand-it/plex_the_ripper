@@ -11,10 +11,13 @@ class UploadProcessComponent < ViewComponent::Base
 
   def uploadable_video_blobs
     @uploadable_video_blobs ||= VideoBlob.uploadable
+                                         .order(updated_at: :desc)
   end
 
   def uploaded_recently_video_blobs
     @uploaded_recently_video_blobs ||= VideoBlob.uploaded_recently
+                                                .order(uploaded_on: :desc)
+                                                .limit(3)
   end
 
   def job_active?

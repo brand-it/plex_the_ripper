@@ -2,29 +2,30 @@
 
 class ScanPlexWorker < ApplicationWorker
   def perform
-    broadcast_progress(ScanPlexProcessComponent.new)
-    plex_videos.map do |blob|
+    broadcast_component(ScanPlexProcessComponent.new)
+    video_blobs.map do |blob|
       blob.video = find_or_create_video(blob)
       blob.episode = search_for_episode(blob, blob.video)
       blob.uploaded_on ||= Time.current
-      blob.save!
+      job.add_message("Failed create video from #{blob.key}") unless blob.save
       self.completed += 1
-      job.metadata['completed'] = (completed / plex_videos.size.to_f * 100)
+      job.completed = (completed / video_blobs.size.to_f * 100)
       next if next_update.future?
 
       job.save!
       broadcast_component(ScanPlexProcessComponent.new)
       @next_update = 1.second.from_now
     end
-    job.update!(metadata: { 'completed' => 100 })
+    job.update!(completed: 100)
     broadcast_component(ScanPlexProcessComponent.new)
+    job
   end
+
+  private
 
   def completed
     @completed ||= 0
   end
-
-  private
 
   def search_for_movie(blob)
     options = { query: blob.parsed_title, year: blob.parsed_year }.compact
@@ -79,8 +80,8 @@ class ScanPlexWorker < ApplicationWorker
     @videos ||= Video.all.to_a
   end
 
-  def plex_videos
-    @plex_videos ||= Ftp::VideoScannerService.call
+  def video_blobs
+    @video_blobs ||= Ftp::VideoScannerService.call
   end
 
   def next_update
