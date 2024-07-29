@@ -80,6 +80,7 @@ class VideoBlob < ApplicationRecord
   scope :missing_checksum, -> { where(checksum: nil) }
   scope :optimized, -> { where(optimized: true) }
   scope :uploadable, -> { where(uploadable: true, uploaded_on: nil) }
+  scope :uploaded, -> { where(uploadable: false).where.not(uploaded_on: nil) }
   scope :uploaded_recently, -> { where(arel_table[:uploaded_on].gteq(10.minutes.ago)) }
 
   delegate :title, :year, :episode, :season, to: :parsed, allow_nil: true, prefix: true
