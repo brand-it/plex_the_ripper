@@ -6,7 +6,7 @@ class LoadDiskWorker < ApplicationWorker
   end
 
   def perform
-    Disk.not_ejected.update_all(ejected: true)
+    Disk.where.not(id: Disk.verified_disks.select(:id)).not_ejected.update_all(ejected: true)
     Disk.loading.update_all(loading: false)
     CreateDisksService.new(job:).tap do |service|
       service.subscribe(DiskListener.new(job:))
