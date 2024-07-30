@@ -7,8 +7,6 @@ class MkvProgressListener
   include ActionView::Helpers::DateHelper
   include SlackUtility
 
-  NOTIFICATION_TITLE = 'Saving to MKV file'
-
   delegate :job_path, to: 'Rails.application.routes.url_helpers'
   delegate :render, to: :ApplicationController
 
