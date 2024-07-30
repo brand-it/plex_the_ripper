@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-class MkvProgressListener
+class MkvDiskLoadListener
   extend Dry::Initializer
   include CableReady::Broadcaster
   include ActionView::Helpers::UrlHelper
@@ -16,21 +16,21 @@ class MkvProgressListener
 
   def mkv_start(video_blob)
     @video_blob = video_blob
-    job.completed = 0
+    job.completed = 0.0
     update_progress_bar
     job.save!
   end
 
   def mkv_success(video_blob)
     @video_blob = video_blob
-    job.completed = 100
+    job.completed = 100.0
     update_progress_bar
     job.save!
   end
 
   def mkv_failure(video_blob, exception = nil)
     @video_blob = video_blob
-    job.completed = 0
+    job.completed = 0.0
     backtrace = exception&.backtrace&.map do |trace|
       trace.gsub(Rails.root.to_s, 'ROOT').strip
     end || []
@@ -62,7 +62,7 @@ class MkvProgressListener
     when MkvParser::PRGV
       job.completed = percentage(mkv_message.current, mkv_message.pmax)
     when MkvParser::PRGT, MkvParser::PRGC
-      job.title = [video_blob&.title, mkv_message.name].compact_blank.join("\n")
+      job.title = "#{video_blob.title}\n#{mkv_message.name}"
     when MkvParser::MSG
       job.add_message(mkv_message.message)
       update_message_component
@@ -109,7 +109,7 @@ class MkvProgressListener
   end
 
   def update_progress_bar
-    component = RipProcessComponent.new
+    component = LoadDiskProcessComponent.new
     cable_ready[BroadcastChannel.channel_name].morph \
       selector: "##{component.dom_id}",
       html: render(component, layout: false)

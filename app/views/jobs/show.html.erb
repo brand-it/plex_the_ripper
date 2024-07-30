@@ -1,53 +1,73 @@
-<h3 class="mb-1 text-white">
-  <%= @job.name.titleize %>
-  <small class="text-muted"><%= @job.status %></small>
-</h3>
-<% if @job.started_at %>
-  <div class="mb-2">
-    Started At: <%= @job.started_at.to_fs(:usa_pretty)%>
-  </div>
-<% end %>
-
-<% if @job.arguments.present? %>
-  <h5 class="mb-1 text-white">Arguments</h5>
-  <% @job.arguments.each do |key, value| %>
-    <p class="pl-0"><%= key %>: <%= value %></p>
-  <% end %>
-<% end %>
-
-<% if @job.metadata.present? %>
-  <h5 class="mb-1 text-white">Metadata</h5>
-  <% @job.metadata.each do |key, value| %>
-    <% next if key == 'message' %>
-    <p class="pl-0"><%= key %>: <%= value %></p>
-  <% end %>
-<% end %>
-
-<% if @job.errored? %>
-  <div class='bg-dark text-danger p-2 rounded-top'>
-    <%= @job.error_class %>
-    <%= @job.error_message %>
-  </div>
-  <% if @job.backtrace.any? %>
-    <div class='p-2 rounded-bottom border-bottom overflow-auto lh-sm text-nowrap bg-dark text-light'>
-      <% @job.backtrace.each do |trace| %>
-        <% next unless trace.include?(Rails.root.to_s) %>
-        <%= trace.gsub(Rails.root.to_s, 'ROOT').strip %><br/>
+<% content_for :sidebar_before do %>
+  <div class="bg-process">
+    <div class="header">
+      <h4>
+        <%= @job.name.titleize %>
+        <small class="text-muted"><%= @job.status %></small>
+      </h4>
+      <% if @job.started_at %>
+        <div class="mb-2">
+          Started At: <%= @job.started_at.to_fs(:usa_pretty)%>
+        </div>
       <% end %>
     </div>
-    <div class='bg-dark text-danger p-2 rounded-top'>Full Trace</div>
-    <div class='p-2 rounded-bottom overflow-auto lh-sm text-nowrap bg-dark text-light'>
-      <% @job.backtrace.each do |trace| %>
-        <%= trace.strip %><br/>
+    <div class="body">
+      <% metadata = @job.metadata.reject { _1 == 'message' } %>
+      <% if @job.arguments.present? || metadata.present? || @job.errored? %>
+        <% if @job.arguments.present? %>
+          <div class="mini-console">
+            <div class="console">
+              <div class='title'>Arguments</div>
+              <% @job.arguments.each do |key, value| %>
+                <p class="pl-0"><%= key %>: <%= value %></p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <% if metadata.present? %>
+          <div class="mini-console">
+            <div class="console">
+              <h5 class="title">Metadata</h5>
+              <% @job.metadata.each do |key, value| %>
+                <p class="pl-0"><%= key %>: <%= value %></p>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+
+        <% if @job.errored? %>
+          <div class="mini-console">
+            <div class='title text-danger'>
+              <%= @job.error_class %>
+              <%= @job.error_message %>
+            </div>
+            <% if @job.backtrace.any? %>
+              <div class="console">
+                <% @job.backtrace.each do |trace| %>
+                  <% next unless trace.include?(Rails.root.to_s) %>
+                  <p><%= trace.gsub(Rails.root.to_s, 'ROOT').strip %></p>
+                <% end %>
+              </div>
+            <% end %>
+          </div>
+          <% if @job.backtrace.any? %>
+            <div class="mini-console">
+              <div class='title'>Full Trace</div>
+              <div class="console">
+                <% @job.backtrace.each do |trace| %>
+                  <p><%= trace.strip %></p>
+                <% end %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      <% else %>
+        No Metadata or Backtrace info to show
       <% end %>
     </div>
-  <% end %>
-<% end %>
-
-<div class='row min-vh-100'>
-  <div class="col-12">
-    <div class="progress-message text-white bg-black rounded-4 p-4" style="overflow-y: scroll; min-height: 100%; max-height: 100%;">
-      <%= render JobMessageComponent.new(job: @job) %>
-    </div>
   </div>
+<% end %>
+<div class="console-content" data-controller="console">
+   <%= render JobMessageComponent.new(job: @job) %>
 </div>

@@ -1,0 +1,24 @@
+<%= render ProcessComponent.new dom_id: dom_id do |c| %>
+  <%= c.with_title do %>
+    Disk Status
+  <% end %>
+  <%= c.with_body do %>
+    <% if message.present? %>
+      <p><%= message %></p>
+    <% elsif job_active? && disks_loading.any? %>
+      <% disks_loading.each do |disk| %>
+        <p class="mb-1">Loading <%= link_to disk.name, the_movie_dbs_path(search: { query: disk.name.titleize }) %> ...</p>
+      <% end %>
+    <% elsif disks_not_ejected.any? %>
+      <% disks_not_ejected.each do |disk| %>
+        <p class="mb-0">
+          <%= link_to disk.name, the_movie_dbs_path(search: { query: disk.name.titleize }) %> is ready to be ripped. <%= link_to 'eject', eject_disk_path(disk), data: { turbo_method: :post } %>
+        </p>
+      <% end %>
+    <% elsif job_active? %>
+      <p class="mb-1">Loading disk info ...</p>
+    <% else %>
+      <span>No disks found - insert disk to continue</span>
+    <% end %>
+  <% end %>
+<% end %>

@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module Ftp
-  class Base
-    extend Dry::Initializer
-    option :plex_config, default: -> { Config::Plex.newest }
+  class Base < ::ApplicationService
     option :max_retries, Types::Integer, default: -> { 20 }
 
     DEFAULT_RESCUES = [

@@ -5,8 +5,14 @@ class UploadWorker < ApplicationWorker
 
   def perform
     video_blob = VideoBlob.find(video_blob_id)
+    return unless video_blob.uploadable?
+
     service = Ftp::UploadMkvService.new(video_blob:)
-    service.subscribe(UploadProgressListener.new(video_blob:, file_size: video_blob.byte_size))
+    service.subscribe(UploadProgressListener.new(
+                        video_blob:,
+                        file_size: video_blob.byte_size,
+                        job:
+                      ))
     service.call
   end
 end

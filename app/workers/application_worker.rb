@@ -52,6 +52,13 @@ class ApplicationWorker
     end
   end
 
+  def broadcast_component(component)
+    cable_ready[BroadcastChannel.channel_name].morph \
+      selector: "##{component.dom_id}",
+      html: render(component, layout: false)
+    cable_ready.broadcast
+  end
+
   def enqueue?
     true # Override in subclass to determine if the job should be enqueued
   end

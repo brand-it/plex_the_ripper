@@ -4,6 +4,9 @@
 
 import { application } from "./application"
 
+import ConsoleController from "./console_controller"
+application.register("console", ConsoleController)
+
 import PaginationController from "./pagination_controller"
 application.register("pagination", PaginationController)
 

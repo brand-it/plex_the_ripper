@@ -16,13 +16,14 @@ RSpec.describe RipWorker, type: :worker do
     subject(:perform) { worker.perform }
 
     let(:stub) { instance_double(CreateMkvService, :call) }
+    let(:stub_result) { instance_double(CreateMkvService::Result, success?: true) }
 
     before do
       allow(CreateMkvService).to receive(:new).and_return(stub)
       allow(stub).to receive(:subscribe)
-      allow(stub).to receive(:call)
+      allow(stub).to receive(:call).and_return(stub_result)
     end
 
-    it { expect { perform }.not_to raise_error }
+    it { is_expected.to eq([stub_result]) }
   end
 end

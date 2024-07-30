@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module TheMovieDb
-  class TvUpdateService
-    extend Dry::Initializer
-
+  class TvUpdateService < ApplicationService
     PERMITTED_PARAMS = %w[
       name
       original_name
@@ -17,12 +15,6 @@ module TheMovieDb
 
     param :tv, Types.Instance(::Tv)
     param :the_movie_db_details, Types::Coercible::Hash, default: -> { tv.the_movie_db_details }
-
-    class << self
-      def call(*)
-        new(*).call
-      end
-    end
 
     def call
       tv.attributes = tv_params.symbolize_keys
