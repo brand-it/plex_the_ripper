@@ -16,7 +16,9 @@ class ApplicationWorker
       return unless found_job.worker.enqueue?
 
       found_job.save!
+      Rails.logger.info("#{found_job.worker.class}.perform_async(#{found_job.id})")
       semaphore.synchronize { enqueued_jobs.add(found_job.id) }
+
       found_job
     end
 

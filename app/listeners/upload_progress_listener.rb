@@ -23,7 +23,7 @@ class UploadProgressListener
     @next_update = 1.second.from_now
   end
 
-  def upload_start
+  def upload_started
     job.metadata['completed'] ||= 0
     job.metadata['video_blob_id'] = video_blob.id
     job.save!

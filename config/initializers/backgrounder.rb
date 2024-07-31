@@ -28,11 +28,11 @@ class Backgrounder
     def shutdown
       Rails.logger.info "Shutting down background #{TOTAL_WORKERS} workers and scheduler"
       Timeout.timeout(5) do
-        Array.wrap(@threads).each(&:stop)
+        Array.wrap(@threads).each { Thread.stop(_1) }
       end
     rescue StandardError => e
       Rails.logger.warn "Warning: #{e.message}"
-      Array.wrap(@threads).each(&:kill)
+      Array.wrap(@threads).each { Thread.kill(_1) }
     end
 
     private
