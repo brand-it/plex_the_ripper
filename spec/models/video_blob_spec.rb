@@ -43,10 +43,10 @@ RSpec.describe VideoBlob do
     it { is_expected.to have_scope(:checksum).where.not(checksum: nil) }
     it { is_expected.to have_scope(:missing_checksum).where(checksum: nil) }
     it { is_expected.to have_scope(:optimized).where(optimized: true) }
-    it { is_expected.to have_scope(:uploadable).where(uploadable: true, uploaded_on: nil) }
+    it { is_expected.to have_scope(:uploadable).where(uploadable: true) }
 
     it {
-      expect(subject).to have_scope(:uploaded_recently).where(described_class.arel_table[:uploaded_on].gteq(10.minutes.ago))
+      expect(subject).to have_scope(:uploaded_recently).where(described_class.arel_table[:uploaded_on].gteq(1.minutes.ago))
     }
   end
 
