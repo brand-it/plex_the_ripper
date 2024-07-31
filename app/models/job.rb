@@ -61,7 +61,6 @@ class Job < ApplicationRecord
 
   before_save :set_ended_at, if: :status_changed?
   before_save :set_started_at, if: :status_changed?
-  before_save :bust_cache, if: :status_changed?
 
   scope :active, -> { where(status: ACTIVE_STATUSES) }
   scope :completed, -> { where(status: COMPLETED_STATUSES) }
@@ -79,12 +78,15 @@ class Job < ApplicationRecord
     update!(status: :succeeded)
   rescue StandardError => e
     record_exception!(e)
+    broadcast_page_reload!
+    nil
   end
 
   def worker
     @worker ||= name.constantize.new(**arguments.symbolize_keys.merge(job: self))
   rescue StandardError => e
     record_exception!(e)
+    broadcast_page_reload!
     nil
   end
 
@@ -128,10 +130,6 @@ class Job < ApplicationRecord
 
   private
 
-  def bust_cache
-    Rails.cache.delete('active_jobs')
-  end
-
   def set_ended_at
     return unless COMPLETED_STATUSES.include?(status.to_sym) || STOPPING_STATUSES.include?(status.to_sym)
 
@@ -142,5 +140,10 @@ class Job < ApplicationRecord
     return unless ACTIVE_STATUSES.include?(status.to_sym)
 
     self.started_at ||= Time.current
+  end
+
+  def broadcast_page_reload!
+    cable_ready[BroadcastChannel.channel_name].reload
+    cable_ready.broadcast
   end
 end

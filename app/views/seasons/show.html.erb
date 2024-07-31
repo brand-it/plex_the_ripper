@@ -48,10 +48,10 @@
           </td>
           <td class="text-center">
             <h1>
-              <% if episode.video_blob&.uploaded? %>
-                <%= icon('square') %>
-              <% else %>
+              <% if episode.video_blobs.any?(&:uploaded?) %>
                 <%= icon('square-check') %>
+              <% else %>
+                <%= icon('square') %>
               <% end %>
             </h1>
           </td>

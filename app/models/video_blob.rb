@@ -81,7 +81,7 @@ class VideoBlob < ApplicationRecord
   scope :optimized, -> { where(optimized: true) }
   scope :uploadable, -> { where(uploadable: true, uploaded_on: nil) }
   scope :uploaded, -> { where(uploadable: false).where.not(uploaded_on: nil) }
-  scope :uploaded_recently, -> { where(arel_table[:uploaded_on].gteq(10.minutes.ago)) }
+  scope :uploaded_recently, -> { where(arel_table[:uploaded_on].gteq(1.minute.ago)) }
 
   delegate :title, :year, :episode, :season, to: :parsed, allow_nil: true, prefix: true
   delegate :plex_name, to: :video, prefix: true, allow_nil: true
@@ -261,7 +261,7 @@ class VideoBlob < ApplicationRecord
   end
 
   def set_extra_type_from_key
-    return unless feature_films?
+    return if extra_type.present?
 
     self.extra_type = match_extra_type_by_dir(key) ||
                       EXTRA_TYPES.first.first
@@ -270,7 +270,7 @@ class VideoBlob < ApplicationRecord
   def match_extra_type_by_dir(name)
     return if name.blank?
 
-    VideoBlob::EXTRA_TYPES.find { name.include?(_1[1][:dir_name]) }&.first
+    EXTRA_TYPES.find { name.include?(_1[1][:dir_name]) }&.first
   end
 
   def set_extra_type_number

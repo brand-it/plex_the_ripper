@@ -10,9 +10,9 @@ class Backgrounder
 
   CRON_TASKS = {
     'ContinueUploadWorker' => 60.seconds.to_i,
-    'ScanPlexWorker' => 10.minutes.to_i,
+    'ScanPlexWorker' => 1.hour.to_i,
     'LoadDiskWorker' => 5.seconds.to_i,
-    'CleanupJobWorker' => 1.minute.to_i
+    'CleanupJobWorker' => 1.hour.to_i
   }.freeze
 
   class << self

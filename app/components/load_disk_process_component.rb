@@ -3,13 +3,23 @@
 class LoadDiskProcessComponent < ViewComponent::Base
   extend Dry::Initializer
 
-  option :message, Types::String.optional, optional: true
   def self.job
     LoadDiskWorker.job
   end
 
   def job_active?
-    LoadDiskWorker.job&.active?
+    job&.active?
+  end
+
+  def job
+    @job ||= self.class.job
+  end
+
+  def recent_job
+    @recent_job ||= Job.where(name: 'LoadDiskWorker')
+                       .completed
+                       .order(created_at: :desc)
+                       .first
   end
 
   def disks_loading

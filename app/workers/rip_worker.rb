@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 class RipWorker < ApplicationWorker
-  include ActionView::Helpers::UrlHelper
-  include ActionView::Helpers::DateHelper
-
-  delegate :movie_url, :tv_season_url, to: 'Rails.application.routes.url_helpers'
-
   option :disk_id, Types::Integer
   option :disk_title_ids, Types::Array.of(Types::Integer)
   option :extra_types, Types::Array.of(Types::String), optional: true, default: -> { [] }
+
+  def enqueue?
+    true
+  end
 
   def perform
     create_mkvs.tap do |results|

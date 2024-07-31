@@ -49,18 +49,4 @@ class DiskListener
     cable_ready[BroadcastChannel.channel_name].reload
     cable_ready.broadcast
   end
-
-  def redirect_to_season_or_movie
-    reload_page! if redirect_url.blank?
-    cable_ready[BroadcastChannel.channel_name].redirect_to(url: redirect_url)
-    cable_ready.broadcast
-  end
-
-  def redirect_url
-    if disk.video.is_a?(Movie)
-      movie_url(disk.video)
-    elsif disk.video.is_a?(Tv)
-      tv_season_url(disk.episode.season.tv, disk.episode.season)
-    end
-  end
 end
