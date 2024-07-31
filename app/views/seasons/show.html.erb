@@ -12,7 +12,7 @@
 </nav>
 <hr/>
 
-<%= simple_form_for :episodes, url: rip_tv_season_path(@tv, @season) do |f| %>
+<%= simple_form_for :episodes, url: rip_tv_season_path(@tv, @season), class: 'pb-4' do |f| %>
   <%= hidden_field_tag :disk_id, @disks.first&.id %>
   <table class="table">
     <thead>

@@ -3,7 +3,7 @@
 class LoadDiskWorker < ApplicationWorker
   include Shell
   def enqueue?
-    Disk.verified_disks.count != devices.count(&:optical?)
+    Disk.not_ejected.count != devices.count(&:optical?)
   end
 
   def perform

@@ -14,6 +14,10 @@ class UploadProcessComponent < ViewComponent::Base
                                          .order(updated_at: :desc)
   end
 
+  def percentage(completed, total)
+    (completed.to_i / total.to_f) * 100
+  end
+
   def uploaded_recently_video_blobs
     @uploaded_recently_video_blobs ||= VideoBlob.uploaded_recently
                                                 .order(uploaded_on: :desc)
@@ -36,5 +40,21 @@ class UploadProcessComponent < ViewComponent::Base
     return if blob.nil? || !job_active?
 
     job if job.metadata['video_blob_id'].to_i == blob.id
+  end
+
+  def eta(job, blob)
+    percentage_completed = percentage(job.completed, blob.byte_size)
+    elapsed_time = Time.current - job.started_at
+
+    total_time_estimated = elapsed_time / (percentage_completed / 100)
+    remaining_time = total_time_estimated - elapsed_time
+
+    eta = Time.current + remaining_time
+
+    distance_of_time_in_words(eta, Time.current)
+  rescue StandardError => e
+    Rails.logger.debug { "#{e.message} #{job.started_at} #{job.completed}" }
+    Rails.logger.debug { e.backtrace.join("\n") }
+    nil
   end
 end
