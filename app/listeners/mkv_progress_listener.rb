@@ -68,7 +68,6 @@ class MkvProgressListener
 
   private
 
-
   def reload_page!
     cable_ready[BroadcastChannel.channel_name].reload
     cable_ready.broadcast
