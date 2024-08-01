@@ -33,7 +33,36 @@ body {
 
 body {
   font-family: "Lucida Console", Monaco, monospace;
+}
+
+.height-100 {
+  height: 100%;
+}
+
+.height-95 {
+  height: 95%;
+}
+
+.height-60 {
+  height: 60px;
+}
+
+// Console for basic shell output
+.console-content {
   display: flex;
+  flex-direction: column;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+
+  .console {
+    background-color: #000;
+    color: #FFF;
+    flex-grow: 1;
+    height: 100%;
+    overflow-y: auto;
+    padding: 10px;
+  }
 }
 
 .debug_dump {
@@ -86,15 +115,10 @@ body {
   width: 225px;
 }
 
-.height-60 {
-  height: 60px;
-}
-
 .display-flex {
   display: flex;
   flex-wrap: wrap;
 }
-
 
 .img-poster-btn {
   --bs-btn-color: #f8f9fa;
@@ -112,4 +136,37 @@ body {
   --bs-btn-disabled-border-color: #f8f9fa;
   --bs-gradient: none;
   border-radius: 0.1rem;
+}
+
+.mini-console {
+  .title {
+    overflow-y: auto;
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    white-space: nowrap !important;
+    line-height: 1.25;
+    padding: 0.5rem !important;
+    border-bottom: var(--bs-border-width) var(--bs-border-style) var(--bs-border-color) !important;
+    border-top-left-radius: var(--bs-border-radius) !important;
+    border-top-right-radius: var(--bs-border-radius) !important;
+  }
+
+  .console {
+    overflow-y: auto;
+    --bs-bg-opacity: 1;
+    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+    border-bottom-right-radius: var(--bs-border-radius) !important;
+    border-bottom-left-radius: var(--bs-border-radius) !important;
+    --bs-text-opacity: 1;
+    color: rgba(var(--bs-light-rgb), var(--bs-text-opacity)) !important;
+    white-space: nowrap !important;
+    line-height: 1.25 !important;
+    padding: 0.5rem !important;
+    margin-bottom: 0.25rem !important;
+    height: 100px;
+
+    p {
+      margin-bottom: 0px;
+    }
+  }
 }

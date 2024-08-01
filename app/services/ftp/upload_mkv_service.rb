@@ -8,12 +8,16 @@ module Ftp
     option :video_blob, Types.Instance(::VideoBlob)
 
     def call
-      broadcast(:started)
+      broadcast(:upload_started)
       ftp_destroy_if_file_exists
       ftp_create_directory
       try_to { ftp_upload_file }
       tmp_destroy_folder
-      broadcast(:finished)
+      mark_as_uploaded!
+      broadcast(:upload_finished)
+    rescue StandardError => e
+      broadcast(:upload_error, e)
+      raise e
     end
 
     private
@@ -38,12 +42,12 @@ module Ftp
 
     def ftp_upload_file
       ftp.putbinaryfile(file, video_blob.plex_path) do |chunk|
-        broadcast(:update_progress, chunk_size: chunk.size)
+        broadcast(:upload_progress, chunk_size: chunk.size)
       end
     end
 
     def mark_as_uploaded!
-      video_blob.update!(uploaded_on: Time.current)
+      video_blob.update!(uploaded_on: Time.current, uploadable: false)
     end
 
     def tmp_destroy_folder

@@ -6,6 +6,6 @@ class CleanupJobWorker < ApplicationWorker
   end
 
   def perform
-    Job.order(created_at: :desc).offset(100).destroy_all
+    Job.order(created_at: :desc).offset(100).in_batches(of: 10).destroy_all
   end
 end

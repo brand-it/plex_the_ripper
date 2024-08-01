@@ -14,6 +14,7 @@
 #  key               :string           not null
 #  metadata          :text
 #  optimized         :boolean          default(FALSE), not null
+#  uploadable        :boolean          default(FALSE), not null
 #  uploaded_on       :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -29,13 +30,14 @@
 #
 FactoryBot.define do
   factory :video_blob do
+    video factory: %i[movie]
     filename { 'Back to the Future Part III.mkv' }
     sequence(:key) { "error-incidunt/#{_1}/perferendis-iure/Back to the Future Part III.mkv" }
     content_type { 'video/x-matroska' }
     byte_size { 123_456_789 }
 
     after(:stub) do |blob, _context|
-      blob.send(:set_extra_type_number)
+      blob.send(:set_defaults)
     end
   end
 end

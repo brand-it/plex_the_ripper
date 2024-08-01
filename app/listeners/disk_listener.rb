@@ -1,0 +1,52 @@
+# frozen_string_literal: true
+
+class DiskListener
+  extend Dry::Initializer
+  include CableReady::Broadcaster
+  include ActionView::Helpers::UrlHelper
+  include ActionView::Helpers::DateHelper
+  include SlackUtility
+
+  delegate :render, to: :ApplicationController
+
+  def disk_ejecting(disk)
+    cable_broadcast("Ejecting Disk #{disk.name}")
+  end
+
+  def disk_ejected(disk)
+    message = "Disk Ejected #{disk.name} - Ready for new disk"
+    notify_slack(message)
+    cable_broadcast(message)
+  end
+
+  def disk_eject_failed(disk, exception)
+    message = "Failed to eject #{disk.name} - #{exception.message}"
+    notify_slack(message)
+    cable_broadcast(message)
+  end
+
+  def disk_loading
+    cable_broadcast
+  end
+
+  def disk_loaded
+    reload_page!
+  end
+
+  private
+
+  def cable_broadcast(message = nil)
+    component = LoadDiskProcessComponent.new(message:)
+
+    cable_ready[BroadcastChannel.channel_name].morph(
+      selector: "##{component.dom_id}",
+      html: render(component, layout: false)
+    )
+    cable_ready.broadcast
+  end
+
+  def reload_page!
+    cable_ready[BroadcastChannel.channel_name].reload
+    cable_ready.broadcast
+  end
+end

@@ -1,9 +1,7 @@
 # frozen_string_literal: true
 
 module TheMovieDb
-  class MovieUpdateService
-    extend Dry::Initializer
-
+  class MovieUpdateService < ApplicationService
     PERMITTED_PARAMS = %w[
       backdrop_path
       original_title
@@ -15,11 +13,6 @@ module TheMovieDb
     ].freeze
     param :movie, Types.Instance(::Movie)
     param :the_movie_db_details, Types::Coercible::Hash, default: -> { movie.the_movie_db_details }
-    class << self
-      def call(*)
-        new(*).call
-      end
-    end
 
     def call
       movie.attributes = movie_params.symbolize_keys

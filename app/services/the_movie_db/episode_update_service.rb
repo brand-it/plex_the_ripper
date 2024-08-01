@@ -1,15 +1,10 @@
 # frozen_string_literal: true
 
 module TheMovieDb
-  class EpisodeUpdateService
-    extend Dry::Initializer
+  class EpisodeUpdateService < ApplicationService
     EPISODE_PERMITTED_PARAMS = %w[name episode_number overview air_date still_path runtime].freeze
 
     param :season, Types.Instance(::Season)
-
-    def self.call(...)
-      new(...).call
-    end
 
     def call
       db_season['episodes'].each do |episode_attributes|

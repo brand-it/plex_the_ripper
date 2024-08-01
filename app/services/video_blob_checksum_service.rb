@@ -1,17 +1,12 @@
 # frozen_string_literal: true
 
-class VideoBlobChecksumService
-  extend Dry::Initializer
+class VideoBlobChecksumService < ApplicationService
   TEMP_DIRECTORY = Rails.root.join('tmp/ftp/checksum').to_s
 
   option :video_blob, Types.Instance(VideoBlob)
   option :download_progress_listener, Types.Interface(:call), optional: true
   option :checksum_progress_listener, Types.Interface(:call), optional: true
   option :max_download_retries, default: -> { 5 }
-
-  def self.call(...)
-    new(...).call
-  end
 
   def call
     create_tmp_directory

@@ -14,6 +14,7 @@
 #  key               :string           not null
 #  metadata          :text
 #  optimized         :boolean          default(FALSE), not null
+#  uploadable        :boolean          default(FALSE), not null
 #  uploaded_on       :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -38,10 +39,18 @@ class VideoBlob < ApplicationRecord
     end
   end
   TvShow = Struct.new(:title, :year, :season, :episode)
-  EXTRA_TYPES = %i[feature_films behind_the_scenes deleted_scenes featurettes interviews scenes shorts trailers
-                   other].freeze
-  EXTRA_TYPE_TO_DIRECTORY = EXTRA_TYPES.to_h { [_1, _1.to_s.humanize.titleize] }
-
+  # Sort order is important don't change...
+  EXTRA_TYPES = {
+    feature_films: { dir_name: 'Feature Films' },
+    behind_the_scenes: { dir_name: 'Behind The Scenes' },
+    deleted_scenes: { dir_name: 'Deleted Scenes' },
+    featurettes: { dir_name: 'Featurettes' },
+    interviews: { dir_name: 'Interviews' },
+    scenes: { dir_name: 'Scenes' },
+    shorts: { dir_name: 'Shorts' },
+    trailers: { dir_name: 'Trailers' },
+    other: { dir_name: 'Other' }
+  }.with_indifferent_access
   VIDEO_FORMATS = [
     '.avi', '.mp4', '.mkv', '.mov', '.wmv', '.flv', '.webm', '.mpeg',
     '.mpg', '.3gp', '.m4v', '.swf', '.rm', '.vob',
@@ -61,39 +70,36 @@ class VideoBlob < ApplicationRecord
   TV_SHOW_WITHOUT_YEAR = /#{TITLE_MATCHER}.*-\s+#{TV_SHOW_SEASON_EPISODE}\s+-\s+(?<date>.*)\s+-\s+(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
   TV_SHOW_NUMBER_ONLY = /#{TV_SHOW_SEASON_EPISODE}\.*#{Regexp.union(VIDEO_FORMATS)}/
 
-  enum :extra_type, EXTRA_TYPES
+  enum :extra_type, EXTRA_TYPES.keys
 
-  belongs_to :video, optional: true
+  belongs_to :video
   belongs_to :episode, optional: true
   has_many :disk_titles, dependent: :nullify
 
-  scope :optimized, -> { where(optimized: true) }
   scope :checksum, -> { where.not(checksum: nil) }
   scope :missing_checksum, -> { where(checksum: nil) }
+  scope :optimized, -> { where(optimized: true) }
+  scope :uploadable, -> { where(uploadable: true) }
+  scope :uploaded, -> { where(uploadable: false).where.not(uploaded_on: nil) }
+  scope :uploaded_recently, -> { where(arel_table[:uploaded_on].gteq(1.minute.ago)) }
 
   delegate :title, :year, :episode, :season, to: :parsed, allow_nil: true, prefix: true
   delegate :plex_name, to: :video, prefix: true, allow_nil: true
   delegate :plex_name, to: :episode, prefix: true, allow_nil: true
 
-  validates :key, presence: true, uniqueness: true
+  before_validation :set_defaults
 
-  before_validation :set_extra_type_number
+  validates :key, presence: true, uniqueness: { message: ->(blob, _) { "#{blob.key} has already been taken" } }
 
-  def self.build_from_disk_title(disk_title, extra_type)
-    extra_type = extra_type.presence || EXTRA_TYPES.first
-    blob = VideoBlob.new(
-      video: disk_title.video,
-      episode: disk_title.episode,
-      extra_type:
-    )
-    VideoBlob.find_or_initialize_by(
-      video: disk_title.video,
-      episode: disk_title.episode,
-      filename: blob.plex_name.to_s,
-      key: blob.plex_path.to_s,
-      content_type: 'video/x-matroska',
-      extra_type:
-    )
+  def title
+    if video.tv?
+      season = episode.season
+      "#{video.title} - S#{season.season_number}E#{episode.episode_number} #{episode.name}"
+    elsif feature_films?
+      video.title
+    else
+      "#{extra_type.humanize} ##{extra_type_number} #{video.title}"
+    end
   end
 
   def uploaded?
@@ -144,10 +150,6 @@ class VideoBlob < ApplicationRecord
     end
   end
 
-  def extra_type_number
-    super || (VideoBlob.where(video:, extra_type:).pluck(:extra_type_number).max.to_i + 1)
-  end
-
   private
 
   def plex_dir_name
@@ -167,7 +169,7 @@ class VideoBlob < ApplicationRecord
   end
 
   def extra_type_directory
-    EXTRA_TYPE_TO_DIRECTORY[extra_type.to_sym]
+    EXTRA_TYPES[extra_type][:dir_name]
   end
 
   def parsed
@@ -206,8 +208,8 @@ class VideoBlob < ApplicationRecord
                 )&.named_captures || {}
 
     @parsed_tv_show = TvShow.new(
-      match['title'] || dir_match['title'],
-      (match['year'] || dir_match['year'])&.to_i,
+      dir_match['title'] || match['title'],
+      (dir_match['year'] || match['year'])&.to_i,
       match['season']&.to_i,
       match['episode']&.to_i
     )
@@ -216,10 +218,12 @@ class VideoBlob < ApplicationRecord
   def parsed_movie
     return @parsed_movie if @parsed_movie
 
-    match = (filename.match(MATCHER_WITH_YEAR) ||
-            filename.match(TITLE_MATCHER) ||
-            directory_name.match(MATCHER_WITH_YEAR) ||
-            directory_name.match(TITLE_MATCHER))&.named_captures || {}
+    match = (
+      directory_name.match(MATCHER_WITH_YEAR) ||
+             directory_name.match(TITLE_MATCHER) ||
+             filename.match(MATCHER_WITH_YEAR) ||
+             filename.match(TITLE_MATCHER)
+    )&.named_captures || {}
     return @parsed_movie = Movie.new(nil, nil) if match.nil?
 
     @parsed_movie = Movie.new(match['title'], match['year']&.to_i)
@@ -247,8 +251,30 @@ class VideoBlob < ApplicationRecord
     "#{plex_root_path}/#{directory_name}"
   end
 
+  def set_defaults
+    set_extra_type_from_key
+    set_extra_type_number
+    self.filename ||= plex_name.to_s
+    self.key ||= plex_path.to_s
+    self.content_type ||= 'video/x-matroska'
+    self.byte_size ||= 0
+  end
+
+  def set_extra_type_from_key
+    return if extra_type.present?
+
+    self.extra_type = match_extra_type_by_dir(key) ||
+                      EXTRA_TYPES.first.first
+  end
+
+  def match_extra_type_by_dir(name)
+    return if name.blank?
+
+    EXTRA_TYPES.find { name.include?(_1[1][:dir_name]) }&.first
+  end
+
   def set_extra_type_number
-    return if attributes[:extra_type_number]
+    return if extra_type_number
 
     self.extra_type_number = VideoBlob.where(video:, extra_type:).pluck(:extra_type_number).max.to_i + 1
   end

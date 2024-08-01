@@ -5,19 +5,27 @@
     <title>Plex The Ripper</title>
     <%= render 'layouts/head' %>
   </head>
-  <body>
-    <div class="d-flex w-100 flex-column">
+  <body class="height-100">
+    <div class="d-flex w-100 flex-column height-100">
       <%= render 'layouts/header' %>
+      <main role="main" class="row p-3 height-95">
+        <div class="col-4 p-2">
+          <% if content_for? :sidebar_before %>
 
-      <main role="main" class="inner p-3 pb-5">
-        <div class="col-12 row">
-          <div class="col-4">
-            <%= render 'layouts/bg_progress' %>
-          </div>
-          <div class="col-8">
-            <%= bootstrap_alerts %>
-            <%= yield %>
-          </div>
+            <div class="sidebar-before">
+              <%= yield :sidebar_before %>
+            </div>
+          <% end %>
+          <%= render 'layouts/bg_progress' %>
+          <% if content_for? :sidebar_after %>
+            <div class="sidebar-after">
+              <%= yield :sidebar_after %>
+            </div>
+          <% end %>
+        </div>
+        <div class="col-8 height-100">
+          <%= bootstrap_alerts %>
+          <%= yield %>
         </div>
       </main>
     </div>

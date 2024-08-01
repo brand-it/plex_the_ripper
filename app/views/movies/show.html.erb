@@ -17,7 +17,7 @@
           <%= link_to_movie_db_movie @movie.the_movie_db_id %>
         </small>
       </p>
-      <% @movie.video_blobs.each do |blob| %>
+      <% @movie.video_blobs.uploadable.uploaded.each do |blob| %>
         <p><%= blob.key %></p>
       <% end %>
       <p class="text-primary-emphasis">Blue Means the disk title is within the runtime range of the movie.</p>

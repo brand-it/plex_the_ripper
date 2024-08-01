@@ -1,65 +1,34 @@
 # frozen_string_literal: true
 
 class ScanPlexWorker < ApplicationWorker
+  def enqueue?
+    true
+  end
+
   def perform
-    broadcast_progress(in_progress_component('Scan Plex...', 50, show_percentage: false))
-    plex_videos.map do |blob|
+    broadcast_component(ScanPlexProcessComponent.new)
+    video_blobs.map do |blob|
       blob.video = find_or_create_video(blob)
       blob.episode = search_for_episode(blob, blob.video)
       blob.uploaded_on ||= Time.current
-      blob.save!
+      job.add_message("Failed create video from #{blob.key}") unless blob.save
       self.completed += 1
-      percent_completed = (completed / plex_videos.size.to_f * 100)
+      job.completed = (completed / video_blobs.size.to_f * 100)
       next if next_update.future?
 
-      broadcast_progress(
-        in_progress_component('Updating Database...', percent_completed)
-      )
+      job.save!
+      broadcast_component(ScanPlexProcessComponent.new)
+      @next_update = 1.second.from_now
     end
-    broadcast_progress(completed_component)
-  end
-
-  def completed
-    @completed ||= 0
+    job.update!(completed: 100)
+    broadcast_component(ScanPlexProcessComponent.new)
+    job
   end
 
   private
 
-  def broadcast_progress(component)
-    cable_ready[BroadcastChannel.channel_name].morph \
-      selector: "##{component.dom_id}",
-      html: render(component, layout: false)
-    cable_ready.broadcast
-    @next_update = nil
-  end
-
-  def completed_component
-    progress_bar = render(
-      ProgressBarComponent.new(
-        model: Movie,
-        completed: 100,
-        status: :success,
-        message: 'Plex scan complete!'
-      ), layout: false
-    )
-    component = ProcessComponent.new(worker: ScanPlexWorker)
-    component.with_body { progress_bar }
-    component
-  end
-
-  def in_progress_component(message, completed, show_percentage: true)
-    progress_bar = render(
-      ProgressBarComponent.new(
-        model: Movie,
-        completed:,
-        status: :info,
-        message: message || 'Scanning Plex...',
-        show_percentage:
-      ), layout: false
-    )
-    component = ProcessComponent.new(worker: ScanPlexWorker)
-    component.with_body { progress_bar }
-    component
+  def completed
+    @completed ||= 0
   end
 
   def search_for_movie(blob)
@@ -115,8 +84,8 @@ class ScanPlexWorker < ApplicationWorker
     @videos ||= Video.all.to_a
   end
 
-  def plex_videos
-    @plex_videos ||= Ftp::VideoScannerService.call
+  def video_blobs
+    @video_blobs ||= Ftp::VideoScannerService.call
   end
 
   def next_update

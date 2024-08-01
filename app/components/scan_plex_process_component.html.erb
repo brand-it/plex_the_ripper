@@ -1,0 +1,17 @@
+<%= render ProcessComponent.new dom_id: dom_id do |c| %>
+  <%= c.with_title do %>
+    Scan Plex Status
+  <% end %>
+  <%= c.with_body do %>
+    <% if job_active? %>
+      <%= render ProgressBarComponent.new(
+            completed: completed,
+            status: status,
+            message: "Scanning #{ftp_host} for movies and tv shows",
+          )
+      %>
+    <% else %>
+      Done! you have a total of <%= pluralize(Movie.count, 'movie') %> & <%= pluralize(Tv.count, 'tv show') %> on plex.
+    <% end %>
+  <% end %>
+<% end %>

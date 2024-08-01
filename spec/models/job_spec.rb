@@ -20,10 +20,26 @@
 require 'rails_helper'
 
 RSpec.describe Job do
+  let(:job) { build(:job) }
+
   describe 'scopes' do
     it { is_expected.to have_scope(:active).where(status: described_class::ACTIVE_STATUSES) }
     it { is_expected.to have_scope(:completed).where(status: described_class::COMPLETED_STATUSES) }
     it { is_expected.to have_scope(:sort_by_created_at).order(created_at: :desc) }
     it { is_expected.to have_scope(:hanging).where(status: described_class::HANGING_STATUSES) }
+  end
+
+  describe '#completed=' do
+    it 'updated completed' do
+      job.completed ||= 1
+      job.completed = 2
+      expect(job.metadata['completed']).to eq(2.0)
+    end
+
+    it 'updated with complex' do
+      job.completed ||= 1
+      job.completed += 2
+      expect(job.metadata['completed']).to eq(3.0)
+    end
   end
 end

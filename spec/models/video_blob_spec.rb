@@ -14,6 +14,7 @@
 #  key               :string           not null
 #  metadata          :text
 #  optimized         :boolean          default(FALSE), not null
+#  uploadable        :boolean          default(FALSE), not null
 #  uploaded_on       :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
@@ -33,20 +34,40 @@ RSpec.describe VideoBlob do
   subject(:video_blob) { build(:video_blob, extra_type_number: 1) }
 
   describe 'associations' do
-    it { is_expected.to belong_to(:video).optional(true) }
+    it { is_expected.to belong_to(:video) }
     it { is_expected.to belong_to(:episode).optional(true) }
     it { is_expected.to have_many(:disk_titles).dependent(:nullify) }
   end
 
-  describe 'scopes' do
-    it { is_expected.to have_scope(:optimized).where(optimized: true) }
+  describe 'scopes', :freeze do
     it { is_expected.to have_scope(:checksum).where.not(checksum: nil) }
     it { is_expected.to have_scope(:missing_checksum).where(checksum: nil) }
+    it { is_expected.to have_scope(:optimized).where(optimized: true) }
+    it { is_expected.to have_scope(:uploadable).where(uploadable: true) }
+
+    it {
+      expect(subject).to have_scope(:uploaded_recently).where(described_class.arel_table[:uploaded_on].gteq(1.minute.ago))
+    }
   end
 
-  describe 'validations' do
-    it { is_expected.to validate_presence_of(:key) }
-    it { is_expected.to validate_uniqueness_of(:key) }
+  describe 'extra_types' do
+    subject(:extra_type) { described_class.extra_types }
+
+    it 'defines a list of types' do
+      expect(extra_type).to eq(
+        {
+          'feature_films' => 0,
+          'behind_the_scenes' => 1,
+          'deleted_scenes' => 2,
+          'featurettes' => 3,
+          'interviews' => 4,
+          'scenes' => 5,
+          'shorts' => 6,
+          'trailers' => 7,
+          'other' => 8
+        }
+      )
+    end
   end
 
   describe '#extra_type_directory' do
@@ -143,7 +164,7 @@ RSpec.describe VideoBlob do
   end
 
   describe '#movie?' do
-    subject(:tv_show?) { video_blob.movie? }
+    subject(:movie?) { video_blob.movie? }
 
     before do
       allow(Config::Plex).to receive(:newest).and_return(config_plex)
@@ -152,28 +173,28 @@ RSpec.describe VideoBlob do
     context 'when path does not start with movie path' do
       let(:config_plex) { build_stubbed(:config_plex, settings_movie_path: '/Media/Movie') }
 
-      let(:video_blob) { build_stubbed(:video_blob, key: '/Movie') }
+      let(:video_blob) { build_stubbed(:video_blob, key: '/Movie', video: nil) }
 
       it { is_expected.to be(false) }
     end
 
     context 'when path does start with movie path' do
       let(:config_plex) { build_stubbed(:config_plex, settings_movie_path: '/Media/Movie') }
-      let(:video_blob) { build_stubbed(:video_blob, key: '/Media/Movie') }
+      let(:video_blob) { build_stubbed(:video_blob, video: nil, key: '/Media/Movie') }
 
       it { is_expected.to be(true) }
     end
 
     context 'when config it missing' do
       let(:config_plex) { nil }
-      let(:video_blob) { build_stubbed(:video_blob, key: '/Media/Movie') }
+      let(:video_blob) { build_stubbed(:video_blob, video: nil, key: '/Media/Movie') }
 
       it { is_expected.to be(false) }
     end
 
     context 'when config path is blank' do
       let(:config_plex) { build_stubbed(:config_plex, settings_movie_path: '') }
-      let(:video_blob) { build_stubbed(:video_blob, key: '/Media/Movie') }
+      let(:video_blob) { build_stubbed(:video_blob, video: nil, key: '/Media/Movie') }
 
       it { is_expected.to be(false) }
     end

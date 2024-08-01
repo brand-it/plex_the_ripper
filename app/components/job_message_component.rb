@@ -9,6 +9,6 @@ class JobMessageComponent < ViewComponent::Base
   end
 
   def message
-    job.metadata['message']&.join("\n")
+    Array.wrap(job.metadata['message']).join("\n")
   end
 end
