@@ -21,6 +21,13 @@ if [ -z "$LATEST_RELEASE" ]; then
   exit 1
 fi
 
+# Check if the latest release tag matches semantic versioning (e.g., v4.0.0)
+if [[ ! $LATEST_RELEASE =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+  echo "The latest release tag does not match the expected semantic versioning format. Exiting... $LATEST_RELEASE"
+
+  exit 0
+fi
+
 echo "Latest release: $LATEST_RELEASE"
 
 # Check current version

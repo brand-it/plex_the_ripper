@@ -3,11 +3,12 @@
     Disk Status
   <% end %>
   <%= c.with_body do %>
-    <% if message.present? %>
-      <p><%= message %></p>
-    <% elsif job_active? && disks_loading.any? %>
+    <% if job_active? && disks_loading.any? %>
       <% disks_loading.each do |disk| %>
-        <p class="mb-1">Loading <%= link_to disk.name, the_movie_dbs_path(search: { query: disk.name.titleize }) %> ...</p>
+        <p class="mb-1">
+          Loading <%= link_to disk.name, the_movie_dbs_path(search: { query: disk.name.titleize }) %> ... <%= link_to 'View Details', job_path(job) %>
+        </p>
+        <p><%= Array.wrap(job.metadata['message']).last %></p>
       <% end %>
     <% elsif disks_not_ejected.any? %>
       <% disks_not_ejected.each do |disk| %>
@@ -16,7 +17,7 @@
         </p>
       <% end %>
     <% elsif job_active? %>
-      <p class="mb-1">Loading disk info ...</p>
+      <p class="mb-1">Loading disk info ...<%= link_to 'View Details', job_path(job) %></p>
     <% else %>
       <span>No disks found - insert disk to continue</span>
     <% end %>

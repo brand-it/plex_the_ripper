@@ -2,17 +2,22 @@
 
 class RipWorker < ApplicationWorker
   include ActionView::Helpers::UrlHelper
-  include ActionView::Helpers::DateHelper
-
   delegate :movie_url, :tv_season_url, to: 'Rails.application.routes.url_helpers'
 
   option :disk_id, Types::Integer
   option :disk_title_ids, Types::Array.of(Types::Integer)
   option :extra_types, Types::Array.of(Types::String), optional: true, default: -> { [] }
 
+  def enqueue?
+    true
+  end
+
   def perform
     create_mkvs.tap do |results|
-      eject_disk if results.all?(&:success?)
+      if results.all?(&:success?)
+        eject_disk
+        redirect_to_season_or_movie
+      end
     end
   end
 
@@ -41,5 +46,19 @@ class RipWorker < ApplicationWorker
 
   def disk
     @disk ||= Disk.find(disk_id)
+  end
+
+  def redirect_to_season_or_movie
+    reload_page! if redirect_url.blank?
+    cable_ready[BroadcastChannel.channel_name].redirect_to(url: redirect_url)
+    cable_ready.broadcast
+  end
+
+  def redirect_url
+    if disk.video.is_a?(Movie)
+      movie_url(disk.video)
+    elsif disk.video.is_a?(Tv)
+      tv_season_url(disk.episode.season.tv, disk.episode.season)
+    end
   end
 end

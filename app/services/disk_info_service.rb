@@ -74,7 +74,7 @@ class DiskInfoService < ApplicationService
     attribute = CODE_LEGEND[tinfo.type.to_i]
     return if attribute.nil?
 
-    title_info[tinfo.id.to_i].send("#{attribute}=", tinfo.value)
+    title_info[tinfo.id.to_i].public_send("#{attribute}=", tinfo.value)
   end
 
   def title_info

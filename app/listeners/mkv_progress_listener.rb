@@ -3,11 +3,8 @@
 class MkvProgressListener
   extend Dry::Initializer
   include CableReady::Broadcaster
-  include ActionView::Helpers::UrlHelper
-  include ActionView::Helpers::DateHelper
   include SlackUtility
 
-  delegate :job_path, to: 'Rails.application.routes.url_helpers'
   delegate :render, to: :ApplicationController
 
   option :job, Types.Instance(Job)
@@ -16,16 +13,14 @@ class MkvProgressListener
 
   def mkv_start(video_blob)
     @video_blob = video_blob
-    job.completed = 0
+    job.update!(title: video_blob&.title, completed: 0)
     update_progress_bar
-    job.save!
   end
 
   def mkv_success(video_blob)
     @video_blob = video_blob
-    job.completed = 100
+    job.update!(completed: 100)
     update_progress_bar
-    job.save!
   end
 
   def mkv_failure(video_blob, exception = nil)

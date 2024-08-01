@@ -16,7 +16,7 @@ class CreateMkvService < ApplicationService
   def call
     disk_title.update!(video_blob:)
     broadcast(:mkv_start, video_blob)
-    Result.new(video_blob.tmp_plex_path, makemkvcon(cmd).success?).tap do |result|
+    Result.new(video_blob.tmp_plex_path, wait_makemkvcon(cmd).success?).tap do |result|
       if result.success?
         rename_file
         video_blob.update!(byte_size:, uploadable: true)
@@ -58,19 +58,11 @@ class CreateMkvService < ApplicationService
   end
 
   def video_blob
-    @video_blob ||= if extra_type == 'feature_films'
-                      VideoBlob.find_or_create_by!(
-                        video: disk_title.video,
-                        episode: disk_title.episode,
-                        extra_type:
-                      )
-                    else
-                      VideoBlob.create!(
-                        video: disk_title.video,
-                        episode: disk_title.episode,
-                        extra_type:
-                      )
-                    end
+    @video_blob ||= VideoBlob.find_or_create_by!(
+      video: disk_title.video,
+      episode: disk_title.episode,
+      extra_type: extra_type.presence || :feature_films
+    )
   end
 
   def recreate_dir(dir)

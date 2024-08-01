@@ -107,7 +107,7 @@ module Shell
     result = `ps aux | grep #{process_name} | grep -v grep`
     result.split("\n").map do |line|
       line.split[1] # PID is the second element in the line
-    end
+    end.first
   end
 
   def system!(*cmd)

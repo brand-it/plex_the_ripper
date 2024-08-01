@@ -12,10 +12,13 @@ class ApplicationWorker
     def perform_async(**args)
       found_job = job
       found_job.arguments = args
-      return unless found_job.new_record? && found_job.worker.enqueue?
+      return unless found_job.new_record?
+      return unless found_job.worker.enqueue?
 
       found_job.save!
+      Rails.logger.info("#{found_job.worker.class}.perform_async(#{found_job.id})")
       semaphore.synchronize { enqueued_jobs.add(found_job.id) }
+
       found_job
     end
 
@@ -60,6 +63,6 @@ class ApplicationWorker
   end
 
   def enqueue?
-    true # Override in subclass to determine if the job should be enqueued
+    raise "#enqueue? needs to be defined in #{self.class}"
   end
 end

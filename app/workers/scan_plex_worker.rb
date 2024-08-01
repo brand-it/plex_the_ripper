@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 class ScanPlexWorker < ApplicationWorker
+  def enqueue?
+    true
+  end
+
   def perform
     broadcast_component(ScanPlexProcessComponent.new)
     video_blobs.map do |blob|
