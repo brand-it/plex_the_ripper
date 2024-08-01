@@ -46,7 +46,7 @@ RSpec.describe VideoBlob do
     it { is_expected.to have_scope(:uploadable).where(uploadable: true) }
 
     it {
-      expect(subject).to have_scope(:uploaded_recently).where(described_class.arel_table[:uploaded_on].gteq(1.minutes.ago))
+      expect(subject).to have_scope(:uploaded_recently).where(described_class.arel_table[:uploaded_on].gteq(1.minute.ago))
     }
   end
 
