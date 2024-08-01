@@ -2,12 +2,9 @@
 
 class MkvProgressListener
   extend Dry::Initializer
-  include ActionView::Helpers::DateHelper
-  include ActionView::Helpers::UrlHelper
   include CableReady::Broadcaster
   include SlackUtility
 
-  delegate :movie_url, :tv_season_url, :job_path, to: 'Rails.application.routes.url_helpers'
   delegate :render, to: :ApplicationController
 
   option :job, Types.Instance(Job)
@@ -24,7 +21,6 @@ class MkvProgressListener
     @video_blob = video_blob
     job.update!(completed: 100)
     update_progress_bar
-    redirect_to_season_or_movie
   end
 
   def mkv_failure(video_blob, exception = nil)
@@ -72,19 +68,6 @@ class MkvProgressListener
 
   private
 
-  def redirect_to_season_or_movie
-    reload_page! if redirect_url.blank?
-    cable_ready[BroadcastChannel.channel_name].redirect_to(url: redirect_url)
-    cable_ready.broadcast
-  end
-
-  def redirect_url
-    if video_blob.video.is_a?(Movie)
-      movie_url(video_blob.video)
-    elsif video_blob.video.is_a?(Tv)
-      tv_season_url(video_blob.episode.season.tv, video_blob.episode.season)
-    end
-  end
 
   def reload_page!
     cable_ready[BroadcastChannel.channel_name].reload

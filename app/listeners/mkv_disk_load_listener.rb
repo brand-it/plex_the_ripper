@@ -3,11 +3,8 @@
 class MkvDiskLoadListener
   extend Dry::Initializer
   include CableReady::Broadcaster
-  include ActionView::Helpers::UrlHelper
-  include ActionView::Helpers::DateHelper
   include SlackUtility
 
-  delegate :job_path, to: 'Rails.application.routes.url_helpers'
   delegate :render, to: :ApplicationController
 
   option :job, Types.Instance(Job)
