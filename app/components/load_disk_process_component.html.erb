@@ -17,7 +17,7 @@
         </p>
       <% end %>
     <% elsif job_active? %>
-      <p class="mb-1">Loading for disk info ...<%= link_to 'View Details', job_path(job) %></p>
+      <p class="mb-1">Loading disk info ...<%= link_to 'View Details', job_path(job) %></p>
     <% else %>
       <span>No disks found - insert disk to continue</span>
     <% end %>
