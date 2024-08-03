@@ -55,10 +55,16 @@ class RipWorker < ApplicationWorker
   end
 
   def redirect_url
-    if disk.video.is_a?(Movie)
-      movie_url(disk.video)
-    elsif disk.video.is_a?(Tv)
-      tv_season_url(disk.episode.season.tv, disk.episode.season)
+    disk_title = DiskTitle.find(disk_title_ids.first)
+    if disk_title.video.is_a?(Movie)
+      movie_url(disk_title.video)
+    elsif disk_title.video.is_a?(Tv)
+      tv_season_url(disk_title.episode.season.tv, disk_title.episode.season)
     end
+  end
+
+  def reload_page!
+    cable_ready[BroadcastChannel.channel_name].reload
+    cable_ready.broadcast
   end
 end
