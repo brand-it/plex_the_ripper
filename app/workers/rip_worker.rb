@@ -55,7 +55,9 @@ class RipWorker < ApplicationWorker
   end
 
   def redirect_url
-    disk_title = DiskTitle.find(disk_title_ids.first)
+    disk_title = DiskTitle.find_by(id: disk_title_ids.first)
+    return if disk_title.nil?
+
     if disk_title.video.is_a?(Movie)
       movie_url(disk_title.video)
     elsif disk_title.video.is_a?(Tv)
