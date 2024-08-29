@@ -5,13 +5,12 @@
     <title>Plex The Ripper</title>
     <%= render 'layouts/head' %>
   </head>
-  <body class="height-100">
-    <div class="d-flex w-100 flex-column height-100">
+  <body >
+    <div class="d-flex w-100 flex-column ">
       <%= render 'layouts/header' %>
       <main role="main" class="row p-3 height-95">
-        <div class="col-4 p-2">
+        <div class="col-4 p-2 sticky-element">
           <% if content_for? :sidebar_before %>
-
             <div class="sidebar-before">
               <%= yield :sidebar_before %>
             </div>
@@ -23,7 +22,7 @@
             </div>
           <% end %>
         </div>
-        <div class="col-8 height-100">
+        <div class="col-8 ">
           <%= bootstrap_alerts %>
           <%= yield %>
         </div>
