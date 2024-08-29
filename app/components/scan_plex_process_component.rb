@@ -4,7 +4,7 @@ class ScanPlexProcessComponent < ViewComponent::Base
   extend Dry::Initializer
 
   def self.job
-    ScanPlexWorker.job
+    Job.sort_by_created_at.active.find_by(name: 'ScanPlexWorker')
   end
 
   def completed
@@ -20,7 +20,7 @@ class ScanPlexProcessComponent < ViewComponent::Base
   end
 
   def job_active?
-    ScanPlexWorker.job&.active?
+    job&.active?
   end
 
   def ftp_host

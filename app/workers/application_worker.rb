@@ -10,7 +10,7 @@ class ApplicationWorker
 
   class << self
     def perform_async(**args)
-      found_job = job(**args)
+      found_job = find_or_create_job(**args)
       return unless found_job.new_record?
       return unless found_job.worker&.enqueue?
 
@@ -21,7 +21,7 @@ class ApplicationWorker
       found_job
     end
 
-    def job(**args)
+    def find_or_create_job(**args)
       Job.sort_by_created_at.active.find_or_initialize_by(name: to_s, arguments: args)
     end
 

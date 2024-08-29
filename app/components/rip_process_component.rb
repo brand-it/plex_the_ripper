@@ -2,7 +2,7 @@
 
 class RipProcessComponent < ViewComponent::Base
   def self.job
-    RipWorker.job
+    Job.sort_by_created_at.active.find_by(name: 'RipWorker')
   end
 
   def job
@@ -10,7 +10,7 @@ class RipProcessComponent < ViewComponent::Base
   end
 
   def hide
-    params[:controller] == 'jobs' && params[:id] == RipWorker.job&.id && params[:action] == 'show'
+    params[:controller] == 'jobs' && params[:id] == job&.id && params[:action] == 'show'
   end
 
   def dom_id

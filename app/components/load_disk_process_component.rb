@@ -4,7 +4,7 @@ class LoadDiskProcessComponent < ViewComponent::Base
   extend Dry::Initializer
 
   def self.job
-    LoadDiskWorker.job
+    Job.sort_by_created_at.active.find_by(name: 'LoadDiskWorker')
   end
 
   def job_active?
