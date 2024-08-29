@@ -47,6 +47,12 @@ body {
   height: 60px;
 }
 
+.sticky-element {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+}
+
 // Console for basic shell output
 .console-content {
   display: flex;
