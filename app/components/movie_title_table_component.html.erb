@@ -25,7 +25,7 @@
             <td scope="row" class="<%= text_class %>"><%= disk_title.id %></td>
             <td class="text-center">
               <h1>
-                <% if movie.ripped_disk_titles.any? %>
+                <% if movie.ripped_disk_titles.any? { _1.name == disk_title.name } %>
                   <%= icon('square-check') %>
                 <% else %>
                   <%= icon('square') %>
@@ -34,7 +34,7 @@
             </td>
             <td class="text-center">
               <h1>
-                <% if movie.ripped_disk_titles.any? { _1.video_blob&.uploaded? } %>
+                <% if movie.ripped_disk_titles.find { _1.name == disk_title.name }&.video_blob&.uploaded? %>
                   <%= icon('square-check') %>
                 <% else %>
                   <%= icon('square') %>
@@ -56,8 +56,12 @@
               <% end %>
             </td>
             <td class="<%= text_class %>">
+              <% if movie.ripped_disk_titles.find { _1.name == disk_title.name }&.video_blob&.uploaded? %>
+                <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, nil), prompt: "Don't Rip" %>
+              <% else %>
+                <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, (in_range ? 'feature_films' : 'other')), prompt: "Don't Rip" %>
+              <% end %>
 
-              <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, (in_range ? 'feature_films' : 'other')), prompt: "Don't Rip" %>
             </td>
           </tr>
         <% end %>
