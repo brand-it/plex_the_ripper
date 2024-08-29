@@ -48,7 +48,7 @@
           </td>
           <td class="text-center">
             <h1>
-              <% if episode.video_blobs.any?(&:uploaded?) %>
+              <% if episode.ripped_disk_titles.any? { _1.video_blob.uploaded? } %>
                 <%= icon('square-check') %>
               <% else %>
                 <%= icon('square') %>

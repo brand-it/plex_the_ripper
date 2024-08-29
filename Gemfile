@@ -43,13 +43,13 @@ group :development, :test do
   gem 'pry'
   gem 'rspec-github', require: false
   gem 'rspec-rails'
-  gem 'rubocop'
-  gem 'rubocop-capybara'
-  gem 'rubocop-discourse'
-  gem 'rubocop-factory_bot'
-  gem 'rubocop-rails'
-  gem 'rubocop-rspec'
-  gem 'rubocop-rspec_rails'
+  gem 'rubocop', require: false
+  gem 'rubocop-capybara', require: false
+  gem 'rubocop-discourse', require: false
+  gem 'rubocop-factory_bot', require: false
+  gem 'rubocop-rails', require: false
+  gem 'rubocop-rspec', require: false
+  gem 'rubocop-rspec_rails', require: false
   gem 'shoulda-matchers'
   gem 'super_diff'
   gem 'timecop'

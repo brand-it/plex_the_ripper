@@ -2,7 +2,7 @@
 
 class UploadProcessComponent < ViewComponent::Base
   def self.job
-    UploadWorker.job
+    Job.sort_by_created_at.active.find_by(name: 'UploadWorker')
   end
 
   def dom_id

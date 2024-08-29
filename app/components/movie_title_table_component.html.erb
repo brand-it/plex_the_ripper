@@ -25,7 +25,7 @@
             <td scope="row" class="<%= text_class %>"><%= disk_title.id %></td>
             <td class="text-center">
               <h1>
-                <% if movie.ripped_disk_titles.any? %>
+                <% if movie.ripped_disk_titles.any? { _1.name == disk_title.name } %>
                   <%= icon('square-check') %>
                 <% else %>
                   <%= icon('square') %>
@@ -34,7 +34,7 @@
             </td>
             <td class="text-center">
               <h1>
-                <% if disk_title.video_blob&.uploaded? %>
+                <% if movie.ripped_disk_titles.find { _1.name == disk_title.name }&.video_blob&.uploaded? %>
                   <%= icon('square-check') %>
                 <% else %>
                   <%= icon('square') %>
@@ -56,8 +56,12 @@
               <% end %>
             </td>
             <td class="<%= text_class %>">
+              <% if movie.ripped_disk_titles.find { _1.name == disk_title.name }&.video_blob&.uploaded? %>
+                <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, nil), prompt: "Don't Rip" %>
+              <% else %>
+                <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, (in_range ? 'feature_films' : 'other')), prompt: "Don't Rip" %>
+              <% end %>
 
-              <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, (in_range ? 'feature_films' : 'other')), prompt: "Don't Rip" %>
             </td>
           </tr>
         <% end %>
@@ -67,7 +71,7 @@
       </div>
     </table>
   <% end %>
-<% elsif LoadDiskWorker.job.active? %>
+<% elsif job&.active? %>
   <p class="text-info">Stand by the disk is still being loading from the CD drive this could take a while. Page will update once the disk is ready so no need to refresh the page but if you do it won't hurt anything.</p>
 <% else %>
   <p class="text-warn">Sorry no Disk is currently loaded or could be detected. Refresh page if your seeing this warning but know a disk is present.</p>

@@ -19,6 +19,10 @@ class MovieTitleTableComponent < ViewComponent::Base
     @total_disk_space ||= stats.block_size * stats.blocks
   end
 
+  def job
+    Job.sort_by_created_at.active.find_by(name: 'LoadDiskWorker')
+  end
+
   private
 
   def stats

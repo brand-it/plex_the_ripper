@@ -58,11 +58,19 @@ class CreateMkvService < ApplicationService
   end
 
   def video_blob
-    @video_blob ||= VideoBlob.find_or_create_by!(
-      video: disk_title.video,
-      episode: disk_title.episode,
-      extra_type: extra_type.presence || :feature_films
-    )
+    @video_blob ||= if extra_type == 'feature_films' || extra_type.blank?
+                      VideoBlob.find_or_create_by!(
+                        video: disk_title.video,
+                        episode: disk_title.episode,
+                        extra_type: extra_type.presence || :feature_films
+                      )
+                    else
+                      VideoBlob.create!(
+                        video: disk_title.video,
+                        episode: disk_title.episode,
+                        extra_type:
+                      )
+                    end
   end
 
   def recreate_dir(dir)

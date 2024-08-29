@@ -12,6 +12,6 @@ RSpec.describe ScanPlexWorker, type: :worker do
 
     before { allow(Ftp::VideoScannerService).to receive(:call).and_return(video_blobs) }
 
-    it { is_expected.to eq(job) }
+    it('returns a job') { is_expected.to eq(job) }
   end
 end
