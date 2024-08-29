@@ -137,7 +137,7 @@ class Job < ApplicationRecord
   end
 
   def set_started_at
-    return unless ACTIVE_STATUSES.include?(status.to_sym)
+    return if status.to_sym != :running
 
     self.started_at ||= Time.current
   end
