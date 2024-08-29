@@ -27,7 +27,7 @@
 #
 class Video < ApplicationRecord
   include Wisper::Publisher
-  enum rating: { 'N/A': 0, NR: 1, 'NC-17': 2, R: 3, 'PG-13': 4, PG: 5, G: 6 }
+  enum :rating, { 'N/A': 0, NR: 1, 'NC-17': 2, R: 3, 'PG-13': 4, PG: 5, G: 6 }
 
   has_many :disk_titles, dependent: :nullify
   has_many :ripped_disk_titles, -> { ripped }, class_name: 'DiskTitle', dependent: false, inverse_of: :video
