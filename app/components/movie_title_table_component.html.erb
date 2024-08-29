@@ -34,7 +34,7 @@
             </td>
             <td class="text-center">
               <h1>
-                <% if disk_title.video_blob&.uploaded? %>
+                <% if movie.ripped_disk_titles.any? { _1.video_blob&.uploaded? } %>
                   <%= icon('square-check') %>
                 <% else %>
                   <%= icon('square') %>
@@ -67,7 +67,7 @@
       </div>
     </table>
   <% end %>
-<% elsif LoadDiskWorker.job.active? %>
+<% elsif job&.active? %>
   <p class="text-info">Stand by the disk is still being loading from the CD drive this could take a while. Page will update once the disk is ready so no need to refresh the page but if you do it won't hurt anything.</p>
 <% else %>
   <p class="text-warn">Sorry no Disk is currently loaded or could be detected. Refresh page if your seeing this warning but know a disk is present.</p>

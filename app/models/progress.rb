@@ -24,7 +24,7 @@
 class Progress < ApplicationRecord
   belongs_to :progressable, polymorphic: true
 
-  enum descriptive: { download_ftp: 0, create_mkv: 1 }
+  enum :descriptive, { download_ftp: 0, create_mkv: 1 }
 
   validates :descriptive, presence: true
 

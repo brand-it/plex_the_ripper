@@ -10,10 +10,9 @@ class ApplicationWorker
 
   class << self
     def perform_async(**args)
-      found_job = job
-      found_job.arguments = args
+      found_job = find_or_create_job(**args)
       return unless found_job.new_record?
-      return unless found_job.worker.enqueue?
+      return unless found_job.worker&.enqueue?
 
       found_job.save!
       Rails.logger.info("#{found_job.worker.class}.perform_async(#{found_job.id})")
@@ -22,8 +21,8 @@ class ApplicationWorker
       found_job
     end
 
-    def job
-      Job.sort_by_created_at.active.find_or_initialize_by(name: to_s)
+    def find_or_create_job(**args)
+      Job.sort_by_created_at.active.find_or_initialize_by(name: to_s, arguments: args)
     end
 
     def process_work
