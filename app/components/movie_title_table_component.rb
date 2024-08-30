@@ -23,6 +23,14 @@ class MovieTitleTableComponent < ViewComponent::Base
     Job.sort_by_created_at.active.find_by(name: 'LoadDiskWorker')
   end
 
+  def feature_film_selected!
+    @feature_film_selected = true
+  end
+
+  def feature_film_selected?
+    @feature_film_selected == true
+  end
+
   private
 
   def stats
