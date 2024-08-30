@@ -1,4 +1,3 @@
-
 <% if disks.any? %>
   <%= simple_form_for :movies, url: rip_movie_path(movie) do |f| %>
     <% disk = disks.first %>
@@ -58,10 +57,14 @@
             <td class="<%= text_class %>">
               <% if movie.ripped_disk_titles.find { _1.name == disk_title.name }&.video_blob&.uploaded? %>
                 <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, nil), prompt: "Don't Rip" %>
+              <% elsif in_range && feature_film_selected? %>
+                <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, 'shorts'), prompt: "Don't Rip" %>
+              <% elsif in_range %>
+                <% feature_film_selected! %>
+                <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, 'feature_films'), prompt: "Don't Rip" %>
               <% else %>
-                <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, (in_range ? 'feature_films' : 'other')), prompt: "Don't Rip" %>
+                  <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, 'other'), prompt: "Don't Rip" %>
               <% end %>
-
             </td>
           </tr>
         <% end %>
