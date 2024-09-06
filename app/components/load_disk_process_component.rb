@@ -7,6 +7,14 @@ class LoadDiskProcessComponent < ViewComponent::Base
     Job.sort_by_created_at.active.find_by(name: 'LoadDiskWorker')
   end
 
+  def self.show?
+    job&.active?
+  end
+
+  def hidden?
+    !self.class.show? && disks_not_ejected.empty?
+  end
+
   def job_active?
     job&.active?
   end

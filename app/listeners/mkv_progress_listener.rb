@@ -90,7 +90,7 @@ class MkvProgressListener
     return if next_update.future?
 
     update_progress_bar
-    job.save!
+    job.save! if job.changed?
     @next_update = nil
   end
 

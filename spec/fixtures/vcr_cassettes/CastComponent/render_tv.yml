@@ -1,0 +1,61 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: https://api.themoviedb.org/3/tv/72893/credits?api_key=<API_KEY>
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v2.11.0
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Content-Type:
+      - application/json;charset=utf-8
+      Content-Length:
+      - '3851'
+      Connection:
+      - keep-alive
+      Date:
+      - Tue, 03 Sep 2024 23:34:54 GMT
+      Server:
+      - openresty
+      Cache-Control:
+      - public, max-age=10503
+      X-Memc:
+      - HIT
+      X-Memc-Key:
+      - 1d8719969716d0c610f2181c0df5c5f4
+      X-Memc-Age:
+      - '17805'
+      X-Memc-Expires:
+      - '10503'
+      Etag:
+      - W/"d238f80fa5d9dc33fb4b6dbe32d76a6d"
+      Vary:
+      - Accept-Encoding,accept-encoding
+      - Origin
+      X-Cache:
+      - Miss from cloudfront
+      Via:
+      - 1.1 3d4704605b9b7f44c7958c0627a493d6.cloudfront.net (CloudFront)
+      X-Amz-Cf-Pop:
+      - LAX53-P1
+      Alt-Svc:
+      - h3=":443"; ma=86400
+      X-Amz-Cf-Id:
+      - LNZY1Ybm7x3J6ZFj16lrA66GFBaDU1-93h98v0GCGd3G_B1MmjrhFA==
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        eyJjYXN0IjpbeyJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjE1NzUwMTQsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IlNlw6draW4gw5Z6ZGVtaXIiLCJvcmlnaW5hbF9uYW1lIjoiU2XDp2tpbiDDlnpkZW1pciIsInBvcHVsYXJpdHkiOjEwLjUxNSwicHJvZmlsZV9wYXRoIjoiL212ZjFaUHl4YURLTHpmcnRyMG9Yb21xNkdZNi5qcGciLCJjaGFyYWN0ZXIiOiJCYXLEscWfIEJ1a2EiLCJjcmVkaXRfaWQiOiI1YWVlMjA1NTkyNTE0MTE5NTQwMDBjYjYiLCJvcmRlciI6MH0seyJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MSwiaWQiOjE0NjQ1MDEsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6Ik5pbGF5IERlbml6Iiwib3JpZ2luYWxfbmFtZSI6Ik5pbGF5IERlbml6IiwicG9wdWxhcml0eSI6MTUuNzMsInByb2ZpbGVfcGF0aCI6Ii9pUExEZUJaNmRpMTE2YkdUWUY2VzRURG4yQ1guanBnIiwiY2hhcmFjdGVyIjoiQXNsxLEgRcSfaWxtZXoiLCJjcmVkaXRfaWQiOiI1YWVlMjA0OTkyNTE0MTE5NWUwMDEwYWUiLCJvcmRlciI6MX0seyJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MSwiaWQiOjEyNTYzNzIsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IlNlZGEgR8O8dmVuIiwib3JpZ2luYWxfbmFtZSI6IlNlZGEgR8O8dmVuIiwicG9wdWxhcml0eSI6MTAuOTksInByb2ZpbGVfcGF0aCI6Ii82ZXRsSm56N201MFgzTndHdEg1Zk9PU3pNczIuanBnIiwiY2hhcmFjdGVyIjoixLBsYXlkYSBUYcWfIiwiY3JlZGl0X2lkIjoiNWFlZTIwODNjM2EzNjgwNzc3MDAwYjUzIiwib3JkZXIiOjJ9LHsiYWR1bHQiOmZhbHNlLCJnZW5kZXIiOjIsImlkIjoyMjcxNTQsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IkR1cnVsIEJhemFuIiwib3JpZ2luYWxfbmFtZSI6IkR1cnVsIEJhemFuIiwicG9wdWxhcml0eSI6OC40OSwicHJvZmlsZV9wYXRoIjoiL2ZZWGIybWp6dDlRRFlMT1ROM2YwdGpxTUp3Ry5qcGciLCJjaGFyYWN0ZXIiOiJNZXRpbiBFxJ9pbG1leiIsImNyZWRpdF9pZCI6IjVhZWUyMGRjOTI1MTQxMTk2NDAwMTFkMSIsIm9yZGVyIjozfSx7ImFkdWx0IjpmYWxzZSwiZ2VuZGVyIjoxLCJpZCI6MTE0NjczNSwia25vd25fZm9yX2RlcGFydG1lbnQiOiJBY3RpbmciLCJuYW1lIjoixZ5lYm5lbSBEaWxsaWdpbCIsIm9yaWdpbmFsX25hbWUiOiLFnmVibmVtIERpbGxpZ2lsIiwicG9wdWxhcml0eSI6Mi40NzUsInByb2ZpbGVfcGF0aCI6Ii82RUtZQnhMd2FDMTVkdGlXbjBScDZKMFlwRFIuanBnIiwiY2hhcmFjdGVyIjoiTmXFn2UgRcSfaWxtZXoiLCJjcmVkaXRfaWQiOiI1YWVlMjBhNTkyNTE0MTE5OWUwMDBmOTAiLCJvcmRlciI6NH0seyJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MSwiaWQiOjEzODA3OTcsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IkfDtnpkZSBDxLHEn2FjxLEiLCJvcmlnaW5hbF9uYW1lIjoiR8O2emRlIEPEscSfYWPEsSIsInBvcHVsYXJpdHkiOjEwLjI5MywicHJvZmlsZV9wYXRoIjoiL2ZZUEV5WXJuRXU2aXdub09HVXNjMHZaaUdKZC5qcGciLCJjaGFyYWN0ZXIiOiJHw7xsIEfDvHJrYW4iLCJjcmVkaXRfaWQiOiI1YWVlMjBjNmMzYTM2ODA3OWIwMDBmM2QiLCJvcmRlciI6NX0seyJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MiwiaWQiOjIwMzY5NzUsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IsOHYcSfcsSxIMOHxLF0YW5hayIsIm9yaWdpbmFsX25hbWUiOiLDh2HEn3LEsSDDh8SxdGFuYWsiLCJwb3B1bGFyaXR5IjoxMy4wMTQsInByb2ZpbGVfcGF0aCI6Ii9ucVRMRFh6YTA4aDRpT2w5SnNhNVNtZGlWNnguanBnIiwiY2hhcmFjdGVyIjoiVGVvIiwiY3JlZGl0X2lkIjoiNWFlZTIwNzZjM2EzNjgwNzgzMDAwOTAwIiwib3JkZXIiOjZ9LHsiYWR1bHQiOmZhbHNlLCJnZW5kZXIiOjIsImlkIjoyMDM2OTc5LCJrbm93bl9mb3JfZGVwYXJ0bWVudCI6IkFjdGluZyIsIm5hbWUiOiJCZXJrYXkgVHVsdW1iYWPEsSIsIm9yaWdpbmFsX25hbWUiOiJCZXJrYXkgVHVsdW1iYWPEsSIsInBvcHVsYXJpdHkiOjUuMjMyLCJwcm9maWxlX3BhdGgiOiIvM1VwOHJpT090b1l5Y1l0OGxXdkhYNld0ZnFILmpwZyIsImNoYXJhY3RlciI6IkJhcmJhcm9zIEfDvHJrYW4iLCJjcmVkaXRfaWQiOiI1YWVlMjBhZmMzYTM2ODA3OTIwMDBhOWUiLCJvcmRlciI6N30seyJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MSwiaWQiOjIwMjI1OTgsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IkFsaWNpYSBLYXB1ZGHEnyIsIm9yaWdpbmFsX25hbWUiOiJBbGljaWEgS2FwdWRhxJ8iLCJwb3B1bGFyaXR5IjoyLjA3OCwicHJvZmlsZV9wYXRoIjoiL2R1TFdTWVBKTmgwRUZGODhvZjEzM3dZRkM0WS5qcGciLCJjaGFyYWN0ZXIiOiJBcnp1IEXEn2lsbWV6IiwiY3JlZGl0X2lkIjoiNWFlZTIwYmI5MjUxNDExOTgzMDAxMmM5Iiwib3JkZXIiOjh9LHsiYWR1bHQiOmZhbHNlLCJnZW5kZXIiOjIsImlkIjoyMDM2OTgxLCJrbm93bl9mb3JfZGVwYXJ0bWVudCI6IkFjdGluZyIsIm5hbWUiOiJVbXVyIFlpxJ9pdCBWYW5sxLEiLCJvcmlnaW5hbF9uYW1lIjoiVW11ciBZacSfaXQgVmFubMSxIiwicG9wdWxhcml0eSI6NC4xMjgsInByb2ZpbGVfcGF0aCI6Ii9yVTQ0ektObmNNbTM1ZWdwSDlvd2I3T2lZcnkuanBnIiwiY2hhcmFjdGVyIjoiSGFrYW4gxZ5la2VyIiwiY3JlZGl0X2lkIjoiNWFlZTIwZDAwZTBhMjYxMDI2MDAwZmVjIiwib3JkZXIiOjl9LHsiYWR1bHQiOmZhbHNlLCJnZW5kZXIiOjAsImlkIjoyNjgwNzY1LCJrbm93bl9mb3JfZGVwYXJ0bWVudCI6IkFjdGluZyIsIm5hbWUiOiJMYWwgVGF5cmEgQmFoYXIiLCJvcmlnaW5hbF9uYW1lIjoiTGFsIFRheXJhIEJhaGFyIiwicG9wdWxhcml0eSI6MC44MjMsInByb2ZpbGVfcGF0aCI6bnVsbCwiY2hhcmFjdGVyIjoiw4dpw6dlayBFxJ9pbG1leiIsImNyZWRpdF9pZCI6IjYyYWIzYTlkODc1ZDFhNTI3OWVmMDYyZSIsIm9yZGVyIjoxMH0seyJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MSwiaWQiOjI5NDU4NjMsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IsOHacSfZGVtIEF5Z8O8biIsIm9yaWdpbmFsX25hbWUiOiLDh2nEn2RlbSBBeWfDvG4iLCJwb3B1bGFyaXR5IjoyLjA2MiwicHJvZmlsZV9wYXRoIjoiL2VPY2djZ3g1ZlVvRkxxd2JZZDNDZGdPbWN2Ri5qcGciLCJjaGFyYWN0ZXIiOiJTxLFkxLFrYSIsImNyZWRpdF9pZCI6IjYyYWIzYzc2NTU0MWZhMmYyYTMxMDNjYyIsIm9yZGVyIjoxMX0seyJhZHVsdCI6ZmFsc2UsImdlbmRlciI6MSwiaWQiOjIwMzY5ODIsImtub3duX2Zvcl9kZXBhcnRtZW50IjoiQWN0aW5nIiwibmFtZSI6IkFzbMSxIFNhbWF0Iiwib3JpZ2luYWxfbmFtZSI6IkFzbMSxIFNhbWF0IiwicG9wdWxhcml0eSI6NS40NzQsInByb2ZpbGVfcGF0aCI6Ii83TExZaEJvYzY5V3Y4dVA1eFpkZlp3ZVFUWkkuanBnIiwiY2hhcmFjdGVyIjoixZ5pcmluIiwiY3JlZGl0X2lkIjoiNWFlZTIwZTUwZTBhMjYxMDNhMDAwZjQ5Iiwib3JkZXIiOjEyfSx7ImFkdWx0IjpmYWxzZSwiZ2VuZGVyIjoxLCJpZCI6MTMzODE4LCJrbm93bl9mb3JfZGVwYXJ0bWVudCI6IkFjdGluZyIsIm5hbWUiOiJEZXJ5YSBBbGFib3JhIiwib3JpZ2luYWxfbmFtZSI6IkRlcnlhIEFsYWJvcmEiLCJwb3B1bGFyaXR5IjoxMC4wODMsInByb2ZpbGVfcGF0aCI6Ii9sQ2xTM0hkWklLczNOc2U1R0I4U0tpNUZ3UFMuanBnIiwiY2hhcmFjdGVyIjoiQ2FoaWRlIFBhcnMiLCJjcmVkaXRfaWQiOiI1YWVlMjA4ZDBlMGEyNjEwNDcwMDBlYzQiLCJvcmRlciI6MTN9XSwiY3JldyI6W10sImlkIjo3Mjg5M30=
+  recorded_at: Tue, 03 Sep 2024 23:34:54 GMT
+recorded_with: VCR 6.3.1

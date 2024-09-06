@@ -7,6 +7,14 @@ class ScanPlexProcessComponent < ViewComponent::Base
     Job.sort_by_created_at.active.find_by(name: 'ScanPlexWorker')
   end
 
+  def self.show?
+    job&.active? || false
+  end
+
+  def hidden?
+    !self.class.show?
+  end
+
   def completed
     job.metadata['completed'].presence || 0.0
   end

@@ -11,6 +11,18 @@ class MovieTitleTableComponent < ViewComponent::Base
     "#{self.class.name.parameterize}-#{movie.id}"
   end
 
+  def disks_loading
+    @disks_loading ||= Disk.loading
+  end
+
+  def disk_titles_with_info
+    MovieDiskTitleSelectorService.call(movie:, disk:)
+  end
+
+  def disk
+    @disk ||= disks.first
+  end
+
   def free_disk_space
     @free_disk_space ||= stats.block_size * stats.blocks_available
   end

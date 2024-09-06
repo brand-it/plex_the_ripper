@@ -1,3 +1,11 @@
+#bg-processes.fixed {
+  max-width: 23%;
+  position: fixed;
+  right: 1em;
+  bottom: 5em;
+  z-index: 1000;
+}
+
 .bg-process {
   --bs-toast-bg: rgba(var(--bs-body-bg-rgb), 0.85);
   --bs-toast-border-color: var(--bs-border-color-translucent);
@@ -48,7 +56,6 @@
 
 }
 
-
 .job {
   --bs-toast-bg: rgba(var(--bs-body-bg-rgb), 0.85);
   --bs-toast-border-color: var(--bs-border-color-translucent);
@@ -94,6 +101,21 @@
   .link {
     padding: var(--bs-toast-padding-x);
     word-wrap: break-word;
+  }
+
+}
+
+#bg-processes.compact {
+  .bg-process {
+    margin: 0px;
+    border-radius: 0;
+    border: 0.2em solid var(--bs-toast-border-color);
+
+    .header {
+      display: none;
+      padding: 0.5em;
+    }
+
   }
 
 }

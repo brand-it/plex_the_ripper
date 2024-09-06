@@ -1,10 +1,2 @@
-
-<%= simple_form_for search_service, as: :search, url: the_movie_dbs_path, method: :get, html: { class: 'row m-1 pb-4' }, data: { turbo_frame: 'videos', turbo_action: 'replace' } do |f| %>
-  <div class='col-8 col-md-10 col-lg-10'>
-    <%= f.input :query, label: 'Search for TV or Movie', autofocus: true, required: false %>
-  </div>
-  <div class='col align-self-center p-0 text-center'>
-    <%= f.button :submit, 'Search', data: { disable_with: 'Searching' } %>
-  </div>
-<% end %>
+<%= render SearchComponent.new(search_service:) %>
 <%= render partial: 'videos', locals: { search_service: }  %>

@@ -5,6 +5,7 @@
 # Table name: videos
 #
 #  id                           :integer          not null, primary key
+#  auto_start                   :boolean          default(FALSE), not null
 #  backdrop_path                :string
 #  episode_distribution_runtime :string
 #  episode_first_air_date       :date

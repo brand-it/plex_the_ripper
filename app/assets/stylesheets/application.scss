@@ -20,6 +20,7 @@
 @import "checkbox_toggle";
 @import "bg_process";
 @import "autocomplete";
+@import "movie";
 
 // @import "./custom";
 // app/javascript/packs/stylesheets/_custom.scss
@@ -33,6 +34,15 @@ body {
 
 body {
   font-family: "Lucida Console", Monaco, monospace;
+
+  main {
+    padding: 1em;
+    padding-bottom: 20em;
+  }
+}
+
+.nav-link {
+  padding: 0.5em;
 }
 
 .height-100 {
@@ -47,10 +57,8 @@ body {
   height: 60px;
 }
 
-.sticky-element {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
+.margin-auto {
+  margin: auto;
 }
 
 // Console for basic shell output
@@ -76,6 +84,31 @@ body {
   padding: 0.5rem;
 }
 
+.certification-rating {
+  align-content: center;
+  align-items: center;
+  border-radius: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  line-height: 1;
+  margin-right: 7px;
+  padding: .06em 4px .06em;
+  white-space: nowrap;
+}
+
+.cast {
+  display: flex;
+  overflow-x: scroll;
+
+  .cast-member {
+    .img-poster {
+      padding-bottom: 1em;
+    }
+
+    width: 200px;
+  }
+}
+
+
 .h-90 {
   height: 90%;
 }
@@ -94,6 +127,10 @@ body {
 
 .d-inline-grid {
   display: inline-grid;
+}
+
+.hidden {
+  display: none;
 }
 
 .overflow-scroll-y {
@@ -115,6 +152,7 @@ body {
 .img-poster {
   height: 300px;
   width: 200px;
+  display: inline-block;
 }
 
 .width-225 {

@@ -1,5 +1,0 @@
-<div class="bg-processes">
-  <% [ScanPlexProcessComponent, LoadDiskProcessComponent, UploadProcessComponent, RipProcessComponent].sort_by { _1.job == @job ? 0 : 1 }.each do |klass| %>
-    <%= render klass.new %>
-  <% end %>
-</div>

@@ -23,6 +23,7 @@ RSpec.describe TheMovieDb::VideoListener do
         'movie_runtime' => nil,
         'the_movie_db_id' => 4629,
         'popularity' => nil,
+        'auto_start' => false,
         'overview' => 'The story of Stargate SG-1 begins about a year after ' \
                       'the events of the feature film, when the United States government ' \
                       'learns that an ancient alien device called the Stargate can access ' \

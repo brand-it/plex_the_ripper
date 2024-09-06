@@ -5,7 +5,7 @@ class VideoSearchQuery
   VIDEOS_MEDIA_TYPE = %w[movie tv].freeze
   RESULTS_PER_PAGE = 21 # the movie db comes back with 20 results per page
 
-  option :query, Types::Coercible::String, optional: true
+  option :query, Types::Coercible::StrippedString, optional: true
   option :page, Types::Coercible::Integer, default: -> { 1 }, optional: true, null: nil
 
   def results

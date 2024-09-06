@@ -12,3 +12,6 @@ application.register("pagination", PaginationController)
 
 import PlexController from "./plex_controller"
 application.register("plex", PlexController)
+
+import SubmitOnKeyupController from "./submit_on_keyup_controller"
+application.register("submit-on-keyup", SubmitOnKeyupController)

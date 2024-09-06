@@ -33,34 +33,34 @@
   }
 
   input {
-    border-radius: 2px 2px 0px 0px;
     background-color: transparent;
+    border-color: transparent;
+    border-radius: 2px 2px 0px 0px;
     border: 0;
     color: $white;
     display: block;
     font-family: "Lucida Console", Monaco, monospace;
     font-size: 20px;
     height: 35px;
-    padding-bottom: 3px;
     line-height: 1.2;
     outline: none;
+    padding-bottom: 3px;
     width: 100%;
-    border-color: transparent;
   }
 
   label {
     display: block;
+    font-size: 22px;
     height: 100%;
     left: 0;
+    overflow: hidden;
     pointer-events: none;
     position: absolute;
-    width: 100%;
-    font-size: 22px;
+    text-overflow: ellipsis;
     top: 0px;
     transition: all .4s;
-    overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    width: 100%;
   }
 
   input:focus + label, input.has-val + label {

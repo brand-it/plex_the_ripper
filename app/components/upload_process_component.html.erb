@@ -1,37 +1,41 @@
-<%= render ProcessComponent.new dom_id: dom_id do |c| %>
-  <%= c.with_title do %>
-    Upload Status
-  <% end %>
-  <%= c.with_body do %>
-    <% if uploadable_video_blobs.any? || uploaded_recently_video_blobs.any? %>
-      <% uploaded_recently_video_blobs.each do |blob| %>
-        <%=
-          render(
-            ProgressBarComponent.new(
-              show_percentage: false,
-              status: :success,
-              completed: 100,
-              message: "Uploaded #{blob.title}"
+<% if hidden? %>
+  <div id="<%= dom_id %>" class="hidden"></div>
+<% else %>
+  <%= render ProcessComponent.new dom_id: dom_id, hidden: hidden? do |c| %>
+    <%= c.with_title do %>
+      Upload Status
+    <% end %>
+    <%= c.with_body do %>
+      <% if uploadable_video_blobs.any? || uploaded_recently_video_blobs.any? %>
+        <% uploaded_recently_video_blobs.each do |blob| %>
+          <%=
+            render(
+              ProgressBarComponent.new(
+                show_percentage: false,
+                status: :success,
+                completed: 100,
+                message: "Uploaded #{blob.title}"
+              )
             )
-          )
-        %>
-      <% end %>
-      <% uploadable_video_blobs.each do |blob| %>
-        <%=
-          video_blob_job = find_job_by_video_blob(blob)
-          render(
-            ProgressBarComponent.new(
-              show_percentage: video_blob_job.present?,
-              status: :info,
-              completed: percentage(video_blob_job&.completed, blob.byte_size),
-              message: video_blob_job ? "Uploading #{blob.title}" : "Pending upload #{blob.title}",
-              eta: (eta(video_blob_job, blob) if video_blob_job)
+          %>
+        <% end %>
+        <% uploadable_video_blobs.each do |blob| %>
+          <%=
+            video_blob_job = find_job_by_video_blob(blob)
+            render(
+              ProgressBarComponent.new(
+                show_percentage: video_blob_job.present?,
+                status: :info,
+                completed: percentage(video_blob_job&.completed, blob.byte_size),
+                message: video_blob_job ? "Uploading #{blob.title}" : "Pending upload #{blob.title}",
+                eta: (eta(video_blob_job, blob) if video_blob_job)
+              )
             )
-          )
-        %>
+          %>
+        <% end %>
+      <% else %>
+        <span>Nothing is being uploaded to <%= ftp_host %> </span>
       <% end %>
-    <% else %>
-      <span>Nothing is being uploaded to <%= ftp_host %> </span>
     <% end %>
   <% end %>
 <% end %>
