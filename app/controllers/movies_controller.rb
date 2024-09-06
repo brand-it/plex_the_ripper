@@ -32,7 +32,7 @@ class MoviesController < ApplicationController
     movie = Movie.find(params[:id])
     Video.auto_start.in_batches { _1.update(auto_start: false) }
     movie.update!(auto_start: true)
-    flash[:notice] = "Once disk is loaded is ready we will start processings #{movie.title}"
+    flash[:notice] = "Once disk is loaded and ready, we will start processings #{movie.title}"
     redirect_to movie_path(movie)
   end
 
