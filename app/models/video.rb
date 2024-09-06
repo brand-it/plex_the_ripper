@@ -5,6 +5,7 @@
 # Table name: videos
 #
 #  id                           :integer          not null, primary key
+#  auto_start                   :boolean          default(FALSE), not null
 #  backdrop_path                :string
 #  episode_distribution_runtime :string
 #  episode_first_air_date       :date
@@ -39,6 +40,8 @@ class Video < ApplicationRecord
   scope :with_video_blobs, -> { includes(:video_blobs).where.not(video_blobs: { id: nil }) }
   scope :optimized, -> { includes(:optimized_video_blobs).where.not(video_blobs: { id: nil }) }
   scope :optimized_with_checksum, -> { optimized.merge(VideoBlob.checksum) }
+  scope :auto_start, -> { where(auto_start: true) }
+  scope :not_auto_start, -> { where.not(auto_start: true) }
 
   validates :title, presence: true
 
@@ -51,18 +54,26 @@ class Video < ApplicationRecord
   end
 
   def credits
+    return if the_movie_db_id.nil?
+
     @credits ||= "TheMovieDb::#{type}::Credits".constantize.new(the_movie_db_id).results
   end
 
   def the_movie_db_details
+    return if the_movie_db_id.nil?
+
     @the_movie_db_details ||= "TheMovieDb::#{type}".constantize.new(the_movie_db_id).results
   end
 
   def release_dates
+    return if the_movie_db_id.nil?
+
     @release_dates ||= "TheMovieDb::#{type}::ReleaseDates".constantize.new(the_movie_db_id).results
   end
 
   def ratings
+    return [] if release_dates.nil?
+
     @ratings ||= self.class.ratings.keys & release_dates['results']
                  .flat_map { _1['release_dates'] }
                  .pluck('certification')

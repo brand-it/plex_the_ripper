@@ -1,0 +1,5 @@
+<div class="<%= Array.wrap(classes).join(' ') %>" id="bg-processes">
+  <% [RipProcessComponent, ScanPlexProcessComponent, LoadDiskProcessComponent, UploadProcessComponent].each do |component| %>
+    <%= render component.new %>
+  <% end %>
+</div>

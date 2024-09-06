@@ -5,6 +5,14 @@ class UploadProcessComponent < ViewComponent::Base
     Job.sort_by_created_at.active.find_by(name: 'UploadWorker')
   end
 
+  def self.show?
+    VideoBlob.uploaded_recently.any? || VideoBlob.uploadable.any?
+  end
+
+  def hidden?
+    !self.class.show?
+  end
+
   def dom_id
     'upload-process-component'
   end

@@ -36,7 +36,7 @@ class RipWorker < ApplicationWorker
 
   def eject_disk
     service = EjectDiskService.new(disk)
-    service.subscribe(DiskListener.new(disk:))
+    service.subscribe(DiskListener.new)
     service.call
   end
 

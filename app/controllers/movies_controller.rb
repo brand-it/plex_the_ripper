@@ -26,6 +26,23 @@ class MoviesController < ApplicationController
     redirect_to job_path(job)
   end
 
+  # Call this method to auto start ripping the disk as soon as it the disk title is ready
+  # It will auto select disk titles for you rather then you selecting them
+  def auto_start
+    movie = Movie.find(params[:id])
+    Video.auto_start.in_batches { _1.update(auto_start: false) }
+    movie.update!(auto_start: true)
+    flash[:notice] = "Once disk is loaded is ready we will start processings #{movie.title}"
+    redirect_to movie_path(movie)
+  end
+
+  def cancel_auto_start
+    movie = Movie.find(params[:id])
+    movie.update!(auto_start: false)
+    flash[:notice] = "Removed #{movie.title} from auto start"
+    redirect_back_or_to :root
+  end
+
   private
 
   def rip_disk_titles(disk, movie)

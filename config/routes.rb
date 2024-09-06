@@ -30,7 +30,11 @@ Rails.application.routes.draw do
   # Movies #
   #--------#
   resources :movies do
-    member { post :rip }
+    member do
+      post :rip
+      post :auto_start
+      post :cancel_auto_start
+    end
   end
 
   #----------#

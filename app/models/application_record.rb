@@ -3,6 +3,7 @@
 class ApplicationRecord < ActiveRecord::Base
   include CableReady::Broadcaster
 
+  scope :newest, -> { order(created_at: :desc) }
   self.abstract_class = true
 
   def unmark_for_destruction

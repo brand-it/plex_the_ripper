@@ -5,6 +5,14 @@ class RipProcessComponent < ViewComponent::Base
     Job.sort_by_created_at.active.find_by(name: 'RipWorker')
   end
 
+  def self.show?
+    Video.auto_start.any? || job&.active?
+  end
+
+  def hidden?
+    !self.class.show?
+  end
+
   def job
     self.class.job
   end
@@ -19,6 +27,10 @@ class RipProcessComponent < ViewComponent::Base
 
   def job_active?
     job&.active?
+  end
+
+  def auto_start_video
+    @auto_start_video ||= Video.auto_start.first
   end
 
   def ftp_host

@@ -8,11 +8,7 @@ class CreateDisksService < ApplicationService
   def call
     return [] if (drives = list_drives).empty?
 
-    disks = drives.map { create_or_update_disks(_1) }
-
-    disks.each { _1.update!(ejected: false) }
-    broadcast(:disk_loaded)
-    disks
+    drives.map { create_or_update_disks(_1) }
   end
 
   private
@@ -20,10 +16,11 @@ class CreateDisksService < ApplicationService
   def create_or_update_disks(drive)
     find_or_initalize_disk(drive).tap do |disk|
       disk.update!(loading: true)
-      broadcast(:disk_loading)
+      broadcast(:disk_loading, disk)
       disk.disk_titles.each(&:mark_for_destruction)
       find_or_build_disk_titles(disk)
-      broadcast(:disk_loaded)
+      disk.update!(ejected: false)
+      broadcast(:disk_loaded, disk)
     ensure
       disk.update!(loading: false)
     end

@@ -1,21 +1,17 @@
 <%= turbo_frame_tag 'videos', class: 'display-flex' do %>
-  <% if params.dig(:search, :query).blank? %>
+  <% if params.dig(:search, :query).blank? && search_service.results.none?%>
     <div class='col-md-12'>
       <div class="text-white">
-        <div class='container'>
-          <h1 class="display-4">To Getting Started</h1>
-          <p class="lead">Type in the name of the movie or TV show your looking for into the search bar above.</p>
-        </div>
+        <h1 class="display-4">To Getting Started</h1>
+        <p class="lead">Type in the name of the movie or TV show your looking for into the search bar above.</p>
       </div>
     </div>
   <% end %>
   <% if search_service.results.none? && params.dig(:search, :query).present? %>
     <div class='col-md-12'>
       <div class="text-white">
-        <div class='container'>
-          <h1 class="display-4">No Results Found For <%= params.dig(:search, :query) %></h1>
-          <p class="lead">Try typing a different movie name</p>
-        </div>
+        <h1 class="display-4">No Results Found For <%= params.dig(:search, :query) %></h1>
+        <p class="lead">Try typing a different movie name</p>
       </div>
     </div>
   <% else %>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_07_16_170733) do
+ActiveRecord::Schema[7.2].define(version: 2024_08_30_212716) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -156,7 +156,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_16_170733) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "rating", default: 0, null: false
+    t.boolean "auto_start", default: false, null: false
     t.index ["type", "the_movie_db_id"], name: "index_videos_on_type_and_the_movie_db_id", unique: true
   end
-
 end

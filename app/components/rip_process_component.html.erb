@@ -1,4 +1,4 @@
-<% if hide %>
+<% if hidden? %>
   <div id="<%= dom_id %>" class="hidden"></div>
 <% else %>
   <%= render ProcessComponent.new dom_id: dom_id do |c| %>
@@ -21,8 +21,13 @@
       <% c.with_link { link_to 'View Details', job_path(job) } %>
     <% else %>
       <% c.with_body do %>
-        <span>Nothing is being ripped to <%= ftp_host %> </span>
+        <% if auto_start_video && auto_start_video.is_a?(Movie) %>
+          <%= link_to 'Cancel', cancel_auto_start_movie_path(auto_start_video), data: { turbo_method: :post } %> | <%= link_to auto_start_video.title, movie_path(auto_start_video) %> will start ripping
+        <% else %>
+          <span>Nothing is being ripped to <%= ftp_host %> </span>
+        <% end %>
       <% end %>
+
     <% end %>
   <% end %>
 <% end %>

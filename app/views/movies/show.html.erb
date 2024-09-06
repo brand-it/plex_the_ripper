@@ -1,30 +1,49 @@
 <%= render SearchComponent.new %>
-<div class="row no-gutters">
-  <div class="col-3 text-center">
+
+<% content_for :sidebar, '' %>
+
+<div class="row">
+  <div class="col" style="width: 225px; max-width: 225px;">
     <%= imdb_image_tag @movie.poster_path, klass: 'img-poster', width: 400 %>
   </div>
-  <div class="col-9">
-    <div class="card-body">
-      <h5 class="card-title">
-        <%= icon('film', type: 'fas') %>
-        <%= @movie.title %>
-      </h5>
-      <small class='text-muted'><%= @movie.original_title %></small>
-      <p class="card-text"><%= @movie.overview %></p>
-      <p class="card-text">
-        <small class="text-muted">
-          <%= @movie.release_or_air_date %>
-          <%= link_to_movie_db_movie @movie.the_movie_db_id %>
-        </small>
-      </p>
-      <% @movie.video_blobs.uploadable.uploaded.each do |blob| %>
-        <p><%= blob.key %></p>
+  <div class="col" style="width: 75%;">
+    <h3 class="movie-title">
+      <%= icon('film', type: 'fas') %>
+      <%= link_to_movie_db_movie @movie.the_movie_db_id, text: @movie.plex_name %>    </h3>
+    <div class='movie-facts'>
+      <span class="certification-rating"><%= @movie.ratings.reject { _1 == 'NR' }.first&.strip %></span>
+      <% if @movie.release_or_air_date %>
+        <span><%= l @movie.release_or_air_date, format: :long %></span>
       <% end %>
-      <p class="text-primary-emphasis">Blue Means the disk title is within the runtime range of the movie.</p>
-      <p class="text-success-emphasis">Gream Means the disk has been ripped before.</p>
+      <% if @movie.the_movie_db_details %>
+        <% @movie.the_movie_db_details['genres'].each do |genre| %>
+          <span class="badge rounded-pill text-bg-secondary"><%= genre["name"].strip %></span>
+        <% end %>
+      <% end %>
+    </div>
+    <div class="movie-description">
+      <p><%= @movie.overview %></p>
+    </div>
+    <%= render CastComponent.new(video: @movie) %>
+    <div id='disk-selector'>
+      <%= render MovieTitleTableComponent.new(disks: @disks, movie: @movie) %>
+    </div>
+    <hr/>
+      <% if Job.sort_by_created_at.active.find_by(name: 'LoadDiskWorker')&.active? %>
+      <p class="text-info">
+        Stand by the disk is still being loading from the CD drive this could take a while. Page will update once the disk is ready so no need to refresh the page but if you do it won't hurt anything.
+      </p>
+    <% else %>
+      <p class="text-warn">
+        Please refresh the page if you see this warning but are certain a disk is present, as no disk is currently loaded or detected.
+      </p>
+    <% end %>
+    <div>
+      <ul>
+        <% @movie.video_blobs.each do |video_blob| %>
+          <li><%= video_blob.plex_path %></li>
+        <% end %>
+      </ul>
     </div>
   </div>
-</div>
-<div id='disk-selector'>
-  <%= render MovieTitleTableComponent.new(disks: @disks, movie: @movie) %>
 </div>

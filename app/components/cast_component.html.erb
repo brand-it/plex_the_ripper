@@ -1,0 +1,11 @@
+<div class="cast">
+  <% cast.each do |cast| %>
+    <div class="cast-member">
+      <%= imdb_image_tag cast[:profile_path], width: 150, klass: 'img-poster' %>
+      <div>
+        <h6 class="cast-name"><%= cast[:name] %></h6>
+        <p class="cast-character "><%= cast[:character] %></p>
+      </div>
+    </div>
+  <% end %>
+</div>
