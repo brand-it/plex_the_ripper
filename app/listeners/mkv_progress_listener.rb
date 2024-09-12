@@ -52,6 +52,12 @@ class MkvProgressListener
     reload_page!
   end
 
+  def mkv_started(cmd)
+    job.add_message("started: #{cmd}")
+    update_message_component
+    update_job!
+  end
+
   def mkv_raw_line(mkv_message)
     case mkv_message
     when MkvParser::PRGV
@@ -74,7 +80,7 @@ class MkvProgressListener
   end
 
   def last_message
-    job.metadata['message'].last
+    job.metadata['message']&.last
   end
 
   def percentage(completed, total)

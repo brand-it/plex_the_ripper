@@ -7,6 +7,9 @@ import { application } from "./application"
 import ConsoleController from "./console_controller"
 application.register("console", ConsoleController)
 
+import ManageSelectionsController from "./manage_selections_controller"
+application.register("manage-selections", ManageSelectionsController)
+
 import PaginationController from "./pagination_controller"
 application.register("pagination", PaginationController)
 

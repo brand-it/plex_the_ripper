@@ -184,6 +184,7 @@ module Shell
       stdout: [],
       stderr: []
     }
+    broadcast(:mkv_started, [makemkvcon_path, *cmd].join(' '))
     Open3.popen3([makemkvcon_path, *cmd].join(' ')) do |stdin, stdout_str, stderr_str, wait_thr|
       stdin.close
       [[stdout_str, :stdout], [stderr_str, :stderr]].each do |std, type|
