@@ -1,5 +1,6 @@
 <% if disks.any? %>
-  <%= simple_form_for :movies, url: rip_movie_path(movie) do |f| %>
+  <%= simple_form_for :movies, url: rip_movie_path(movie), data: { controller: 'manage-selections' } do |f| %>
+
     <%= hidden_field_tag :disk_id, disk&.id %>
     <table class="table" id="<%= dom_id %>">
       <thead>
@@ -10,7 +11,7 @@
           <th>Name(video title)</th>
           <th>Duration (<%= distance_of_time_in_words @movie.movie_runtime.seconds %>)</th>
           <th>Size</th>
-          <th></th>
+          <th><a class='btn btn-info' data-action="click->manage-selections#clearInputs">Select None</a></th>
         </tr>
       </thead>
       <tbody class="disk_titles">
@@ -55,7 +56,7 @@
               <% end %>
             </td>
             <td class="<%= text_class %>">
-              <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, info.extra_type), prompt: "Don't Rip" %>
+              <%= select_tag "movies[][extra_type]", options_for_select(VideoBlob.extra_types.keys, info.extra_type), prompt: "Don't Rip", data: { manage_selections_target: :input } %>
             </td>
           </tr>
         <% end %>
