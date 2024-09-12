@@ -49,6 +49,7 @@ class CreateMkvService < ApplicationService
       Shellwords.escape(tmp_dir),
       '--progress=-same',
       '--robot',
+      '--no-scan',
       '--profile="FLAC"'
     ].join(' ')
   end
