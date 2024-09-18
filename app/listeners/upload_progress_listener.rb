@@ -8,7 +8,6 @@ class UploadProgressListener
   delegate :render, to: :ApplicationController
 
   option :video_blob, Types.Instance(::VideoBlob)
-  option :file_size, Types::Integer
   option :job, Types.Instance(::Job)
 
   attr_reader :completed
@@ -23,15 +22,19 @@ class UploadProgressListener
     @next_update = 1.second.from_now
   end
 
+  def upload_ready
+    upload_started
+  end
+
   def upload_started
-    job.metadata['completed'] ||= 0
+    job.metadata['completed'] = 0
     job.metadata['video_blob_id'] = video_blob.id
     job.save!
     update_component
   end
 
   def upload_finished
-    job.metadata['completed'] = file_size
+    job.metadata['completed'] = video_blob.byte_size
     job.save!
     video_blob.update!(uploadable: false, uploaded_on: Time.current)
     update_component
