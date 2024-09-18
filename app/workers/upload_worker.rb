@@ -14,7 +14,6 @@ class UploadWorker < ApplicationWorker
     service = Ftp::UploadMkvService.new(video_blob:)
     service.subscribe(UploadProgressListener.new(
                         video_blob:,
-                        file_size: video_blob.byte_size,
                         job:
                       ))
     service.call
