@@ -10,7 +10,7 @@ module ActiveRecord
         @file_watcher = file_watcher
       end
 
-      def call(env) # rubocop:disable Metrics/MethodLength
+      def call(env)
         @mutex.synchronize do
           @watcher ||= build_watcher do
             @needs_check = true

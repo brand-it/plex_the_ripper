@@ -20,8 +20,7 @@ class MoviesController < ApplicationController
     disk_titles = rip_disk_titles(disk, movie)
     job = RipWorker.perform_async(
       disk_id: disk.id,
-      disk_title_ids: disk_titles.map(&:id),
-      extra_types: movies_params.pluck(:extra_type).compact_blank
+      disk_titles:
     )
     redirect_to job_path(job)
   end
@@ -46,16 +45,18 @@ class MoviesController < ApplicationController
   private
 
   def rip_disk_titles(disk, movie)
-    movies_params.filter_map do |movie_params|
-      next if movie_params[:extra_type].blank?
-
+    movies_params.map do |movie_params|
       disk_title = disk.disk_titles.find(movie_params[:disk_title_id])
       disk_title.update!(video: movie)
-      disk_title
+      {
+        id: disk_title.id,
+        extra_type: movie_params[:extra_type].to_sym,
+        edition: movie_params[:edition]
+      }
     end
   end
 
   def movies_params
-    params.required(:movies)
+    @movies_params ||= params.required(:movies).reject { _1[:extra_type].blank? }
   end
 end

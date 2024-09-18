@@ -8,8 +8,9 @@
 #  byte_size         :bigint           not null
 #  checksum          :text
 #  content_type      :string           not null
+#  edition           :string
 #  extra_type        :integer          default("feature_films")
-#  extra_type_number :integer          not null
+#  extra_type_number :integer
 #  filename          :string           not null
 #  key               :string           not null
 #  metadata          :text

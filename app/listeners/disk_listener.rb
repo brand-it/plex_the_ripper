@@ -37,10 +37,12 @@ class DiskListener
     info_disk_titles = rip_disk_titles(disk, video)
     return reload_page! if info_disk_titles.empty?
 
+    disk_titles = info_disk_titles.map do |info|
+      { id: info.disk_title.id, extra_type: info.extra_type }
+    end
     job = RipWorker.perform_async(
       disk_id: disk.id,
-      disk_title_ids: info_disk_titles.map { _1.disk_title.id },
-      extra_types: info_disk_titles.map(&:extra_type)
+      disk_titles:
     )
     if job
       video.update!(auto_start: false)

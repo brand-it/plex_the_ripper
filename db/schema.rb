@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_08_30_212716) do
+ActiveRecord::Schema[7.2].define(version: 2024_09_17_230625) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -131,9 +131,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_08_30_212716) do
     t.datetime "updated_at", null: false
     t.bigint "episode_id"
     t.integer "extra_type", default: 0
-    t.integer "extra_type_number", null: false
+    t.integer "extra_type_number"
     t.datetime "uploaded_on"
     t.boolean "uploadable", default: false, null: false
+    t.string "edition"
     t.index ["extra_type_number", "video_id", "extra_type"], name: "idx_on_extra_type_number_video_id_extra_type_1978193db6", unique: true
     t.index ["key"], name: "index_video_blobs_on_key", unique: true
     t.index ["key"], name: "index_video_blobs_on_key_and_service_name", unique: true

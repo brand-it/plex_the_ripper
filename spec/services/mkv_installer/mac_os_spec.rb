@@ -16,7 +16,7 @@ RSpec.describe MkvInstaller::MacOs do
       allow(FileUtils).to receive(:rm_rf)
     end
 
-    it 'calls all the right things' do # rubocop:disable RSpec/MultipleExpectations
+    it 'calls all the right things' do
       call
       expect(FileUtils).to have_received(:cp_r).with '/Volumes/makemkv_v1.17.7/MakeMKV.app',
                                                      '/Applications/MakeMKV.app'

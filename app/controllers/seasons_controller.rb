@@ -14,7 +14,7 @@ class SeasonsController < ApplicationController
     season = tv.seasons.find(params[:id])
     disk = Disk.find(params[:disk_id])
     disk_titles = rip_disk_titles(tv, disk, season)
-    job = RipWorker.perform_async(disk_id: disk.id, disk_title_ids: disk_titles.map(&:id))
+    job = RipWorker.perform_async(disk_id: disk.id, disk_titles:)
     redirect_to job_path(job)
   end
 
@@ -25,7 +25,7 @@ class SeasonsController < ApplicationController
       episode = season.episodes.find { _1.id == episode_param[:id].to_i }
       disk_title = disk.disk_titles.find { _1.id == episode_param[:disk_title_id].to_i }
       disk_title.update!(video: tv, episode:)
-      disk_title
+      { id: disk_title.id }
     end
   end
 
