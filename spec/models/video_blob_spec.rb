@@ -8,8 +8,9 @@
 #  byte_size         :bigint           not null
 #  checksum          :text
 #  content_type      :string           not null
+#  edition           :string
 #  extra_type        :integer          default("feature_films")
-#  extra_type_number :integer          not null
+#  extra_type_number :integer
 #  filename          :string           not null
 #  key               :string           not null
 #  metadata          :text
@@ -98,7 +99,7 @@ RSpec.describe VideoBlob do
     end
 
     context 'when not feature_films extra type' do
-      let(:video_blob) { build_stubbed(:video_blob, extra_type: :behind_the_scenes, video: movie) }
+      let(:video_blob) { build_stubbed(:video_blob, extra_type: :behind_the_scenes, extra_type_number: 1, video: movie) }
       let(:movie) { build_stubbed(:movie) }
       let(:expected_path) do
         "#{Config::Plex.newest.settings_movie_path}/#{movie.plex_name}/Behind The Scenes/Behind The Scenes #1.mkv"
@@ -108,10 +109,24 @@ RSpec.describe VideoBlob do
     end
 
     context 'when not feature_films extra type & tv show' do
-      let(:video_blob) { build_stubbed(:video_blob, extra_type: :behind_the_scenes, video: tv) }
+      let(:video_blob) { build_stubbed(:video_blob, extra_type: :behind_the_scenes, extra_type_number: 1, video: tv, episode:) }
       let(:tv) { build_stubbed(:tv) }
+      let(:season) { build_stubbed(:season, tv:) }
+      let(:episode) { build_stubbed(:episode, season:) }
       let(:expected_path) do
         "#{Config::Plex.newest.settings_tv_path}/#{tv.plex_name}/Behind The Scenes/Behind The Scenes #1.mkv"
+      end
+
+      it { is_expected.to eq Pathname.new(expected_path) }
+    end
+
+    context 'when movie is a feature_film & and has a edition' do
+      let(:video_blob) do
+        build_stubbed(:video_blob, extra_type: :feature_films, video: movie, edition: 'Something super special')
+      end
+      let(:movie) { build_stubbed(:movie) }
+      let(:expected_path) do
+        "#{Config::Plex.newest.settings_movie_path}/#{movie.plex_name} {edition-Something super special}/#{movie.plex_name} {edition-Something super special}.mkv"
       end
 
       it { is_expected.to eq Pathname.new(expected_path) }
@@ -124,8 +139,8 @@ RSpec.describe VideoBlob do
       let!(:video_blob_b) { create(:video_blob, video: movie, extra_type: :feature_films) }
       let(:movie) { create(:movie) }
 
-      it { expect(video_blob_a.extra_type_number).to eq 1 }
-      it { expect(video_blob_b.extra_type_number).to eq 2 }
+      it { expect(video_blob_a.extra_type_number).to be_nil }
+      it { expect(video_blob_b.extra_type_number).to be_nil }
     end
   end
 
@@ -143,7 +158,7 @@ RSpec.describe VideoBlob do
 
     context 'when path does start with tv show path' do
       let(:config_plex) { build_stubbed(:config_plex, settings_tv_path: '/Media/Tv Show') }
-      let(:video_blob) { build_stubbed(:video_blob, key: '/Media/Tv Show') }
+      let(:video_blob) { build_stubbed(:video_blob, key: '/Media/Tv Show/something.mkv') }
 
       it { is_expected.to be(true) }
     end
@@ -180,7 +195,7 @@ RSpec.describe VideoBlob do
 
     context 'when path does start with movie path' do
       let(:config_plex) { build_stubbed(:config_plex, settings_movie_path: '/Media/Movie') }
-      let(:video_blob) { build_stubbed(:video_blob, video: nil, key: '/Media/Movie') }
+      let(:video_blob) { build_stubbed(:video_blob, video: nil, key: '/Media/Movie/something.mkv') }
 
       it { is_expected.to be(true) }
     end

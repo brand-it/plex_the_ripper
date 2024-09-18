@@ -2,11 +2,16 @@
 
 class RipWorker < ApplicationWorker
   include ActionView::Helpers::UrlHelper
+
+  DiskTitleHash = Types::Hash.schema(
+    id: Types::Coercible::Integer,
+    edition?: Types::String.optional,
+    extra_type?: Types::Coercible::Symbol
+  ).with_key_transform(&:to_sym)
   delegate :movie_url, :tv_season_url, to: 'Rails.application.routes.url_helpers'
 
   option :disk_id, Types::Integer
-  option :disk_title_ids, Types::Array.of(Types::Integer)
-  option :extra_types, Types::Array.of(Types::String), optional: true, default: -> { [] }
+  option :disk_titles, Types::Array.of(DiskTitleHash)
 
   def enqueue?
     true
@@ -24,12 +29,15 @@ class RipWorker < ApplicationWorker
   private
 
   def create_mkvs
-    disk_title_ids.zip(extra_types).filter_map do |disk_title_id, extra_type|
-      disk_title = DiskTitle.find(disk_title_id)
-      service = CreateMkvService.new(disk_title:, extra_type:)
+    disk_titles.filter_map do |disk_title|
+      service = CreateMkvService.new(
+        disk_title: DiskTitle.find(disk_title[:id]),
+        extra_type: disk_title[:extra_type],
+        edition: disk_title[:edition]
+      )
       service.subscribe(MkvProgressListener.new(job:))
       result = service.call
-      upload_mkv(disk_title) if result.success?
+      upload_mkv(service.disk_title) if result.success?
       result
     end
   end
@@ -55,7 +63,7 @@ class RipWorker < ApplicationWorker
   end
 
   def redirect_url
-    disk_title = DiskTitle.find_by(id: disk_title_ids.first)
+    disk_title = DiskTitle.find_by(id: disk_titles.first[:id])
     return if disk_title.nil?
 
     if disk_title.video.is_a?(Movie)

@@ -18,20 +18,23 @@ module Ftp
     end
 
     def build_video(path, entry)
-      return unless entry.pathname.end_with?('.mkv') || entry.pathname.end_with?('.mp4')
+      service = KeyParserService.new([path, entry.pathname].join('/'))
+      parsed = service.call
+      return if parsed.nil?
 
-      key = [path, entry.pathname].join('/')
-
-      find_or_initialize_by(key).tap do |video_blob|
-        video_blob.assign_attributes filename: safe_encode(entry.pathname),
-                                     content_type: content_type(entry),
-                                     optimized: path.include?('Optimized for'),
-                                     byte_size: entry.size
+      find_or_initialize_by(service.key).tap do |video_blob|
+        video_blob.assign_attributes filename: parsed.filename,
+                                     content_type: parsed.content_type,
+                                     optimized: parsed.optimized,
+                                     byte_size: entry.size,
+                                     extra_type_number: parsed.extra_number,
+                                     extra_type: parsed.extra_type
+        video_blob.uploaded_on ||= Time.current
       end
     end
 
     def find_or_initialize_by(key)
-      preloaded_video_blobs[safe_encode(key)] || VideoBlob.new(key: safe_encode(key))
+      preloaded_video_blobs[key] || VideoBlob.new(key:)
     end
 
     def preloaded_video_blobs
@@ -40,17 +43,6 @@ module Ftp
           hash[video_blob.key] ||= video_blob
         end
       end
-    end
-
-    def content_type(entry)
-      return 'video/x-matroska' if entry.pathname.end_with?('.mkv')
-      return 'video/mp4' if entry.pathname.end_with?('.mp4')
-
-      raise 'Unsupported file type'
-    end
-
-    def safe_encode(string)
-      string.force_encoding(Encoding::UTF_8)
     end
   end
 end

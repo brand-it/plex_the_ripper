@@ -10,8 +10,10 @@ class ScanPlexWorker < ApplicationWorker
     video_blobs.map do |blob|
       blob.video = find_or_create_video(blob)
       blob.episode = search_for_episode(blob, blob.video)
-      blob.uploaded_on ||= Time.current
-      job.add_message("Failed create video from #{blob.key}") unless blob.save
+      unless blob.save
+        job.add_message("Failed create video from #{blob.key}")
+        job.add_message(blob.errors.full_messages)
+      end
       self.completed += 1
       job.completed = (completed / video_blobs.size.to_f * 100)
       next if next_update.future?
@@ -19,6 +21,13 @@ class ScanPlexWorker < ApplicationWorker
       job.save!
       broadcast_component(ScanPlexProcessComponent.new)
       @next_update = 1.second.from_now
+    end
+    existing_ids = video_blobs.map(&:id).compact
+    VideoBlob.not_uploaded.in_batches do |batch|
+      VideoBlob.where(id: batch.map(&:id) - existing_ids).destroy_all
+    end
+    Video.includes(:video_blobs).find_each do |video|
+      video.destroy if video.video_blobs.empty?
     end
     job.update!(completed: 100)
     broadcast_component(ScanPlexProcessComponent.new)

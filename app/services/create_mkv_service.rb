@@ -11,7 +11,8 @@ class CreateMkvService < ApplicationService
   TMP_DIR = Rails.root.join('tmp/videos')
 
   option :disk_title, Types.Instance(DiskTitle)
-  option :extra_type, Types::Coercible::String, default: -> { VideoBlob::EXTRA_TYPES.first.first }
+  option :extra_type, Types::Coercible::Symbol.optional, default: -> { VideoBlob::EXTRA_TYPES.first.first }
+  option :edition, Types::Coercible::String, optional: true
 
   def call
     disk_title.update!(video_blob:)
@@ -58,19 +59,29 @@ class CreateMkvService < ApplicationService
   end
 
   def video_blob
-    @video_blob ||= if extra_type == 'feature_films' || extra_type.blank?
+    @video_blob ||= if extra_type == :feature_films || extra_type.blank? || edition.present?
                       VideoBlob.find_or_create_by!(
                         video: disk_title.video,
                         episode: disk_title.episode,
-                        extra_type: extra_type.presence || :feature_films
+                        extra_type: :feature_films,
+                        edition:
                       )
                     else
                       VideoBlob.create!(
                         video: disk_title.video,
                         episode: disk_title.episode,
-                        extra_type:
+                        extra_type:,
+                        edition:,
+                        extra_type_number: extra_type_number(
+                          video: disk_title.video,
+                          extra_type:
+                        )
                       )
                     end
+  end
+
+  def extra_type_number(video:, extra_type:)
+    VideoBlob.where(video:, extra_type:).pluck(:extra_type_number).max.to_i + 1
   end
 
   def recreate_dir(dir)

@@ -47,7 +47,7 @@ module MkvParser
     end
   end
 
-  def define_type(type, line) # rubocop:disable Metrics/AbcSize
+  def define_type(type, line)
     type = "MkvParser::#{type}".constantize
     if line.size <= type.new.members.size
       type.new(*line)
