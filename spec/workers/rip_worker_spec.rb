@@ -15,7 +15,7 @@ RSpec.describe RipWorker, type: :worker do
   describe '#perform' do
     subject(:perform) { worker.perform }
 
-    let(:stub) { instance_double(CreateMkvService, :call) }
+    let(:stub) { instance_double(CreateMkvService, :call, disk_title:) }
     let(:stub_result) { instance_double(CreateMkvService::Result, success?: true) }
 
     before do
