@@ -19,7 +19,7 @@ class Config
         notifier.ping 'Hello I will post messages to this channel as they happen'
         redirect_to root_path, notice: 'Slack Config was successfully created.'
       else
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 
@@ -32,7 +32,7 @@ class Config
 
         redirect_to root_path, notice: 'Updated Slack config successfully'
       else
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
 

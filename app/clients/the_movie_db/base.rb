@@ -8,6 +8,7 @@ module TheMovieDb
     VERSION = '3'
     CACHE_TTL = 7.days
     CACHE_NAMESPACE = 'the_movie_db'
+    option :api_key, optional: true
     class << self
       def option_names
         @option_names ||= dry_initializer.options.map(&:target)
@@ -81,7 +82,7 @@ module TheMovieDb
 
     # Visit to get api key https://www.themoviedb.org/settings/api
     def api_key
-      config.settings.api_key.tap do |key|
+      @api_key = super || config.settings.api_key.tap do |key|
         raise InvalidConfig, 'the movie db api requires an api key' if key.blank?
       end
     end

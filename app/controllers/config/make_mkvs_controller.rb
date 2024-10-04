@@ -16,8 +16,7 @@ class Config
       if @config_make_mkv.save
         redirect_to root_path, success: 'Make MKV Config was successfully created.'
       else
-        flash.now[:error] = 'Could not create MKV Config'
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 
@@ -26,8 +25,7 @@ class Config
         flash[:success] = 'Updated Make MKV'
         redirect_to root_path
       else
-        flash.now[:error] = 'Could not update MKV Config'
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
 

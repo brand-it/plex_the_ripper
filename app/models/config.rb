@@ -24,9 +24,7 @@ class Config < ApplicationRecord
     end
 
     def newest
-      key = :"#{model_name.param_key}_newest"
-      newest = Thread.current.thread_variable_get(key)
-      newest || Thread.current.thread_variable_set(key, order(updated_at: :desc).first) || new
+      order(updated_at: :desc).first || new
     end
   end
 

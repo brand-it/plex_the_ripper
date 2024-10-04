@@ -17,6 +17,7 @@ gem 'hotwire-rails'
 gem 'jbuilder'
 gem 'jsbundling-rails'
 gem 'kaminari'
+gem 'shakapacker'
 gem 'net-ftp'
 gem 'net-pop', require: false # Downloading net-pop-0.1.2 revealed dependencies not in the API or the lockfile (net-protocol (>= 0)).
 gem 'os'
