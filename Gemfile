@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.3'
+ruby '3.3.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'bootsnap', require: false
@@ -18,6 +18,7 @@ gem 'jbuilder'
 gem 'jsbundling-rails'
 gem 'kaminari'
 gem 'net-ftp'
+gem 'net-pop', require: false # Downloading net-pop-0.1.2 revealed dependencies not in the API or the lockfile (net-protocol (>= 0)).
 gem 'os'
 gem 'progressbar'
 gem 'puma', git: 'https://github.com/puma/puma'

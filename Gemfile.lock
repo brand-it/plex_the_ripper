@@ -457,6 +457,7 @@ DEPENDENCIES
   listen
   memory_profiler
   net-ftp
+  net-pop
   os
   progressbar
   puma!
@@ -495,7 +496,7 @@ DEPENDENCIES
   workflow
 
 RUBY VERSION
-   ruby 3.3.3p89
+   ruby 3.3.4p94
 
 BUNDLED WITH
    2.5.21
