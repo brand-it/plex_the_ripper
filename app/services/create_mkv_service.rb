@@ -64,7 +64,7 @@ class CreateMkvService < ApplicationService
                         video: disk_title.video,
                         episode: disk_title.episode,
                         extra_type: :feature_films,
-                        edition:
+                        edition: edition.presence
                       )
                     else
                       VideoBlob.create!(
