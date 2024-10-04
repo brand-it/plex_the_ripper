@@ -228,7 +228,7 @@ end
 
 def compile_assets
   log 'Compiling assets...'
-  Rake::Task['javascript:build'].invoke
+  Rake::Task['assets:precompile'].invoke
   Rake::Task['assets:clean'].invoke
   success 'Assets compiled!'
 end
