@@ -25,7 +25,7 @@ class Config
         ScanPlexWorker.perform_async
         redirect_to root_path, notice: 'Plex was successfully created.'
       else
-        render :new
+        render :new, status: :unprocessable_entity
       end
     end
 
@@ -34,7 +34,7 @@ class Config
         ScanPlexWorker.perform_async
         redirect_to root_path, notice: 'Plex was successfully updated.'
       else
-        render :edit
+        render :edit, status: :unprocessable_entity
       end
     end
 

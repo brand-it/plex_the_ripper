@@ -13,15 +13,19 @@ class Config
     def create
       @config_the_movie_db = Config::TheMovieDb.new(the_movie_db_params)
 
-      flash[:success] = 'Created Movie DB API key' if @config_the_movie_db.save
-      redirect_to root_path
+      if @config_the_movie_db.save
+        redirect_to root_path, success: 'Created Movie DB API key'
+      else
+        render :new, status: :unprocessable_entity
+      end
     end
 
     def update
-      if @config_the_movie_db.update(the_movie_db_params) && @config_the_movie_db.save
-        flash[:success] = 'Updated Movie DB API key'
+      if @config_the_movie_db.update(the_movie_db_params)
+        redirect_to root_path, success: 'Updated Movie DB API key'
+      else
+        render :edit, status: :unprocessable_entity
       end
-      redirect_to root_path
     end
 
     private
@@ -31,7 +35,7 @@ class Config
     end
 
     def the_movie_db_params
-      params.require(:config_the_movie_db).permit(settings: {})
+      params.require(:config_the_movie_db).permit(:settings_api_key)
     end
   end
 end

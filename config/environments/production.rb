@@ -73,6 +73,10 @@ Rails.application.configure do
   # the I18n.default_locale when a translation cannot be found).
   config.i18n.fallbacks = true
 
+  # https://github.com/rails/rails/issues/52728
+  # Took a bit to find but this new feature changes the output of console commands
+  config.active_record.attributes_for_inspect = :all
+
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 

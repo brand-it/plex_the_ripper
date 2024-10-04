@@ -17,5 +17,18 @@ class Config
     end
 
     validates :settings_api_key, presence: true
+    validate :api_key_valid
+
+    def api_key_valid
+      return if Rails.env.test? # lazy did not want to test
+
+      ::TheMovieDb::Search::Movie.new(
+        api_key: settings_api_key,
+        query: 'Star Wars',
+        use_cache: false
+      ).results
+    rescue ::TheMovieDb::Error => e
+      errors.add(:settings_api_key, e.body&.dig('status_message'))
+    end
   end
 end

@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '3.3.3'
+ruby '3.3.4'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'bootsnap', require: false
@@ -24,6 +24,7 @@ gem 'puma', git: 'https://github.com/puma/puma'
 gem 'rails'
 gem 'rainbow'
 gem 'sass-rails'
+gem 'shakapacker'
 gem 'simple_form'
 gem 'slack-notifier'
 gem 'sprockets-rails'
@@ -40,7 +41,6 @@ group :development, :test do
   gem 'awesome_print'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'pry'
   gem 'rspec-github', require: false
   gem 'rspec-rails'
   gem 'rubocop', require: false

@@ -131,6 +131,13 @@ def install_asdf
   `git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0`
 end
 
+def asdf_install
+  `asdf plugin add ruby`
+  `asdf plugin add yarn`
+  `asdf plugin add nodejs`
+  `asdf install`
+end
+
 def install_brew
   return if `which brew` != ''
   `/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"`
@@ -174,12 +181,8 @@ def node_setup
     MSG
   end
   success "Node.js #{node_version} installed!"
-  log 'Installing yarn...'
-  system 'npm install -g npm'
-  system 'npm install -g yarn'
-  log 'Installing npm packages...'
-  system 'bin/yarn install'
-  success 'Javascript dependencies installed!'
+  log 'Running NPM install...'
+  system 'npm install'
 end
 
 def application_setup
@@ -225,7 +228,7 @@ end
 
 def compile_assets
   log 'Compiling assets...'
-  Rake::Task['assets:precompile'].invoke
+  Rake::Task['javascript:build'].invoke
   Rake::Task['assets:clean'].invoke
   success 'Assets compiled!'
 end
@@ -236,6 +239,7 @@ Dir.chdir APP_ROOT do
     setup_mac
     install_brew
     install_asdf
+    asdf_install
   else
     warn 'Not running on a Mac. Skipping package installation.'
   end

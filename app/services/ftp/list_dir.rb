@@ -31,7 +31,8 @@ module Ftp
       {
         username:,
         password:,
-        ssl: { verify_mode: OpenSSL::SSL::VERIFY_NONE }
+        ssl: { verify_mode: OpenSSL::SSL::VERIFY_NONE },
+        read_timeout: 5
       }
     end
   end
