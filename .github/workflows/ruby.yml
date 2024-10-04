@@ -22,6 +22,8 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: 22.9.0
+    - name: Configure npm for cache fallback
+      run: npm config set cache-mode default
     - name: Find npm cache location
       id: npm-cache
       run: echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
