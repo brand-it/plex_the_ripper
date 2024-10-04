@@ -23,7 +23,7 @@ module PlexRipper
   VERSION = File.read(File.expand_path('./current_version.txt')).gsub('v', '').strip
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.1
+    config.load_defaults 7.2
 
     config.active_record.sqlite3_production_warning = false
 
