@@ -22,18 +22,21 @@ jobs:
     - uses: actions/setup-node@v4
       with:
         node-version: 22.9.0
-    - name: Configure npm for cache fallback
-      run: npm config set cache-mode default
     - name: Find npm cache location
       id: npm-cache
       run: echo "dir=$(npm config get cache)" >> $GITHUB_OUTPUT
     - name: JS package cache
+      id: cache-npm
       uses: actions/cache@v4
+      env:
+        cache-name: cache-node-modules
       with:
         path: ${{ steps.npm-cache.outputs.dir }}
-        key: ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
         restore-keys: |
-          ${{ runner.os }}-npm-${{ hashFiles('**/package-lock.json') }}
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
     - name: Run tests
       run: bundle exec rspec --format RSpec::Github::Formatter --format progress
 
