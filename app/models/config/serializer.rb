@@ -69,8 +69,8 @@ class Config
     end
 
     #
-    # Compares this object and +other+ for equality.  An OpenStruct is eql? to
-    # +other+ when +other+ is an OpenStruct and the two objects' Hash tables are
+    # Compares this object and +other+ for equality. An Config::Serializer is eql? to
+    # +other+ when +other+ is an Config::Serializer and the two objects' Hash tables are
     # eql?.
     #
     def eql?(other)

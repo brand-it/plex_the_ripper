@@ -40,7 +40,6 @@ group :development, :test do
   gem 'awesome_print'
   gem 'factory_bot_rails'
   gem 'faker'
-  gem 'pry'
   gem 'rspec-github', require: false
   gem 'rspec-rails'
   gem 'rubocop', require: false
