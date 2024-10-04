@@ -42,7 +42,7 @@
     "webpack-dev-server": "^4.15.2"
   },
   "scripts": {
-    "build": "something webpack --config webpack.config.js"
+    "build": "webpack --config webpack.config.js"
   },
   "babel": {
     "presets": [
