@@ -136,7 +136,7 @@ RSpec.describe VideoBlob do
   describe '#set_extra_type_number' do
     context 'when using movies types' do
       let!(:video_blob_a) { create(:video_blob, video: movie, extra_type: :feature_films) }
-      let!(:video_blob_b) { create(:video_blob, video: movie, extra_type: :feature_films) }
+      let!(:video_blob_b) { create(:video_blob, key: 'uniq', video: movie, extra_type: :feature_films) }
       let(:movie) { create(:movie) }
 
       it { expect(video_blob_a.extra_type_number).to be_nil }

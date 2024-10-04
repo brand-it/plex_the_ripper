@@ -33,7 +33,6 @@ FactoryBot.define do
   factory :video_blob do
     video factory: %i[movie]
     filename { 'Back to the Future Part III.mkv' }
-    sequence(:key) { "error-incidunt/#{_1}/perferendis-iure/Back to the Future Part III.mkv" }
     content_type { 'video/x-matroska' }
     byte_size { 123_456_789 }
 
