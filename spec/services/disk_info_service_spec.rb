@@ -14,10 +14,50 @@ RSpec.describe DiskInfoService do
 
     let(:expected_response) do
       [
-        DiskInfoService::TitleInfo.new(0, duration: '1:35:13', size: '1.8 GB', filename: 'title_t00.mkv'),
-        DiskInfoService::TitleInfo.new(1, duration: '1:53:42', size: '2.1 GB', filename: 'title_t01.mkv'),
-        DiskInfoService::TitleInfo.new(2, duration: '1:28:33', size: '1.6 GB', filename: 'title_t02.mkv'),
-        DiskInfoService::TitleInfo.new(3, duration: '1:31:24', size: '1.7 GB', filename: 'title_t03.mkv')
+        {
+          'id' => 0,
+          'chapter_count' => 10,
+          'duration' => '1:35:13',
+          'size' => '1.8 GB',
+          'bytes' => 1_947_029_504,
+          'segment_count' => 1,
+          'segement_map' => '1-10',
+          'filename' => 'title_t00.mkv',
+          'description' => '10 chapter(s), 1.8 GB'
+        },
+        {
+          'id' => 1,
+          'chapter_count' => 11,
+          'duration' => '1:53:42',
+          'size' => '2.1 GB',
+          'bytes' => 2_321_354_752,
+          'segment_count' => 1,
+          'segement_map' => '1-11',
+          'filename' => 'title_t01.mkv',
+          'description' => '11 chapter(s), 2.1 GB'
+        },
+        {
+          'id' => 2,
+          'chapter_count' => 10,
+          'duration' => '1:28:33',
+          'size' => '1.6 GB',
+          'bytes' => 1_810_173_952,
+          'segment_count' => 1,
+          'segement_map' => '1-10',
+          'filename' => 'title_t02.mkv',
+          'description' => '10 chapter(s), 1.6 GB'
+        },
+        {
+          'id' => 3,
+          'chapter_count' => 10,
+          'duration' => '1:31:24',
+          'size' => '1.7 GB',
+          'bytes' => 1_870_516_224,
+          'segment_count' => 1,
+          'segement_map' => '1-10',
+          'filename' => 'title_t03.mkv',
+          'description' => '10 chapter(s), 1.7 GB'
+        }
       ].as_json
     end
 

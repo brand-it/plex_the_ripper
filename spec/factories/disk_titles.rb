@@ -5,7 +5,10 @@
 # Table name: disk_titles
 #
 #  id              :integer          not null, primary key
+#  angle           :integer
+#  description     :string
 #  duration        :integer
+#  filename        :string
 #  name            :string           not null
 #  ripped_at       :datetime
 #  size            :integer          default(0), not null

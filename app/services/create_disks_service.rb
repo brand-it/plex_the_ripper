@@ -45,15 +45,19 @@ class CreateDisksService < ApplicationService
 
   def find_or_build_disk_title(disk, title)
     disk.disk_titles.find do |disk_title|
-      disk_title.title_id == title.id.to_i &&
-        title.filename == disk_title.name &&
-        title.size_in_bytes.to_i == disk_title.size &&
-        title.duration_seconds.to_i == disk_title.duration
+      disk_title.title_id == title.id &&
+        title.filename == disk_title.filename &&
+        title.bytes == disk_title.size &&
+        title.duration_seconds == disk_title.duration &&
+        title.angle == disk_title.angle
     end || disk.disk_titles.build(
       title_id: title.id,
-      name: title.filename,
-      size: title.size_in_bytes,
-      duration: title.duration_seconds
+      name: title.name,
+      filename: title.filename,
+      size: title.bytes,
+      duration: title.duration_seconds,
+      angle: title.angle,
+      description: title.description
     )
   end
 end
