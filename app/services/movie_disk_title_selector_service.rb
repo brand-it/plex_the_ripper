@@ -21,13 +21,19 @@ class MovieDiskTitleSelectorService < ApplicationService
   def extra_type(disk_title)
     if uploaded?(disk_title)
       nil
-    elsif within_range?(disk_title) && feature_film_selected?
-      'shorts'
-    elsif within_range?(disk_title)
-      feature_film_selected!
+    elsif featured_file_disk_title&.id == disk_title.id
       'feature_films'
-    else
+    elsif !within_range?(disk_title) && disk_title.angle.nil?
       'other'
+    elsif !within_range?(disk_title)
+      'shorts'
+    end
+  end
+
+  def featured_file_disk_title
+    @featured_file_disk_title ||= begin
+      within_range_titles = disk.disk_titles.select { within_range?(_1) }.sort_by { _1.angle.to_i }
+      within_range_titles.find { _1.angle&.positive? } || within_range_titles.first
     end
   end
 

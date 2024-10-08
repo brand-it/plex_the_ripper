@@ -24,7 +24,22 @@ class Config < ApplicationRecord
     end
 
     def newest
-      order(updated_at: :desc).first || new
+      key = :"#{model_name.param_key}_newest"
+      key_time = :"#{key}_time"
+
+      # Fetch the last cache timestamp and value
+      last_cache_time = Thread.current.thread_variable_get(key_time) || Time.zone.at(0)
+      cached_value = Thread.current.thread_variable_get(key)
+
+      # Only re-fetch from the DB if the cache is older than 1 second
+      if Time.zone.now - last_cache_time > 1 || cached_value.nil?
+        cached_value = order(updated_at: :desc).first
+        # Store the new cache value and update the cache timestamp
+        Thread.current.thread_variable_set(key, cached_value)
+        Thread.current.thread_variable_set(key_time, Time.zone.now)
+      end
+
+      cached_value || new
     end
   end
 
@@ -37,6 +52,6 @@ class Config < ApplicationRecord
   end
 
   def clear_rails_cache
-    Rails.cache.delete(:"#{self.class.model_name.param_key}_newest")
+    Thread.current.thread_variable_set(:"#{self.class.model_name.param_key}_newest", nil)
   end
 end
