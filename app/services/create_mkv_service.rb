@@ -35,7 +35,7 @@ class CreateMkvService < ApplicationService
   private
 
   def rename_file
-    File.rename(tmp_dir.join(disk_title.name), video_blob.tmp_plex_path)
+    File.rename(tmp_dir.join(disk_title.filename), video_blob.tmp_plex_path)
   end
 
   def byte_size

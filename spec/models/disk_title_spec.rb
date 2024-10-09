@@ -8,8 +8,8 @@
 #  angle           :integer
 #  description     :string
 #  duration        :integer
-#  filename        :string
-#  name            :string           not null
+#  filename        :string           not null
+#  name            :string
 #  ripped_at       :datetime
 #  size            :integer          default(0), not null
 #  created_at      :datetime         not null
@@ -42,6 +42,10 @@ RSpec.describe DiskTitle do
   describe 'scopes' do
     it { is_expected.to have_scope(:not_ripped).where(ripped_at: nil) }
     it { is_expected.to have_scope(:ripped).where.not(ripped_at: nil) }
+  end
+
+  describe 'validations' do
+    it { is_expected.to validate_presence_of(:filename) }
   end
 
   describe '#to_label' do

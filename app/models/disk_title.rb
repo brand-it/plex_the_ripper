@@ -8,8 +8,8 @@
 #  angle           :integer
 #  description     :string
 #  duration        :integer
-#  filename        :string
-#  name            :string           not null
+#  filename        :string           not null
+#  name            :string
 #  ripped_at       :datetime
 #  size            :integer          default(0), not null
 #  created_at      :datetime         not null
@@ -40,6 +40,8 @@ class DiskTitle < ApplicationRecord
 
   scope :not_ripped, -> { where(ripped_at: nil) }
   scope :ripped, -> { where.not(ripped_at: nil) }
+
+  validates :filename, presence: true
 
   def duration
     super&.seconds
