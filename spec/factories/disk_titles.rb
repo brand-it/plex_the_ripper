@@ -8,8 +8,8 @@
 #  angle           :integer
 #  description     :string
 #  duration        :integer
-#  filename        :string
-#  name            :string           not null
+#  filename        :string           not null
+#  name            :string
 #  ripped_at       :datetime
 #  size            :integer          default(0), not null
 #  created_at      :datetime         not null
@@ -31,7 +31,7 @@
 #
 FactoryBot.define do
   factory :disk_title do
-    name { 'title_mk1.mkv' } # don't rename required for spec/bin/makemkvcon_test
+    filename { 'title_mk1.mkv' } # don't rename required for spec/bin/makemkvcon_test
     title_id { Faker::Types.rb_integer }
     disk
     video

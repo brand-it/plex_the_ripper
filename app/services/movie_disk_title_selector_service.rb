@@ -38,11 +38,11 @@ class MovieDiskTitleSelectorService < ApplicationService
   end
 
   def ripped?(disk_title)
-    movie.ripped_disk_titles.any? { _1.name == disk_title.name }
+    movie.ripped_disk_titles.any? { _1.filename == disk_title.filename }
   end
 
   def uploaded?(disk_title)
-    movie.ripped_disk_titles.find { _1.name == disk_title.name }&.video_blob&.uploaded? || false
+    movie.ripped_disk_titles.find { _1.filename == disk_title.filename }&.video_blob&.uploaded? || false
   end
 
   def within_range?(disk_title)

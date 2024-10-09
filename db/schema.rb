@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_08_200453) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_09_012227) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -19,7 +19,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_08_200453) do
   end
 
   create_table "disk_titles", force: :cascade do |t|
-    t.string "name", null: false
+    t.string "name"
     t.integer "duration"
     t.integer "title_id", null: false
     t.integer "size", default: 0, null: false
@@ -32,7 +32,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_08_200453) do
     t.datetime "ripped_at"
     t.integer "video_blob_id"
     t.integer "angle"
-    t.string "filename"
+    t.string "filename", null: false
     t.string "description"
     t.index ["disk_id"], name: "index_disk_titles_on_disk_id"
     t.index ["episode_id"], name: "index_disk_titles_on_episode_id"
