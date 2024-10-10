@@ -14,13 +14,15 @@ module Ftp
       try_to { ftp_upload_file }
       tmp_destroy_folder
       mark_as_uploaded!
-      broadcast(:upload_finished)
+      broadcast(:upload_finished, tracker:)
     rescue StandardError => e
       broadcast(:upload_error, e)
       raise e
     end
 
     private
+
+    attr_reader :tracker
 
     def ftp_destroy_if_file_exists
       ftp.delete(video_blob.plex_path)
@@ -41,12 +43,29 @@ module Ftp
     end
 
     def ftp_upload_file
-      broadcast(:upload_started)
-      total_uploaded = 0
+      @tracker = ProgressTracker::Base.new(
+        total: bytes_to_kilobyte(file.size),
+        rate_scale: ->(rate) { rate / 1024 }
+      )
+      broadcast(:upload_started, tracker:)
       ftp.putbinaryfile(file, video_blob.plex_path) do |chunk|
-        total_uploaded += chunk.size
-        broadcast(:upload_progress, total_uploaded:)
+        increment_progress_bar(chunk.size)
+        broadcast(:upload_progress, tracker:)
       end
+    end
+
+    def increment_progress_bar(increment)
+      return if tracker.finished?
+
+      @total_bytes ||= 0
+      @total_bytes += increment
+      tracker.progress = bytes_to_kilobyte(@total_bytes)
+    rescue ProgressBar::InvalidProgressError
+      tracker&.finish
+    end
+
+    def bytes_to_kilobyte(bites)
+      bites / 1000
     end
 
     def mark_as_uploaded!

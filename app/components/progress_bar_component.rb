@@ -7,4 +7,5 @@ class ProgressBarComponent < ViewComponent::Base
   option :message, optional: true
   option :show_percentage, default: -> { true }
   option :eta, optional: true
+  option :progress, optional: true
 end

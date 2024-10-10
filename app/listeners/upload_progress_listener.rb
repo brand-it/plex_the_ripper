@@ -12,8 +12,8 @@ class UploadProgressListener
 
   attr_reader :completed
 
-  def upload_progress(total_uploaded:)
-    job.completed = total_uploaded
+  def upload_progress(tracker:)
+    update_meta_from_tracker(tracker)
     return if next_update.future?
 
     job.save!
@@ -25,15 +25,15 @@ class UploadProgressListener
     upload_started
   end
 
-  def upload_started
-    job.completed = 0
+  def upload_started(tracker: nil)
+    update_meta_from_tracker(tracker)
     job.metadata['video_blob_id'] = video_blob.id
     job.save!
     update_component
   end
 
-  def upload_finished
-    job.completed = video_blob.byte_size
+  def upload_finished(tracker:)
+    update_meta_from_tracker(tracker)
     job.save!
     video_blob.update!(uploadable: false, uploaded_on: Time.current)
     update_component
@@ -45,6 +45,15 @@ class UploadProgressListener
   end
 
   private
+
+  def update_meta_from_tracker(tracker)
+    return if tracker.nil?
+
+    job.completed = tracker.percentage_component.percentage_with_precision
+    job.metadata['eta'] = tracker.time_component.estimated_without_label
+    job.metadata['rate'] = "#{tracker.rate_component.rate_of_change_with_precision} KB/sec"
+    job.metadata['progress'] = "#{tracker.progress} KB"
+  end
 
   def update_component
     component = UploadProcessComponent.new

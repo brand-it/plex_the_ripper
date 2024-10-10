@@ -18,6 +18,7 @@ end
 Bundler.require(*Rails.groups)
 require 'view_component/engine'
 require 'sys/filesystem'
+require './lib/progress_tracker/base'
 
 module PlexRipper
   VERSION = File.read(File.expand_path('./current_version.txt')).gsub('v', '').strip

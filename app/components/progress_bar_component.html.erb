@@ -1,16 +1,24 @@
 <div>
-  <div class="progress mb-2">
-    <div class="progress-bar progress-bar-striped <%= 'progress-bar-animated' if completed < 100 %> bg-<%= status %>" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= completed %>%">
+  <div class="row">
+    <div class="<%= show_percentage ? 'col-9' : 'col-12' %>">
+      <div class="progress mb-2">
+        <div class="progress-bar progress-bar-striped <%= 'progress-bar-animated' if completed < 100 %> bg-<%= status %>" role="progressbar" aria-valuenow="<%= completed %>" aria-valuemin="0" aria-valuemax="100" style="width: <%= completed %>%">
+        </div>
+      </div>
     </div>
-  </div>
-  <div>
-    <%= message.presence %>
     <% if show_percentage %>
-      ...
-      <%= number_to_percentage completed, precision: 2 %>
-      <% if eta.present? %>
-        (<%= eta %>)
-      <% end %>
+      <div class="mb-2 col-3">
+        <%= number_to_percentage completed, precision: 2 %>
+      </div>
     <% end %>
   </div>
+  <div class="overflow-hidden">
+    <%= message.presence&.html_safe %>
+  </div>
+  <% if eta.present? %>
+    <div>ETA: <%= eta %></div>
+  <% end %>
+  <% if progress.present? %>
+    <div>Progress: <%= progress %></div>
+  <% end %>
 </div>
