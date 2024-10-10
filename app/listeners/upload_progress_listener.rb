@@ -12,9 +12,8 @@ class UploadProgressListener
 
   attr_reader :completed
 
-  def upload_progress(chunk_size: nil)
-    job.completed ||= 0
-    job.completed += chunk_size
+  def upload_progress(total_uploaded:)
+    job.completed = total_uploaded
     return if next_update.future?
 
     job.save!
@@ -27,14 +26,14 @@ class UploadProgressListener
   end
 
   def upload_started
-    job.metadata['completed'] = 0
+    job.completed = 0
     job.metadata['video_blob_id'] = video_blob.id
     job.save!
     update_component
   end
 
   def upload_finished
-    job.metadata['completed'] = video_blob.byte_size
+    job.completed = video_blob.byte_size
     job.save!
     video_blob.update!(uploadable: false, uploaded_on: Time.current)
     update_component

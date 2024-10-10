@@ -6,7 +6,7 @@ RSpec.describe UploadProgressListener do
   subject(:listener) { described_class.new(**args) }
 
   describe '#upload_progress' do
-    subject(:upload_progress) { listener.upload_progress(chunk_size: 10) }
+    subject(:upload_progress) { listener.upload_progress(total_uploaded: 10) }
 
     let(:video_blob) { build_stubbed(:video_blob) }
     let(:job) { build(:job) }

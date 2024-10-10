@@ -7,6 +7,21 @@
     <% end %>
     <%= c.with_body do %>
       <% if uploadable_video_blobs.any? || uploaded_recently_video_blobs.any? %>
+        <% blobs = uploadable_video_blobs.map { [_1, find_job_by_video_blob(_1)] } %>
+        <% blobs.sort_by { _2.present? ? 1 : 2 }.each do |blob, video_blob_job| %>
+          <%=
+            render(
+              ProgressBarComponent.new(
+                show_percentage: video_blob_job.present?,
+                status: :info,
+                completed: percentage(video_blob_job&.completed, blob.byte_size),
+                message: video_blob_job ? "Uploading #{blob.title}" : "Pending upload #{blob.title} ##{blob.id}",
+                eta: (eta(video_blob_job, blob) if video_blob_job)
+              )
+            )
+          %>
+        <% end %>
+
         <% uploaded_recently_video_blobs.each do |blob| %>
           <%=
             render(
@@ -15,20 +30,6 @@
                 status: :success,
                 completed: 100,
                 message: "Uploaded #{blob.title}"
-              )
-            )
-          %>
-        <% end %>
-        <% uploadable_video_blobs.each do |blob| %>
-          <%=
-            video_blob_job = find_job_by_video_blob(blob)
-            render(
-              ProgressBarComponent.new(
-                show_percentage: video_blob_job.present?,
-                status: :info,
-                completed: percentage(video_blob_job&.completed, blob.byte_size),
-                message: video_blob_job ? "Uploading #{blob.title}" : "Pending upload #{blob.title}",
-                eta: (eta(video_blob_job, blob) if video_blob_job)
               )
             )
           %>
