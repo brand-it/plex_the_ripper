@@ -42,8 +42,10 @@ module Ftp
 
     def ftp_upload_file
       broadcast(:upload_started)
+      total_uploaded = 0
       ftp.putbinaryfile(file, video_blob.plex_path) do |chunk|
-        broadcast(:upload_progress, chunk_size: chunk.size)
+        total_uploaded += chunk.size
+        broadcast(:upload_progress, total_uploaded:)
       end
     end
 

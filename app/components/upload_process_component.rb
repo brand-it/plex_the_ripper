@@ -18,8 +18,7 @@ class UploadProcessComponent < ViewComponent::Base
   end
 
   def uploadable_video_blobs
-    @uploadable_video_blobs ||= VideoBlob.uploadable
-                                         .order(updated_at: :desc)
+    @uploadable_video_blobs ||= VideoBlob.uploadable.order(updated_at: :desc)
   end
 
   def percentage(completed, total)
@@ -47,7 +46,11 @@ class UploadProcessComponent < ViewComponent::Base
   def find_job_by_video_blob(blob)
     return if blob.nil? || !job_active?
 
-    job if job.metadata['video_blob_id'].to_i == blob.id
+    jobs.find { _1.metadata['video_blob_id'].to_i == blob.id }
+  end
+
+  def jobs
+    Job.active.where(name: 'UploadWorker')
   end
 
   def eta(job, blob)
