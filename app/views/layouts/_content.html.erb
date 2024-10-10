@@ -1,15 +1,14 @@
 <main role="main">
   <div class="row">
-    <% if content_for?(:sidebar) %>
-      <div id="sidebar" class="col-3">
-        <%= yield :sidebar %>
-        <%= render "layouts/bg_processes", classes: nil %>
-      </div>
-    <% else %>
-      <%= render "layouts/bg_processes", classes: ['fixed', 'compact'] %>
-    <% end %>
 
-    <div id="content" class="col-<%= content_for?(:sidebar) ? 9 : 12 %>">
+    <div id="sidebar" class="col-3">
+      <% if content_for?(:sidebar) %>
+        <%= yield :sidebar %>
+      <% end %>
+      <%= render "layouts/bg_processes", classes: nil %>
+    </div>
+
+    <div id="content" class="col-9">
       <%= bootstrap_alerts %>
       <%= yield %>
     </div>
