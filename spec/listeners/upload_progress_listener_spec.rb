@@ -6,7 +6,9 @@ RSpec.describe UploadProgressListener do
   subject(:listener) { described_class.new(**args) }
 
   describe '#upload_progress' do
-    subject(:upload_progress) { listener.upload_progress(total_uploaded: 10) }
+    subject(:upload_progress) { listener.upload_progress(tracker:) }
+
+    let(:tracker) { ProgressTracker::Base.new }
 
     let(:video_blob) { build_stubbed(:video_blob) }
     let(:job) { build(:job) }
@@ -21,7 +23,12 @@ RSpec.describe UploadProgressListener do
     it 'changes the completed size based on the chunk size' do
       upload_progress
 
-      expect(listener.job.metadata).to eq('completed' => 10)
+      expect(listener.job.metadata).to eq({
+                                            'completed' => 0.0,
+                                            'eta' => '??:??:??',
+                                            'rate' => '0 KB/sec',
+                                            'progress' => '0 KB'
+                                          })
     end
   end
 end
