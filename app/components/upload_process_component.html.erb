@@ -14,12 +14,17 @@
               ProgressBarComponent.new(
                 show_percentage: video_blob_job.present?,
                 status: :info,
-                completed: percentage(video_blob_job&.completed, blob.byte_size),
-                message: video_blob_job ? "Uploading #{blob.title}" : "Pending upload #{blob.title} ##{blob.id}",
-                eta: (eta(video_blob_job, blob) if video_blob_job)
+                completed: video_blob_job&.completed,
+                message: video_blob_job ? "Uploading #{link_to_video(blob)}" : "Pending #{link_to_video(blob)} ##{blob.id}",
+                eta: video_blob_job&.metadata&.fetch('eta', nil),
+                progress: [
+                  video_blob_job&.metadata&.fetch('progress', nil),
+                  video_blob_job&.metadata&.fetch('rate', nil)
+                ].compact_blank.join(' ')
               )
             )
           %>
+          <hr>
         <% end %>
 
         <% uploaded_recently_video_blobs.each do |blob| %>
@@ -29,7 +34,7 @@
                 show_percentage: false,
                 status: :success,
                 completed: 100,
-                message: "Uploaded #{blob.title}"
+                message: "Uploaded #{link_to_video(blob)}"
               )
             )
           %>

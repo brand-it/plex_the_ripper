@@ -13,7 +13,7 @@
               completed: job.metadata['completed'],
               status: :info,
               message: job.metadata['title'],
-              eta:
+              eta: job.metadata['eta']
             )
           )
         %>

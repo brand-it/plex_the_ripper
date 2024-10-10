@@ -31,6 +31,14 @@ class UploadProcessComponent < ViewComponent::Base
                                                 .limit(3)
   end
 
+  def link_to_video(blob)
+    return link_to(blob.title, movie_path(blob.video)) if blob.video.is_a?(Movie)
+
+    return link_to(blob.title, tv_season_path(blob.video, blob.episode.season)) if blob.episode && blob.video.is_a?(Tv)
+
+    blob.title
+  end
+
   def job_active?
     job&.active?
   end

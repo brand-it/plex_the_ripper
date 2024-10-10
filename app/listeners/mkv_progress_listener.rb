@@ -61,8 +61,12 @@ class MkvProgressListener
   def mkv_raw_line(mkv_message)
     case mkv_message
     when MkvParser::PRGV
-      job.completed = percentage(mkv_message.current, mkv_message.pmax)
+      tracker(mkv_message.pmax)
+      increment_progress_bar(mkv_message.current)
+      job.completed = tracker.percentage_component.percentage_with_precision
+      job.metadata['eta'] = tracker.time_component.estimated_without_label
     when MkvParser::PRGT, MkvParser::PRGC
+      @tracker = nil
       job.title = [video_blob&.title, mkv_message.name].compact_blank.join("\n")
     when MkvParser::MSG
       job.add_message(mkv_message.message)
@@ -73,6 +77,19 @@ class MkvProgressListener
   end
 
   private
+
+  def tracker(total = nil)
+    @tracker = nil if total && @tracker&.total != total
+    @tracker ||= ProgressTracker::Base.new(total:)
+  end
+
+  def increment_progress_bar(progress)
+    return if tracker.finished?
+
+    tracker.progress = progress
+  rescue ProgressBar::InvalidProgressError
+    tracker&.finish
+  end
 
   def reload_page!
     cable_ready[BroadcastChannel.channel_name].reload
