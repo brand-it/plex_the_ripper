@@ -28,7 +28,7 @@ gem 'shakapacker'
 gem 'simple_form'
 gem 'slack-notifier'
 gem 'sprockets-rails'
-gem 'sqlite3', '~> 1.6' # https://github.com/sparklemotion/sqlite3-ruby/issues/529
+gem 'sqlite3'
 gem 'stimulus-rails'
 gem 'sys-filesystem'
 gem 'text'
