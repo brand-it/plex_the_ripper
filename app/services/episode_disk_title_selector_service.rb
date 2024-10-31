@@ -12,17 +12,25 @@ class EpisodeDiskTitleSelectorService < ApplicationService
   option :episodes, Types::Coercible::Array.of(Types.Instance(Episode))
 
   def call
-    disk.disk_titles.map do |disk_title|
+    sort_episodes.map do |episode|
       Info.new(
-        disk_title,
-        select_episode(disk_title),
-        ripped?(disk_title),
-        uploaded?(disk_title)
+        episode_disk_title(episode),
+        episode,
+        episode.ripped_disk_titles.any?,
+        uploaded?(episode)
       )
     end
   end
 
   private
+
+  def episode_disk_title(episode)
+    return if selected_episodes.include?(episode)
+
+    disk.disk_titles.find { within_range?(episode, _1) && selected_disk_titles.exclude?(_1) }.tap do |disk_title|
+      selected_disk_titles.append(disk_title) if disk_title
+    end
+  end
 
   def select_episode(disk_title)
     episode = sort_episodes.find { selected_episodes.exclude?(_1) && within_range?(_1, disk_title) }
@@ -30,20 +38,16 @@ class EpisodeDiskTitleSelectorService < ApplicationService
     episode
   end
 
-  def ripped?(disk_title)
-    ripped_disk_titles.any? { _1.filename == disk_title.filename }
-  end
-
-  def uploaded?(disk_title)
-    ripped_disk_titles.find { _1.filename == disk_title.filename }&.video_blob&.uploaded? || false
-  end
-
-  def ripped_disk_titles
-    @ripped_disk_titles ||= episodes.flat_map(&:ripped_disk_titles)
+  def uploaded?(episode)
+    episode.ripped_disk_titles.any? { _1&.video_blob&.uploaded? }
   end
 
   def within_range?(episode, disk_title)
     episode.runtime_range.include?(disk_title.duration)
+  end
+
+  def selected_disk_titles
+    @selected_disk_titles ||= []
   end
 
   def selected_episodes

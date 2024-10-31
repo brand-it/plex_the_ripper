@@ -30,6 +30,7 @@ RSpec.describe EpisodeDiskTitleSelectorService do
       it { expect(call.first.disk_title.id).to eq(disk_title_a.id) }
       it { expect(call.second.episode.id).to eq(episodes.second.id) }
       it { expect(call.second.disk_title.id).to eq(disk_title_b.id) }
+      it('does not assocate a disk_title') { expect(call.third.disk_title).to be_nil }
     end
   end
 end
