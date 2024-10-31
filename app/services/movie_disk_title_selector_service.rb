@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
 class MovieDiskTitleSelectorService < ApplicationService
-  Info = Data.define(:disk_title, :extra_type, :within_range, :ripped?, :uploaded?)
+  Info = Data.define(
+    :disk_title,
+    :extra_type,
+    :within_range,
+    :ripped?,
+    :uploaded?
+  )
 
   option :disk, Types.Instance(Disk)
   option :movie, Types.Instance(Movie)
@@ -10,8 +16,10 @@ class MovieDiskTitleSelectorService < ApplicationService
     disk_title_sorted.map do |disk_title|
       Info.new(
         disk_title,
-        extra_type(disk_title), within_range?(disk_title),
-        ripped?(disk_title), uploaded?(disk_title)
+        extra_type(disk_title),
+        within_range?(disk_title),
+        ripped?(disk_title),
+        uploaded?(disk_title)
       )
     end
   end

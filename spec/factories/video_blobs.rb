@@ -15,16 +15,19 @@
 #  key               :string           not null
 #  metadata          :text
 #  optimized         :boolean          default(FALSE), not null
+#  part              :integer
 #  uploadable        :boolean          default(FALSE), not null
 #  uploaded_on       :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  episode_id        :bigint
+#  episode_last_id   :integer
 #  video_id          :integer
 #
 # Indexes
 #
 #  idx_on_extra_type_number_video_id_extra_type_1978193db6  (extra_type_number,video_id,extra_type) UNIQUE
+#  index_video_blobs_on_episode_last_id                     (episode_last_id)
 #  index_video_blobs_on_key                                 (key) UNIQUE
 #  index_video_blobs_on_key_and_service_name                (key) UNIQUE
 #  index_video_blobs_on_video                               (video_id)

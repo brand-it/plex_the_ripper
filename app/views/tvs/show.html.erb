@@ -8,7 +8,7 @@
 </nav>
 <hr/>
 
-<%= render SearchComponent.new %>
+<%= render SearchComponent.new(submit_on_key_up: false) %>
 
 <div class="display-flex">
   <% @tv.seasons.each do |season| %>

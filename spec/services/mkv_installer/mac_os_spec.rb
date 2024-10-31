@@ -14,6 +14,9 @@ RSpec.describe MkvInstaller::MacOs do
                                                                   path: 'dignissimos-voluptate/id.tiff'))
       allow(FileUtils).to receive(:cp_r)
       allow(FileUtils).to receive(:rm_rf)
+      allow(Open3).to receive(:capture3).with('mount').and_return(
+        ['', '', instance_double(Process::Status)]
+      )
     end
 
     it 'calls all the right things' do

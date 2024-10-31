@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_09_012227) do
+ActiveRecord::Schema[7.2].define(version: 2024_10_30_174837) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -34,8 +34,10 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_09_012227) do
     t.integer "angle"
     t.string "filename", null: false
     t.string "description"
+    t.integer "episode_last_id"
     t.index ["disk_id"], name: "index_disk_titles_on_disk_id"
     t.index ["episode_id"], name: "index_disk_titles_on_episode_id"
+    t.index ["episode_last_id"], name: "index_disk_titles_on_episode_last_id"
     t.index ["mkv_progress_id"], name: "index_disk_titles_on_mkv_progress_id"
     t.index ["video_blob_id"], name: "index_disk_titles_on_video_blob_id"
     t.index ["video_id"], name: "index_disk_titles_on_video"
@@ -138,6 +140,9 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_09_012227) do
     t.datetime "uploaded_on"
     t.boolean "uploadable", default: false, null: false
     t.string "edition"
+    t.integer "part"
+    t.integer "episode_last_id"
+    t.index ["episode_last_id"], name: "index_video_blobs_on_episode_last_id"
     t.index ["extra_type_number", "video_id", "extra_type"], name: "idx_on_extra_type_number_video_id_extra_type_1978193db6", unique: true
     t.index ["key"], name: "index_video_blobs_on_key", unique: true
     t.index ["key"], name: "index_video_blobs_on_key_and_service_name", unique: true

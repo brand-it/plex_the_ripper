@@ -6,7 +6,8 @@ class RipWorker < ApplicationWorker
   DiskTitleHash = Types::Hash.schema(
     id: Types::Coercible::Integer,
     edition?: Types::String.optional,
-    extra_type?: Types::Coercible::Symbol
+    extra_type?: Types::Coercible::Symbol,
+    part?: Types::Coercible::Integer.optional.constructor { _1.to_i.positive? ? _1 : nil }
   ).with_key_transform(&:to_sym)
   delegate :movie_url, :tv_season_url, to: 'Rails.application.routes.url_helpers'
 
@@ -33,7 +34,8 @@ class RipWorker < ApplicationWorker
       service = CreateMkvService.new(
         disk_title: DiskTitle.find(disk_title[:id]),
         extra_type: disk_title[:extra_type],
-        edition: disk_title[:edition]
+        edition: disk_title[:edition],
+        part: disk_title[:part]
       )
       service.subscribe(MkvProgressListener.new(job:))
       result = service.call

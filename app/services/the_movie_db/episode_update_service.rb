@@ -11,6 +11,7 @@ module TheMovieDb
         episode_attributes = episode_attributes.with_indifferent_access
         find_or_build(episode_attributes[:id]).tap do |episode|
           episode.attributes = episode_attributes.slice(*EPISODE_PERMITTED_PARAMS)
+          episode.runtime = episode.runtime&.minutes&.to_i
         end
       end
     end

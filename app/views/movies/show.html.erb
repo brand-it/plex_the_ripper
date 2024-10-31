@@ -1,4 +1,4 @@
-<%= render SearchComponent.new %>
+<%= render SearchComponent.new(submit_on_key_up: false) %>
 
 <% content_for :sidebar, '' %>
 
@@ -11,9 +11,13 @@
       <%= icon('film', type: 'fas') %>
       <%= link_to_movie_db_movie @movie.the_movie_db_id, text: @movie.plex_name %>    </h3>
     <div class='movie-facts'>
-      <span class="certification-rating"><%= @movie.ratings.reject { _1 == 'NR' }.first&.strip %></span>
+      <span class="certification-rating">
+        <%= @movie.ratings.reject { _1 == 'NR' }.first&.strip %>
+      </span>
       <% if @movie.release_or_air_date %>
-        <span><%= l @movie.release_or_air_date, format: :long %></span>
+        <span>
+          <%= l @movie.release_or_air_date, format: :long %>
+        </span>
       <% end %>
       <% if @movie.the_movie_db_details %>
         <% @movie.the_movie_db_details['genres'].each do |genre| %>
@@ -41,7 +45,7 @@
     <div>
       <ul>
         <% @movie.video_blobs.each do |video_blob| %>
-          <li><%= video_blob.plex_path %></li>
+          <li><%= video_blob.key %></li>
         <% end %>
       </ul>
     </div>

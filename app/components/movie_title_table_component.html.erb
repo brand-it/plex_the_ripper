@@ -12,7 +12,9 @@
           <th>Duration (<%= distance_of_time_in_words @movie.movie_runtime.seconds %>)</th>
           <th>Size</th>
           <th>Edition</th>
-          <th><a class='btn btn-info' data-action="click->manage-selections#clearInputs">Select None</a></th>
+          <th>
+            <a class='btn btn-info' data-action="click->manage-selections#clearInputs">Select None</a>
+          </th>
         </tr>
       </thead>
       <tbody class="disk_titles">

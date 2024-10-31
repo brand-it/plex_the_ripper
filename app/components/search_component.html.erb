@@ -1,6 +1,6 @@
-<%= simple_form_for search_service, as: :search, url: the_movie_dbs_path, method: :get, html: { class: 'row pb-4', style: "margin: auto; width: 50%;" }, data: { turbo_frame: 'videos', turbo_action: 'replace', controller: 'submit-on-keyup' } do |f| %>
+<%= simple_form_for search_service, as: :search, url: the_movie_dbs_path, method: :get, html: { class: 'row pb-4', style: "margin: auto; width: 50%;" }, data: form_data do |f| %>
   <div class='col-8 col-md-10 col-lg-10 p-0'>
-    <%= f.input :query, label: 'Search for TV or Movie', autofocus: true, required: false, input_html: { data: { action: "keyup->submit-on-keyup#submitWithDebounce", submit_on_keyup_target: :input } } %>
+    <%= f.input :query, label: 'Search for TV or Movie', autofocus: true, required: false, input_html: input_html %>
   </div>
   <div class='col align-self-center p-0 text-center mt-2'>
     <%= f.button :submit, 'Search', data: { disable_with: 'Searching' } %>

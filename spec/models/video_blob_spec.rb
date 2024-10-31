@@ -15,16 +15,19 @@
 #  key               :string           not null
 #  metadata          :text
 #  optimized         :boolean          default(FALSE), not null
+#  part              :integer
 #  uploadable        :boolean          default(FALSE), not null
 #  uploaded_on       :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  episode_id        :bigint
+#  episode_last_id   :integer
 #  video_id          :integer
 #
 # Indexes
 #
 #  idx_on_extra_type_number_video_id_extra_type_1978193db6  (extra_type_number,video_id,extra_type) UNIQUE
+#  index_video_blobs_on_episode_last_id                     (episode_last_id)
 #  index_video_blobs_on_key                                 (key) UNIQUE
 #  index_video_blobs_on_key_and_service_name                (key) UNIQUE
 #  index_video_blobs_on_video                               (video_id)
@@ -37,6 +40,7 @@ RSpec.describe VideoBlob do
   describe 'associations' do
     it { is_expected.to belong_to(:video) }
     it { is_expected.to belong_to(:episode).optional(true) }
+    it { is_expected.to belong_to(:episode_last).optional(true) }
     it { is_expected.to have_many(:disk_titles).dependent(:nullify) }
   end
 
@@ -68,6 +72,15 @@ RSpec.describe VideoBlob do
           'other' => 8
         }
       )
+    end
+  end
+
+  describe 'before_save' do
+    context 'when the episode_last is not set but episode is' do
+      let(:video_blob) { create(:video_blob, episode:) }
+      let(:episode) { create(:episode) }
+
+      it { expect { video_blob }.to change { described_class.first&.episode_last_id }.from(nil).to(episode.id) }
     end
   end
 
@@ -127,6 +140,35 @@ RSpec.describe VideoBlob do
       let(:movie) { build_stubbed(:movie) }
       let(:expected_path) do
         "#{Config::Plex.newest.settings_movie_path}/#{movie.plex_name} {edition-Something super special}/#{movie.plex_name} {edition-Something super special}.mkv"
+      end
+
+      it { is_expected.to eq Pathname.new(expected_path) }
+    end
+
+    context 'when tv is a multiple part film' do
+      let(:video_blob) do
+        build_stubbed(:video_blob, extra_type: :feature_films, video: tv, episode:, part: 1)
+      end
+      let(:episode) { build_stubbed(:episode, season:) }
+      let(:season) { build_stubbed(:season, tv:, season_number: 1) }
+      let(:tv) { build_stubbed(:tv, name: 'The Violent Bear It Away') }
+      let(:expected_path) do
+        "#{Config::Plex.newest.settings_tv_path}/The Violent Bear It Away/Season 01/The Violent Bear It Away - s01e01 - pt1.mkv"
+      end
+
+      it { is_expected.to eq Pathname.new(expected_path) }
+    end
+
+    context 'when tv is a multiple part film & a range of episodes' do
+      let(:video_blob) do
+        build_stubbed(:video_blob, extra_type: :feature_films, video: tv, episode:, episode_last:, part: 1)
+      end
+      let(:episode) { build_stubbed(:episode, season:, episode_number: 1) }
+      let(:episode_last) { build_stubbed(:episode, season:, episode_number: 3) }
+      let(:season) { build_stubbed(:season, tv:, season_number: 1) }
+      let(:tv) { build_stubbed(:tv, name: 'The Violent Bear It Away') }
+      let(:expected_path) do
+        "#{Config::Plex.newest.settings_tv_path}/The Violent Bear It Away/Season 01/The Violent Bear It Away - s01e01-e03 - pt1.mkv"
       end
 
       it { is_expected.to eq Pathname.new(expected_path) }
