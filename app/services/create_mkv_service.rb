@@ -13,6 +13,7 @@ class CreateMkvService < ApplicationService
   option :disk_title, Types.Instance(DiskTitle)
   option :extra_type, Types::Coercible::Symbol.optional, default: -> { VideoBlob::EXTRA_TYPES.first.first }
   option :edition, Types::Coercible::String, optional: true
+  option :part, Types::Integer.optional, optional: true
 
   def call
     disk_title.update!(video_blob:)
@@ -63,15 +64,19 @@ class CreateMkvService < ApplicationService
                       VideoBlob.find_or_create_by!(
                         video: disk_title.video,
                         episode: disk_title.episode,
+                        episode_last: disk_title.episode_last,
                         extra_type: :feature_films,
-                        edition: edition.presence
+                        edition: edition.presence,
+                        part:
                       )
                     else
                       VideoBlob.create!(
                         video: disk_title.video,
                         episode: disk_title.episode,
+                        episode_last: disk_title.episode_last,
                         extra_type:,
                         edition:,
+                        part:,
                         extra_type_number: extra_type_number(
                           video: disk_title.video,
                           extra_type:

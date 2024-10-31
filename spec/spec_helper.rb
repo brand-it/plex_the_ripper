@@ -103,4 +103,12 @@ RSpec.configure do |config|
     FileUtils.rm_rf(Rails.root.join('tmp/tv'))
     FileUtils.rm_rf(Rails.root.join('tmp/movies'))
   end
+
+  config.before do
+    allow(Open3).to receive(:capture3).with('mount').and_return(
+      ['', '', instance_double(Process::Status)]
+    )
+    allow(Open3).to receive(:capture3).with('ps aux | grep makemkvcon | grep -v grep').and_return(['', '', instance_double(Process::Status)])
+    allow(Open3).to receive(:capture3).with('drutil eject /dev/rdisk5').and_return(['', '', instance_double(Process::Status, success?: true)])
+  end
 end

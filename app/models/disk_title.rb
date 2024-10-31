@@ -16,6 +16,7 @@
 #  updated_at      :datetime         not null
 #  disk_id         :bigint
 #  episode_id      :integer
+#  episode_last_id :integer
 #  mkv_progress_id :bigint
 #  title_id        :integer          not null
 #  video_blob_id   :integer
@@ -25,6 +26,7 @@
 #
 #  index_disk_titles_on_disk_id          (disk_id)
 #  index_disk_titles_on_episode_id       (episode_id)
+#  index_disk_titles_on_episode_last_id  (episode_last_id)
 #  index_disk_titles_on_mkv_progress_id  (mkv_progress_id)
 #  index_disk_titles_on_video            (video_id)
 #  index_disk_titles_on_video_blob_id    (video_blob_id)
@@ -34,6 +36,7 @@ class DiskTitle < ApplicationRecord
 
   belongs_to :video, optional: true
   belongs_to :episode, optional: true
+  belongs_to :episode_last, optional: true, class_name: 'Episode'
   belongs_to :disk, optional: true
 
   belongs_to :video_blob, optional: true
@@ -43,11 +46,20 @@ class DiskTitle < ApplicationRecord
 
   validates :filename, presence: true
 
+  before_save :set_episode_last
+
   def duration
     super&.seconds
   end
 
   def to_label
     "##{title_id} #{name} #{distance_of_time_in_words(duration)}"
+  end
+
+  private
+
+  def set_episode_last
+    self.episode_last = nil if episode.nil?
+    self.episode_last ||= episode
   end
 end

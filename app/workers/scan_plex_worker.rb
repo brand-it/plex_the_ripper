@@ -7,7 +7,9 @@ class ScanPlexWorker < ApplicationWorker
 
   def perform
     broadcast_component(ScanPlexProcessComponent.new)
-    video_blobs.map do |blob|
+    job.add_message('Starting Processing Video Blobs')
+    update_message_component
+    video_blobs.each do |blob|
       blob.video = find_or_create_video(blob)
       blob.episode = search_for_episode(blob, blob.video)
       unless blob.save
@@ -19,22 +21,41 @@ class ScanPlexWorker < ApplicationWorker
       next if next_update.future?
 
       job.save!
+      update_message_component
       broadcast_component(ScanPlexProcessComponent.new)
       @next_update = 1.second.from_now
     end
     existing_ids = video_blobs.map(&:id).compact
     VideoBlob.not_uploaded.in_batches do |batch|
-      VideoBlob.where(id: batch.map(&:id) - existing_ids).destroy_all
+      VideoBlob.where(id: batch.map(&:id) - existing_ids).find_each do |blob|
+        job.add_message("Destroyed #{blob.key}")
+        blob.destroy
+        update_message_component
+      end
     end
     Video.includes(:video_blobs).find_each do |video|
-      video.destroy if video.video_blobs.empty?
+      if video.video_blobs.empty?
+        video.destroy
+        job.add_message("Destroyed #{video.plex_name}")
+        update_message_component
+      end
     end
     job.update!(completed: 100)
     broadcast_component(ScanPlexProcessComponent.new)
+    update_message_component
     job
   end
 
   private
+
+  def update_message_component
+    component = JobMessageComponent.new(job:)
+    cable_ready[JobChannel.channel_name].morph(
+      selector: "##{component.dom_id}",
+      html: render(component, layout: false)
+    )
+    cable_ready.broadcast
+  end
 
   def completed
     @completed ||= 0

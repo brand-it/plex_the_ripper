@@ -35,5 +35,40 @@ RSpec.describe CreateMkvService do
         expect(call).to be_a(described_class::Result)
       end
     end
+
+    context 'when part is passed in' do
+      let(:service) { described_class.new(disk_title:, part: 1) }
+      let(:disk_title) { create(:disk_title, video: tv, episode:) }
+      let(:tv) { create(:tv) }
+      let(:episode) { create(:episode) }
+
+      before do
+        allow(service).to receive(:cmd).and_return('ls /not-a-real-folder')
+      end
+
+      it 'build a video blob with all the attributes on the disk title' do
+        expect { call }.to change(VideoBlob, :count).by(1)
+        expect(VideoBlob.first.part).to eq(1)
+        expect(VideoBlob.first.episode_last).to eq(episode)
+      end
+    end
+
+    context 'when disk titles has a range of episodes' do
+      let(:service) { described_class.new(disk_title:, part: 1) }
+      let(:disk_title) { create(:disk_title, video: tv, episode:, episode_last:) }
+      let(:tv) { create(:tv) }
+      let(:episode) { create(:episode) }
+      let(:episode_last) { create(:episode) }
+
+      before do
+        allow(service).to receive(:cmd).and_return('ls /not-a-real-folder')
+      end
+
+      it 'build a video blob with all the attributes on the disk title' do
+        expect { call }.to change(VideoBlob, :count).by(1)
+        expect(VideoBlob.first.part).to eq(1)
+        expect(VideoBlob.first.episode_last).to eq(episode_last)
+      end
+    end
   end
 end

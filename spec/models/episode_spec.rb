@@ -40,4 +40,33 @@ RSpec.describe Episode do
 
     it { is_expected.to be_a(Tv) }
   end
+
+  describe '#plex_name' do
+    subject(:plex_name) { episode.plex_name(part:, episode_last:) }
+
+    let(:episode) { build_stubbed(:episode, season:) }
+    let(:season) { build_stubbed(:season, tv:, season_number: 1) }
+    let(:tv) { build_stubbed(:tv, name: 'The Violent Bear It Away') }
+    let(:part) { nil }
+    let(:episode_last) { nil }
+
+    context 'when part is given' do
+      let(:part) { 1 }
+
+      it { is_expected.to eq 'The Violent Bear It Away - s01e01 - pt1' }
+    end
+
+    context 'when episode_last is given' do
+      let(:episode_last) { build_stubbed(:episode, season:, episode_number: 3) }
+
+      it { is_expected.to eq 'The Violent Bear It Away - s01e01-e03' }
+    end
+
+    context 'when episode_last is given & part' do
+      let(:episode_last) { build_stubbed(:episode, season:, episode_number: 3) }
+      let(:part) { 1 }
+
+      it { is_expected.to eq 'The Violent Bear It Away - s01e01-e03 - pt1' }
+    end
+  end
 end

@@ -15,16 +15,19 @@
 #  key               :string           not null
 #  metadata          :text
 #  optimized         :boolean          default(FALSE), not null
+#  part              :integer
 #  uploadable        :boolean          default(FALSE), not null
 #  uploaded_on       :datetime
 #  created_at        :datetime         not null
 #  updated_at        :datetime         not null
 #  episode_id        :bigint
+#  episode_last_id   :integer
 #  video_id          :integer
 #
 # Indexes
 #
 #  idx_on_extra_type_number_video_id_extra_type_1978193db6  (extra_type_number,video_id,extra_type) UNIQUE
+#  index_video_blobs_on_episode_last_id                     (episode_last_id)
 #  index_video_blobs_on_key                                 (key) UNIQUE
 #  index_video_blobs_on_key_and_service_name                (key) UNIQUE
 #  index_video_blobs_on_video                               (video_id)
@@ -47,6 +50,7 @@ class VideoBlob < ApplicationRecord
 
   belongs_to :video
   belongs_to :episode, optional: true
+  belongs_to :episode_last, optional: true, class_name: 'Episode'
   has_many :disk_titles, dependent: :nullify
 
   scope :checksum, -> { where.not(checksum: nil) }
@@ -66,6 +70,7 @@ class VideoBlob < ApplicationRecord
     :extra,
     :filename,
     :optimized,
+    :part,
     :plex_version,
     :season,
     :title,
@@ -78,6 +83,8 @@ class VideoBlob < ApplicationRecord
 
   before_validation :set_defaults
   before_validation :set_edition
+  before_validation :set_part
+  before_validation :set_episode_last
 
   validates :key, presence: true, uniqueness: { message: ->(blob, _) { "#{blob.key} has already been taken" } }
   validates :extra_type, presence: true
@@ -86,8 +93,7 @@ class VideoBlob < ApplicationRecord
 
   def title
     if video.tv?
-      season = episode.season
-      "#{video.title} - S#{season.season_number}E#{episode.episode_number} #{episode.name}"
+      episode_plex_name(part:, episode_last:)
     elsif feature_films?
       video.title
     else
@@ -141,7 +147,7 @@ class VideoBlob < ApplicationRecord
         video_plex_name, ("{edition-#{edition}}" if edition.present?)
       ].compact_blank.join(' ')
     elsif video&.tv?
-      episode_plex_name
+      episode_plex_name(part:, episode_last:)
     end
   end
 
@@ -192,5 +198,14 @@ class VideoBlob < ApplicationRecord
 
   def set_edition
     self.edition = parsed_edition
+  end
+
+  def set_part
+    self.part ||= parsed_part
+  end
+
+  def set_episode_last
+    self.episode_last = nil if episode.nil?
+    self.episode_last ||= episode
   end
 end

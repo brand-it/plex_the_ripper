@@ -28,13 +28,14 @@ module Ftp
                                      optimized: parsed.optimized,
                                      byte_size: entry.size,
                                      extra_type_number: parsed.extra_number,
-                                     extra_type: parsed.extra_type
+                                     extra_type: parsed.extra_type,
+                                     part: parsed.part
         video_blob.uploaded_on ||= Time.current
       end
     end
 
     def find_or_initialize_by(key)
-      preloaded_video_blobs[key] || VideoBlob.new(key:)
+      preloaded_video_blobs[key.strip] || VideoBlob.new(key: key.strip)
     end
 
     def preloaded_video_blobs

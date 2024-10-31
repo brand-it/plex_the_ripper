@@ -16,6 +16,7 @@ class KeyParserService < ApplicationService
     :extra,
     :filename,
     :optimized,
+    :part,
     :plex_version,
     :season,
     :title,
@@ -28,6 +29,7 @@ class KeyParserService < ApplicationService
       type:,
       year:,
       content_type:,
+      part: nil,
       optimized: false,
       edition: nil,
       episode: nil,
@@ -51,7 +53,8 @@ class KeyParserService < ApplicationService
         year: year.presence&.to_i,
         content_type: content_type.presence&.strip,
         optimized: Types::Coercible::Bool[optimized],
-        extra_type:
+        extra_type:,
+        part:
       )
     end
 
@@ -174,7 +177,8 @@ class KeyParserService < ApplicationService
       season: match['season'],
       title: dir_match['title'].presence || match['title'],
       type: 'Tv',
-      year: dir_match['year'].presence || match['year']
+      year: dir_match['year'].presence || match['year'],
+      part:
     )
   end
 
@@ -243,5 +247,9 @@ class KeyParserService < ApplicationService
 
   def optimized
     plex_version && simplified_key.gsub("#{directory_name}/", '').include?(OPTIMIZED)
+  end
+
+  def part
+    (filename.match(/\spart(\d+)/) || filename.match(/\spt(\d+)/) || [])[1]&.to_i
   end
 end
