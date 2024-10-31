@@ -31,7 +31,7 @@
           <%= hidden_field_tag "episodes[][episode_id]", title.episode.id %>
           <tr>
             <td>
-              <%= imdb_image_tag episode.still_path, width: 100, height: 100 %>
+              <%= imdb_image_tag title.episode.still_path, width: 100, height: 100 %>
             </td>
             <td class="text-center">
               <h1>
@@ -61,11 +61,15 @@
               <%= link_to_movie_db_episode(@season.tv.the_movie_db_id, @season.season_number, title.episode.episode_number) %>
             </td>
             <td>
-              <%= select_tag 'episodes[][disk_title_id]',
-                    options_from_collection_for_select(disk.disk_titles, :id, :to_label, title.episode&.id), prompt: "Select Episode", data: { manage_selections_target: :input } %>
+              <% if @disks.any? %>
+                <%= select_tag 'episodes[][disk_title_id]',
+                      options_from_collection_for_select(@disks.first.disk_titles, :id, :to_label, title.disk_title&.id), prompt: "Select Disk Title", data: { manage_selections_target: :input } %>
+              <% end %>
             </td>
             <td>
-              <%= number_field_tag "episodes[][part]" %>
+              <% if @disks.any? %>
+                <%= number_field_tag "episodes[][part]" %>
+              <% end %>
             </td>
           </tr>
           <tr>

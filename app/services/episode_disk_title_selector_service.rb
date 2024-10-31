@@ -8,7 +8,7 @@ class EpisodeDiskTitleSelectorService < ApplicationService
     :uploaded?
   )
 
-  option :disk, Types.Instance(Disk)
+  option :disk, Types.Instance(Disk).optional
   option :episodes, Types::Coercible::Array.of(Types.Instance(Episode))
 
   def call
@@ -25,6 +25,7 @@ class EpisodeDiskTitleSelectorService < ApplicationService
   private
 
   def episode_disk_title(episode)
+    return if disk.nil?
     return if selected_episodes.include?(episode)
 
     disk.disk_titles.find { within_range?(episode, _1) && selected_disk_titles.exclude?(_1) }.tap do |disk_title|
