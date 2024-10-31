@@ -45,7 +45,7 @@ class SeasonsController < ApplicationController
   end
 
   def episode_params
-    params[:episodes].reject { _1[:episode_id].blank? }.sort_by do |episode_param|
+    params[:episodes].reject { _1[:episode_id].blank? || _1[:disk_title_id].blank? }.sort_by do |episode_param|
       season.episodes.find { _1.id == episode_param[:episode_id].to_i }.episode_number
     end
   end

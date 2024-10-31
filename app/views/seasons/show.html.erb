@@ -10,69 +10,8 @@
   </ol>
 </nav>
 <hr/>
-<% if @disks.any? %>
-  <%= simple_form_for :episodes, url: rip_tv_season_path(@tv, @season), class: 'pb-4', data: { controller: 'manage-selections' } do |f| %>
-    <%= hidden_field_tag :disk_id, @disks.first&.id %>
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Ripped</th>
-          <th>Uploaded</th>
-          <th>#</th>
-          <th>Name</th>
-          <th>Filename</th>
-          <th>Angle</th>
-          <th>Duration</th>
-          <th>
-            <a class='btn btn-info' data-action="click->manage-selections#clearInputs">Clear Selected Episodes</a>
-          </th>
-          <th>Part</th>
-        </tr>
-      </thead>
-      <tbody>
-          <% EpisodeDiskTitleSelectorService.call(disk: @disks.first, episodes: @season.episodes).each do |title| %>
-            <%= hidden_field_tag "episodes[][disk_title_id]", title.disk_title.id %>
-            <tr>
-              <td>
-                <h1>
-                  <% if title.ripped? %>
-                    <%= icon('square-check') %>
-                  <% else %>
-                    <%= icon('square') %>
-                  <% end %>
-                </h1>
-              </td>
-              <td>
-                <h1>
-                  <% if title.uploaded? %>
-                    <%= icon('square-check') %>
-                  <% else %>
-                    <%= icon('square') %>
-                  <% end %>
-                </h1>
-              </td>
-              <td>#<%= title.disk_title.title_id %></td>
-              <td><%= title.disk_title.name %></td>
-              <td><%= title.disk_title.filename %></td>
-              <td><%= title.disk_title.angle %></td>
-              <td><%= distance_of_time_in_words(title.disk_title.duration) %></td>
-              <td>
-                <%= select_tag 'episodes[][episode_id]',
-                      options_from_collection_for_select(@season.episodes, :id, :to_label, title.episode&.id), prompt: "Select Episode", data: { manage_selections_target: :input } %>
-              </td>
-              <td>
-                <%= number_field_tag "episodes[][part]" %>
-              </td>
-            </tr>
-          <% end %>
-      </tbody>
-      <div class='bg-dark w-100 fixed-bottom mt-1 text-right p-3 border-top'>
-        <%= f.button :submit, 'Rip Disk' %>
-      </div>
-    </table>
-  <% end %>
-<% else %>
-
+<%= simple_form_for :episodes, url: rip_tv_season_path(@tv, @season), class: 'pb-4', data: { controller: 'manage-selections' } do |f| %>
+  <%= hidden_field_tag :disk_id, @disks.first&.id %>
   <table class="table">
     <thead>
       <tr>
@@ -88,48 +27,65 @@
       </tr>
     </thead>
     <tbody>
-      <% @season.episodes.each do |episode| %>
-        <tr>
-          <td>
-            <%= imdb_image_tag episode.still_path, width: 100, height: 100 %>
-          </td>
-          <td class="text-center">
-            <h1>
-              <% if episode.ripped_disk_titles.any? %>
-                <%= icon('square-check') %>
-              <% else %>
-                <%= icon('square') %>
+        <% EpisodeDiskTitleSelectorService.call(disk: @disks.first, episodes: @season.episodes).each do |title| %>
+          <%= hidden_field_tag "episodes[][episode_id]", title.episode.id %>
+          <tr>
+            <td>
+              <%= imdb_image_tag title.episode.still_path, width: 100, height: 100 %>
+            </td>
+            <td class="text-center">
+              <h1>
+                <% if title.ripped? %>
+                  <%= icon('square-check') %>
+                <% else %>
+                  <%= icon('square') %>
+                <% end %>
+              </h1>
+            </td>
+            <td class="text-center">
+              <h1>
+                <% if title.uploaded? %>
+                  <%= icon('square-check') %>
+                <% else %>
+                  <%= icon('square') %>
+                <% end %>
+              </h1>
+            </td>
+            <td>
+              <%= title.episode.episode_number %>
+            </td>
+            <td><%= title.episode.name %></td>
+            <td><%= title.episode.air_date  %></td>
+            <td><%= distance_of_time_in_words(title.episode.runtime) if title.episode.runtime %>
+            <td>
+              <%= link_to_movie_db_episode(@season.tv.the_movie_db_id, @season.season_number, title.episode.episode_number) %>
+            </td>
+            <td>
+              <% if @disks.any? %>
+                <%= select_tag 'episodes[][disk_title_id]',
+                      options_from_collection_for_select(@disks.first.disk_titles, :id, :to_label, title.disk_title&.id), prompt: "Select Disk Title", data: { manage_selections_target: :input } %>
               <% end %>
-            </h1>
-          </td>
-          <td class="text-center">
-            <h1>
-              <% if episode.ripped_disk_titles.any? { _1.video_blob.uploaded? } %>
-                <%= icon('square-check') %>
-              <% else %>
-                <%= icon('square') %>
+            </td>
+            <td>
+              <% if @disks.any? %>
+                <%= number_field_tag "episodes[][part]" %>
               <% end %>
-            </h1>
-          </td>
-          <td>
-            <%= episode.episode_number %>
-          </td>
-          <td><%= episode.name %></td>
-          <td><%= episode.air_date  %></td>
-          <td><%= distance_of_time_in_words(episode.runtime) if episode.runtime %>
-          <td>
-            <%= link_to_movie_db_episode(@season.tv.the_movie_db_id, @season.season_number, episode.episode_number) %>
-          </td>
-        </tr>
-        <tr>
-          <td colspan="1"></td>
-          <td colspan="8">
-            <% episode.video_blobs.each do |video_blob| %>
-              <p><%= video_blob.key %></p>
-            <% end %>
-          </td>
-        </tr>
-      <% end %>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="1"></td>
+            <td colspan="8">
+              <% title.episode.video_blobs.each do |video_blob| %>
+                <p><%= video_blob.key %></p>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
     </tbody>
   </table>
+  <% if @disks.any? %>
+    <div class='bg-dark w-100 fixed-bottom mt-1 text-right p-3 border-top'>
+      <%= f.button :submit, 'Rip Disk' %>
+    </div>
+  <% end %>
 <% end %>

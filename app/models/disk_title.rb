@@ -53,7 +53,7 @@ class DiskTitle < ApplicationRecord
   end
 
   def to_label
-    "##{title_id} #{name} #{distance_of_time_in_words(duration)}"
+    "##{title_id} #{name || filename} #{distance_of_time_in_words(duration)}"
   end
 
   private
