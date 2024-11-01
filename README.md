@@ -1,7 +1,6 @@
 ![Status](https://github.com/brand-it/plex_the_ripper/workflows/Status/badge.svg)
 
-![Screenshot 2024-06-18 at 3 00 23 PM](https://github.com/brand-it/plex_the_ripper/assets/13140/b031e88a-74c5-4885-9b88-8e00c3a1484e)
-
+![Screenshot 2024-10-31 at 9 13 38 PM](https://github.com/user-attachments/assets/6c81df81-b50f-4db0-83d5-4182480c8190)
 
 ## Usage
 
