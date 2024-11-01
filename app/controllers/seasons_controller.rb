@@ -29,7 +29,8 @@ class SeasonsController < ApplicationController
   end
 
   def rip_disk_titles
-    @rip_disk_titles ||= episode_params.map do |episode_param|
+    disk_title_ids = []
+    @rip_disk_titles ||= episode_params.filter_map do |episode_param|
       episode = season.episodes.find { _1.id == episode_param[:episode_id].to_i }
       disk_title = disk.disk_titles.find { _1.id == episode_param[:disk_title_id].to_i }
       if disk_title.episode
@@ -37,6 +38,9 @@ class SeasonsController < ApplicationController
       else
         disk_title.update!(video: tv, episode:)
       end
+      next if disk_title_ids.include?(disk_title.id)
+
+      disk_title_ids.append(disk_title.id)
       RipWorker::DiskTitleHash[{
         id: disk_title.id,
         part: episode_param[:part].presence&.to_i
