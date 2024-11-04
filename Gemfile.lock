@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/puma/puma
-  revision: 37d80d3f9b021e98dbc8a303ab84e973d824c3a6
+  revision: 5ac3f408008dd3496b251ce5b252014d82668198
   specs:
     puma (6.4.3)
       nio4r (~> 2.0)
@@ -224,7 +224,7 @@ GEM
       timeout
     net-smtp (0.5.0)
       net-protocol
-    nio4r (2.7.3)
+    nio4r (2.7.4)
     nokogiri (1.16.7)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
