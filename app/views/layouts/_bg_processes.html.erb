@@ -1,4 +1,4 @@
-<div class="<%= Array.wrap(classes).join(' ') %>" id="bg-processes">
+<div class="<%= Array.wrap(classes).join(' ') %> sticky-top pt-3" id="bg-processes">
   <% [RipProcessComponent, ScanPlexProcessComponent, LoadDiskProcessComponent, UploadProcessComponent].each do |component| %>
     <%= render component.new %>
   <% end %>

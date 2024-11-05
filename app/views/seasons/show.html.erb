@@ -12,21 +12,27 @@
 <hr/>
 <%= simple_form_for :episodes, url: rip_tv_season_path(@tv, @season), class: 'pb-4', data: { controller: 'manage-selections' } do |f| %>
   <%= hidden_field_tag :disk_id, @disks.first&.id %>
-  <table class="table">
-    <thead>
+  <table class="table table-hover table-responsive">
+    <thead class="sticky-top bg-dark">
       <tr>
         <th></th>
         <th>Ripped</th>
         <th>Uploaded</th>
-        <th>#</th>
         <th>Name</th>
-        <th>Air Date</th>
-        <th>Duration</th>
-        <th></th>
-        <th></th>
+        <th>
+          Title Select
+          <small>
+            <% if @tv.duration_stats.weighted_average %>
+              (<%= distance_of_time_in_words(@tv.duration_stats.weighted_average - @tv.duration_stats.interquartile_range, 0, include_seconds: false) %>
+              -
+              <%= distance_of_time_in_words(@tv.duration_stats.weighted_average + @tv.duration_stats.interquartile_range, 0, include_seconds: false) %>)
+            <% end %>
+          </small>
+        </th>
+        <th>Part</th>
       </tr>
     </thead>
-    <tbody>
+    <tbody class="table-group-divider">
         <% EpisodeDiskTitleSelectorService.call(disk: @disks.first, episodes: @season.episodes).each do |title| %>
           <%= hidden_field_tag "episodes[][episode_id]", title.episode.id %>
           <tr>
@@ -51,35 +57,39 @@
                 <% end %>
               </h1>
             </td>
+
             <td>
-              <%= title.episode.episode_number %>
-            </td>
-            <td><%= title.episode.name %></td>
-            <td><%= title.episode.air_date  %></td>
-            <td><%= distance_of_time_in_words(title.episode.runtime) if title.episode.runtime %>
-            <td>
-              <%= link_to_movie_db_episode(@season.tv.the_movie_db_id, @season.season_number, title.episode.episode_number) %>
-            </td>
+              #<%= title.episode.episode_number %>
+              <%= link_to_movie_db_episode(
+                  @season.tv.the_movie_db_id,
+                  @season.season_number,
+                  title.episode.episode_number,
+                  text: title.episode.name
+                )
+              %>
+              <br/>
+              <%= title.episode.air_date  %>
+             </td>
             <td>
               <% if @disks.any? %>
                 <%= select_tag 'episodes[][disk_title_id]',
-                      options_from_collection_for_select(@disks.first.disk_titles, :id, :to_label, title.disk_title&.id), prompt: "Select Disk Title", data: { manage_selections_target: :input } %>
+                      options_from_collection_for_select(@disks.first.disk_titles, :id, :to_label, title.disk_title&.id), prompt: "", data: { manage_selections_target: :input }, class: 'form-select mb-2' %>
+              <% end %>
+              <% if title.episode.duration_stats.weighted_average %>
+                <%= distance_of_time_in_words(title.episode.duration_stats.weighted_average) %>
+              <% elsif @season.duration_stats.weighted_average%>
+                <%= distance_of_time_in_words(@tv.duration_stats.weighted_average) %>
+              <% elsif title.episode.runtime %>
+                <%= distance_of_time_in_words(title.episode.runtime) %>
               <% end %>
             </td>
             <td>
               <% if @disks.any? %>
-                <%= number_field_tag "episodes[][part]" %>
+                <%= number_field_tag "episodes[][part]", nil, class: 'form-control' %>
               <% end %>
             </td>
           </tr>
-          <tr>
-            <td colspan="1"></td>
-            <td colspan="8">
-              <% title.episode.video_blobs.each do |video_blob| %>
-                <p><%= video_blob.key %></p>
-              <% end %>
-            </td>
-          </tr>
+
         <% end %>
     </tbody>
   </table>

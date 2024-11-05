@@ -27,6 +27,8 @@ class Season < ApplicationRecord
   has_many :ripped_disk_titles, -> { ripped }, through: :episodes, source: :disk_titles
   belongs_to :tv
 
+  DEFAULT_EPISODE_RUNNTIME_MARGIN = 5.minutes.to_i
+
   scope :order_by_season_number, -> { order(:season_number) }
 
   validates :season_number, presence: true
@@ -40,5 +42,13 @@ class Season < ApplicationRecord
 
   def format_season_number
     format('%02d', season_number)
+  end
+
+  def ripped_disk_title_durations
+    @ripped_disk_title_durations ||= ripped_disk_titles&.map(&:duration)&.compact_blank || []
+  end
+
+  def duration_stats
+    @duration_stats ||= StatsService.call(ripped_disk_title_durations)
   end
 end

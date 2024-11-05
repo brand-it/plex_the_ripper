@@ -45,6 +45,10 @@ class Video < ApplicationRecord
 
   validates :title, presence: true
 
+  def duration_stats
+    @duration_stats ||= StatsService.call(ripped_disk_titles&.map(&:duration)&.compact_blank || [])
+  end
+
   def movie?
     is_a?(::Movie)
   end

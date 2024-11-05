@@ -35,16 +35,9 @@ class Episode < ApplicationRecord
 
   delegate :tv, to: :season
   delegate :title, :plex_name, to: :tv, prefix: true
-  EPISODE_RUNNTIME_MARGIN = 3.minutes.to_i
 
   def to_label
     "s#{season.format_season_number}e#{format_episode_number} - #{runtime ? distance_of_time_in_words(runtime) : 'runtime unknown'} - #{name}"
-  end
-
-  def runtime_range
-    return if runtime.nil?
-
-    @runtime_range ||= (runtime - EPISODE_RUNNTIME_MARGIN)...(runtime + EPISODE_RUNNTIME_MARGIN)
   end
 
   def plex_name(part: nil, episode_last: nil)
@@ -60,5 +53,9 @@ class Episode < ApplicationRecord
 
   def format_episode_number
     format('%02d', episode_number)
+  end
+
+  def duration_stats
+    @duration_stats ||= StatsService.call(ripped_disk_titles&.map(&:duration)&.compact_blank || [])
   end
 end
