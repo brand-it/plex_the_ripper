@@ -48,10 +48,6 @@ class DiskTitle < ApplicationRecord
 
   before_save :set_episode_last
 
-  def duration
-    super&.seconds
-  end
-
   def to_label
     "##{title_id} #{name || filename} #{distance_of_time_in_words(duration)}"
   end

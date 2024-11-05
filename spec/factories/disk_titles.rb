@@ -40,5 +40,8 @@ FactoryBot.define do
     episode
 
     trait(:with_movie) { video factory: %i[movie] }
+
+    trait(:ripped) { ripped_at { Time.current } }
+    trait(:with_duration) { duration { Faker::Types.rb_integer } }
   end
 end

@@ -1,4 +1,4 @@
-<nav aria-label="breadcrumb">
+<nav aria-label="breadcrumb" class="sticky-top pt-3 bg-dark p-1">
   <ol class="breadcrumb">
     <li class="breadcrumb-item">
       <%= link_to 'Search', root_path %>
@@ -6,7 +6,6 @@
     <li class="breadcrumb-item active" aria-current="page"><%= @tv.name %></li>
   </ol>
 </nav>
-<hr/>
 
 <%= render SearchComponent.new(submit_on_key_up: false) %>
 
