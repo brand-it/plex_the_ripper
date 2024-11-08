@@ -12,6 +12,7 @@ class ScanPlexWorker < ApplicationWorker
     video_blobs.each do |blob|
       blob.video = find_or_create_video(blob)
       blob.episode = search_for_episode(blob, blob.video)
+      blob.episode_last = search_for_episode(blob, blob.video, last: true)
       unless blob.save
         job.add_message("Failed create video from #{blob.key}")
         job.add_message(blob.errors.full_messages)
@@ -75,7 +76,7 @@ class ScanPlexWorker < ApplicationWorker
     search&.results&.dig('results', 0, 'id')
   end
 
-  def search_for_episode(blob, video)
+  def search_for_episode(blob, video, last: false)
     return unless video.is_a?(::Tv)
 
     season = video.seasons.find { _1.season_number == blob.parsed_season }
@@ -83,7 +84,8 @@ class ScanPlexWorker < ApplicationWorker
 
     season.subscribe(TheMovieDb::EpisodesListener.new)
     season.save!
-    season.episodes.find { _1.episode_number == blob.parsed_episode }
+    episode_number = last ? blob.parsed_episode_last : blob.parsed_episode
+    season.episodes.find { _1.episode_number == episode_number }
   end
 
   def find_or_create_video(blob)

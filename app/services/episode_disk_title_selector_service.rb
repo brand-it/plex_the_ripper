@@ -28,7 +28,7 @@ class EpisodeDiskTitleSelectorService < ApplicationService
 
   def episode_disk_title(episode)
     return if disk.nil?
-    return if selected_episodes.include?(episode)
+    return if uploaded?(episode) || ripped?(episode)
 
     disk.disk_titles.find { within_range?(episode, _1) && selected_disk_titles.exclude?(_1) }.tap do |disk_title|
       selected_disk_titles.append(disk_title) if disk_title
@@ -42,7 +42,14 @@ class EpisodeDiskTitleSelectorService < ApplicationService
   end
 
   def uploaded?(episode)
-    episode.ripped_disk_titles.any? { _1&.video_blob&.uploaded? } || episode.video_blobs.any?(&:uploaded?)
+    uploaded_episodes_numbers.any? { _1.include?(episode.episode_number) } ||
+      episode.ripped_disk_titles.any? { _1&.video_blob&.uploaded? } ||
+      episode.video_blobs.any?(&:uploaded?)
+  end
+
+  def ripped?(episode)
+    ripped_episodes_numbers.any? { _1.include?(episode.episode_number) } ||
+      episode.ripped_disk_titles.any?
   end
 
   def within_range?(episode, disk_title)
@@ -61,9 +68,15 @@ class EpisodeDiskTitleSelectorService < ApplicationService
     @selected_disk_titles ||= []
   end
 
-  def selected_episodes
-    @selected_episodes ||= episodes.select do |episode|
-      episode.ripped_disk_titles.any? || episode.uploaded_video_blobs.any?
+  def uploaded_episodes_numbers
+    @uploaded_episodes_numbers ||= episodes.flat_map do |episode|
+      episode.uploaded_video_blobs.filter_map(&:episode_numbers)
+    end
+  end
+
+  def ripped_episodes_numbers
+    @ripped_episodes_numbers ||= episodes.flat_map do |episode|
+      episode.ripped_disk_titles.filter_map(&:episode_numbers)
     end
   end
 

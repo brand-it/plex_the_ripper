@@ -21,7 +21,8 @@ class KeyParserService < ApplicationService
     :season,
     :title,
     :type,
-    :year
+    :year,
+    :episode_last
   ) do
     def initialize(
       filename:,
@@ -29,12 +30,13 @@ class KeyParserService < ApplicationService
       type:,
       year:,
       content_type:,
-      part: nil,
-      optimized: false,
       edition: nil,
+      episode_last: nil,
       episode: nil,
       extra_number: nil,
       extra: nil,
+      optimized: false,
+      part: nil,
       plex_version: false,
       season: nil
     )
@@ -54,7 +56,8 @@ class KeyParserService < ApplicationService
         content_type: content_type.presence&.strip,
         optimized: Types::Coercible::Bool[optimized],
         extra_type:,
-        part:
+        part:,
+        episode_last:
       )
     end
 
@@ -116,6 +119,7 @@ class KeyParserService < ApplicationService
 
   # TODO: Currently not activly used but these are the patterns we are looking for
   TV_SHOW_SEASON_EPISODE = /[sS](?<season>\d+)[eE](?<episode>\d+)/
+  TV_SHOW_SEASON_EPISODE_LAST = /[sS](?<season>\d+)[eE](?<episode>\d+)-[eE](?<episode_last>\d+)/
   TV_SHOW_MATCHER_FULL = /#{MATCHER_WITH_YEAR}.*-#{SPACE_OR_NOTHING}#{TV_SHOW_SEASON_EPISODE}#{SPACE_OR_NOTHING}-#{SPACE_OR_NOTHING}(?<date>.*)#{SPACE_OR_NOTHING}-#{SPACE_OR_NOTHING}(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
   TV_SHOW_WITHOUT_EP_NAME = /#{MATCHER_WITH_YEAR}.*-#{SPACE_OR_NOTHING}#{TV_SHOW_SEASON_EPISODE}#{SPACE_OR_NOTHING}-#{SPACE_OR_NOTHING}(?<date>.*).*#{Regexp.union(VIDEO_FORMATS)}/
   TV_SHOW_WITHOUT_DATE = /#{MATCHER_WITH_YEAR}.*-#{SPACE_OR_NOTHING}#{TV_SHOW_SEASON_EPISODE}#{SPACE_OR_NOTHING}-#{SPACE_OR_NOTHING}(?<episode_name>.*).*#{Regexp.union(VIDEO_FORMATS)}/
@@ -178,7 +182,8 @@ class KeyParserService < ApplicationService
       title: dir_match['title'].presence || match['title'],
       type: 'Tv',
       year: dir_match['year'].presence || match['year'],
-      part:
+      part:,
+      episode_last:
     )
   end
 
@@ -251,5 +256,9 @@ class KeyParserService < ApplicationService
 
   def part
     (filename.match(/\spart(\d+)/) || filename.match(/\spt(\d+)/) || [])[1]&.to_i
+  end
+
+  def episode_last
+    (filename.match(TV_SHOW_SEASON_EPISODE_LAST)&.named_captures || {})['episode_last']&.to_i
   end
 end

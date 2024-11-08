@@ -83,7 +83,7 @@ class Job < ApplicationRecord
   end
 
   def worker
-    @worker ||= name.constantize.new(**arguments.symbolize_keys.merge(job: self))
+    @worker ||= name.constantize.new(**arguments.symbolize_keys, job: self)
   rescue StandardError => e
     record_exception!(e)
     broadcast_page_reload!

@@ -65,6 +65,7 @@ class VideoBlob < ApplicationRecord
     :content_type,
     :edition,
     :episode,
+    :episode_last,
     :extra_number,
     :extra_type,
     :extra,
@@ -99,6 +100,12 @@ class VideoBlob < ApplicationRecord
     else
       "#{extra_type.humanize} ##{extra_type_number} #{video.title}"
     end
+  end
+
+  def episode_numbers
+    return if episode.nil?
+
+    episode.episode_number..(episode_last&.episode_number || episode.episode_number)
   end
 
   def uploaded?

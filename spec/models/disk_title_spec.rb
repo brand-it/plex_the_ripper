@@ -67,4 +67,29 @@ RSpec.describe DiskTitle do
       it { expect { disk_title }.to change { described_class.first&.episode_last_id }.from(nil).to(episode.id) }
     end
   end
+
+  describe '#episode_numbers' do
+    subject(:episode_numbers) { disk_title.episode_numbers }
+
+    context 'when no episode is present' do
+      let(:disk_title) { build_stubbed(:disk_title, episode: nil) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when episode is present' do
+      let(:disk_title) { build_stubbed(:disk_title, episode:) }
+      let(:episode) { build_stubbed(:episode, episode_number: 1) }
+
+      it { is_expected.to eq(1..1) }
+    end
+
+    context 'when episode is present & last_episode' do
+      let(:disk_title) { build_stubbed(:disk_title, episode:, episode_last:) }
+      let(:episode) { build_stubbed(:episode, episode_number: 1) }
+      let(:episode_last) { build_stubbed(:episode, episode_number: 10) }
+
+      it { is_expected.to eq(1..10) }
+    end
+  end
 end
