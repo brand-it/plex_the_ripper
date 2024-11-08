@@ -52,6 +52,12 @@ class DiskTitle < ApplicationRecord
     "##{title_id} #{name || filename} #{distance_of_time_in_words(duration)}"
   end
 
+  def episode_numbers
+    return if episode.nil?
+
+    episode.episode_number..(episode_last&.episode_number || episode.episode_number)
+  end
+
   private
 
   def set_episode_last

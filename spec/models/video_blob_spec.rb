@@ -186,6 +186,31 @@ RSpec.describe VideoBlob do
     end
   end
 
+  describe '#episode_numbers' do
+    subject(:episode_numbers) { video_blob.episode_numbers }
+
+    context 'when no episode is present' do
+      let(:video_blob) { build_stubbed(:video_blob, episode: nil) }
+
+      it { is_expected.to be_nil }
+    end
+
+    context 'when episode is present' do
+      let(:video_blob) { build_stubbed(:video_blob, episode:) }
+      let(:episode) { build_stubbed(:episode, episode_number: 1) }
+
+      it { is_expected.to eq(1..1) }
+    end
+
+    context 'when episode is present & last_episode' do
+      let(:video_blob) { build_stubbed(:video_blob, episode:, episode_last:) }
+      let(:episode) { build_stubbed(:episode, episode_number: 1) }
+      let(:episode_last) { build_stubbed(:episode, episode_number: 10) }
+
+      it { is_expected.to eq(1..10) }
+    end
+  end
+
   describe '#tv_show?' do
     subject(:tv_show?) { video_blob.tv_show? }
 

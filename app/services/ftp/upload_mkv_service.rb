@@ -78,6 +78,9 @@ module Ftp
 
     def file
       @file ||= File.new(video_blob.tmp_plex_path)
+    rescue Errno::ENOENT => e
+      video_blob.destroy
+      raise e
     end
   end
 end
