@@ -13,6 +13,11 @@ RSpec.describe EpisodeDiskTitleSelectorService do
       let(:disk) { build_stubbed(:disk, disk_titles: [disk_title]) }
       let(:disk_title) { build_stubbed(:disk_title, duration: 10.minutes) }
 
+      before do
+        tv.association(:ripped_disk_titles).target = [disk_title]
+        tv.association(:ripped_disk_titles).loaded!
+      end
+
       it { expect(call.first).to be_a(described_class::Info) }
       it { expect(call.first.disk_title.id).to eq(disk_title.id) }
       it { expect(call.first.episode.id).to eq(episodes.first.id) }
@@ -25,6 +30,11 @@ RSpec.describe EpisodeDiskTitleSelectorService do
       let(:disk) { build_stubbed(:disk, disk_titles: [disk_title_a, disk_title_b]) }
       let(:disk_title_a) { build_stubbed(:disk_title, duration: 10.minutes) }
       let(:disk_title_b) { build_stubbed(:disk_title, duration: 10.minutes) }
+
+      before do
+        tv.association(:ripped_disk_titles).target = [disk_title_a, disk_title_b]
+        tv.association(:ripped_disk_titles).loaded!
+      end
 
       it { expect(call.first.episode.id).to eq(episodes.first.id) }
       it { expect(call.first.disk_title.id).to eq(disk_title_a.id) }

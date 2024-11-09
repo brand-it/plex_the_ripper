@@ -28,6 +28,8 @@
 #
 class Video < ApplicationRecord
   include Wisper::Publisher
+  DEFAULT_RANGE = (60 * 3).seconds # 3 minutes
+
   enum :rating, { 'N/A': 0, NR: 1, 'NC-17': 2, R: 3, 'PG-13': 4, PG: 5, G: 6 }
 
   has_many :disk_titles, dependent: :nullify
@@ -46,7 +48,11 @@ class Video < ApplicationRecord
   validates :title, presence: true
 
   def duration_stats
-    @duration_stats ||= StatsService.call(ripped_disk_titles&.map(&:duration)&.compact_blank || [])
+    @duration_stats ||= StatsService.call(ripped_disk_titles_durations)
+  end
+
+  def ripped_disk_titles_durations
+    @ripped_disk_titles_durations ||= Array.wrap(ripped_disk_titles).map(&:duration).compact_blank
   end
 
   def movie?
@@ -93,5 +99,11 @@ class Video < ApplicationRecord
 
   def plex_name
     release_or_air_date ? "#{title} (#{release_or_air_date.year})" : title
+  end
+
+  private
+
+  def round_up_to_nearest_minute(seconds)
+    (seconds.to_f / 60).ceil * 60
   end
 end
