@@ -38,12 +38,33 @@ class Tv < Video
   end
 
   has_many :seasons, -> { order_by_season_number }, dependent: :destroy, inverse_of: :tv
+  has_many :episodes, ->  { order_by_episode_number }, through: :seasons
 
   before_validation { broadcast(:tv_validating, self) }
   before_save { broadcast(:tv_saving, self) }
   after_commit { broadcast(:tv_saved, self) }
 
-  def min_max_run_time_seconds
-    (episode_run_time.min * 60)..(episode_run_time.max * 60)
+  def duration_range
+    return if ripped_disk_titles_durations.empty? && episodes_runtime.empty?
+
+    range = round_up_to_nearest_minute(
+      duration_stats.interquartile_range ||
+      episode_runtime_stats.interquartile_range ||
+      DEFAULT_RANGE
+    )
+    average_runtime = duration_stats.weighted_average ||
+                      episode_runtime_stats.weighted_average
+
+    return if average_runtime.nil?
+
+    (average_runtime - range)..(average_runtime + range)
+  end
+
+  def episode_runtime_stats
+    @episode_runtime_stats ||= StatsService.call(episodes_runtime)
+  end
+
+  def episodes_runtime
+    @episodes_runtime ||= episodes.map(&:runtime).uniq.compact_blank
   end
 end

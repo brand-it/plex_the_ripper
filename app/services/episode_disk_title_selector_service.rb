@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
 class EpisodeDiskTitleSelectorService < ApplicationService
-  DEFAULT_RANGE = (60 * 3).seconds # 3 minutes
-
   Info = Data.define(
     :disk_title,
     :episode,
@@ -53,15 +51,7 @@ class EpisodeDiskTitleSelectorService < ApplicationService
   end
 
   def within_range?(episode, disk_title)
-    runtime_range(episode)&.include?(disk_title.duration)
-  end
-
-  def runtime_range(episode)
-    runtime = episode.tv.duration_stats.weighted_average || episode.runtime
-    range = episode.tv.duration_stats.interquartile_range || DEFAULT_RANGE
-    return if runtime.nil?
-
-    (runtime - range)...(runtime + range)
+    episode.tv.duration_range&.include?(disk_title.duration)
   end
 
   def selected_disk_titles

@@ -23,9 +23,28 @@
           Title Select
           <small>
             <% if @tv.duration_stats.weighted_average %>
-              (<%= distance_of_time_in_words(@tv.duration_stats.weighted_average - @tv.duration_stats.interquartile_range, 0, include_seconds: false) %>
-              -
-              <%= distance_of_time_in_words(@tv.duration_stats.weighted_average + @tv.duration_stats.interquartile_range, 0, include_seconds: false) %>)
+              (<%= distance_of_time_in_words(@tv.duration_range.min, 0, include_seconds: params[:debug] == 'true') %>
+              ..
+              <%= distance_of_time_in_words(@tv.duration_range.max, 0, include_seconds: params[:debug] == 'true') %>)
+
+              <% if params[:debug] == 'true' %>
+                <br>
+                median: <%= distance_of_time_in_words @tv.duration_stats.median  %>
+                <br>
+                weighted average: <%= distance_of_time_in_words @tv.duration_stats.weighted_average  %>
+                <br>
+                weighted average difference: <%= distance_of_time_in_words @tv.duration_stats.weighted_average_difference %>
+                <br>
+                interquartile range: <%= distance_of_time_in_words(@tv.duration_stats.interquartile_range)  %>
+                <br>
+                median difference: <%= distance_of_time_in_words(@tv.duration_stats.median_difference)  %>
+                <br>
+                z score: <%= distance_of_time_in_words @tv.duration_stats.z_score %>
+                <br>
+                Durations: <%= @tv.ripped_disk_titles_durations.sort.uniq.join(', ') %>
+                <br>
+                Differences: <%= @tv.duration_stats.differences.join(', ') %>
+              <% end %>
             <% end %>
           </small>
         </th>
