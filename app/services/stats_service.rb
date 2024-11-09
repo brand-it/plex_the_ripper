@@ -47,7 +47,7 @@ class StatsService < ApplicationService
   end
 
   def differences
-    @differences ||= list.uniq.permutation(2).map { _1.inject(:-).abs }.uniq.sort
+    @differences ||= list.uniq.permutation(2).map { _1.inject(:-).abs }.sort
   end
 
   def weighted_average_difference
@@ -60,7 +60,7 @@ class StatsService < ApplicationService
     return if differences.empty?
 
     q1 = differences[(differences.size * 0.25).floor]
-    q3 = differences[(differences.size * 0.75).floor]
+    q3 = differences[(differences.size * 0.50).floor]
     iqr = q3 - q1
 
     upper_bound = q3 + (1.5 * iqr)
