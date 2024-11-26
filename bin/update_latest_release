@@ -6,6 +6,12 @@ else
   APP_SUPPORT_DIR="$1"
 fi
 
+if [ -z "$1" ]; then
+  APP_SUPPORT_DIR="$HOME/Library/Application Support/PlexTheRipperMac"
+else
+  APP_SUPPORT_DIR="$1"
+fi
+
 # Variables
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="brand-it/plex_the_ripper"
