@@ -18,7 +18,7 @@ class UploadProcessComponent < ViewComponent::Base
   end
 
   def uploadable_video_blobs
-    @uploadable_video_blobs ||= VideoBlob.uploadable.includes(:video).order(updated_at: :desc)
+    @uploadable_video_blobs ||= VideoBlob.uploadable.includes(:video, :episode_last, episode: { season: :tv }).order(updated_at: :desc)
   end
 
   def percentage(completed, total)
@@ -27,7 +27,7 @@ class UploadProcessComponent < ViewComponent::Base
 
   def uploaded_recently_video_blobs
     @uploaded_recently_video_blobs ||= VideoBlob.uploaded_recently
-                                                .includes(:video)
+                                                .includes(:video, :episode_last, episode: [:season])
                                                 .order(uploaded_on: :desc)
                                                 .limit(3)
   end
