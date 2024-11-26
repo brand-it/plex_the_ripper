@@ -1,18 +1,22 @@
 #!/bin/bash
 
 # Variables
+APP_SUPPORT_DIR="$HOME/Library/Application Support/PlexTheRipper"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="brand-it/plex_the_ripper"
 API_URL="https://api.github.com/repos/$REPO/releases/latest"
 DOWNLOAD_URL="https://github.com/$REPO/archive/refs/tags/"
-TEMP_DIR="$SCRIPT_DIR/tmp/latest"
-GITIGNORE=".gitignore"
-VERSION_FILE="$SCRIPT_DIR/current_version.txt"
-RSYNC_EXCLUDE_FILE="$SCRIPT_DIR/tmp/rsync_exclude"
+TEMP_DIR="$APP_SUPPORT_DIR/tmp/latest"
+GITIGNORE="$SCRIPT_DIR/.gitignore"
+VERSION_FILE="$APP_SUPPORT_DIR/current_version.txt"
+RSYNC_EXCLUDE_FILE="$APP_SUPPORT_DIR/tmp/rsync_exclude"
+
+# Ensure Application Support directory exists
+mkdir -p "$APP_SUPPORT_DIR"
 
 # Create necessary directories
-mkdir -p "$(dirname $TEMP_DIR)"
-mkdir -p "$(dirname $RSYNC_EXCLUDE_FILE)"
+mkdir -p "$(dirname "$TEMP_DIR")"
+mkdir -p "$(dirname "$RSYNC_EXCLUDE_FILE")"
 
 # Get latest release tag from GitHub API
 echo "Fetching the latest release info..."
@@ -25,7 +29,6 @@ fi
 # Check if the latest release tag matches semantic versioning (e.g., v4.0.0)
 if [[ ! $LATEST_RELEASE =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
   echo "The latest release tag does not match the expected semantic versioning format. Exiting... $LATEST_RELEASE"
-
   exit 0
 fi
 
@@ -33,8 +36,8 @@ echo "Latest release: $LATEST_RELEASE"
 
 # Check current version
 CURRENT_VERSION=""
-if [ -f $VERSION_FILE ]; then
-  CURRENT_VERSION=$(cat $VERSION_FILE)
+if [ -f "$VERSION_FILE" ]; then
+  CURRENT_VERSION=$(cat "$VERSION_FILE")
 fi
 
 if [ "$CURRENT_VERSION" = "$LATEST_RELEASE" ]; then
@@ -44,11 +47,9 @@ fi
 
 # Compare versions to ensure no downgrade
 if [ ! -z "$CURRENT_VERSION" ]; then
-  # Remove the "v" prefix for comparison
   LATEST_VERSION_NUMBER="${LATEST_RELEASE#v}"
   CURRENT_VERSION_NUMBER="${CURRENT_VERSION#v}"
 
-  # Compare versions using sort -V for version number sorting
   if [[ $(printf '%s\n' "$LATEST_VERSION_NUMBER" "$CURRENT_VERSION_NUMBER" | sort -V | head -n1) != "$CURRENT_VERSION_NUMBER" ]]; then
     echo "Current version ($CURRENT_VERSION) is greater than or equal to the latest release ($LATEST_RELEASE). No update needed."
     exit 0
@@ -60,22 +61,21 @@ echo "Updating from version $CURRENT_VERSION to $LATEST_RELEASE"
 # Download the latest release zip file
 DOWNLOAD_LINK="${DOWNLOAD_URL}${LATEST_RELEASE}.zip"
 echo "Downloading the latest release from $DOWNLOAD_LINK..."
-curl -L $DOWNLOAD_LINK -o $TEMP_DIR.zip
+curl -L "$DOWNLOAD_LINK" -o "$TEMP_DIR.zip"
 
 # Unzip the file to a temporary directory
 echo "Unzipping the release..."
-mkdir -p $TEMP_DIR
-unzip -q $TEMP_DIR.zip -d $TEMP_DIR
+mkdir -p "$TEMP_DIR"
+unzip -q "$TEMP_DIR.zip" -d "$TEMP_DIR"
 
 # Find the extracted directory (assuming there's only one top-level directory)
-EXTRACTED_DIR=$(find $TEMP_DIR -mindepth 1 -maxdepth 1 -type d)
+EXTRACTED_DIR=$(find "$TEMP_DIR" -mindepth 1 -maxdepth 1 -type d)
 
 # Update the files while respecting .gitignore
 echo "Updating files..."
-rsync -av --delete --exclude-from=$GITIGNORE $EXTRACTED_DIR/ .
+rsync -av --delete --exclude-from="$GITIGNORE" "$EXTRACTED_DIR/" "$APP_SUPPORT_DIR/"
 
-# Cleanup
 echo "Cleaning up..."
-rm -rf $TEMP_DIR $TEMP_DIR.zip
+rm -rf "$TEMP_DIR" "$TEMP_DIR.zip"
 
 echo "Update complete!"
