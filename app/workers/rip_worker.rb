@@ -31,10 +31,10 @@ class RipWorker < ApplicationWorker
 
   def create_mkvs
     disk_titles.filter_map do |disk_title|
-      disk_title = DiskTitle.includes(:video, :episode, :episode_last, :disk)
-                            .find(disk_title[:id])
+      title = DiskTitle.includes(:video, :episode, :episode_last, :disk)
+                       .find(disk_title[:id])
       service = CreateMkvService.new(
-        disk_title:,
+        disk_title: title,
         extra_type: disk_title[:extra_type],
         edition: disk_title[:edition],
         part: disk_title[:part]
