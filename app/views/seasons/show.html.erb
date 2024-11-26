@@ -92,7 +92,7 @@
             <td>
               <% if @disks.any? %>
                 <%= select_tag 'episodes[][disk_title_id]',
-                      options_from_collection_for_select(@disks.first.disk_titles, :id, :to_label, title.disk_title&.id), prompt: "", data: { manage_selections_target: :input }, class: 'form-select mb-2' %>
+                      options_from_collection_for_select(@disks.first.disk_titles.sort_by { _1.segment_map.sum }, :id, :to_label, title.disk_title&.id), prompt: "", data: { manage_selections_target: :input }, class: 'form-select mb-2' %>
               <% end %>
               <% if title.episode.duration_stats.weighted_average %>
                 <%= distance_of_time_in_words(title.episode.duration_stats.weighted_average, 0) %>
