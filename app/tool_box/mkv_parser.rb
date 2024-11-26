@@ -10,7 +10,7 @@ module MkvParser
     15 => :angle,
     16 => :source_file_name,
     25 => :segment_count,
-    26 => :segement_map,
+    26 => :segment_map,
     27 => :filename,
     28 => :lang,
     29 => :language,

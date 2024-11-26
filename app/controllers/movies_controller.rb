@@ -3,10 +3,11 @@
 class MoviesController < ApplicationController
   # movie GET    /movies/:id(.:format)
   def show
+    scope = Movie.includes(:video_blobs)
     @movie = if params[:id].start_with?('tmdb:')
-               Movie.find_or_initialize_by(the_movie_db_id: params[:id].split(':').last)
+               scope.find_or_initialize_by(the_movie_db_id: params[:id].split(':').last)
              else
-               Movie.find(params[:id])
+               scope.find(params[:id])
              end
     @movie.subscribe(TheMovieDb::VideoListener.new)
     @movie.save!
@@ -16,7 +17,7 @@ class MoviesController < ApplicationController
   # rip_movie POST   /movies/:id/rip(.:format)
   def rip
     movie = Movie.find(params[:id])
-    disk = Disk.find(params[:disk_id])
+    disk = Disk.includes(disk_titles: %i[episode episode_last]).find(params[:disk_id])
     disk_titles = rip_disk_titles(disk, movie)
     job = RipWorker.perform_async(
       disk_id: disk.id,

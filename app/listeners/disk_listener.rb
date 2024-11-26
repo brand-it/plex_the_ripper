@@ -32,7 +32,7 @@ class DiskListener
   end
 
   def disk_loaded(disk)
-    return reload_page! unless (video = Video.auto_start.first)
+    return reload_page! unless (video = Video.auto_start.includes(:ripped_disk_titles).first)
 
     info_disk_titles = rip_disk_titles(disk, video)
     return reload_page! if info_disk_titles.empty?

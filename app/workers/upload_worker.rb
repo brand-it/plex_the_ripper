@@ -7,8 +7,13 @@ class UploadWorker < ApplicationWorker
     true
   end
 
+  # Max Number of this job that can run at the same time
+  def concurrently
+    2
+  end
+
   def perform
-    video_blob = VideoBlob.find(video_blob_id)
+    video_blob = VideoBlob.includes(:video, :episode_last, episode: { season: :tv }).find(video_blob_id)
     return unless video_blob.uploadable?
 
     service = Ftp::UploadMkvService.new(video_blob:)

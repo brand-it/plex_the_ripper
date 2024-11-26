@@ -16,7 +16,7 @@ class ApplicationWorker
 
       found_job.save!
       Rails.logger.info("#{found_job.worker.class}.perform_async(#{found_job.id})")
-      semaphore.synchronize { enqueued_jobs.add(found_job.id) }
+      Backgrounder.add_job_id(found_job.id)
 
       found_job
     end
@@ -25,32 +25,8 @@ class ApplicationWorker
       Job.sort_by_created_at.active.find_or_initialize_by(name: to_s, arguments: args)
     end
 
-    def process_work
-      id = take_job_id
-      return if id.nil?
-
-      Job.find_by(id:)&.perform
-    end
-
-    # Stores the thread that this current worker is running
-    def threads
-      @@threads ||= {} # rubocop:disable Style/ClassVars
-    end
-
-    def enqueued_jobs
-      @@enqueued_jobs ||= Job.enqueued.pluck(:id).to_set # rubocop:disable Style/ClassVars
-    end
-
-    def take_job_id
-      semaphore.synchronize do
-        job_id = enqueued_jobs.first
-        enqueued_jobs.delete(job_id) if job_id.present?
-        job_id
-      end
-    end
-
-    def semaphore
-      @@semaphore ||= Thread::Mutex.new # rubocop:disable Style/ClassVars
+    def concurrently
+      nil
     end
   end
 

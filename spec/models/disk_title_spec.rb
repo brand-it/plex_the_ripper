@@ -11,6 +11,7 @@
 #  filename        :string           not null
 #  name            :string
 #  ripped_at       :datetime
+#  segment_map     :string
 #  size            :integer          default(0), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -55,7 +56,7 @@ RSpec.describe DiskTitle do
     let(:disk_title) { create(:disk_title, title_id: 1, name: 'Sample Title', duration: 3600) }
 
     it 'returns the correct label' do
-      expect(disk_title.to_label).to eq('#1 Sample Title 1 hour')
+      expect(disk_title.to_label).to eq('#1 title_mk1.mkv 1 hr')
     end
   end
 

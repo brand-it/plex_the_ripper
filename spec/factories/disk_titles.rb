@@ -11,6 +11,7 @@
 #  filename        :string           not null
 #  name            :string
 #  ripped_at       :datetime
+#  segment_map     :string
 #  size            :integer          default(0), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null

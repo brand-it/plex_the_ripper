@@ -105,7 +105,7 @@ class VideoBlob < ApplicationRecord
   def episode_numbers
     return if episode.nil?
 
-    episode.episode_number..(episode_last&.episode_number || episode.episode_number)
+    @episode_numbers ||= episode.episode_number..(episode_last&.episode_number || episode.episode_number)
   end
 
   def uploaded?

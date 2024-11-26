@@ -2,6 +2,8 @@
 
 class ImagesController < ApplicationController
   HOST_URL = 'https://image.tmdb.org/t/p'
+
+  skip_before_action :mkv_config, :movie_db_config, :plex_config
   def show
     send_data image, disposition: :inline, type: "image/#{params[:format]}"
   end

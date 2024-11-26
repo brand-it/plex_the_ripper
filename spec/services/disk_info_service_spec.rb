@@ -21,7 +21,7 @@ RSpec.describe DiskInfoService do
           'size' => '1.8 GB',
           'bytes' => 1_947_029_504,
           'segment_count' => 1,
-          'segement_map' => '1-10',
+          'segment_map' => '1-10',
           'filename' => 'title_t00.mkv',
           'description' => '10 chapter(s), 1.8 GB'
         },
@@ -32,7 +32,7 @@ RSpec.describe DiskInfoService do
           'size' => '2.1 GB',
           'bytes' => 2_321_354_752,
           'segment_count' => 1,
-          'segement_map' => '1-11',
+          'segment_map' => '1-11',
           'filename' => 'title_t01.mkv',
           'description' => '11 chapter(s), 2.1 GB'
         },
@@ -43,7 +43,7 @@ RSpec.describe DiskInfoService do
           'size' => '1.6 GB',
           'bytes' => 1_810_173_952,
           'segment_count' => 1,
-          'segement_map' => '1-10',
+          'segment_map' => '1-10',
           'filename' => 'title_t02.mkv',
           'description' => '10 chapter(s), 1.6 GB'
         },
@@ -54,7 +54,7 @@ RSpec.describe DiskInfoService do
           'size' => '1.7 GB',
           'bytes' => 1_870_516_224,
           'segment_count' => 1,
-          'segement_map' => '1-10',
+          'segment_map' => '1-10',
           'filename' => 'title_t03.mkv',
           'description' => '10 chapter(s), 1.7 GB'
         }
