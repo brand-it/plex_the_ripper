@@ -1,13 +1,14 @@
 #!/bin/bash
 
 # Variables
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="brand-it/plex_the_ripper"
 API_URL="https://api.github.com/repos/$REPO/releases/latest"
 DOWNLOAD_URL="https://github.com/$REPO/archive/refs/tags/"
-TEMP_DIR="./tmp/latest"
+TEMP_DIR="$SCRIPT_DIR/tmp/latest"
 GITIGNORE=".gitignore"
-VERSION_FILE="./current_version.txt"
-RSYNC_EXCLUDE_FILE="./tmp/rsync_exclude"
+VERSION_FILE="$SCRIPT_DIR/current_version.txt"
+RSYNC_EXCLUDE_FILE="$SCRIPT_DIR/tmp/rsync_exclude"
 
 # Create necessary directories
 mkdir -p "$(dirname $TEMP_DIR)"
