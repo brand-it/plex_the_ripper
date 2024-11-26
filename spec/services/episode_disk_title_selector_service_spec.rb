@@ -6,6 +6,15 @@ RSpec.describe EpisodeDiskTitleSelectorService do
   describe '#call' do
     subject(:call) { described_class.new(episodes:, disk:).call }
 
+    before do
+      episodes.each do |episode|
+        episode.association(:uploaded_video_blobs).loaded!
+        episode.association(:ripped_disk_titles).loaded!
+      end
+      tv.association(:episodes).target = episodes
+      tv.association(:episodes).loaded!
+    end
+
     context 'when there is a single disk_title' do
       let(:episodes) { build_stubbed_list(:episode, 3, season:, runtime: 10.minutes) }
       let(:season) { build_stubbed(:season, tv:) }

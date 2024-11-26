@@ -60,8 +60,9 @@ class CreateMkvService < ApplicationService
   end
 
   def video_blob
+    scope = VideoBlob.includes(:video, :episode_last, episode: { season: :tv })
     @video_blob ||= if extra_type == :feature_films || extra_type.blank? || edition.present?
-                      VideoBlob.find_or_create_by!(
+                      scope.find_or_create_by!(
                         video: disk_title.video,
                         episode: disk_title.episode,
                         episode_last: disk_title.episode_last,
@@ -70,7 +71,7 @@ class CreateMkvService < ApplicationService
                         part:
                       )
                     else
-                      VideoBlob.create!(
+                      scope.create!(
                         video: disk_title.video,
                         episode: disk_title.episode,
                         episode_last: disk_title.episode_last,

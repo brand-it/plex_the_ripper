@@ -2,11 +2,11 @@
 
 class RipProcessComponent < ViewComponent::Base
   def self.job
-    Job.sort_by_created_at.active.find_by(name: 'RipWorker')
+    Backgrounder.managers.find { _1.current_job&.name == 'RipWorker' }&.current_job
   end
 
   def self.show?
-    Video.auto_start.any? || job&.active?
+    job&.active? || Video.auto_start.any?
   end
 
   def hidden?

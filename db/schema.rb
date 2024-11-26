@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_30_174837) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_23_005122) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -35,6 +35,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_30_174837) do
     t.string "filename", null: false
     t.string "description"
     t.integer "episode_last_id"
+    t.string "segment_map"
     t.index ["disk_id"], name: "index_disk_titles_on_disk_id"
     t.index ["episode_id"], name: "index_disk_titles_on_episode_id"
     t.index ["episode_last_id"], name: "index_disk_titles_on_episode_last_id"

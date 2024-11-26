@@ -2,11 +2,16 @@
 
 class SeasonsController < ApplicationController
   def show
-    @tv = Tv.find(params[:tv_id])
-    @season = @tv.seasons.includes(episodes: [:ripped_disk_titles]).find(params[:id])
+    @tv = Tv.includes(:ripped_disk_titles).find(params[:tv_id])
+    @season = @tv.seasons.includes(
+      :ripped_disk_titles,
+      episodes: [
+        { uploaded_video_blobs: %i[episode episode_last] }, { ripped_disk_titles: %i[episode_last] }, :video_blobs
+      ]
+    ).find(params[:id])
     @season.subscribe(TheMovieDb::EpisodesListener.new)
     @season.save!
-    @disks = Disk.not_ejected
+    @disks = Disk.not_ejected.includes(:disk_titles)
   end
 
   def rip
@@ -17,11 +22,11 @@ class SeasonsController < ApplicationController
   private
 
   def season
-    @season ||= tv.seasons.find(params[:id])
+    @season ||= tv.seasons.includes(:episodes).find(params[:id])
   end
 
   def disk
-    @disk ||= Disk.find(params[:disk_id])
+    @disk ||= Disk.includes(disk_titles: [:episode]).find(params[:disk_id])
   end
 
   def tv

@@ -9,12 +9,14 @@ class LoadDiskWorker < ApplicationWorker
   def perform
     Disk.where
         .not(id: Disk.verified_disks.select(:id))
+        .includes(:disk_titles)
         .in_batches
         .destroy_all
     DiskTitle.not_ripped.in_batches.destroy_all
-    CreateDisksService.new(job:).tap do |service|
+    mkv_disk_load_listener = MkvDiskLoadListener.new(job:)
+    CreateDisksService.new(listener: mkv_disk_load_listener).tap do |service|
       service.subscribe(DiskListener.new(job:))
-      service.subscribe(MkvDiskLoadListener.new(job:))
+      service.subscribe(mkv_disk_load_listener)
     end.call
   end
 end

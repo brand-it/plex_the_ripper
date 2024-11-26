@@ -48,4 +48,6 @@ Rails.application.configure do
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
+  # Strict Load model data to make sure things are fast
+  config.active_record.strict_loading_by_default = true
 end

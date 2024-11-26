@@ -6,6 +6,8 @@ RSpec.describe MovieDiskTitleSelectorService do
   describe '#call' do
     subject(:call) { described_class.new(movie:, disk:).call }
 
+    before { movie.association(:ripped_disk_titles).loaded! }
+
     let(:movie) { build_stubbed(:movie, movie_runtime: 10.seconds) }
     let(:disk) { build_stubbed(:disk, disk_titles: [disk_title]) }
     let(:disk_title) { build_stubbed(:disk_title, duration: 10.seconds) }

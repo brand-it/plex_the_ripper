@@ -6,7 +6,37 @@
 #
 
 class Backgrounder
-  TOTAL_WORKERS = 3
+  class Manager
+    def thread(&block)
+      @thread ||= Thread.new do
+        loop do
+          block.call(self)
+          sleep 0.1
+        rescue StandardError => e
+          Rails.logger.error e.message
+          Rails.logger.error e.backtrace.join("\n")
+          nil
+        ensure
+          self.current_job = nil
+        end
+      end
+    end
+
+    def stop
+      Thread.stop(@thread)
+    end
+
+    def run
+      @thread.run
+    end
+
+    def kill
+      Thread.kill(@thread)
+    end
+
+    attr_accessor :current_job
+  end
+  TOTAL_MANAGERS = 5
 
   CRON_TASKS = {
     'ContinueUploadWorker' => 60.seconds.to_i,
@@ -15,70 +45,111 @@ class Backgrounder
     'CleanupJobWorker' => 1.hour.to_i
   }.freeze
 
+  @semaphore = Thread::Mutex.new
+  @enqueued_jobs = Set.new
+
   class << self
-    # kick off the threads asynchronusly
-    # so that the main thread can continue
+    def managers
+      Array.wrap(@managers)
+    end
+
     def start
-      Rails.logger.info "Starting background #{TOTAL_WORKERS} workers and scheduler"
+      Rails.logger.info "Starting background #{TOTAL_MANAGERS} managers
+      and scheduler"
+
       fix_broken_jobs
-      @threads = (worker_threads + [scheduled_thread])
-      @threads.each(&:run)
+      @enqueued_jobs = Job.enqueued.pluck(:id).to_set
+
+      @managers = worker_managers
+      scheduler.run
+      @managers.each(&:run)
     end
 
     def shutdown
-      Rails.logger.info "Shutting down background #{TOTAL_WORKERS} workers and scheduler"
+      Rails.logger.info "Shutting down background #{TOTAL_MANAGERS} workers and scheduler"
       Timeout.timeout(5) do
-        Array.wrap(@threads).each { Thread.stop(_1) }
+        managers.each(&:stop)
       end
     rescue StandardError => e
       Rails.logger.warn "Warning: #{e.message}"
-      Array.wrap(@threads).each { Thread.kill(_1) }
+      managers.each(&:kill)
+    end
+
+    def add_job_id(id)
+      semaphore.synchronize do
+        Rails.logger.debug { "#add_job_id(#{id}) enqueued_jobs: #{enqueued_jobs}" }
+        enqueued_jobs.add(id)
+      end
     end
 
     private
 
     def fix_broken_jobs
       Job.hanging.find_each do |job|
-        next if ApplicationWorker.threads[job.id].present?
+        next if managers.any? { _1.current_job&.id == job.id }
 
         job.update!(status: :errored, error_message: 'Job was marked as stopping but no worker was found to process it')
       end
     end
 
-    def schedule
-      @schedule ||= CRON_TASKS.to_h do |task, _|
-        [task, Time.current.to_i]
+    def worker_managers
+      TOTAL_MANAGERS.times.map do
+        manager = Manager.new
+        manager.thread { process_work(_1) }
+        manager
       end
     end
 
-    def worker_threads
-      TOTAL_WORKERS.times.map do
-        threaded_loop { ApplicationWorker.process_work }
-      end
-    end
-
-    def scheduled_thread
-      threaded_loop do
-        CRON_TASKS.each do |task, duration|
-          next if Time.current.to_i < schedule[task]
-
-          Object.const_get(task).perform_async
-          schedule[task] = Time.current.to_i + duration
-          sleep 1 # make sure we don't unique all at the same time
-        end
-      end
-    end
-
-    def threaded_loop(&block)
+    def scheduler
       Thread.new do
+        schedule = CRON_TASKS.to_h { [_1, Time.current.to_i] }
+
         loop do
-          block.call
-          sleep 1
-        rescue StandardError => e
-          Rails.logger.error e.message
-          Rails.logger.error e.backtrace.join("\n")
-          nil
+          CRON_TASKS.each do |task, duration|
+            next if Time.current.to_i < schedule[task]
+
+            Object.const_get(task).perform_async
+            schedule[task] = Time.current.to_i + duration
+            sleep 1 # make sure we don't unique all at the same time
+          rescue StandardError => e
+            Rails.logger.error e.message
+            Rails.logger.error e.backtrace.join("\n")
+          end
         end
+      end
+    end
+
+    def process_work(manager)
+      job_id = take_job_id
+      return if job_id.nil?
+
+      manager.current_job = Job.find(job_id)
+
+      if manager.current_job.name_constant.concurrently.nil? ||
+         manager.current_job.name_constant.concurrently >= concurrent_count
+        Rails.logger.debug { "#process_work #{manager.current_job.id}" }
+        manager.current_job.perform
+      else
+        add_job_id(manager.current_job.id)
+      end
+    end
+
+    attr_reader :enqueued_jobs, :semaphore
+
+    def concurrent_count
+      managers.count do |manager|
+        manager.current_job&.name == @manager.current_job.name
+      end
+    end
+
+    def take_job_id
+      semaphore.synchronize do
+        job_id = enqueued_jobs.first
+        if job_id.present?
+          enqueued_jobs.delete(job_id)
+          Rails.logger.debug { "#take_job_id #{job_id || 'nil'} enqueued_jobs: #{enqueued_jobs}" }
+        end
+        job_id
       end
     end
   end

@@ -28,9 +28,13 @@ class EpisodeDiskTitleSelectorService < ApplicationService
     return if disk.nil?
     return if uploaded?(episode) || ripped?(episode)
 
-    disk.disk_titles.find { within_range?(episode, _1) && selected_disk_titles.exclude?(_1) }.tap do |disk_title|
+    disk_titles.find { within_range?(episode, _1) && selected_disk_titles.exclude?(_1) }.tap do |disk_title|
       selected_disk_titles.append(disk_title) if disk_title
     end
+  end
+
+  def disk_titles
+    disk.disk_titles.sort_by { _1.segment_map.sum }
   end
 
   def select_episode(disk_title)
@@ -42,7 +46,7 @@ class EpisodeDiskTitleSelectorService < ApplicationService
   def uploaded?(episode)
     uploaded_episodes_numbers.any? { _1.include?(episode.episode_number) } ||
       episode.ripped_disk_titles.any? { _1&.video_blob&.uploaded? } ||
-      episode.video_blobs.any?(&:uploaded?)
+      episode.uploaded_video_blobs.any?
   end
 
   def ripped?(episode)
