@@ -32,6 +32,56 @@
 en:
   time:
     formats:
-      default: "%Y-%m-%d %H:%M:%S"
-      short: "%d %b %H:%M"
-      long: "%B %d, %Y %H:%M"
+      default: '%Y-%m-%d %H:%M:%S'
+      short: '%d %b %H:%M'
+      long: '%B %d, %Y %H:%M'
+
+  datetime:
+    distance_in_words:
+      short:
+        hours:
+          one: '%{count} hr'
+          other: '%{count} hrs'
+        minutes:
+          one: '%{count} min'
+          other: '%{count} mins'
+        seconds:
+          one: '%{count} sec'
+          other: '%{count} secs'
+        about_x_hours:
+          one: ~%{count} hr
+          other: ~%{count} hrs
+        about_x_months:
+          one: ~%{count} mo
+          other: ~%{count} mos
+        about_x_years:
+          one: ~%{count} yr
+          other: ~%{count} yrs
+        almost_x_years:
+          one: ~%{count} yr
+          other: ~%{count} yrs
+        half_a_minute: ~30 sec
+        less_than_x_seconds:
+          one: < %{count} sec
+          other: < %{count} secs
+        less_than_x_minutes:
+          one: < 1 min
+          other: < %{count} mins
+        over_x_years:
+          one: '> %{count} yr'
+          other: '> %{count} yrs'
+        x_seconds:
+          one: '%{count} sec'
+          other: '%{count} secs'
+        x_minutes:
+          one: '%{count} min'
+          other: '%{count} mins'
+        x_days:
+          one: '%{count} day'
+          other: '%{count} days'
+        x_months:
+          one: '%{count} mo'
+          other: '%{count} mos'
+        x_years:
+          one: '%{count} yr'
+          other: '%{count} yrs'

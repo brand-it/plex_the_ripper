@@ -4,7 +4,7 @@ class LoadDiskProcessComponent < ViewComponent::Base
   extend Dry::Initializer
 
   def self.job
-    Job.sort_by_created_at.active.find_by(name: 'LoadDiskWorker')
+    Backgrounder.managers.find { _1.current_job&.name == 'LoadDiskWorker' }&.current_job
   end
 
   def self.show?

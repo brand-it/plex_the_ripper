@@ -42,7 +42,7 @@ class EpisodeDiskTitleSelectorService < ApplicationService
   def uploaded?(episode)
     uploaded_episodes_numbers.any? { _1.include?(episode.episode_number) } ||
       episode.ripped_disk_titles.any? { _1&.video_blob&.uploaded? } ||
-      episode.video_blobs.any?(&:uploaded?)
+      episode.uploaded_video_blobs.any?
   end
 
   def ripped?(episode)

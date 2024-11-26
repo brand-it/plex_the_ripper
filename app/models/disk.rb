@@ -25,7 +25,7 @@ class Disk < ApplicationRecord
 
   after_commit { broadcast(:disk_updated, self) }
 
-  has_many :disk_titles, dependent: :nullify, autosave: true
+  has_many :disk_titles, -> { order(:segment_map) }, dependent: :nullify, autosave: true, inverse_of: :disk
   has_many :not_ripped_disk_titles, -> { not_ripped }, dependent: false, inverse_of: :disk, class_name: 'DiskTitle'
   belongs_to :video, optional: true
   belongs_to :episode, optional: true

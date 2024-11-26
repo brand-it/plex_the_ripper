@@ -23,9 +23,9 @@
           Title Select
           <small>
             <% if @tv.duration_stats.weighted_average %>
-              (<%= distance_of_time_in_words(@tv.duration_range.min, 0, include_seconds: params[:debug] == 'true') %>
+              (<%= distance_of_time_in_words(@tv.duration_range.min, 0, include_seconds: params[:debug] == 'true', scope: "datetime.distance_in_words.short") %>
               ..
-              <%= distance_of_time_in_words(@tv.duration_range.max, 0, include_seconds: params[:debug] == 'true') %>)
+              <%= distance_of_time_in_words(@tv.duration_range.max, 0, include_seconds: params[:debug] == 'true', scope: "datetime.distance_in_words.short") %>)
 
               <% if params[:debug] == 'true' %>
                 <br>
@@ -95,11 +95,11 @@
                       options_from_collection_for_select(@disks.first.disk_titles, :id, :to_label, title.disk_title&.id), prompt: "", data: { manage_selections_target: :input }, class: 'form-select mb-2' %>
               <% end %>
               <% if title.episode.duration_stats.weighted_average %>
-                <%= distance_of_time_in_words(title.episode.duration_stats.weighted_average) %>
+                <%= distance_of_time_in_words(title.episode.duration_stats.weighted_average, 0) %>
               <% elsif @season.duration_stats.weighted_average%>
-                <%= distance_of_time_in_words(@tv.duration_stats.weighted_average) %>
+                <%= distance_of_time_in_words(@tv.duration_stats.weighted_average, 0) %>
               <% elsif title.episode.runtime %>
-                <%= distance_of_time_in_words(title.episode.runtime) %>
+                <%= distance_of_time_in_words(title.episode.runtime, 0) %>
               <% end %>
             </td>
             <td>

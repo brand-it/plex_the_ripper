@@ -2,7 +2,7 @@
 
 class UploadProcessComponent < ViewComponent::Base
   def self.job
-    Job.sort_by_created_at.active.find_by(name: 'UploadWorker')
+    Backgrounder.managers.find { _1.current_job&.name == 'UploadWorker' }&.current_job
   end
 
   def self.show?
@@ -18,7 +18,7 @@ class UploadProcessComponent < ViewComponent::Base
   end
 
   def uploadable_video_blobs
-    @uploadable_video_blobs ||= VideoBlob.uploadable.order(updated_at: :desc)
+    @uploadable_video_blobs ||= VideoBlob.uploadable.includes(:video).order(updated_at: :desc)
   end
 
   def percentage(completed, total)
@@ -27,6 +27,7 @@ class UploadProcessComponent < ViewComponent::Base
 
   def uploaded_recently_video_blobs
     @uploaded_recently_video_blobs ||= VideoBlob.uploaded_recently
+                                                .includes(:video)
                                                 .order(uploaded_on: :desc)
                                                 .limit(3)
   end

@@ -16,7 +16,7 @@ class ApplicationWorker
 
       found_job.save!
       Rails.logger.info("#{found_job.worker.class}.perform_async(#{found_job.id})")
-      add_job_id(found_job.id)
+      Backgrounder.add_job_id(found_job.id)
 
       found_job
     end
@@ -24,7 +24,6 @@ class ApplicationWorker
     def find_or_create_job(**args)
       Job.sort_by_created_at.active.find_or_initialize_by(name: to_s, arguments: args)
     end
-
 
     def concurrently
       nil

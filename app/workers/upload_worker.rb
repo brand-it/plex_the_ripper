@@ -13,7 +13,7 @@ class UploadWorker < ApplicationWorker
   end
 
   def perform
-    video_blob = VideoBlob.find(video_blob_id)
+    video_blob = VideoBlob.includes(:video).find(video_blob_id)
     return unless video_blob.uploadable?
 
     service = Ftp::UploadMkvService.new(video_blob:)

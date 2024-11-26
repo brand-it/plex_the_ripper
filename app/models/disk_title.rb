@@ -11,6 +11,7 @@
 #  filename        :string           not null
 #  name            :string
 #  ripped_at       :datetime
+#  segment_map     :string
 #  size            :integer          default(0), not null
 #  created_at      :datetime         not null
 #  updated_at      :datetime         not null
@@ -34,6 +35,8 @@
 class DiskTitle < ApplicationRecord
   include ActionView::Helpers::DateHelper
 
+  serialize :segment_map, coder: JSON, type: Array
+
   belongs_to :video, optional: true
   belongs_to :episode, optional: true
   belongs_to :episode_last, optional: true, class_name: 'Episode'
@@ -43,13 +46,19 @@ class DiskTitle < ApplicationRecord
 
   scope :not_ripped, -> { where(ripped_at: nil) }
   scope :ripped, -> { where.not(ripped_at: nil) }
+  scope :sort_by_segment_map, -> { order(:segment_map) }
 
   validates :filename, presence: true
 
   before_save :set_episode_last
 
   def to_label
-    "##{title_id} #{name || filename} #{distance_of_time_in_words(duration)}"
+    [
+      "##{title_id}",
+      filename || name,
+      distance_of_time_in_words(duration, 0, include_seconds: false, scope: 'datetime.distance_in_words.short'),
+      segment_map.join(', ')
+    ].compact_blank.join(' ')
   end
 
   def episode_numbers

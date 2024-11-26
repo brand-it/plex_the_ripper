@@ -36,7 +36,7 @@ class Backgrounder
 
     attr_accessor :current_job
   end
-  TOTAL_MANAGERS = 3
+  TOTAL_MANAGERS = 5
 
   CRON_TASKS = {
     'ContinueUploadWorker' => 60.seconds.to_i,
@@ -45,15 +45,23 @@ class Backgrounder
     'CleanupJobWorker' => 1.hour.to_i
   }.freeze
 
+  @semaphore = Thread::Mutex.new
+  @enqueued_jobs = Set.new
+
   class << self
     def managers
       Array.wrap(@managers)
     end
 
     def start
-      Rails.logger.info "Starting background #{TOTAL_MANAGERS} managers and scheduler"
+      Rails.logger.info "Starting background #{TOTAL_MANAGERS} managers
+      and scheduler"
+
       fix_broken_jobs
-      @managers = (worker_managers + [scheduled_manager])
+      @enqueued_jobs = Job.enqueued.pluck(:id).to_set
+
+      @managers = worker_managers
+      scheduler.run
       @managers.each(&:run)
     end
 
@@ -67,6 +75,13 @@ class Backgrounder
       managers.each(&:kill)
     end
 
+    def add_job_id(id)
+      semaphore.synchronize do
+        Rails.logger.debug { "#add_job_id(#{id}) enqueued_jobs: #{enqueued_jobs}" }
+        enqueued_jobs.add(id)
+      end
+    end
+
     private
 
     def fix_broken_jobs
@@ -74,12 +89,6 @@ class Backgrounder
         next if managers.any? { _1.current_job&.id == job.id }
 
         job.update!(status: :errored, error_message: 'Job was marked as stopping but no worker was found to process it')
-      end
-    end
-
-    def schedule
-      @schedule ||= CRON_TASKS.to_h do |task, _|
-        [task, Time.current.to_i]
       end
     end
 
@@ -91,35 +100,41 @@ class Backgrounder
       end
     end
 
-    def scheduled_manager
-      manager = Manager.new
-      manager.thread do |_manager|
-        CRON_TASKS.each do |task, duration|
-          next if Time.current.to_i < schedule[task]
+    def scheduler
+      Thread.new do
+        schedule = CRON_TASKS.to_h { [_1, Time.current.to_i] }
 
-          Object.const_get(task).perform_async
-          schedule[task] = Time.current.to_i + duration
-          sleep 0.1 # make sure we don't unique all at the same time
+        loop do
+          CRON_TASKS.each do |task, duration|
+            next if Time.current.to_i < schedule[task]
+
+            Object.const_get(task).perform_async
+            schedule[task] = Time.current.to_i + duration
+            sleep 1 # make sure we don't unique all at the same time
+          rescue StandardError => e
+            Rails.logger.error e.message
+            Rails.logger.error e.backtrace.join("\n")
+          end
         end
       end
-      manager
     end
 
     def process_work(manager)
-      @manager = manager
-      @manager.current_job = Job.find_by(id: take_job_id)
-      return if current_job.nil?
+      job_id = take_job_id
+      return if job_id.nil?
 
-      if current_job.name_constant.concurrently.nil? || current_job.name_constant.concurrently >= concurrent_count
-        current_job.perform
+      manager.current_job = Job.find(job_id)
+
+      if manager.current_job.name_constant.concurrently.nil? ||
+         manager.current_job.name_constant.concurrently >= concurrent_count
+        Rails.logger.debug { "#process_work #{manager.current_job.id}" }
+        manager.current_job.perform
       else
-        add_job_id(current_job.id)
+        add_job_id(manager.current_job.id)
       end
     end
 
-    def enqueued_jobs
-      @enqueued_jobs ||= Job.enqueued.pluck(:id).to_set
-    end
+    attr_reader :enqueued_jobs, :semaphore
 
     def concurrent_count
       managers.count do |manager|
@@ -130,17 +145,12 @@ class Backgrounder
     def take_job_id
       semaphore.synchronize do
         job_id = enqueued_jobs.first
-        enqueued_jobs.delete(job_id) if job_id.present?
+        if job_id.present?
+          enqueued_jobs.delete(job_id)
+          Rails.logger.debug { "#take_job_id #{job_id || 'nil'} enqueued_jobs: #{enqueued_jobs}" }
+        end
         job_id
       end
-    end
-
-    def add_job_id(id)
-      semaphore.synchronize { enqueued_jobs.add(id) }
-    end
-
-    def semaphore
-      @semaphore ||= Thread::Mutex.new
     end
   end
 end

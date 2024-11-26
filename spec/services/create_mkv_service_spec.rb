@@ -49,7 +49,7 @@ RSpec.describe CreateMkvService do
       it 'build a video blob with all the attributes on the disk title' do
         expect { call }.to change(VideoBlob, :count).by(1)
         expect(VideoBlob.first.part).to eq(1)
-        expect(VideoBlob.first.episode_last).to eq(episode)
+        expect(VideoBlob.includes(:episode_last).first.episode_last).to eq(episode)
       end
     end
 
@@ -67,7 +67,7 @@ RSpec.describe CreateMkvService do
       it 'build a video blob with all the attributes on the disk title' do
         expect { call }.to change(VideoBlob, :count).by(1)
         expect(VideoBlob.first.part).to eq(1)
-        expect(VideoBlob.first.episode_last).to eq(episode_last)
+        expect(VideoBlob.includes(:episode_last).first.episode_last).to eq(episode_last)
       end
     end
   end

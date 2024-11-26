@@ -9,6 +9,10 @@ class DiskInfoService < ApplicationService
 
     param :id, Types::Coercible::Integer
 
+    def segment_map
+      Array.wrap(@segment_map&.split(',')&.map(&:to_i))
+    end
+
     def duration_seconds
       hours, minutes, seconds = duration.split(':')
       seconds.to_i + (minutes.to_i * 60) + (hours.to_i * 60 * 60)
