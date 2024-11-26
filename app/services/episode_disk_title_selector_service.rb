@@ -34,7 +34,7 @@ class EpisodeDiskTitleSelectorService < ApplicationService
   end
 
   def disk_titles
-    disk_titles.sort_by { _1.segment_map.sum }
+    disk.disk_titles.sort_by { _1.segment_map.sum }
   end
 
   def select_episode(disk_title)
