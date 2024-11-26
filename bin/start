@@ -7,8 +7,27 @@ SERVER_EXIT_CODE=0
 URL="http://localhost:8080"
 HEALTH_CHECK_URL="http://localhost:8080/system/health"
 
-# Bin directory path
+# Define paths
+if [ -z "$1" ]; then
+  APP_SUPPORT_DIR="$HOME/Library/Application Support/PlexTheRipperMac"
+else
+  APP_SUPPORT_DIR="$1"
+fi
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+UPDATE_SCRIPT="$APP_SUPPORT_DIR/bin/update_latest_release"
+SETUP_SCRIPT="$APP_SUPPORT_DIR/bin/setup"
+RAILS_SCRIPT="$APP_SUPPORT_DIR/bin/rails"
+
+# Ensure the Application Support directory exists
+mkdir -p "$APP_SUPPORT_DIR/bin"
+
+# Copy scripts to the Application Support directory if not already present
+if [ ! -f "$UPDATE_SCRIPT" ]; then
+  cp "$SCRIPT_DIR/update_latest_release" "$UPDATE_SCRIPT"
+fi
+
+# Ensure scripts are executable
+chmod +x "$UPDATE_SCRIPT"
 
 check_health() {
   STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" $HEALTH_CHECK_URL)
@@ -23,14 +42,14 @@ check_health() {
 start_server() {
   export RAILS_ENV=production
 
-  echo "Running bin/update_latest_release..."
-  $SCRIPT_DIR/update_latest_release
+  echo "Running update_latest_release..."
+  "$UPDATE_SCRIPT"
 
-  echo "Running bin/setup..."
-  $SCRIPT_DIR/setup
+  echo "Running setup..."
+  "$SETUP_SCRIPT"
 
   echo "Starting Rails server..."
-  $SCRIPT_DIR/rails server -b 0.0.0.0 -p 8080 -e production &
+  "$RAILS_SCRIPT" server -b 0.0.0.0 -p 8080 -e production &
   SERVER_PID=$!
 
   if [ $FIRST_START -eq 1 ]; then

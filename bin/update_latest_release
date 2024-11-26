@@ -1,7 +1,12 @@
 #!/bin/bash
 
+if [ -z "$1" ]; then
+  APP_SUPPORT_DIR="$HOME/Library/Application Support/PlexTheRipperMac"
+else
+  APP_SUPPORT_DIR="$1"
+fi
+
 # Variables
-APP_SUPPORT_DIR="$HOME/Library/Application Support/PlexTheRipper"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="brand-it/plex_the_ripper"
 API_URL="https://api.github.com/repos/$REPO/releases/latest"
