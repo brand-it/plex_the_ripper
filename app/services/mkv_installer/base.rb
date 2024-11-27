@@ -48,7 +48,7 @@ module MkvInstaller
     end
 
     def current_version
-      @current_version ||= makemkvcon('version').stdout_str.scan(VERSION_PATTERN).flatten.map { Gem::Version.new(_1) }.max
+      @current_version ||= makemkvcon('version').stdout_str.scan(VERSION_PATTERN).flatten.map { Gem::Version.new(_1) }.max || Gem::Version.new('0.0.0')
     end
 
     def request
