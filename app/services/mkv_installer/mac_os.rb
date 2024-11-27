@@ -10,6 +10,8 @@ module MkvInstaller
     end
 
     def call
+      return if current_version >= version
+
       attach
       copy
     ensure

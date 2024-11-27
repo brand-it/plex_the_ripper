@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+set -e
 
 # Variables
 RUNNING=1
@@ -21,10 +22,7 @@ RAILS_SCRIPT="$APP_SUPPORT_DIR/bin/rails"
 # Ensure the Application Support directory exists
 mkdir -p "$APP_SUPPORT_DIR/bin"
 
-# Copy scripts to the Application Support directory if not already present
-if [ ! -f "$UPDATE_SCRIPT" ]; then
-  cp "$SCRIPT_DIR/update_latest_release" "$UPDATE_SCRIPT"
-fi
+cp "$SCRIPT_DIR/update_latest_release" "$UPDATE_SCRIPT"
 
 # Ensure scripts are executable
 chmod +x "$UPDATE_SCRIPT"
@@ -43,7 +41,7 @@ start_server() {
   export RAILS_ENV=production
 
   echo "Running update_latest_release..."
-  "$UPDATE_SCRIPT"
+  "$UPDATE_SCRIPT" "$APP_SUPPORT_DIR"
 
   echo "Running setup..."
   "$SETUP_SCRIPT"

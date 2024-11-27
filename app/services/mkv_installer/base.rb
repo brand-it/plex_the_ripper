@@ -4,7 +4,7 @@ module MkvInstaller
   class Base
     include Shell
     DOWNLOAD_URI = URI('https://www.makemkv.com/download/')
-    VERSION_PATTERN = /.*_v(\d*\.\d*\.\d*)/
+    VERSION_PATTERN = /.*[_\s]v(\d*\.\d*\.\d*)/
 
     private
 
@@ -42,9 +42,13 @@ module MkvInstaller
     end
 
     def version
-      @version ||= request.body.scan(VERSION_PATTERN).flatten.max.tap do |version|
+      @version ||= request.body.scan(VERSION_PATTERN).flatten.map { Gem::Version.new(_1) }.max.tap do |version|
         raise "Version could not be resolved from #{request.body}" if version.nil?
       end
+    end
+
+    def current_version
+      @current_version ||= makemkvcon('version').stdout_str.scan(VERSION_PATTERN).flatten.map { Gem::Version.new(_1) }.max
     end
 
     def request
