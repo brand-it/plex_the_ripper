@@ -1,13 +1,17 @@
-#!/bin/bash
+#!/usr/bin/env sh
+
+if [ -z "$1" ]; then
+  APP_SUPPORT_DIR="$HOME/Library/Application Support/PlexTheRipperMac"
+else
+  APP_SUPPORT_DIR="$1"
+fi
 
 # Variables
-APP_SUPPORT_DIR="$HOME/Library/Application Support/PlexTheRipper"
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="brand-it/plex_the_ripper"
 API_URL="https://api.github.com/repos/$REPO/releases/latest"
 DOWNLOAD_URL="https://github.com/$REPO/archive/refs/tags/"
 TEMP_DIR="$APP_SUPPORT_DIR/tmp/latest"
-GITIGNORE="$SCRIPT_DIR/.gitignore"
 VERSION_FILE="$APP_SUPPORT_DIR/current_version.txt"
 RSYNC_EXCLUDE_FILE="$APP_SUPPORT_DIR/tmp/rsync_exclude"
 
@@ -73,6 +77,7 @@ EXTRACTED_DIR=$(find "$TEMP_DIR" -mindepth 1 -maxdepth 1 -type d)
 
 # Update the files while respecting .gitignore
 echo "Updating files..."
+GITIGNORE="$EXTRACTED_DIR/.gitignore"
 rsync -av --delete --exclude-from="$GITIGNORE" "$EXTRACTED_DIR/" "$APP_SUPPORT_DIR/"
 
 echo "Cleaning up..."

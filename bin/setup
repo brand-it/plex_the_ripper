@@ -128,7 +128,7 @@ end
 
 def install_asdf
   return if `which asdf` != ''
-  `git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0`
+  `git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.1`
 end
 
 def asdf_install
@@ -233,6 +233,11 @@ def compile_assets
   success 'Assets compiled!'
 end
 
+def install_mkv
+  log 'Installing MKV'
+  Rake::Task['mkv:install'].invoke
+end
+
 Dir.chdir APP_ROOT do
   case RUBY_PLATFORM
   when /darwin/
@@ -250,4 +255,5 @@ Dir.chdir APP_ROOT do
   database_setup
   migrate_db
   compile_assets
+  install_mkv
 end
