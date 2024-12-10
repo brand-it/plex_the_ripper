@@ -18,7 +18,8 @@
 #
 # Indexes
 #
-#  index_episodes_on_season_id  (season_id)
+#  index_episodes_on_season_id        (season_id)
+#  index_episodes_on_the_movie_db_id  (the_movie_db_id) UNIQUE
 #
 FactoryBot.define do
   factory :episode do

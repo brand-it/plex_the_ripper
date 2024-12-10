@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_23_005122) do
+ActiveRecord::Schema[7.2].define(version: 2024_12_10_214438) do
   create_table "configs", force: :cascade do |t|
     t.string "type", default: "Config", null: false
     t.text "settings"
@@ -70,6 +70,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_23_005122) do
     t.bigint "season_id"
     t.integer "runtime"
     t.index ["season_id"], name: "index_episodes_on_season_id"
+    t.index ["the_movie_db_id"], name: "index_episodes_on_the_movie_db_id", unique: true
   end
 
   create_table "jobs", force: :cascade do |t|

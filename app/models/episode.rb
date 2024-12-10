@@ -18,7 +18,8 @@
 #
 # Indexes
 #
-#  index_episodes_on_season_id  (season_id)
+#  index_episodes_on_season_id        (season_id)
+#  index_episodes_on_the_movie_db_id  (the_movie_db_id) UNIQUE
 #
 class Episode < ApplicationRecord
   include ActionView::Helpers::DateHelper
@@ -30,6 +31,7 @@ class Episode < ApplicationRecord
   has_many :uploaded_video_blobs, -> { uploaded }, class_name: 'VideoBlob', dependent: false, inverse_of: :episode
 
   validates :episode_number, presence: true
+  validates :the_movie_db_id, uniqueness: true
 
   scope :order_by_episode_number, -> { order(:episode_number) }
 
