@@ -36,7 +36,7 @@ class Backgrounder
 
     attr_accessor :current_job
   end
-  TOTAL_MANAGERS = 5
+  TOTAL_MANAGERS = 3
 
   CRON_TASKS = {
     'ContinueUploadWorker' => 60.seconds.to_i,
